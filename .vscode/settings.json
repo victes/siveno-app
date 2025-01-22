@@ -15,5 +15,12 @@
     "[typescript]": {                          // Использовать Prettier для TS
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "eslint.workingDirectories": [{ "mode": "auto" }] // Автоматическое определение корня проекта
+    "eslint.workingDirectories": [
+      {
+        "mode": "auto"
+      }
+    ],
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    } // Автоматическое определение корня проекта
   }
