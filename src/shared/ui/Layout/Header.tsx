@@ -4,7 +4,7 @@ import { Container } from '../Container';
 
 const Header = () => {
   return (
-    <header className='h-[90px]'>
+    <header className='h-[90px] bg-white'>
         <Container>Header</Container>
     </header>
   )
