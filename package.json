@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
     "next": "15.1.5",
+    "prettier": "^3.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "sass": "^1.83.4",
     "swiper": "^11.2.1"
   },
