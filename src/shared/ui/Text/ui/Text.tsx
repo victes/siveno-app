@@ -1,8 +1,9 @@
 import React from 'react'
+import { IText } from '../types/types'
 
-const Text = ({text}) => {
+const Text = ({text}: IText) => {
   return (
-    <div>Text</div>
+    <p>{text}</p>
   )
 }
 
