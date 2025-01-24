@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { Jost } from "next/font/google";
 
-import "./globals.css";
+import "./globals.scss";
 import Header from "@/shared/ui/Layout/Header";
 import Footer from "@/shared/ui/Layout/Footer";
 
