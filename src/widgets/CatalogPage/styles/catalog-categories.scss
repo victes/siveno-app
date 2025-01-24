@@ -1,0 +1,24 @@
+.categories-card-container {
+  display: grid;
+  gap: 50px;
+
+  @media screen and (min-width: 1920px) {
+    grid-template-columns: repeat(4, 1fr); /* 4 карточки */
+  }
+
+  @media (min-width: 1366px) and (max-width: 1920px) {
+    grid-template-columns: repeat(3, 1fr); /* 4 карточки */
+  }
+  @media (min-width: 768px) and (max-width: 1366px) {
+    grid-template-columns: repeat(2, 1fr); /* 3 карточки */
+  }
+
+  /* Для экранов от 480px до 768px — 2 карточки */
+  @media (min-width: 480px) and (max-width: 768px) {
+    grid-template-columns: repeat(1fr); /* 2 карточки */
+  }
+  /* Для экранов ниже 480px — 1 карточка */
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr; /* 1 карточка */
+  }
+}
