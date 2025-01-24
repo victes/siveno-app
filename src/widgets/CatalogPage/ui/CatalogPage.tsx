@@ -23,10 +23,26 @@ const data = [
 const CatalogPage = () => {
   return (
     <Container>
-      <div className="flex gap-4 flex-wrap justify-center">
-        {data.map((item, idx) => (
-          <CatalogCard key={idx} img={item.img} href={item.href} name={item.name} />
-        ))}
+      <div className="flex flex-col gap-4 mt-[10px] justify-center">
+        <div className="breadcrumbs text-sm mx-auto mb-[70px]">
+          <ul>
+            <li>
+              <a>Home</a>
+            </li>
+            <li>
+              <a>Documents</a>
+            </li>
+            <li>Add Document</li>
+          </ul>
+        </div>
+        <div className="mb-[20px]">
+          <h1 className="title-h1">Каталог</h1>
+        </div>
+        <div className="flex gap-10 flex-wrap justify-center">
+          {data.map((item, idx) => (
+            <CatalogCard key={idx} img={item.img} href={item.href} name={item.name} />
+          ))}
+        </div>
       </div>
     </Container>
   );

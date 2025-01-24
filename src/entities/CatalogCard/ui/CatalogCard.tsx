@@ -13,7 +13,7 @@ const CatalogCard = ({ img, name, href }: ICCard) => {
           className="w-full max-w-[400px] max-h-[600px] min-w-[270px] min-h-[400px] object-cover"
         />
       </a>
-      <span className="mt-2 text-center text-lg font-medium">{name}</span>
+      <span className="mt-2 text-center text-[#423c3d] text-lg font-medium">{name}</span>
     </div>
   );
 };
