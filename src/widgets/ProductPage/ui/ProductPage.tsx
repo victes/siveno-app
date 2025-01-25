@@ -6,6 +6,7 @@ import React from "react";
 
 import "../styles/product-page.scss";
 import ButtonsProduct from "@/features/ButtonsProduct";
+import Accordion from "@/shared/ui/Accordion";
 
 const carousel = [
   {
@@ -20,6 +21,12 @@ const carousel = [
   {
     src: "https://lesyanebo.com/upload/resize_cache/iblock/83e/1380_2760_1/40npmby0a9hw3gcqlj479mpnma91q8xq.jpg",
   },
+];
+
+const accordion = [
+  { name: "Состав и Уход", value: "" },
+  { name: "Обмеры", value: "" },
+  { name: "Параметры Модели", value: "" },
 ];
 
 const ProductPage = () => {
@@ -68,6 +75,12 @@ const ProductPage = () => {
           {/* ================================================== */}
           <div className="">
             <ButtonsProduct />
+          </div>
+
+          <div className="w-full">
+            {accordion.map((item, idx) => {
+              return <Accordion key={idx} name={item.name} context={item.value} />;
+            })}
           </div>
         </div>
       </div>
