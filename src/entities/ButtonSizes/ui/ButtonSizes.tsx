@@ -4,7 +4,7 @@ import ButtonSize from "@/shared/ui/ButtonSize";
 import React, { useState } from "react";
 
 const sizes = [
-  { name: "os tall", className: "", onClick: () => {} },
+  { name: "all", className: "", onClick: () => {} },
   { name: "os", className: "", onClick: () => {} },
   { name: "xs", className: "", onClick: () => {} },
   { name: "s", className: "", onClick: () => {} },
@@ -13,14 +13,14 @@ const sizes = [
 ];
 
 const ButtonSizes = () => {
-  const [activeSize, setActiveSize] = useState<string | null>(null);
+  const [activeSize, setActiveSize] = useState<string | null>(sizes[0].name);
 
   const handleClick = (size: string) => {
     setActiveSize(size); // Устанавливаем активный размер
   };
 
   return (
-    <div className="flex gap-3">
+    <div className="flex flex-wrap tablet:flex-nowrap gap-3">
       {sizes.map((item, idx) => {
         const isActive = activeSize === item.name; // Проверяем, активен ли размер
         return (

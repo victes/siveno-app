@@ -8,9 +8,7 @@ import "../styles/catalog-card.scss";
 const CatalogCard = ({ img, name, href, price }: ICCard) => {
   return (
     <div
-      className={`catalog-card flex flex-col items-center relative transition-all duration-300 pb-2 ${
-        price ? "hover:shadow-lg" : "hover:bg-gray-500"
-      }`}
+      className={`catalog-card flex flex-col items-center relative transition-all duration-300 pb-2 hover:shadow-lg`}
     >
       <div className="relative group">
         <a href={href} className="block">

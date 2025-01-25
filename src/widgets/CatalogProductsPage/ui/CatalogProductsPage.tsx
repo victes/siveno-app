@@ -10,43 +10,43 @@ import ButtonSizes from "@/entities/ButtonSizes";
 const data = [
   {
     img: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
-    href: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
+    href: "/product",
     name: "Новинки",
     price: "800",
   },
   {
     img: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
-    href: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
+    href: "/product",
     name: "Новинки",
     price: "800",
   },
   {
     img: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
-    href: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
+    href: "/product",
     name: "Верхняя одежда",
     price: "800",
   },
   {
     img: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
-    href: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
+    href: "/product",
     name: "Пиджаки и Жакеты",
     price: "800",
   },
   {
     img: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
-    href: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
+    href: "/product",
     name: "Пиджаки и Жакеты",
     price: "800",
   },
   {
     img: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
-    href: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
+    href: "/product",
     name: "Пиджаки и Жакеты",
     price: "800",
   },
   {
     img: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
-    href: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
+    href: "/product",
     name: "Пиджаки и Жакеты",
     price: "800",
   },
@@ -71,8 +71,8 @@ const CatalogProductsPage = () => {
         <h1 className="title-h1">Новинки</h1>
       </div>
       {/* ========================================================== */}
-      <div className="flex justify-between items-center mb-[30px]">
-        <div className="flex gap-[20px]">
+      <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row  mindesk:justify-between items-center mb-[30px]">
+        <div className="flex flex-col tablet:flex-row gap-[20px]">
           <Select
             name="По Популярности"
             options={[
@@ -85,7 +85,7 @@ const CatalogProductsPage = () => {
           <Select
             name="Цвет"
             options={[
-              { option: "Все цвета", value: "homer" },
+              { option: "Все цвета", value: "Все цвета" },
               { option: "Синий", value: "Синий" },
               { option: "Серый", value: "Серый" },
               { option: "Зеленный", value: "Зеленный" },

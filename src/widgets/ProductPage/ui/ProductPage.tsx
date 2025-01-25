@@ -6,6 +6,7 @@ import React from "react";
 
 import "../styles/product-page.scss";
 import ButtonsProduct from "@/features/ButtonsProduct";
+import Accordion from "@/shared/ui/Accordion";
 
 const carousel = [
   {
@@ -22,9 +23,15 @@ const carousel = [
   },
 ];
 
+const accordion = [
+  { name: "Состав и Уход", value: "" },
+  { name: "Обмеры", value: "" },
+  { name: "Параметры Модели", value: "" },
+];
+
 const ProductPage = () => {
   return (
-    <section>
+    <section className="mb-[60px] border-b-[1px] pb-[20px] border-solid border-[#423c3d]">
       <div className="breadcrumbs text-sm mx-auto mb-[30px]">
         <ul>
           <li>
@@ -36,15 +43,15 @@ const ProductPage = () => {
           <li>Add Document</li>
         </ul>
       </div>
-      <div className="flex justify-between">
-        <div className="">
+      <div className="flex flex-col items-center largeDesk:flex-row justify-between">
+        <div className="mb-[40px] largeDesk:mb-0">
           <ProductSlider carousel={carousel} />
         </div>
-        <div className="flex flex-col gap-[20px] items-center mx-auto max-w-[500px]">
+        <div className="flex flex-col gap-[20px] items-center tablet:mx-auto tablet:max-w-[500px]">
           {/* ================================================== */}
-          <div className="flex flex-col gap-[20px]">
+          <div className="flex flex-col items-center justify-center gap-[20px]">
             <h1 className="title-h1">Двубортный тренч ICONIC</h1>
-            <p className="text-center text-[10px] tablet:text-[14px]">
+            <p className="text-center max-w-[200px] tablet:max-w-full text-[10px] tablet:text-[14px]">
               Базовая модель тренча из плотного хлопкового материала надёжно защищает от ветра и лёгких осадков.
               Объёмный крой, спущенная линия плеч, объёмный воротник, декоративные ремешки. Рекомендуем выбирать тренч
               на 1-2 размера меньше, чем вы носите обычно.
@@ -68,6 +75,12 @@ const ProductPage = () => {
           {/* ================================================== */}
           <div className="">
             <ButtonsProduct />
+          </div>
+
+          <div className="w-full">
+            {accordion.map((item, idx) => {
+              return <Accordion key={idx} name={item.name} context={item.value} />;
+            })}
           </div>
         </div>
       </div>
