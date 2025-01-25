@@ -20,7 +20,7 @@ const ButtonSizes = () => {
   };
 
   return (
-    <div className="flex gap-3">
+    <div className="flex flex-wrap tablet:flex-nowrap gap-3">
       {sizes.map((item, idx) => {
         const isActive = activeSize === item.name; // Проверяем, активен ли размер
         return (
