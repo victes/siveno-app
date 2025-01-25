@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { Container } from "@/shared/ui/Container";
 import React from "react";
