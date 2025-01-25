@@ -22,7 +22,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     set(state => ({
       products: [...state.products, product],
     }));
-    toast.success(`Добавлено в продукты: ${product.name}`, {
+    toast.success(`Добавлено в корзину: ${product.name}`, {
       position: "top-right",
     });
   },
