@@ -1,12 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "../Container";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosSearch } from "react-icons/io";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
+import { Burger } from "@/widgets/Burger";
 
 const Header = () => {
+  const [click, setClick] = useState(false);
   return (
     <header className="bg-white">
       <Container>
@@ -15,7 +17,9 @@ const Header = () => {
             <RxHamburgerMenu
               size={30}
               className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+              onClick={() => setClick(prev => !prev)}
             />
+            <Burger onOpen={click} />
             <p className="text-[30px] text-black max-tablet:text-[20px]">PremShop</p>
             <a href="/catalog-categories">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
