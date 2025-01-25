@@ -32,7 +32,7 @@ const Cart = ({ click, setClick }: ICart) => {
         >
           <div
             ref={modalRef}
-            className={`bg-white p-4 relative rounded-lg shadow-lg transform max-w-[800px] w-full flex flex-col gap-5 ${
+            className={`bg-white p-4 relative rounded-lg shadow-lg transform max-w-[800px] overflow-y-auto w-full flex flex-col gap-5 ${
               animate ? "translate-x-0" : "translate-x-full"
             } transition-transform duration-300`}
             onClick={e => e.stopPropagation()} // Предотвращает всплытие события клика
@@ -47,10 +47,10 @@ const Cart = ({ click, setClick }: ICart) => {
               {products.length} Товаров на {totalCost()} руб.
             </p>
             {products.map(product => (
-              <li key={product.id} className="flex gap-5 p-2 justify-between ">
+              <li key={product.id} className="flex gap-5 p-2 justify-between">
                 <div className="flex gap-5 items-center">
                   <div>
-                    <img src={product.img} alt={product.name} className="h-[300px] w-[200px]" />
+                    <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
                   </div>
                   <div className="flex flex-col justify-start">
                     <span className="text-black">{product.name}</span>
