@@ -74,7 +74,13 @@ const ProductPage = () => {
 
           {/* ================================================== */}
           <div className="">
-            <ButtonsProduct />
+            <ButtonsProduct
+              price={"68000"}
+              name="Двубортный тренч ICONIC"
+              img={
+                "https://lesyanebo.com/upload/resize_cache/iblock/83e/1380_2760_1/40npmby0a9hw3gcqlj479mpnma91q8xq.jpg"
+              }
+            />
           </div>
 
           <div className="w-full">

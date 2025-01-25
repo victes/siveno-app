@@ -1,12 +1,18 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "../Container";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosSearch } from "react-icons/io";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
+import { Burger } from "@/widgets/Burger";
+import { Cart } from "@/widgets/Cart";
+import { useProductStore } from "@/entities/productStore/store";
 
 const Header = () => {
+  const [click, setClick] = useState(false);
+  const [cart, setCart] = useState(false);
+  const { products, removeProduct, totalCost } = useProductStore();
   return (
     <header className="bg-white">
       <Container>
@@ -15,8 +21,10 @@ const Header = () => {
             <RxHamburgerMenu
               size={30}
               className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+              onClick={() => setClick(prev => !prev)}
             />
-            <p className="text-[30px] text-black max-tablet:text-[20px]">PremShop</p>
+            <Burger onOpen={click} setOpen={() => setClick(prev => !prev)} />
+            <p className="text-[30px] text-black max-tablet:text-[20px]">SIVENO</p>
             <a href="/catalog-categories">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
                 Каталог
@@ -31,24 +39,25 @@ const Header = () => {
           <div className="flex text-center items-top ">
             <p className="text-[20px] max-mindesk:hidden">8 (800) 555-25-23</p>
             <div className="flex gap-5 ml-20 text-center items-top max-tablet:ml-0 max-tablet:gap-2">
-              <p className="text-[20px]">
-                <IoIosSearch
-                  size={30}
-                  className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                />
-              </p>
-              <p className="text-[20px]">
-                <IoMdHeartEmpty
-                  size={30}
-                  className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                />
-              </p>
-              <p className="text-[20px]">
+              <IoIosSearch
+                size={30}
+                className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+              />
+
+              <IoMdHeartEmpty
+                size={30}
+                className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+              />
+              <div className="relative">
+                <div className="absolute text-black ml-5 -mt-4">{products.length}</div>
                 <IoCartOutline
                   size={30}
                   className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+                  onClick={() => setCart(prev => !prev)}
                 />
-              </p>
+              </div>
+
+              <Cart click={cart} setClick={() => setCart(prev => !prev)} />
             </div>
           </div>
         </div>

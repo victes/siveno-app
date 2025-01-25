@@ -3,14 +3,20 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ISliders } from "../types/type";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 const Slider = ({ slides, className }: ISliders) => {
   return (
     <div className={className}>
       <Swiper
+        modules={[Navigation]}
         spaceBetween={50}
         slidesPerView={6}
+        navigation
         loop={true}
+        onSwiper={swiper => console.log(swiper)}
+        onSlideChange={() => console.log("slide change")}
         breakpoints={{
           // when window width is >= 320px
           320: {
