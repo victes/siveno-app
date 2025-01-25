@@ -71,8 +71,8 @@ const CatalogProductsPage = () => {
         <h1 className="title-h1">Новинки</h1>
       </div>
       {/* ========================================================== */}
-      <div className="flex justify-between items-center mb-[30px]">
-        <div className="flex gap-[20px]">
+      <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row  mindesk:justify-between items-center mb-[30px]">
+        <div className="flex flex-col tablet:flex-row gap-[20px]">
           <Select
             name="По Популярности"
             options={[
@@ -85,7 +85,7 @@ const CatalogProductsPage = () => {
           <Select
             name="Цвет"
             options={[
-              { option: "Все цвета", value: "homer" },
+              { option: "Все цвета", value: "Все цвета" },
               { option: "Синий", value: "Синий" },
               { option: "Серый", value: "Серый" },
               { option: "Зеленный", value: "Зеленный" },
