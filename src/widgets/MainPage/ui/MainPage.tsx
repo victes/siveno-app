@@ -1,3 +1,4 @@
+"use client";
 import { Category } from "@/widgets/Category";
 import { Hero } from "@/widgets/Hero";
 import { Sales } from "@/widgets/Sales";
