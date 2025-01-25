@@ -1,4 +1,4 @@
 export interface ICart {
-  onClick: boolean;
-  setClick(value: number): void;
+  click: boolean;
+  setClick: (value: boolean) => void;
 }

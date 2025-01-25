@@ -6,9 +6,11 @@ import { IoIosSearch } from "react-icons/io";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { Burger } from "@/widgets/Burger";
+import { Cart } from "@/widgets/Cart";
 
 const Header = () => {
   const [click, setClick] = useState(false);
+  const [cart, setCart] = useState(false);
   return (
     <header className="bg-white">
       <Container>
@@ -35,24 +37,22 @@ const Header = () => {
           <div className="flex text-center items-top ">
             <p className="text-[20px] max-mindesk:hidden">8 (800) 555-25-23</p>
             <div className="flex gap-5 ml-20 text-center items-top max-tablet:ml-0 max-tablet:gap-2">
-              <p className="text-[20px]">
-                <IoIosSearch
-                  size={30}
-                  className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                />
-              </p>
-              <p className="text-[20px]">
-                <IoMdHeartEmpty
-                  size={30}
-                  className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                />
-              </p>
-              <p className="text-[20px]">
-                <IoCartOutline
-                  size={30}
-                  className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                />
-              </p>
+              <IoIosSearch
+                size={30}
+                className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+              />
+
+              <IoMdHeartEmpty
+                size={30}
+                className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+              />
+
+              <IoCartOutline
+                size={30}
+                className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+                onClick={() => setCart(prev => !prev)}
+              />
+              <Cart click={cart} setClick={() => setCart(prev => !prev)} />
             </div>
           </div>
         </div>
