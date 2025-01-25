@@ -1,11 +1,11 @@
 "use client";
 
-import { Hero } from "@/widgets/Hero";
+import { MainPage } from "@/widgets/MainPage";
 
 export default function Home() {
   return (
     <div className="">
-      <Hero />
+      <MainPage />
     </div>
   );
 }
