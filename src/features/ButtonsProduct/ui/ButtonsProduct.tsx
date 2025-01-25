@@ -8,7 +8,7 @@ interface IProduct {
   img: string;
 }
 
-const ButtonsProduct = ({ name, price }: IProduct) => {
+const ButtonsProduct = ({ name, price, img }: IProduct) => {
   const { addProduct } = useProductStore();
 
   const handleAddProduct = () => {

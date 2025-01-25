@@ -19,7 +19,7 @@ const Cart = ({ click, setClick }: ICart) => {
       setAnimate(true); // Запуск анимации при открытии
     }
   }, [click]);
-  const { products, removeProduct } = useProductStore();
+  const { products, removeProduct, totalCost } = useProductStore();
 
   return (
     <>
@@ -36,7 +36,9 @@ const Cart = ({ click, setClick }: ICart) => {
             onClick={e => e.stopPropagation()} // Предотвращает всплытие события клика
           >
             <h2 className="text-black text-[30px]">Корзина</h2>
-            <p className="uppercase">{products.length} Товаров на 0 руб.</p>
+            <p className="uppercase">
+              {products.length} Товаров на {totalCost()} руб.
+            </p>
             {products.map(product => (
               <li key={product.id} className="flex justify-between items-center p-2 border rounded">
                 <span>

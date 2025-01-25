@@ -7,10 +7,12 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { Burger } from "@/widgets/Burger";
 import { Cart } from "@/widgets/Cart";
+import { useProductStore } from "@/entities/productStore/store";
 
 const Header = () => {
   const [click, setClick] = useState(false);
   const [cart, setCart] = useState(false);
+  const { products, removeProduct, totalCost } = useProductStore();
   return (
     <header className="bg-white">
       <Container>
@@ -46,12 +48,15 @@ const Header = () => {
                 size={30}
                 className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
               />
+              <div className="relative">
+                <div className="absolute text-black ml-5 -mt-4">{products.length}</div>
+                <IoCartOutline
+                  size={30}
+                  className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+                  onClick={() => setCart(prev => !prev)}
+                />
+              </div>
 
-              <IoCartOutline
-                size={30}
-                className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                onClick={() => setCart(prev => !prev)}
-              />
               <Cart click={cart} setClick={() => setCart(prev => !prev)} />
             </div>
           </div>
