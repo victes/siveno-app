@@ -5,6 +5,7 @@ import ProductSlider from "@/entities/ProductSlider/ui/ProductSlider";
 import React from "react";
 
 import "../styles/product-page.scss";
+import ButtonsProduct from "@/features/ButtonsProduct";
 
 const carousel = [
   {
@@ -60,8 +61,13 @@ const ProductPage = () => {
           </div>
           {/* ================================================== */}
 
-          <div className="producti-page-price mx-auto">
+          <div className="producti-page-price mx-auto mb-[10px]">
             <span>68 000 руб.</span>
+          </div>
+
+          {/* ================================================== */}
+          <div className="">
+            <ButtonsProduct />
           </div>
         </div>
       </div>
