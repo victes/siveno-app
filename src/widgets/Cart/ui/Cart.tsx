@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { ICart } from "../types/types";
 import { useProductStore } from "@/entities/productStore/store";
 import { MdDeleteOutline } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
 
 const Cart = ({ click, setClick }: ICart) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -31,11 +32,16 @@ const Cart = ({ click, setClick }: ICart) => {
         >
           <div
             ref={modalRef}
-            className={`bg-white p-4 rounded-lg shadow-lg transform max-w-[800px] w-full flex flex-col gap-5 ${
+            className={`bg-white p-4 relative rounded-lg shadow-lg transform max-w-[800px] w-full flex flex-col gap-5 ${
               animate ? "translate-x-0" : "translate-x-full"
             } transition-transform duration-300`}
             onClick={e => e.stopPropagation()} // Предотвращает всплытие события клика
           >
+            <RxCross2
+              className="absolute top-0 left-0 m-5 cursor-pointer"
+              size={30}
+              onClick={() => setClick(prev => !prev)}
+            />
             <h2 className="text-black text-[30px]">Корзина</h2>
             <p className="uppercase">
               {products.length} Товаров на {totalCost()} руб.
