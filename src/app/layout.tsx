@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { Jost } from "next/font/google";
 
-import "./globals.css";
+import "./globals.scss";
 import Header from "@/shared/ui/Layout/Header";
 import Footer from "@/shared/ui/Layout/Footer";
 
@@ -35,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} antialiased`}>
         <div className="flex flex-col min-h-screen">
           <Header />
           {children}
