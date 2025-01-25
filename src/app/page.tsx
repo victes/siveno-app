@@ -1,4 +1,11 @@
-'use client'
+"use client";
+
+import { MainPage } from "@/widgets/MainPage";
+
 export default function Home() {
-  return <div className=""></div>;
+  return (
+    <div className="">
+      <MainPage />
+    </div>
+  );
 }

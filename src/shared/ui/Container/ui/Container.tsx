@@ -1,11 +1,9 @@
-'use client'
-import React from 'react'
-import { IContainer } from '../types/types'
+"use client";
+import React from "react";
+import { IContainer } from "../types/types";
 
-const Container = ({children}: IContainer) => {
-  return (
-    <div className='max-w-[1700px] w-full m-auto px-[60px]'>{children}</div>
-  )
-}
+const Container = ({ children, className }: IContainer) => {
+  return <div className={` w-full m-auto px-[40px] ${className}`}>{children}</div>;
+};
 
-export default Container
+export default Container;
