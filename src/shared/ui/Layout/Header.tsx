@@ -19,7 +19,7 @@ const Header = () => {
               className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
               onClick={() => setClick(prev => !prev)}
             />
-            <Burger onOpen={click} />
+            <Burger onOpen={click} setOpen={() => setClick(prev => !prev)} />
             <p className="text-[30px] text-black max-tablet:text-[20px]">PremShop</p>
             <a href="/catalog-categories">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
