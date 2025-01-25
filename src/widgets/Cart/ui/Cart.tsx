@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { ICart } from "../types/types";
+import { useProductStore } from "@/entities/productStore/store";
 
 const Cart = ({ click, setClick }: ICart) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -18,6 +19,7 @@ const Cart = ({ click, setClick }: ICart) => {
       setAnimate(true); // Запуск анимации при открытии
     }
   }, [click]);
+  const { products, removeProduct } = useProductStore();
 
   return (
     <>
@@ -34,7 +36,20 @@ const Cart = ({ click, setClick }: ICart) => {
             onClick={e => e.stopPropagation()} // Предотвращает всплытие события клика
           >
             <h2 className="text-black text-[30px]">Корзина</h2>
-            <p className="uppercase">0 Товаров на 0 руб.</p>
+            <p className="uppercase">{products.length} Товаров на 0 руб.</p>
+            {products.map(product => (
+              <li key={product.id} className="flex justify-between items-center p-2 border rounded">
+                <span>
+                  {product.name} - {product.price} руб
+                </span>
+                <button
+                  onClick={() => removeProduct(product.id)}
+                  className="bg-red-500 text-white p-1 rounded hover:bg-red-600"
+                >
+                  Удалить
+                </button>
+              </li>
+            ))}
           </div>
         </div>
       )}

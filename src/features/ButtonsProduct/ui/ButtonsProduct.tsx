@@ -1,10 +1,15 @@
+"use client";
 import { useProductStore } from "@/entities/productStore/store";
-import React, { useState } from "react";
+import React from "react";
 
-const ButtonsProduct = () => {
+interface IProduct {
+  name: string;
+  price: string;
+  img: string;
+}
+
+const ButtonsProduct = ({ name, price }: IProduct) => {
   const { addProduct } = useProductStore();
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
 
   const handleAddProduct = () => {
     if (name.trim() && price) {
@@ -12,9 +17,8 @@ const ButtonsProduct = () => {
         id: Date.now().toString(),
         name,
         price: parseFloat(price),
+        img,
       });
-      setName("");
-      setPrice("");
     }
   };
   return (
