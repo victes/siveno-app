@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { toast } from "react-toastify";
 
 interface Favourite {
   id: string;
@@ -17,18 +18,33 @@ interface FavouriteStore {
 
 export const useFavStore = create<FavouriteStore>((set, get) => ({
   favourite: [],
-  addFav: fav =>
+  addFav: fav => {
     set(state => ({
       favourite: [...state.favourite, fav],
-    })),
-  removeFav: id =>
+    }));
+    toast.success(`Добавлено в избранное: ${fav.name}`, {
+      position: "top-right",
+    });
+  },
+  removeFav: id => {
+    const favItem = get().favourite.find(fav => fav.id === id);
     set(state => ({
       favourite: state.favourite.filter(fav => fav.id !== id),
-    })),
-  clearFav: () =>
+    }));
+    if (favItem) {
+      toast.error(`Удалено из избранного: ${favItem.name}`, {
+        position: "top-right",
+      });
+    }
+  },
+  clearFav: () => {
     set(() => ({
       favourite: [],
-    })),
+    }));
+    toast.info("Избранное очищено.", {
+      position: "top-right",
+    });
+  },
   totalCost: () => {
     const products = get().favourite;
     return products.reduce((total, fav) => total + fav.price, 0);

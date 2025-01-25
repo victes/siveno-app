@@ -36,11 +36,11 @@ const Header = () => {
                 Каталог
               </p>
             </a>
-            <a href="">
+            {/* <a href="">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
                 Магазины
               </p>
-            </a>
+            </a> */}
           </div>
           <div className="flex text-center items-top ">
             <p className="text-[20px] max-mindesk:hidden">8 (800) 555-25-23</p>
