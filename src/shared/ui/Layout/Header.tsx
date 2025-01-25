@@ -16,7 +16,7 @@ const Header = () => {
               size={30}
               className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
             />
-            <p className="text-[30px] text-black">PremShop</p>
+            <p className="text-[30px] text-black max-tablet:text-[20px]">PremShop</p>
             <a href="/catalog-categories">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
                 Каталог
@@ -30,7 +30,7 @@ const Header = () => {
           </div>
           <div className="flex text-center items-top ">
             <p className="text-[20px] max-mindesk:hidden">8 (800) 555-25-23</p>
-            <div className="flex gap-5 ml-20 text-center items-top">
+            <div className="flex gap-5 ml-20 text-center items-top max-tablet:ml-0 max-tablet:gap-2">
               <p className="text-[20px]">
                 <IoIosSearch
                   size={30}
