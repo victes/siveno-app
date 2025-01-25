@@ -15,9 +15,9 @@ const Slider = ({ slides, className }: ISliders) => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <div className="text-center mt-[10px] flex flex-col gap-[10px]">
-              <h3>{slide.title}</h3>
-              <p>{slide.price}</p>
+            <div className="mt-[10px] flex flex-col gap-[10px] text-left">
+              <h3 className="uppercase">{slide.title}</h3>
+              <p>{Intl.NumberFormat("ru-RU").format(slide.price)} $</p>
             </div>
           </SwiperSlide>
         ))}

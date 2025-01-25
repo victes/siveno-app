@@ -12,7 +12,7 @@ const Hero = () => {
         <HeroSlider />
         <div className="absolute bottom-0 mb-[200px] z-10 text-white text-[60px] ">COMPANY NAME X ZARA</div>
       </div>
-      <LoopSlider text="Shop" />
+      <LoopSlider text="Скидка 10%" />
     </div>
   );
 };

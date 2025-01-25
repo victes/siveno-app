@@ -11,7 +11,7 @@ import "./LoopSlider.scss";
 
 const LoopSlider = ({ text }: ILoopSlider) => {
   return (
-    <div className="bg-white">
+    <div className="bg-black">
       <Swiper
         modules={[Autoplay]}
         loop={true}
@@ -24,7 +24,9 @@ const LoopSlider = ({ text }: ILoopSlider) => {
         }}
       >
         {[...Array(19).keys()].map(id => (
-          <SwiperSlide key={id + 1}>{text}</SwiperSlide>
+          <SwiperSlide key={id + 1} className="text-white uppercase ">
+            {text}
+          </SwiperSlide>
         ))}
       </Swiper>
     </div>
