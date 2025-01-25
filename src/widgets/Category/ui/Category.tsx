@@ -1,3 +1,5 @@
+"use client";
+import { Container } from "@/shared/ui/Container";
 import { Slider } from "@/shared/ui/Slider";
 import React from "react";
 
@@ -5,57 +7,59 @@ const Category = () => {
   const Slides = [
     {
       img: [{ src: "/images/MainPage/img.jpeg", alt: "Img" }],
-      title: "Title",
+      title: "Кардиган из пряжи с Мериносом",
       description: "Description",
-      price: 10,
+      price: 10000,
+    },
+    {
+      img: [{ src: "/images/MainPage/1.jpg", alt: "Img" }],
+      title: "Рубашка Декоррованная цветами",
+      description: "Description",
+      price: 7895,
+    },
+    {
+      img: [{ src: "/images/MainPage/2.jpg", alt: "Img" }],
+      title: "Жакет-балон из атласа",
+      description: "Description",
+      price: 87954,
+    },
+    {
+      img: [{ src: "/images/MainPage/3.jpg", alt: "Img" }],
+      title: "Рубашка в пижамном стиле с буфами",
+      description: "Description",
+      price: 1204,
     },
     {
       img: [{ src: "/images/MainPage/img.jpeg", alt: "Img" }],
-      title: "Title",
+      title: "Кардиган из пряжи с Мериносом",
       description: "Description",
-      price: 10,
+      price: 20415,
     },
     {
-      img: [{ src: "/images/MainPage/img.jpeg", alt: "Img" }],
-      title: "Title",
+      img: [{ src: "/images/MainPage/1.jpg", alt: "Img" }],
+      title: "Жакет-балон из атласа",
       description: "Description",
-      price: 10,
+      price: 45689,
     },
     {
-      img: [{ src: "/images/MainPage/img.jpeg", alt: "Img" }],
-      title: "Title",
+      img: [{ src: "/images/MainPage/2.jpg", alt: "Img" }],
+      title: "Кардиган из пряжи с Мериносом",
       description: "Description",
-      price: 10,
+      price: 48986,
     },
     {
-      img: [{ src: "/images/MainPage/img.jpeg", alt: "Img" }],
-      title: "Title",
+      img: [{ src: "/images/MainPage/3.jpg", alt: "Img" }],
+      title: "Рубашка в пижамном стиле с буфами",
       description: "Description",
-      price: 10,
-    },
-    {
-      img: [{ src: "/images/MainPage/img.jpeg", alt: "Img" }],
-      title: "Title",
-      description: "Description",
-      price: 10,
-    },
-    {
-      img: [{ src: "/images/MainPage/img.jpeg", alt: "Img" }],
-      title: "Title",
-      description: "Description",
-      price: 10,
-    },
-    {
-      img: [{ src: "/images/MainPage/img.jpeg", alt: "Img" }],
-      title: "Title",
-      description: "Description",
-      price: 10,
+      price: 17894,
     },
   ];
   return (
     <div>
-      <h2 className="text-[40px]">Category</h2>
-      <Slider slides={Slides} className="mt-[20px]" />
+      <Container>
+        <h2 className="text-[40px] mt-[60px] uppercase text-black">Новые модели</h2>
+        <Slider slides={Slides} className="mt-[40px]" />
+      </Container>
     </div>
   );
 };
