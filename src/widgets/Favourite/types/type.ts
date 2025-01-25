@@ -1,4 +1,4 @@
 export interface IFav {
   click: boolean;
-  setClick: (value: boolean) => void;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
 }

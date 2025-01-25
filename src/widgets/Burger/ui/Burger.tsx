@@ -1,14 +1,22 @@
 "use client";
 import React, { useState } from "react";
-import { IBurger } from "../types/types";
 import { RxCross1 } from "react-icons/rx";
 
-const Burger = ({ onOpen, setOpen }: IBurger) => {
-  const [openSection, setOpenSection] = useState(null);
+// Интерфейс для пропсов
+export interface IBurger {
+  onOpen: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-  const toggleSection = section => {
+const Burger = ({ onOpen, setOpen }: IBurger) => {
+  // Типизация состояния openSection, оно может быть строкой или null
+  const [openSection, setOpenSection] = useState<string | null>(null);
+
+  // Типизация параметра section как строки
+  const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
   };
+
   return (
     <>
       {onOpen ? (
@@ -31,7 +39,6 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   openSection === "sample" || window.innerWidth > 1024 ? "block" : "hidden"
                 } max-laptop:mt-2`}
               >
-                {/* Список пунктов */}
                 {[
                   "Каталог",
                   "Верхняя одежда",
@@ -74,7 +81,6 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   openSection === "campaign" || window.innerWidth > 1024 ? "block" : "hidden"
                 } max-laptop:mt-2`}
               >
-                {/* Список пунктов */}
                 {["О компании", "О нас", "Магазины (где купить)", "Контакты", "Работа у нас", "Оптовым партнерам"].map(
                   item => (
                     <li key={item}>
@@ -100,7 +106,6 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   openSection === "customers" || window.innerWidth > 1024 ? "block" : "hidden"
                 } max-laptop:mt-2`}
               >
-                {/* Список пунктов */}
                 {[
                   "Личный кабинет",
                   "Часто задаваемые вопросы",

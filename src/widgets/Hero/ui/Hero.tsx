@@ -2,7 +2,6 @@
 import { HeroSlider } from "@/entities/HeroSlider/ui";
 import { LoopSlider } from "@/shared/ui/LoopSlider";
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 
 const Hero = () => {
   return (
