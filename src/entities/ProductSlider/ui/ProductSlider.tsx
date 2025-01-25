@@ -16,10 +16,10 @@ const ProductSlider: React.FC<{ carousel: TCarousel }> = ({ carousel }) => {
   };
 
   return (
-    <div className="relative h-screen w-full max-w-[630px] overflow-hidden">
+    <div className="relative  w-full max-w-[630px] overflow-hidden">
       {/* Slider Content */}
       <div
-        className="flex relative flex-col h-full transition-transform duration-500"
+        className="flex relative h-[400px] tablet:h-[500px] laptop:h-[800px] flex-col transition-transform duration-500"
         style={{
           transform: `translateY(-${currentIndex * 100}%)`, // Плавная прокрутка по оси Y
         }}
