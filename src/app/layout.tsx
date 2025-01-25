@@ -7,6 +7,8 @@ import { Jost } from "next/font/google";
 import "./globals.scss";
 import Header from "@/shared/ui/Layout/Header";
 import Footer from "@/shared/ui/Layout/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +39,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} antialiased`}>
         <div className="flex flex-col min-h-screen">
+          <ToastContainer />
           <Header />
           {children}
           <Footer />

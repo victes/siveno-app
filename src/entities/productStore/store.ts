@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { toast } from "react-toastify";
 
 interface Product {
   id: string;
@@ -17,18 +18,33 @@ interface ProductStore {
 
 export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
-  addProduct: product =>
+  addProduct: product => {
     set(state => ({
       products: [...state.products, product],
-    })),
-  removeProduct: id =>
+    }));
+    toast.success(`Добавлено в продукты: ${product.name}`, {
+      position: "top-right",
+    });
+  },
+  removeProduct: id => {
+    const productItem = get().products.find(product => product.id === id);
     set(state => ({
       products: state.products.filter(product => product.id !== id),
-    })),
-  clearProducts: () =>
+    }));
+    if (productItem) {
+      toast.error(`Удалено из продуктов: ${productItem.name}`, {
+        position: "top-right",
+      });
+    }
+  },
+  clearProducts: () => {
     set(() => ({
       products: [],
-    })),
+    }));
+    toast.info("Продукты очищены.", {
+      position: "top-right",
+    });
+  },
   totalCost: () => {
     const products = get().products;
     return products.reduce((total, product) => total + product.price, 0);

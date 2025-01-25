@@ -1,9 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { IBurger } from "../types/types";
 import { RxCross1 } from "react-icons/rx";
 
 const Burger = ({ onOpen, setOpen }: IBurger) => {
+  const [openSection, setOpenSection] = useState(null);
+
+  const toggleSection = section => {
+    setOpenSection(openSection === section ? null : section);
+  };
   return (
     <>
       {onOpen ? (
@@ -12,180 +17,106 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
             <RxCross1 onClick={() => setOpen(prev => !prev)} size={50} color="White" className="cursor-pointer" />
             <h2 className="text-bold text-[50px] text-white">SIVENO</h2>
           </div>
-          <div className="flex justify-start gap-8 text-white p-8">
-            <div className="">
-              <h3 className="text-xl font-semibold mb-4">SAMPLE SALE</h3>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="hover:underline">
-                    Каталог
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Верхняя одежда
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Свитеры и кардиганы
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Пиджаки и жакеты
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Брюки
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Рубашки и блузы
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Лонгсливы и боди
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Деним
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Юбки
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Трикотаж
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Платья
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Футболки и топы
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Аксессуары
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Сумки
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Носки
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Сертификаты
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Смотреть все
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Last Chance
-                  </a>
-                </li>
+          <div className="flex justify-start gap-8 text-white p-8 max-laptop:flex-col">
+            {/** SAMPLE SALE */}
+            <div className="max-laptop:w-full">
+              <h3
+                className="text-xl font-semibold mb-4 cursor-pointer max-laptop:mb-0"
+                onClick={() => toggleSection("sample")}
+              >
+                SAMPLE SALE
+              </h3>
+              <ul
+                className={`space-y-2 ${
+                  openSection === "sample" || window.innerWidth > 1024 ? "block" : "hidden"
+                } max-laptop:mt-2`}
+              >
+                {/* Список пунктов */}
+                {[
+                  "Каталог",
+                  "Верхняя одежда",
+                  "Свитеры и кардиганы",
+                  "Пиджаки и жакеты",
+                  "Брюки",
+                  "Рубашки и блузы",
+                  "Лонгсливы и боди",
+                  "Деним",
+                  "Юбки",
+                  "Трикотаж",
+                  "Платья",
+                  "Футболки и топы",
+                  "Аксессуары",
+                  "Сумки",
+                  "Носки",
+                  "Сертификаты",
+                  "Смотреть все",
+                  "Last Chance",
+                ].map(item => (
+                  <li key={item}>
+                    <a href="#" className="hover:underline">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="w-full sm:w-1/3">
-              <h3 className="text-xl font-semibold mb-4">CAMPAIGN</h3>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="hover:underline">
-                    О компании
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    О нас
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Магазины (где купить)
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Контакты
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Работа у нас
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Оптовым партнерам
-                  </a>
-                </li>
+
+            {/** CAMPAIGN */}
+            <div className="w-full sm:w-1/3 max-laptop:w-full">
+              <h3
+                className="text-xl font-semibold mb-4 cursor-pointer max-laptop:mb-0"
+                onClick={() => toggleSection("campaign")}
+              >
+                CAMPAIGN
+              </h3>
+              <ul
+                className={`space-y-2 ${
+                  openSection === "campaign" || window.innerWidth > 1024 ? "block" : "hidden"
+                } max-laptop:mt-2`}
+              >
+                {/* Список пунктов */}
+                {["О компании", "О нас", "Магазины (где купить)", "Контакты", "Работа у нас", "Оптовым партнерам"].map(
+                  item => (
+                    <li key={item}>
+                      <a href="#" className="hover:underline">
+                        {item}
+                      </a>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
-            <div className="w-full sm:w-1/3">
-              <h3 className="text-xl font-semibold mb-4">ПОКУПАТЕЛЯМ</h3>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="hover:underline">
-                    Личный кабинет
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Часто задаваемые вопросы
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Как сделать заказ
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Оплата и доставка
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Возврат
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Политика конфиденциальности
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Оферта
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:underline">
-                    Уход за материалами
-                  </a>
-                </li>
+
+            {/** ПОКУПАТЕЛЯМ */}
+            <div className="w-full sm:w-1/3 max-laptop:w-full">
+              <h3
+                className="text-xl font-semibold mb-4 cursor-pointer max-laptop:mb-0"
+                onClick={() => toggleSection("customers")}
+              >
+                ПОКУПАТЕЛЯМ
+              </h3>
+              <ul
+                className={`space-y-2 ${
+                  openSection === "customers" || window.innerWidth > 1024 ? "block" : "hidden"
+                } max-laptop:mt-2`}
+              >
+                {/* Список пунктов */}
+                {[
+                  "Личный кабинет",
+                  "Часто задаваемые вопросы",
+                  "Как сделать заказ",
+                  "Оплата и доставка",
+                  "Возврат",
+                  "Политика конфиденциальности",
+                  "Оферта",
+                  "Уход за материалами",
+                ].map(item => (
+                  <li key={item}>
+                    <a href="#" className="hover:underline">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
