@@ -7,7 +7,7 @@ const ButtonSize = ({ name, className, onClick }: IBtnSize) => {
     <>
       <button
         onClick={onClick}
-        className={`${className} btn bg-transparent btn-ghost shadow-none border-none uppercase text-[12px]`}
+        className={`${className} btn bg-transparent btn-ghost shadow-none    uppercase text-[12px]`}
       >
         {name}
       </button>
