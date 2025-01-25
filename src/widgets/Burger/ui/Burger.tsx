@@ -10,7 +10,7 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
         <div className="fixed top-0 left-0 h-screen w-screen bg-black bg-opacity-80 z-50 p-[40px]">
           <div className="flex text-center items-center gap-6">
             <RxCross1 onClick={() => setOpen(prev => !prev)} size={50} color="White" className="cursor-pointer" />
-            <h2 className="text-bold text-[50px] text-white">PremShop</h2>
+            <h2 className="text-bold text-[50px] text-white">SIVENO</h2>
           </div>
           <div className="flex justify-start gap-8 text-white p-8">
             <div className="">

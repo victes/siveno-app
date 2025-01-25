@@ -20,7 +20,7 @@ const Header = () => {
               onClick={() => setClick(prev => !prev)}
             />
             <Burger onOpen={click} setOpen={() => setClick(prev => !prev)} />
-            <p className="text-[30px] text-black max-tablet:text-[20px]">PremShop</p>
+            <p className="text-[30px] text-black max-tablet:text-[20px]">SIVENO</p>
             <a href="/catalog-categories">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
                 Каталог
