@@ -1,4 +1,5 @@
 "use client";
+import { useFavStore } from "@/entities/favouriteStore/store";
 import { useProductStore } from "@/entities/productStore/store";
 import React from "react";
 
@@ -10,10 +11,21 @@ interface IProduct {
 
 const ButtonsProduct = ({ name, price, img }: IProduct) => {
   const { addProduct } = useProductStore();
+  const { addFav } = useFavStore();
 
   const handleAddProduct = () => {
     if (name.trim() && price) {
       addProduct({
+        id: Date.now().toString(),
+        name,
+        price: parseFloat(price),
+        img,
+      });
+    }
+  };
+  const handleAddFavourite = () => {
+    if (name.trim() && price) {
+      addFav({
         id: Date.now().toString(),
         name,
         price: parseFloat(price),
@@ -30,7 +42,10 @@ const ButtonsProduct = ({ name, price, img }: IProduct) => {
           </button>
         </div>
         <div className="">
-          <button className="btn bg-transparent border-none shadow-none hover:bg-transparent btn-active uppercase">
+          <button
+            className="btn bg-transparent border-none shadow-none hover:bg-transparent btn-active uppercase"
+            onClick={handleAddFavourite}
+          >
             ❤
           </button>
         </div>

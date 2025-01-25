@@ -8,11 +8,15 @@ import { IoCartOutline } from "react-icons/io5";
 import { Burger } from "@/widgets/Burger";
 import { Cart } from "@/widgets/Cart";
 import { useProductStore } from "@/entities/productStore/store";
+import { useFavStore } from "@/entities/favouriteStore/store";
+import { Favourite } from "@/widgets/Favourite";
 
 const Header = () => {
   const [click, setClick] = useState(false);
   const [cart, setCart] = useState(false);
-  const { products, removeProduct, totalCost } = useProductStore();
+  const [fav, setFav] = useState(false);
+  const { products } = useProductStore();
+  const { favourite } = useFavStore();
   return (
     <header className="bg-white">
       <Container>
@@ -24,7 +28,9 @@ const Header = () => {
               onClick={() => setClick(prev => !prev)}
             />
             <Burger onOpen={click} setOpen={() => setClick(prev => !prev)} />
-            <p className="text-[30px] text-black max-tablet:text-[20px]">SIVENO</p>
+            <a href="./">
+              <p className="text-[30px] text-black max-tablet:text-[20px]">SIVENO</p>
+            </a>
             <a href="/catalog-categories">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
                 Каталог
@@ -43,11 +49,15 @@ const Header = () => {
                 size={30}
                 className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
               />
+              <div className="relative">
+                <div className="absolute text-black ml-5 -mt-4">{favourite.length}</div>
+                <IoMdHeartEmpty
+                  size={30}
+                  className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+                  onClick={() => setFav(prev => !prev)}
+                />
+              </div>
 
-              <IoMdHeartEmpty
-                size={30}
-                className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-              />
               <div className="relative">
                 <div className="absolute text-black ml-5 -mt-4">{products.length}</div>
                 <IoCartOutline
@@ -58,6 +68,7 @@ const Header = () => {
               </div>
 
               <Cart click={cart} setClick={() => setCart(prev => !prev)} />
+              <Favourite click={fav} setClick={() => setFav(prev => !prev)} />
             </div>
           </div>
         </div>
