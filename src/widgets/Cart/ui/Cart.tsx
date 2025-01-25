@@ -2,6 +2,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { ICart } from "../types/types";
 import { useProductStore } from "@/entities/productStore/store";
+import { MdDeleteOutline } from "react-icons/md";
 
 const Cart = ({ click, setClick }: ICart) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -40,16 +41,23 @@ const Cart = ({ click, setClick }: ICart) => {
               {products.length} Товаров на {totalCost()} руб.
             </p>
             {products.map(product => (
-              <li key={product.id} className="flex justify-between items-center p-2 border rounded">
-                <span>
-                  {product.name} - {product.price} руб
-                </span>
-                <button
-                  onClick={() => removeProduct(product.id)}
-                  className="bg-red-500 text-white p-1 rounded hover:bg-red-600"
-                >
-                  Удалить
-                </button>
+              <li key={product.id} className="flex gap-5 p-2 justify-between ">
+                <div className="flex gap-5 items-center">
+                  <div>
+                    <img src={product.img} alt={product.name} className="h-[300px] w-[200px]" />
+                  </div>
+                  <div className="flex flex-col justify-start">
+                    <span className="text-black">{product.name}</span>
+                    <span className="text-[30px] text-black">{product.price} руб</span>
+                  </div>
+                </div>
+                <div>
+                  <MdDeleteOutline
+                    onClick={() => removeProduct(product.id)}
+                    size={30}
+                    className="m-2 cursor-pointer hover:text-red-500"
+                  />
+                </div>
               </li>
             ))}
           </div>
