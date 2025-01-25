@@ -7,6 +7,7 @@ import React from "react";
 import "../styles/product-page.scss";
 import ButtonsProduct from "@/features/ButtonsProduct";
 import Accordion from "@/shared/ui/Accordion";
+import Carousel from "@/shared/ui/Carousel";
 
 const carousel = [
   {
@@ -27,6 +28,57 @@ const accordion = [
   { name: "Состав и Уход", value: "" },
   { name: "Обмеры", value: "" },
   { name: "Параметры Модели", value: "" },
+];
+
+const Slides = [
+  {
+    img: [{ src: "/images/MainPage/13.jpg", alt: "Img" }],
+    title: "Кардиган из пряжи с Мериносом",
+    description: "Description",
+    price: 10000,
+  },
+  {
+    img: [{ src: "/images/MainPage/10.jpg", alt: "Img" }],
+    title: "Рубашка Декоррованная цветами",
+    description: "Description",
+    price: 7895,
+  },
+  {
+    img: [{ src: "/images/MainPage/11.jpg", alt: "Img" }],
+    title: "Жакет-балон из атласа",
+    description: "Description",
+    price: 87954,
+  },
+  {
+    img: [{ src: "/images/MainPage/12.jpg", alt: "Img" }],
+    title: "Рубашка в пижамном стиле с буфами",
+    description: "Description",
+    price: 1204,
+  },
+  {
+    img: [{ src: "/images/MainPage/13.jpg", alt: "Img" }],
+    title: "Кардиган из пряжи с Мериносом",
+    description: "Description",
+    price: 20415,
+  },
+  {
+    img: [{ src: "/images/MainPage/14.jpg", alt: "Img" }],
+    title: "Жакет-балон из атласа",
+    description: "Description",
+    price: 45689,
+  },
+  {
+    img: [{ src: "/images/MainPage/10.jpg", alt: "Img" }],
+    title: "Кардиган из пряжи с Мериносом",
+    description: "Description",
+    price: 48986,
+  },
+  {
+    img: [{ src: "/images/MainPage/13.jpg", alt: "Img" }],
+    title: "Рубашка в пижамном стиле с буфами",
+    description: "Description",
+    price: 17894,
+  },
 ];
 
 const ProductPage = () => {
@@ -82,13 +134,19 @@ const ProductPage = () => {
               }
             />
           </div>
-
+          {/* ================================================== */}
           <div className="w-full">
             {accordion.map((item, idx) => {
               return <Accordion key={idx} name={item.name} context={item.value} />;
             })}
           </div>
         </div>
+      </div>
+      {/* ================================================== */}
+      <div className="flex flex-col gap-5 mt-8">
+        {/* <Slider slides={Slides} className="mt-[40px]" /> */}
+        <Carousel heading="Идеи от стилиста" items={Slides} />
+        <Carousel heading="Вам может понравиться" items={Slides} />
       </div>
     </section>
   );
