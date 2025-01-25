@@ -14,11 +14,11 @@ const sizes = [
 
 const ButtonSizes = () => {
   return (
-    <>
+    <div>
       {sizes.map((item, idx) => {
         return <ButtonSize key={idx} name={item.name} className={item.className} onClick={item.onClick} />;
       })}
-    </>
+    </div>
   );
 };
 
