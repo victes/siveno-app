@@ -12,7 +12,7 @@ const Select = ({ name, options }: ISelect) => {
         {options.map((item, idx) => {
           return (
             <option key={idx} value={item.value}>
-              <p className="text-[14px]">{item.option}</p>
+              {item.option}
             </option>
           );
         })}
