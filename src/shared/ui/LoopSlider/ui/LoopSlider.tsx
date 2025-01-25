@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
+import "./LoopSlider.scss";
 
 const LoopSlider = ({ text }: ILoopSlider) => {
   return (
@@ -16,8 +17,9 @@ const LoopSlider = ({ text }: ILoopSlider) => {
         loop={true}
         spaceBetween={50}
         slidesPerView={10}
+        speed={500}
         autoplay={{
-          delay: 500,
+          delay: 1000,
           disableOnInteraction: false,
         }}
       >
