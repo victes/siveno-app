@@ -4,7 +4,7 @@ import React from "react";
 
 const Sales = () => {
   return (
-    <div className="mt-[80px] flex flex-col gap-[150px]">
+    <div className="mt-[80px] flex flex-col gap-[120px]">
       <Container>
         <h3 className="text-[40px] uppercase text-black">Распродажа</h3>
       </Container>
@@ -26,18 +26,22 @@ const Sales = () => {
           </div>
         </div> */}
         <a href="#">
-          <div className="grid grid-cols-2 h-screen">
+          <div className="grid grid-cols-2 h-screen max-minilaptop:grid-cols-1">
             <img src="/images/MainPage/5.jpg" alt="" className="h-screen w-screen object-cover" />
-            <img src="/images/MainPage/6.jpg" alt="" className="h-screen w-screen object-cover" />
+            <img src="/images/MainPage/6.jpg" alt="" className="h-screen w-screen object-cover max-minilaptop:hidden" />
           </div>
         </a>
         <h1 className="absolute text-[50px] text-white uppercase">Костюмы</h1>
       </div>
       <div className="flex flex-col items-center justify-center">
         <a href="#">
-          <div className="grid grid-cols-2 h-screen">
+          <div className="grid grid-cols-2 h-screen max-minilaptop:grid-cols-1">
             <img src="/images/MainPage/8.png" alt="" className="h-screen w-screen object-cover" />
-            <img src="/images/MainPage/9.webp" alt="" className="h-screen w-screen object-cover" />
+            <img
+              src="/images/MainPage/9.webp"
+              alt=""
+              className="h-screen w-screen object-cover max-minilaptop:hidden"
+            />
           </div>
         </a>
         <h1 className="absolute text-[50px] text-white">Шапки</h1>

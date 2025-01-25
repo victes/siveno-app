@@ -1,4 +1,3 @@
-"use client";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -21,17 +20,17 @@ const HeroSlider = () => {
       onSwiper={swiper => console.log(swiper)}
       onSlideChange={() => console.log("slide change")}
     >
-      <SwiperSlide className="w-full h-full">
-        <img src="/images/Hero/Slide.jpg" alt="Hero slide 1" className="w-full h-full" />
+      <SwiperSlide className="w-full h-screen">
+        <img src="/images/Hero/Slide.jpg" alt="Hero slide 1" className="w-full h-screen object-cover" />
       </SwiperSlide>
-      <SwiperSlide className="w-full h-full">
-        <img src="/images/Hero/Slide.jpg" alt="Hero slide 1" className="w-full h-full" />
+      <SwiperSlide className="w-full h-screen">
+        <img src="/images/Hero/Slide.jpg" alt="Hero slide 1" className="w-full h-screen object-cover" />
       </SwiperSlide>
-      <SwiperSlide className="w-full h-full">
-        <img src="/images/Hero/Slide.jpg" alt="Hero slide 1" className="w-full h-full" />
+      <SwiperSlide className="w-full h-screen">
+        <img src="/images/Hero/Slide.jpg" alt="Hero slide 1" className="w-full h-screen object-cover" />
       </SwiperSlide>
-      <SwiperSlide className="w-full h-full">
-        <img src="/images/Hero/Slide.jpg" alt="Hero slide 1" className="w-full h-full" />
+      <SwiperSlide className="w-full h-screen">
+        <img src="/images/Hero/Slide.jpg" alt="Hero slide 1" className="w-full h-screen object-cover" />
       </SwiperSlide>
     </Swiper>
   );
