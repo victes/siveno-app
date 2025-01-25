@@ -1,5 +1,6 @@
 export interface ISliders {
   slides: ISlide[];
+  className: string;
 }
 
 interface ISlide {

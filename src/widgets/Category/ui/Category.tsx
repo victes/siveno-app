@@ -53,9 +53,9 @@ const Category = () => {
     },
   ];
   return (
-    <div className="mt-[40px]">
+    <div>
       <h2 className="text-[40px]">Category</h2>
-      <Slider slides={Slides} />
+      <Slider slides={Slides} className="mt-[20px]" />
     </div>
   );
 };

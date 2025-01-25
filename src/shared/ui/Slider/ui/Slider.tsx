@@ -2,9 +2,9 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ISliders } from "../types/type";
 
-const Slider = ({ slides }: ISliders) => {
+const Slider = ({ slides, className }: ISliders) => {
   return (
-    <>
+    <div className={className}>
       <Swiper spaceBetween={20} slidesPerView={6} loop={true}>
         {slides.map(slide => (
           <SwiperSlide key={slide.price}>
@@ -22,7 +22,7 @@ const Slider = ({ slides }: ISliders) => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </div>
   );
 };
 
