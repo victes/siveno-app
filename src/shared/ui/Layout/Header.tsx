@@ -10,6 +10,7 @@ import { Cart } from "@/widgets/Cart";
 import { useProductStore } from "@/entities/productStore/store";
 import { useFavStore } from "@/entities/favouriteStore/store";
 import { Favourite } from "@/widgets/Favourite";
+import Link from "next/link";
 
 const Header = () => {
   const [click, setClick] = useState(false);
@@ -66,7 +67,6 @@ const Header = () => {
                   onClick={() => setCart(prev => !prev)}
                 />
               </div>
-
               <Cart click={cart} setClick={() => setCart(prev => !prev)} />
               <Favourite click={fav} setClick={() => setFav(prev => !prev)} />
             </div>
