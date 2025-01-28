@@ -53,7 +53,7 @@ const RegisterPage = () => {
   return (
     <div className="space-y-4 min-w-[220px] lg:min-w-[450px] mt-4 my-10">
       <div className="w-full text-center">
-        <h1 className="text-[30px]">Регистрация</h1>
+        <h1 className="text-[20px] tablet:text-[30px]">Регистрация</h1>
       </div>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col mx-auto items-center gap-4 max-w-[600px]">
         {/* Email Field */}
@@ -70,9 +70,6 @@ const RegisterPage = () => {
             </svg>
             <input type="text" className="grow" placeholder="Почта" {...form.register("email")} />
           </label>
-          {form.formState.errors.email && (
-            <span className="text-red-500 text-sm">{form.formState.errors.email.message}</span>
-          )}
           {form.formState.errors.email && (
             <span className="text-red-500 text-sm">{form.formState.errors.email.message}</span>
           )}
@@ -178,7 +175,7 @@ const RegisterPage = () => {
             className="checkbox checkbox-sm rounded-none"
             {...form.register("agreeToPolicy")}
           />
-          <label htmlFor="agreeToPolicy" className="text-sm">
+          <label htmlFor="agreeToPolicy" className="text-xs">
             Подтверждаю согласие с <Link href="/policy">Политикой конфиденциальности</Link>
           </label>
         </div>

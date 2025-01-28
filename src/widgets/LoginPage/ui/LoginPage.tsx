@@ -32,7 +32,7 @@ const LoginPage = () => {
   return (
     <div className="space-y-4 min-w-[220px] lg:min-w-[450px] mt-4 my-10">
       <div className="w-full text-center">
-        <h1 className="text-[30px] ">Вход/Регистрация</h1>
+        <h1 className="text-[20px] tablet:text-[30px]">Вход/Регистрация</h1>
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
@@ -89,11 +89,17 @@ const LoginPage = () => {
           <button type="submit" className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300">
             Вход
           </button>
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center gap-2 justify-center">
             <button className="text-center flex gap-2 ">
               <span className="text-[14px]">У вас нет аккаунта?</span>
               <Link href="/register" className="text-blue-300 text-[14px]">
                 Регистрация
+              </Link>
+            </button>
+            <button className="text-center flex gap-2">
+              <span className="text-[14px]">Забыли свой</span>
+              <Link href="/forgot-password" className="text-blue-300 text-[14px]">
+                Пароль?
               </Link>
             </button>
           </div>
