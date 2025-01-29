@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useFavStore } from "@/entities/favouriteStore/store";
 import { useProductStore } from "@/entities/productStore/store";
@@ -50,8 +52,20 @@ const AccountPage = () => {
               </div>
               <div className="flex flex-col space-y-2 w-full">
                 <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                  <input type="text" className="grow" placeholder="E-mail" />
+                  <input type="text" className="grow" placeholder="Почта" />
                 </label>
+              </div>
+              <div className="flex gap-[40px] max-minilaptop:flex-col">
+                <div className="flex flex-col space-y-2 w-full">
+                  <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                    <input type="password" className="grow" placeholder="Пароль" />
+                  </label>
+                </div>
+                <div className="flex flex-col space-y-2 w-full">
+                  <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                    <input type="password" className="grow" placeholder="Подтверждение пароля" />
+                  </label>
+                </div>
               </div>
               <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">
                 Сохранить изменения
