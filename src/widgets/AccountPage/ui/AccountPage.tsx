@@ -13,44 +13,55 @@ const AccountPage = () => {
     switch (activeTab) {
       case "Личные данные":
         return (
-          <div className="mt-[100px] flex flex-col gap-[50px] max-w-[600px] w-full max-laptop:mt-[10px]">
-            <div className="flex gap-[40px] max-minilaptop:flex-col">
-              <div className="flex flex-col space-y-2 w-full">
-                <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                  <input type="text" className="grow" placeholder="Имя" />
-                </label>
-              </div>
-              <div className="flex flex-col space-y-2 w-full">
-                <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                  <input type="text" className="grow" placeholder="Фамилия" />
-                </label>
-              </div>
+          <div className="flex flex-row-reverse gap-[50px] max-mindesk:flex-col">
+            <div className="flex flex-col gap-[20px] mr-auto max-w-[200px] w-full object-cover rounded-md max-mindesk:m-auto">
+              <img
+                src="/images/Account/icon.png"
+                className="object-cover max-w-[200px] w-full border-solid border-[1px] border-gray-400"
+              />
+              <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">
+                Сохранить изменения
+              </button>
             </div>
-            <div className="flex gap-[40px] max-minilaptop:flex-col">
-              <div className="flex flex-col space-y-2 w-full">
-                <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                  <input type="text" className="grow" placeholder="Дата рождения" />
-                </label>
+            <div className="mt-[0px] flex flex-col gap-[50px] max-w-[600px] w-full max-laptop:mt-[10px]">
+              <div className="flex gap-[40px] max-minilaptop:flex-col">
+                <div className="flex flex-col space-y-2 w-full">
+                  <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                    <input type="text" className="grow" placeholder="Имя" />
+                  </label>
+                </div>
+                <div className="flex flex-col space-y-2 w-full">
+                  <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                    <input type="text" className="grow" placeholder="Фамилия" />
+                  </label>
+                </div>
+              </div>
+              <div className="flex gap-[40px] max-minilaptop:flex-col">
+                <div className="flex flex-col space-y-2 w-full">
+                  <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                    <input type="text" className="grow" placeholder="Дата рождения" />
+                  </label>
+                </div>
+                <div className="flex flex-col space-y-2 w-full">
+                  <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                    <input type="text" className="grow" placeholder="Номер телефона" />
+                  </label>
+                </div>
               </div>
               <div className="flex flex-col space-y-2 w-full">
                 <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                  <input type="text" className="grow" placeholder="Номер телефона" />
+                  <input type="text" className="grow" placeholder="E-mail" />
                 </label>
               </div>
+              <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">
+                Сохранить изменения
+              </button>
             </div>
-            <div className="flex flex-col space-y-2 w-full">
-              <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                <input type="text" className="grow" placeholder="E-mail" />
-              </label>
-            </div>
-            <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">
-              Сохранить изменения
-            </button>
           </div>
         );
       case "Заказы":
         return (
-          <div className="mt-[100px] grid grid-cols-2 gap-[30px]">
+          <div className="max-w-[600px] w-full mt-[100px] grid grid-cols-2 gap-[30px]">
             {products == null
               ? products.map(product => (
                   <li key={product.id} className="flex gap-5 p-2 justify-between">
@@ -75,9 +86,9 @@ const AccountPage = () => {
               : "Заказов нет"}
           </div>
         );
-      case "Wishlist":
+      case "Избранное":
         return (
-          <div className="mt-[100px] grid grid-cols-2 gap-[30px]">
+          <div className="max-w-[600px] w-full mt-[100px] grid grid-cols-2 gap-[30px]">
             {favourite == null
               ? favourite.map(product => (
                   <li key={product.id} className="flex gap-5 p-2 justify-between ">
@@ -112,28 +123,40 @@ const AccountPage = () => {
             </button>
           </div>
         );
-      case "Промокоды":
-        return <div className="mt-[100px]">Ваши доступные промокоды будут находится здесь.</div>;
+      case "Партнерская программа":
+        return (
+          <div className="mt-[100px] max-w-[600px] w-full flex flex-col gap-[50px]">
+            <p>Партнерских программ нет</p>
+            <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">
+              {" "}
+              Добавить партнерскую программу{" "}
+            </button>
+          </div>
+        );
+      case "Уровень и скидки":
+        return <div className="max-w-[600px] w-full mt-[100px]">Ваши доступные промокоды будут находится здесь.</div>;
       case "Выйти":
-        return <div className="mt-[100px]">Вы вышли из аккаунта.</div>;
+        return <div className="max-w-[600px] w-full mt-[100px]">Вы вышли из аккаунта.</div>;
       default:
         return null;
     }
   };
 
   return (
-    <div className="flex mt-[90px] gap-[100px] justify-center max-laptop:flex-col max-laptop:gap-[40px]">
+    <div className="flex mt-[90px] mb-[50px] gap-[100px] justify-center max-laptop:flex-col max-laptop:gap-[40px]">
       <div>
         <ul className="flex gap-4 cursor-pointer flex-col max-laptop:flex-row overflow-x-auto">
-          {["Личные данные", "Заказы", "Wishlist", "Адреса", "Промокоды", "Выйти"].map(tab => (
-            <li
-              key={tab}
-              className={`p-2 ${activeTab === tab ? "font-bold underline" : ""}`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </li>
-          ))}
+          {["Личные данные", "Заказы", "Избранное", "Адреса", "Партнерская программа", "Уровень и скидки", "Выйти"].map(
+            tab => (
+              <li
+                key={tab}
+                className={`p-2 ${activeTab === tab ? "font-bold underline" : ""}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </li>
+            ),
+          )}
         </ul>
       </div>
       {renderContent()}
