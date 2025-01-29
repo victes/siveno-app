@@ -13,8 +13,8 @@ const AccountPage = () => {
     switch (activeTab) {
       case "Личные данные":
         return (
-          <div className="mt-[100px] flex flex-col gap-[50px] max-w-[600px] w-full">
-            <div className="flex gap-[40px]">
+          <div className="mt-[100px] flex flex-col gap-[50px] max-w-[600px] w-full max-laptop:mt-[10px]">
+            <div className="flex gap-[40px] max-minilaptop:flex-col">
               <div className="flex flex-col space-y-2 w-full">
                 <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
                   <input type="text" className="grow" placeholder="Имя" />
@@ -26,7 +26,7 @@ const AccountPage = () => {
                 </label>
               </div>
             </div>
-            <div className="flex gap-[40px]">
+            <div className="flex gap-[40px] max-minilaptop:flex-col">
               <div className="flex flex-col space-y-2 w-full">
                 <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
                   <input type="text" className="grow" placeholder="Дата рождения" />
@@ -77,7 +77,7 @@ const AccountPage = () => {
         );
       case "Wishlist":
         return (
-          <div className="mt-[100px]  grid grid-cols-2 gap-[30px]">
+          <div className="mt-[100px] grid grid-cols-2 gap-[30px]">
             {favourite == null
               ? favourite.map(product => (
                   <li key={product.id} className="flex gap-5 p-2 justify-between ">
@@ -122,9 +122,9 @@ const AccountPage = () => {
   };
 
   return (
-    <div className="flex mt-[90px] gap-[100px]">
+    <div className="flex mt-[90px] gap-[100px] justify-center max-laptop:flex-col max-laptop:gap-[40px]">
       <div>
-        <ul className="flex gap-4 cursor-pointer flex-col">
+        <ul className="flex gap-4 cursor-pointer flex-col max-laptop:flex-row overflow-x-auto">
           {["Личные данные", "Заказы", "Wishlist", "Адреса", "Промокоды", "Выйти"].map(tab => (
             <li
               key={tab}

@@ -1,3 +1,4 @@
+"use client";
 import { Container } from "@/shared/ui/Container";
 import { AccountPage } from "@/widgets/AccountPage";
 import React from "react";
