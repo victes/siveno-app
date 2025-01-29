@@ -21,9 +21,7 @@ const AccountPage = () => {
                 src="/images/Account/icon.png"
                 className="object-cover max-w-[200px] w-full border-solid border-[1px] border-gray-400"
               />
-              <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">
-                Сохранить изменения
-              </button>
+              <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">Изменить фото</button>
             </div>
             <div className="mt-[0px] flex flex-col gap-[50px] max-w-[600px] w-full max-laptop:mt-[10px]">
               <div className="flex gap-[40px] max-minilaptop:flex-col">
@@ -76,7 +74,7 @@ const AccountPage = () => {
       case "Заказы":
         return (
           <div className="max-w-[600px] w-full mt-[100px] grid grid-cols-2 gap-[30px]">
-            {products == null
+            {products.length > 0
               ? products.map(product => (
                   <li key={product.id} className="flex gap-5 p-2 justify-between">
                     <div className="flex gap-5 items-center">
@@ -103,7 +101,7 @@ const AccountPage = () => {
       case "Избранное":
         return (
           <div className="max-w-[600px] w-full mt-[100px] grid grid-cols-2 gap-[30px]">
-            {favourite == null
+            {favourite.length > 0
               ? favourite.map(product => (
                   <li key={product.id} className="flex gap-5 p-2 justify-between ">
                     <div className="flex gap-5 items-center">
