@@ -16,6 +16,11 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     }
   };
 
+  const handleClose = () => {
+    setAnimate(false);
+    setTimeout(() => onOpen(false), 300);
+  };
+
   useEffect(() => {
     if (open) {
       setAnimate(true); // Запуск анимации при открытии
@@ -36,11 +41,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             } transition-transform duration-300`}
             onClick={e => e.stopPropagation()}
           >
-            <RxCross2
-              className="absolute top-0 left-0 m-5 cursor-pointer"
-              size={30}
-              onClick={() => onOpen(prev => !prev)}
-            />
+            <RxCross2 className="absolute top-0 left-0 m-5 cursor-pointer" size={30} onClick={() => handleClose()} />
             <h2 className="text-black text-[30px]">Оформление заказа</h2>
             <p className="uppercase">
               {products.length} Товаров на {totalCost()} руб.
