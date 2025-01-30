@@ -41,9 +41,9 @@ const AboutPage = () => {
         О бренде
       </motion.h1>
       {/* =========================== */}
-      <div className="flex flex-col mt-[60px]">
+      <div className="flex flex-col gap-[20px] mt-[60px]">
         <motion.div
-          className="flex justify-center gap-[40px] items-center"
+          className="flex flex-col mindesk:flex-row justify-center gap-[40px] items-center"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -55,9 +55,9 @@ const AboutPage = () => {
               className="shadow-lg"
             />
           </motion.div>
-          <motion.div className="max-w-[450px] w-full" variants={fadeIn("right", 0.5)}>
+          <motion.div className="max-w-[850px] mindesk:max-w-[450px] w-full" variants={fadeIn("right", 0.5)}>
             <motion.h2
-              className="text-[30px] mb-[50px] text-text bona"
+              className="text-[20px] tablet:text-[25px] laptop:text-[30px] mb-[50px] text-text bona"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -65,7 +65,7 @@ const AboutPage = () => {
               Lesyanebo был создан Олесей Шиповской в 2014 году.
             </motion.h2>
             <motion.p
-              className="text-[30px] text-text bona"
+              className="text-[20px] tablet:text-[25px] laptop:text-[30px] text-text bona"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
@@ -77,14 +77,14 @@ const AboutPage = () => {
         </motion.div>
 
         <motion.div
-          className="flex justify-center gap-[40px] items-center"
+          className="flex flex-col-reverse mindesk:flex-row justify-center gap-[40px] items-center"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.div className="max-w-[450px] text-right w-full" variants={fadeIn("left", 0.3)}>
+          <motion.div className="max-w-[850px] mindesk:max-w-[450px] text-right w-full" variants={fadeIn("left", 0.3)}>
             <motion.h2
-              className="text-[30px] mb-[50px] text-text bona"
+              className="text-[20px] tablet:text-[25px] laptop:text-[30px] mb-[50px] text-text bona"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -92,7 +92,7 @@ const AboutPage = () => {
               Lesyanebo был создан Олесей Шиповской в 2014 году.
             </motion.h2>
             <motion.p
-              className="text-[30px] text-text bona"
+              className="text-[20px] tablet:text-[25px] laptop:text-[30px] text-text bona"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
@@ -101,9 +101,9 @@ const AboutPage = () => {
               жизни, так и для особых случаев.
             </motion.p>
           </motion.div>
-          <motion.div className="max-w-[550px]" variants={fadeIn("right", 0.5)} style={{ y: y2 }}>
+          <motion.div className="max-w-[550px] mb-[50px]" variants={fadeIn("right", 0.5)} style={{ y: y2 }}>
             <img
-              src="https://lesyanebo.com/local/templates/nebo_2022/images/about-lesya.jpg"
+              src="https://lesyanebo.com/personal/01_2024_10_08_lesya%20nebo0173%20copy%20(2).jpg"
               alt=""
               className="shadow-lg"
             />
