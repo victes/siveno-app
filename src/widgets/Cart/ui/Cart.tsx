@@ -19,6 +19,11 @@ const Cart = ({ click, setClick }: ICart) => {
     }
   };
 
+  const handleClose = (e: React.MouseEvent) => {
+    setAnimate(false);
+    setTimeout(() => setClick(false), 300);
+  };
+
   useEffect(() => {
     if (click) {
       setAnimate(true); // Запуск анимации при открытии
@@ -40,11 +45,7 @@ const Cart = ({ click, setClick }: ICart) => {
             } transition-transform duration-300`}
             onClick={e => e.stopPropagation()} // Предотвращает всплытие события клика
           >
-            <RxCross2
-              className="absolute top-0 left-0 m-5 cursor-pointer"
-              size={30}
-              onClick={() => setClick(prev => !prev)}
-            />
+            <RxCross2 className="absolute top-0 left-0 m-5 cursor-pointer" size={30} onClick={e => handleClose(e)} />
             <h2 className="text-black text-[30px]">Корзина</h2>
             <p className="uppercase">
               {products.length} Товаров на {totalCost()} руб.
