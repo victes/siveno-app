@@ -16,7 +16,7 @@ const Footer = () => {
               <Link href={"/shipping"}>Доставка</Link>
             </li>
             <li>
-              <Link href={"#"}>Возврат</Link>
+              <Link href={"/returns"}>Возврат</Link>
             </li>
             <li>
               <Link href={"#"}>FAQ</Link>
