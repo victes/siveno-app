@@ -5,10 +5,12 @@ import { ICart } from "../types/types";
 import { useProductStore } from "@/entities/productStore/store";
 import { MdDeleteOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import { PayCard } from "@/widgets/PayCard";
 
 const Cart = ({ click, setClick }: ICart) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
+  const [payCard, setPayCard] = useState(false);
 
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
@@ -47,29 +49,42 @@ const Cart = ({ click, setClick }: ICart) => {
             <p className="uppercase">
               {products.length} Товаров на {totalCost()} руб.
             </p>
-            {products.map(product => (
-              <li key={product.id} className="flex gap-5 p-2 justify-between">
-                <div className="flex gap-5 items-center">
-                  <div>
-                    <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
-                  </div>
-                  <div className="flex flex-col justify-start">
-                    <span className="text-black">{product.name}</span>
-                    <span className="text-[30px] text-black">{product.price} руб</span>
-                  </div>
-                </div>
-                <div>
-                  <MdDeleteOutline
-                    onClick={() => removeProduct(product.id)}
-                    size={30}
-                    className="m-2 cursor-pointer hover:text-red-500"
-                  />
-                </div>
-              </li>
-            ))}
+            <div className="h-[700px] flex flex-col overflow-y-auto">
+              {products.length > 0 ? (
+                products.map(product => (
+                  <li key={product.id} className="flex gap-5 p-2 justify-between">
+                    <div className="flex gap-5 items-center">
+                      <div>
+                        <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
+                      </div>
+                      <div className="flex flex-col justify-start">
+                        <span className="text-black">{product.name}</span>
+                        <span className="text-[30px] text-black">{product.price} руб</span>
+                      </div>
+                    </div>
+                    <div>
+                      <MdDeleteOutline
+                        onClick={() => removeProduct(product.id)}
+                        size={30}
+                        className="m-2 cursor-pointer hover:text-red-500"
+                      />
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <div className="flex justify-center items-center m-auto text-center">Корзина пуста</div>
+              )}
+            </div>
+            <button
+              className="bg-gray-100 text-[#423C3D] px-4 py-4 hover:bg-gray-300 w-full"
+              onClick={() => setPayCard(prev => !prev)}
+            >
+              Оформить заказ
+            </button>
           </div>
         </div>
       )}
+      <PayCard open={payCard} onOpen={() => setPayCard(prev => !prev)} />
     </>
   );
 };
