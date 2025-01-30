@@ -2,9 +2,9 @@ import React from "react";
 
 const ContactsPage = () => {
   return (
-    <div className="flex items-center justify-center gap-[50px] py-[100px]">
+    <div className="flex items-center justify-center gap-[50px] py-[100px] max-laptop:flex-col-reverse">
       <div>
-        <img src="/images/Contacts/map.jpg" alt="Map" className="max-w-[500px]" />
+        <img src="/images/Contacts/map.jpg" alt="Map" className="max-w-[500px] w-full" />
       </div>
       <div className="flex flex-col gap-[30px]">
         <h3 className="text-[50px] text-black">Контакты</h3>
