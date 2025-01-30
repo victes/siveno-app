@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap");
+
 body {
   background-color: #fff;
 }
@@ -13,7 +17,7 @@ body {
   margin-bottom: 40px;
   text-transform: uppercase;
 
-  font-family: "CSTM Xprmntl 02", "Jost", "Arial", sans-serif;
+  // font-family: "CSTM Xprmntl 02", "Jost", "Arial", sans-serif;
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0;
@@ -24,4 +28,23 @@ body {
     font-size: 20px;
     line-height: 48px;
   }
+}
+
+.bona {
+  font-family: "Bona Nova SC", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.yeseva {
+  font-family: "Yeseva One", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.tektur {
+  font-family: "Tektur", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
 }
