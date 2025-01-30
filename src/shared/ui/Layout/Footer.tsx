@@ -19,7 +19,7 @@ const Footer = () => {
               <Link href={"#"}>Возврат</Link>
             </li>
             <li>
-              <Link href={"#"}>Ответы на вопросы</Link>
+              <Link href={"#"}>FAQ</Link>
             </li>
             <li>
               <Link href={"#"}>Уход за изделиями</Link>
