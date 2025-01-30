@@ -18,6 +18,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        text: "#423c3d",
       },
     },
   },
