@@ -16,6 +16,10 @@ const Favourite = ({ click, setClick }: IFav) => {
       setTimeout(() => setClick(false), 300); // Задержка для завершения анимации
     }
   };
+  const handleClose = () => {
+    setAnimate(false);
+    setTimeout(() => setClick(false), 300);
+  };
 
   useEffect(() => {
     if (click) {
@@ -37,11 +41,7 @@ const Favourite = ({ click, setClick }: IFav) => {
             } transition-transform duration-300`}
             onClick={e => e.stopPropagation()} // Предотвращает всплытие события клика
           >
-            <RxCross2
-              className="absolute top-0 left-0 m-5 cursor-pointer"
-              size={30}
-              onClick={() => setClick(prev => !prev)}
-            />
+            <RxCross2 className="absolute top-0 left-0 m-5 cursor-pointer" size={30} onClick={() => handleClose()} />
             <h2 className="text-black text-[30px]">Избранное</h2>
             {favourite.map(product => (
               <li key={product.id} className="flex gap-5 p-2 justify-between ">
