@@ -5,10 +5,12 @@ import { ICart } from "../types/types";
 import { useProductStore } from "@/entities/productStore/store";
 import { MdDeleteOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import { PayCard } from "@/widgets/PayCard";
 
 const Cart = ({ click, setClick }: ICart) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
+  const [payCard, setPayCard] = useState(false);
 
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
@@ -73,10 +75,16 @@ const Cart = ({ click, setClick }: ICart) => {
                 <div className="flex justify-center items-center m-auto text-center">Корзина пуста</div>
               )}
             </div>
-            <button className="bg-gray-100 text-[#423C3D] px-4 py-4 hover:bg-gray-300 w-full">Оформить заказ</button>
+            <button
+              className="bg-gray-100 text-[#423C3D] px-4 py-4 hover:bg-gray-300 w-full"
+              onClick={() => setPayCard(prev => !prev)}
+            >
+              Оформить заказ
+            </button>
           </div>
         </div>
       )}
+      <PayCard open={payCard} onOpen={() => setPayCard(prev => !prev)} />
     </>
   );
 };
