@@ -22,7 +22,7 @@ const Footer = () => {
               <Link href={"/faq"}>FAQ</Link>
             </li>
             <li>
-              <Link href={"#"}>Уход за изделиями</Link>
+              <Link href={"/product-care"}>Уход за изделиями</Link>
             </li>
           </ul>
           <form action="">
@@ -51,7 +51,7 @@ const Footer = () => {
             </li>
             <li>
               {" "}
-              <Link href={"#"}>Публичная Оферта</Link>
+              <Link href={"/oferta"}>Публичная Оферта</Link>
             </li>
             <li>
               {" "}
