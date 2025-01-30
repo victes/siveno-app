@@ -37,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} bona antialiased`}>
         <div className="flex flex-col min-h-screen">
           <ToastContainer />
           <Header />

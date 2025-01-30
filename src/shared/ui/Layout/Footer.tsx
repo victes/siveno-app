@@ -19,10 +19,10 @@ const Footer = () => {
               <Link href={"/returns"}>Возврат</Link>
             </li>
             <li>
-              <Link href={"#"}>FAQ</Link>
+              <Link href={"/faq"}>FAQ</Link>
             </li>
             <li>
-              <Link href={"#"}>Уход за изделиями</Link>
+              <Link href={"/product-care"}>Уход за изделиями</Link>
             </li>
           </ul>
           <form action="">
@@ -47,15 +47,15 @@ const Footer = () => {
           <ul className="flex gap-[10px] max-mindesk:flex-col">
             <li>
               {" "}
-              <Link href={"#"}>Политика</Link>
+              <Link href={"/politika"}>Политика</Link>
             </li>
             <li>
               {" "}
-              <Link href={"#"}>Публичная Оферта</Link>
+              <Link href={"/oferta"}>Публичная Оферта</Link>
             </li>
             <li>
               {" "}
-              <Link href={"#"}>Контакты</Link>
+              <Link href={"/contacts"}>Контакты</Link>
             </li>
           </ul>
           <p>@ SIVENO 2025 | Все права защищены</p>
