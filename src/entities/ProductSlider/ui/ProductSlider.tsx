@@ -3,6 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { TCarousel } from "../types";
+import Image from "next/image";
 
 const ProductSlider: React.FC<{ carousel: TCarousel }> = ({ carousel }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,12 +22,18 @@ const ProductSlider: React.FC<{ carousel: TCarousel }> = ({ carousel }) => {
       <div
         className="flex relative h-[400px] tablet:h-[500px] laptop:h-[800px] flex-col transition-transform duration-500"
         style={{
-          transform: `translateY(-${currentIndex * 100}%)`, // Плавная прокрутка по оси Y
+          transform: `translateY(-${currentIndex * 100}%)`,
         }}
       >
         {carousel.map((item, idx) => (
           <div key={idx} className="h-full w-full flex-shrink-0 flex justify-center items-center z-10">
-            <img src={item.src} alt={`Slide ${idx + 1}`} className="object-contain max-h-full max-w-full rounded-sm" />
+            <Image
+              width={550}
+              height={730}
+              src={item.src}
+              alt={`Slide ${idx + 1}`}
+              className="object-contain max-h-full max-w-full rounded-sm"
+            />
           </div>
         ))}
       </div>

@@ -11,16 +11,16 @@ import Carousel from "@/shared/ui/Carousel";
 
 const carousel = [
   {
-    src: "https://lesyanebo.com/upload/resize_cache/iblock/83e/1380_2760_1/40npmby0a9hw3gcqlj479mpnma91q8xq.jpg",
+    src: "/images/MainPage/13.jpg",
   },
   {
-    src: "https://lesyanebo.com/upload/resize_cache/iblock/668/1380_2760_1/wn61ulv6puak2wbjh1aesfvwhh2njjfn.jpg",
+    src: "/images/MainPage/10.jpg",
   },
   {
-    src: "https://lesyanebo.com/upload/resize_cache/iblock/83e/1380_2760_1/40npmby0a9hw3gcqlj479mpnma91q8xq.jpg",
+    src: "/images/MainPage/11.jpg",
   },
   {
-    src: "https://lesyanebo.com/upload/resize_cache/iblock/83e/1380_2760_1/40npmby0a9hw3gcqlj479mpnma91q8xq.jpg",
+    src: "/images/MainPage/12.jpg",
   },
 ];
 
@@ -83,7 +83,7 @@ const Slides = [
 
 const ProductPage = () => {
   return (
-    <section className="mb-[60px] border-b-[1px] pb-[20px] border-solid border-[#423c3d]">
+    <section className="mb-[60px] pb-[20px] ">
       <div className="breadcrumbs text-sm mx-auto mb-[30px]">
         <ul>
           <li>
