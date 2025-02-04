@@ -29,6 +29,7 @@ const Cart = ({ click, setClick }: ICart) => {
       setAnimate(true); // Запуск анимации при открытии
     }
   }, [click]);
+
   const { products, removeProduct, totalCost } = useProductStore();
 
   return (

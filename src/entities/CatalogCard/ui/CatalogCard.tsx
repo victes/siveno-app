@@ -5,6 +5,7 @@ import React from "react";
 import { ICCard } from "../types";
 
 import "../styles/catalog-card.scss";
+
 import { useFavStore } from "@/entities/favouriteStore/store";
 
 const CatalogCard = ({ img, name, href, price }: ICCard) => {
