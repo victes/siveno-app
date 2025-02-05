@@ -4,6 +4,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
 const fadeIn = (direction = "up", delay = 0) => {
   return {
@@ -48,13 +49,17 @@ const AboutPage = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.div className="max-w-[550px]" variants={fadeIn("left", 0.3)} style={{ y: y1 }}>
-            <img
-              src="https://lesyanebo.com/local/templates/nebo_2022/images/about-lesya.jpg"
-              alt=""
-              className="shadow-lg"
-            />
-          </motion.div>
+          <div className="relative">
+            <motion.div className="max-w-[550px] w-full" variants={fadeIn("left", 0.3)} style={{ y: y1 }}>
+              <Image
+                width={550}
+                height={730}
+                src="https://lesyanebo.com/local/templates/nebo_2022/images/about-lesya.jpg"
+                alt=""
+                className="shadow-lg"
+              />
+            </motion.div>
+          </div>
           <motion.div className="max-w-[850px] mindesk:max-w-[450px] w-full" variants={fadeIn("right", 0.5)}>
             <motion.h2
               className="text-[20px] tablet:text-[25px] laptop:text-[30px] mb-[50px] text-text bona"
@@ -101,13 +106,17 @@ const AboutPage = () => {
               жизни, так и для особых случаев.
             </motion.p>
           </motion.div>
-          <motion.div className="max-w-[550px] mb-[50px]" variants={fadeIn("right", 0.5)} style={{ y: y2 }}>
-            <img
-              src="https://lesyanebo.com/personal/01_2024_10_08_lesya%20nebo0173%20copy%20(2).jpg"
-              alt=""
-              className="shadow-lg"
-            />
-          </motion.div>
+          <div className="relative">
+            <motion.div className="max-w-[550px] mb-[50px] w-full" variants={fadeIn("right", 0.5)} style={{ y: y2 }}>
+              <Image
+                width={550}
+                height={730}
+                src="https://lesyanebo.com/upload/resize_cache/iblock/e9a/1380_2760_1/idhpbzr0zy0rhpegyzz5ll8va6tiip5e.jpg"
+                alt=""
+                className="shadow-lg"
+              />
+            </motion.div>
+          </div>
         </motion.div>
       </div>
       {/* ======================== */}

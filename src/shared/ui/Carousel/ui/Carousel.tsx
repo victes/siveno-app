@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import Image from "next/image";
 
 type ImageType = {
   src: string;
@@ -60,7 +61,9 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
         {items.map((item, index) => (
           <SwiperSlide key={index}>
             <div className="flex flex-col items-center mt-10 tablet:p-4 duration-300">
-              <img
+              <Image
+                width={200}
+                height={200}
                 src={item.img[0].src}
                 alt={item.img[0].alt}
                 className="w-[15rem] h-[20rem] object-cover rounded-sm mb-4"

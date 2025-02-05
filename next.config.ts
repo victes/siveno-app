@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  distDir: "build",
+  images: {
+    domains: ["lesyanebo.com", "avatars.mds.yandex.net"], // Добавь домен изображения
+  },
 };
 
 export default nextConfig;
