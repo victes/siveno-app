@@ -5,6 +5,7 @@ import { useFavStore } from "@/entities/favouriteStore/store";
 import { useProductStore } from "@/entities/productStore/store";
 import { useLogoutMutation } from "@/shared/api/LogoutApi/LogoutApi";
 import { useGetProfileQuery } from "@/shared/api/ProfileApi/ProfileApi";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 
@@ -14,12 +15,14 @@ const AccountPage = () => {
   const { favourite, removeFav } = useFavStore();
   const { data, isLoading } = useGetProfileQuery({});
   const [logout] = useLogoutMutation();
+  const { push } = useRouter();
 
   const handleLogout = async () => {
     try {
       await logout({ access_token: localStorage.getItem("access_token") }).unwrap(); // Выполняем запрос на выход
       localStorage.removeItem("access_token");
       console.log("Успешный выход из системы");
+      push("/");
     } catch (error) {
       console.error("Ошибка при выходе из системы:", error);
     }

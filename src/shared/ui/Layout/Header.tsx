@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../Container";
 import { RxHamburgerMenu } from "react-icons/rx";
 
@@ -24,7 +24,16 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
   const { favourite } = useFavStore();
-  const token = localStorage.getItem("access_token");
+  const [token, setToken] = useState(localStorage.getItem("access_token"));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setToken(localStorage.getItem("access_token"));
+    }, 1000); // Проверка каждую секунду
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <header className="bg-white">
       <Container>
@@ -57,7 +66,7 @@ const Header = () => {
                 size={30}
                 className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
               />
-              {!token ? (
+              {token === null ? (
                 <Link href={"/login"}>
                   <IoIosLogIn size={30} />
                 </Link>
