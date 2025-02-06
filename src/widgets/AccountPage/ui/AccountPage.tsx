@@ -3,6 +3,8 @@
 "use client";
 import { useFavStore } from "@/entities/favouriteStore/store";
 import { useProductStore } from "@/entities/productStore/store";
+import { useLogoutMutation } from "@/shared/api/LogoutApi/LogoutApi";
+import { useGetProfileQuery } from "@/shared/api/ProfileApi/ProfileApi";
 import React, { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 
@@ -10,6 +12,19 @@ const AccountPage = () => {
   const [activeTab, setActiveTab] = useState("Личные данные");
   const { products, removeProduct } = useProductStore();
   const { favourite, removeFav } = useFavStore();
+  const { data, isLoading } = useGetProfileQuery({});
+  const [logout] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logout({ access_token: localStorage.getItem("access_token") }).unwrap(); // Выполняем запрос на выход
+      localStorage.removeItem("access_token");
+      console.log("Успешный выход из системы");
+    } catch (error) {
+      console.error("Ошибка при выходе из системы:", error);
+    }
+  };
+  console.log(data);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -18,7 +33,13 @@ const AccountPage = () => {
           <div className="flex flex-row-reverse gap-[50px] max-mindesk:flex-col">
             <div className="flex flex-col gap-[20px] mr-auto max-w-[200px] w-full object-cover rounded-md max-mindesk:m-auto">
               <img
-                src="/images/Account/icon.png"
+                src={
+                  isLoading
+                    ? "/images/Account/icon.png" // Пока данные загружаются, показываем заглушку
+                    : data?.avatar_url // Если данные загружены, проверяем, есть ли avatar_url
+                      ? data.avatar_url
+                      : "/images/Account/icon.png"
+                }
                 className="object-cover max-w-[200px] w-full border-solid border-[1px] border-gray-400"
               />
               <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">Изменить фото</button>
@@ -148,7 +169,7 @@ const AccountPage = () => {
       case "Уровень и скидки":
         return <div className="max-w-[600px] w-full mt-[100px]">Ваши доступные промокоды будут находится здесь.</div>;
       case "Выйти":
-        return <div className="max-w-[600px] w-full mt-[100px]">Вы вышли из аккаунта.</div>;
+        return <div className="max-w-[600px] w-full mt-[100px] cursor-pointer">Вы вышли из аккаунта.</div>;
       default:
         return null;
     }
@@ -163,7 +184,7 @@ const AccountPage = () => {
               <li
                 key={tab}
                 className={`p-2 ${activeTab === tab ? "font-bold underline" : ""}`}
-                onClick={() => setActiveTab(tab)}
+                onClick={tab === "Выйти" ? () => handleLogout() : () => setActiveTab(tab)}
               >
                 {tab}
               </li>

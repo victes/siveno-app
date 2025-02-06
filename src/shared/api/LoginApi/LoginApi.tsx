@@ -17,7 +17,7 @@ interface LoginResponse {
 export const LoginApi = createApi({
   reducerPath: "login",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.API,
+    baseUrl: "http://kudzer5h.beget.tech/api/",
   }),
   endpoints: builder => ({
     loginUser: builder.mutation<LoginResponse, LoginRequest>({

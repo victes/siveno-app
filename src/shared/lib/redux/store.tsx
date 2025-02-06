@@ -3,6 +3,7 @@ import { CategoriesApi } from "@/shared/api/CategoriesApi/CategoriesApi";
 import { LoginApi } from "@/shared/api/LoginApi/LoginApi";
 import { RegApi } from "@/shared/api/RegApi/RegApi";
 import { ProfileApi } from "@/shared/api/ProfileApi/ProfileApi";
+import { LogoutApi } from "@/shared/api/LogoutApi/LogoutApi";
 
 export const store = configureStore({
   reducer: {
@@ -10,13 +11,15 @@ export const store = configureStore({
     [LoginApi.reducerPath]: LoginApi.reducer,
     [RegApi.reducerPath]: RegApi.reducer,
     [ProfileApi.reducerPath]: ProfileApi.reducer,
+    [LogoutApi.reducerPath]: LogoutApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .concat(CategoriesApi.middleware)
       .concat(LoginApi.middleware)
       .concat(RegApi.middleware)
-      .concat(ProfileApi.middleware), // Подключаем middleware для всех API
+      .concat(ProfileApi.middleware)
+      .concat(LogoutApi.middleware), // Подключаем middleware для всех API
 });
 
 export type RootState = ReturnType<typeof store.getState>;
