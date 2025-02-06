@@ -7,9 +7,9 @@ export const CategoriesApi = createApi({
   }),
   endpoints: builder => ({
     getCategories: builder.query({
-      query: () => "categories", // эндпоинт для получения списка категорий
+      query: () => "categories",
     }),
   }),
 });
 
-export const { useGetCategoriesQuery } = CategoriesApi; // экспорт хука
+export const { useGetCategoriesQuery } = CategoriesApi;

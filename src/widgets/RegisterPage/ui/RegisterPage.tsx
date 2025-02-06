@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Link from "next/link";
+import { useRegisterUserMutation } from "@/shared/api/RegApi/RegApi";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -34,6 +36,8 @@ const formSchema = z
 type FormFields = z.infer<typeof formSchema>;
 
 const RegisterPage = () => {
+  const [registerUser] = useRegisterUserMutation();
+  const { push } = useRouter();
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,8 +50,22 @@ const RegisterPage = () => {
     },
   });
 
-  function onSubmit(values: FormFields) {
-    console.log(values);
+  async function onSubmit(values: FormFields) {
+    try {
+      const requestBody = {
+        name: values.firstName + " " + values.lastName,
+        email: values.email,
+        password: values.password,
+        password_confirmation: values.confirmPassword,
+      };
+
+      const result = await registerUser(requestBody).unwrap();
+      console.log("Registration successful:", result);
+      localStorage.setItem("access_token", result.access_token);
+      push("/");
+    } catch (err) {
+      console.error("Registration failed:", err);
+    }
   }
 
   return (
