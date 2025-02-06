@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const RegApi = createApi({
-  reducerPath: "profile",
+export const ProfileApi = createApi({
+  reducerPath: "profileApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.API,
   }),
@@ -12,4 +12,4 @@ export const RegApi = createApi({
   }),
 });
 
-export const { useRegisterUserMutation } = RegApi;
+export const { useGetProfileQuery } = ProfileApi;
