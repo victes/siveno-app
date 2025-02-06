@@ -1,11 +1,16 @@
-import CatalogCard from "@/entities/CatalogCard";
+"use client";
+
 import React from "react";
+
+import { useParams } from "next/navigation";
+
+import CatalogCard from "@/entities/CatalogCard";
+import ButtonSizes from "@/entities/ButtonSizes";
 
 import "../styles/catalog-products-page.scss";
 
 import Select from "@/shared/ui/Select";
-
-import ButtonSizes from "@/entities/ButtonSizes";
+import { useGetCategoriesQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
 
 const data = [
   {
@@ -83,6 +88,11 @@ const data = [
 ];
 
 const CatalogProductsPage = () => {
+  const { slug } = useParams();
+  const { data: categories } = useGetCategoriesQuery();
+
+  const category = categories?.find(item => item.slug === slug);
+
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
       <div className="breadcrumbs text-sm mx-auto mb-[70px]">
@@ -93,12 +103,12 @@ const CatalogProductsPage = () => {
           <li>
             <a>Documents</a>
           </li>
-          <li>Add Document</li>
+          <li>{category?.title || slug}</li>
         </ul>
       </div>
       {/* ====================================================== */}
       <div className="mb-[40px]">
-        <h1 className="title-h1">Новинки</h1>
+        <h1 className="title-h1">{category?.title || "Категория не найдена"}</h1>
       </div>
       {/* ========================================================== */}
       <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row  mindesk:justify-between items-center mb-[30px]">

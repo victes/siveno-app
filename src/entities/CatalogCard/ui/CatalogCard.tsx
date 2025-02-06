@@ -28,7 +28,7 @@ const CatalogCard = ({ img, name, href, price }: ICCard) => {
     >
       <div className="relative group">
         <Link href={href} className="block">
-          <Image width={400} height={400} src={img} alt={name} className={`w-full `} />
+          <Image width={400} height={400} priority={true} src={img} alt={name} className={`w-full `} />
         </Link>
         {price && (
           <button
