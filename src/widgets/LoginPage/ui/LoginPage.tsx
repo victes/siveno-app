@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Link from "next/link";
+import { useLoginUserMutation } from "@/shared/api/LoginApi/LoginApi";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -17,6 +18,7 @@ const formSchema = z.object({
 type FormFields = z.infer<typeof formSchema>;
 
 const LoginPage = () => {
+  const [loginUser] = useLoginUserMutation();
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -25,8 +27,13 @@ const LoginPage = () => {
     },
   });
 
-  function onSubmit(values: FormFields) {
-    console.log(values);
+  async function onSubmit(values: FormFields) {
+    try {
+      const result = await loginUser(values).unwrap();
+      console.log("Login successful:", result);
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
   }
 
   return (
