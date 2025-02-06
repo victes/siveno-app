@@ -31,7 +31,7 @@ const CatalogPage = () => {
         {categories?.map(item => (
           <CatalogCard
             key={item.id}
-            img={"/images/MainPage/14.jpg"} // Здесь можно добавить дефолтное изображение
+            img={item.image} // Здесь можно добавить дефолтное изображение
             href={`/catalog-products/${item.slug}`} // Формируем ссылку на категорию
             name={item.title} // Передаем название категории
           />
