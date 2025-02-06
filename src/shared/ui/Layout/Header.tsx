@@ -23,6 +23,8 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
   const { favourite } = useFavStore();
+  const token = localStorage.getItem("access_token");
+  console.log(token);
   return (
     <header className="bg-white">
       <Container>

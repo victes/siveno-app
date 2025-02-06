@@ -17,12 +17,12 @@ interface RegisterResponse {
 }
 
 export const RegApi = createApi({
-  reducerPath: "login",
+  reducerPath: "register",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://kudzer5h.beget.tech/api/",
   }),
   endpoints: builder => ({
-    loginUser: builder.mutation<RegisterResponse, RegisterRequest>({
+    registerUser: builder.mutation<RegisterResponse, RegisterRequest>({
       query: user => ({
         url: "/register",
         method: "POST",
@@ -32,4 +32,4 @@ export const RegApi = createApi({
   }),
 });
 
-export const { useLoginUserMutation } = RegApi;
+export const { useRegisterUserMutation } = RegApi;
