@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Link from "next/link";
 import { useLoginUserMutation } from "@/shared/api/LoginApi/LoginApi";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -19,6 +20,7 @@ type FormFields = z.infer<typeof formSchema>;
 
 const LoginPage = () => {
   const [loginUser] = useLoginUserMutation();
+  const { push } = useRouter();
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,6 +34,7 @@ const LoginPage = () => {
       const result = await loginUser(values).unwrap();
       console.log("Login successful:", result);
       localStorage.setItem("access_token", result.access_token);
+      push("/");
     } catch (err) {
       console.error("Login failed:", err);
     }
