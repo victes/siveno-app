@@ -19,7 +19,7 @@ interface RegisterResponse {
 export const RegApi = createApi({
   reducerPath: "register",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://kudzer5h.beget.tech/api/",
+    baseUrl: process.env.API,
   }),
   endpoints: builder => ({
     registerUser: builder.mutation<RegisterResponse, RegisterRequest>({
