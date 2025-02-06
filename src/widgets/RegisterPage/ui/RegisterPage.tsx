@@ -53,7 +53,8 @@ const RegisterPage = () => {
   async function onSubmit(values: FormFields) {
     try {
       const requestBody = {
-        name: values.firstName + " " + values.lastName,
+        name: values.firstName,
+        surname: values.lastName,
         email: values.email,
         password: values.password,
         password_confirmation: values.confirmPassword,

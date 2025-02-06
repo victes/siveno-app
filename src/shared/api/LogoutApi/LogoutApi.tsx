@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const ProfileApi = createApi({
-  reducerPath: "profileApi",
+export const LogoutApi = createApi({
+  reducerPath: "logout",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://kudzer5h.beget.tech/api/",
     prepareHeaders: headers => {
@@ -16,10 +16,14 @@ export const ProfileApi = createApi({
     },
   }),
   endpoints: builder => ({
-    getProfile: builder.query({
-      query: () => "profile",
+    logout: builder.mutation({
+      query: user => ({
+        url: "/logout",
+        method: "POST",
+        body: user,
+      }),
     }),
   }),
 });
 
-export const { useGetProfileQuery } = ProfileApi;
+export const { useLogoutMutation } = LogoutApi;
