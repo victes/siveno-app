@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "../Container";
 import { RxHamburgerMenu } from "react-icons/rx";
 
@@ -11,6 +11,7 @@ import { IoIosLogIn } from "react-icons/io";
 import { Burger } from "@/widgets/Burger";
 import { Cart } from "@/widgets/Cart";
 import { Favourite } from "@/widgets/Favourite";
+import { GoPerson } from "react-icons/go";
 
 import { useProductStore } from "@/entities/productStore/store";
 import { useFavStore } from "@/entities/favouriteStore/store";
@@ -23,6 +24,16 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
   const { favourite } = useFavStore();
+  const [token, setToken] = useState(localStorage.getItem("access_token"));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setToken(localStorage.getItem("access_token"));
+    }, 1000); // Проверка каждую секунду
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <header className="bg-white">
       <Container>
@@ -55,9 +66,16 @@ const Header = () => {
                 size={30}
                 className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
               />
-              <Link href={"/login"}>
-                <IoIosLogIn size={30} />
-              </Link>
+              {token === null ? (
+                <Link href={"/login"}>
+                  <IoIosLogIn size={30} />
+                </Link>
+              ) : (
+                <Link href={"/account"}>
+                  <GoPerson size={30} />
+                </Link>
+              )}
+
               <div className="relative">
                 <div className="absolute text-black ml-5 -mt-4">{favourite.length}</div>
                 <IoMdHeartEmpty
