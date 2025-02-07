@@ -28,7 +28,9 @@ const Header = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setToken(localStorage.getItem("access_token"));
+      if (typeof window !== "undefined") {
+        setToken(localStorage.getItem("access_token"));
+      }
     }, 1000); // Проверка каждую секунду
 
     return () => clearInterval(interval);

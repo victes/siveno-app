@@ -26,7 +26,10 @@ export const ProfileApi = createApi({
         body: user,
       }),
     }),
+    getWishList: builder.query({
+      query: () => "wishlist",
+    }),
   }),
 });
 
-export const { useGetProfileQuery, useChangeProfileMutation } = ProfileApi;
+export const { useGetProfileQuery, useChangeProfileMutation, useGetWishListQuery } = ProfileApi;
