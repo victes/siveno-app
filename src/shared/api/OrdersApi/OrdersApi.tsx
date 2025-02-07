@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const CategoriesApi = createApi({
-  reducerPath: "categories",
+export const OrdersApi = createApi({
+  reducerPath: "orders",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://kudzer5h.beget.tech/api/",
   }),
@@ -12,4 +12,4 @@ export const CategoriesApi = createApi({
   }),
 });
 
-export const { useGetOrdersQuery } = CategoriesApi; // экспорт хука
+export const { useGetOrdersQuery } = OrdersApi; // экспорт хука

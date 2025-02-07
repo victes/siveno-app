@@ -1,6 +1,8 @@
+// import { useGetAddressesQuery } from "@/shared/api/AddressApi/AddressApi";
 import React from "react";
 
 const Address = () => {
+  // const { data } = useGetAddressesQuery();
   return (
     <div className="mt-[100px] max-w-[600px] w-full flex flex-col gap-[50px]">
       <p>Сохранненых адресов нет</p>
