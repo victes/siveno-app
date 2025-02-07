@@ -4,18 +4,85 @@
 import { useFavStore } from "@/entities/favouriteStore/store";
 import { useProductStore } from "@/entities/productStore/store";
 import { useLogoutMutation } from "@/shared/api/LogoutApi/LogoutApi";
-import { useGetProfileQuery } from "@/shared/api/ProfileApi/ProfileApi";
+import { useChangeProfileMutation, useGetProfileQuery } from "@/shared/api/ProfileApi/ProfileApi";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { z } from "zod";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { MdDeleteOutline } from "react-icons/md";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z
+  .object({
+    email: z.string().email({
+      message: "Почта введена неправильно",
+    }),
+    password: z.string().min(8, {
+      message: "Пароль должен содержать не менее 8 символов",
+    }),
+    confirmPassword: z.string().min(8, {
+      message: "Подтверждение пароля должно содержать не менее 8 символов",
+    }),
+    firstName: z.string().nonempty({
+      message: "Имя обязательно для заполнения",
+    }),
+    lastName: z.string().nonempty({
+      message: "Фамилия обязательна для заполнения",
+    }),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: "Пароли не совпадают",
+    path: ["confirmPassword"],
+  });
+
+type FormFields = z.infer<typeof formSchema>;
 
 const AccountPage = () => {
   const [activeTab, setActiveTab] = useState("Личные данные");
   const { products, removeProduct } = useProductStore();
   const { favourite, removeFav } = useFavStore();
-  const { data, isLoading } = useGetProfileQuery({});
+  const { data, isLoading, isSuccess } = useGetProfileQuery({});
   const [logout] = useLogoutMutation();
   const { push } = useRouter();
+  const [changeProfile] = useChangeProfileMutation();
+
+  const form = useForm<FormFields>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: data?.email || "", // Используем опциональную цепочку
+      password: "",
+      confirmPassword: "",
+      firstName: data?.name || "", // Используем опциональную цепочку
+      lastName: data?.surname || "", // Используем опциональную цепочку
+    },
+  });
+
+  const handleChange = async (values: FormFields) => {
+    try {
+      const requestBody = {
+        id: isSuccess ? data.id : "",
+        name: values.firstName,
+        surname: values.lastName,
+        email: values.email,
+        password: values.password,
+        password_confirmation: values.confirmPassword,
+      };
+      const result = await changeProfile(requestBody).unwrap();
+      console.log("result: " + result);
+    } catch (err) {
+      console.error("Registration failed:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      form.reset({
+        email: data.email,
+        firstName: data.name,
+        lastName: data.surname,
+      });
+    }
+  }, [isSuccess, data, form]);
 
   const handleLogout = async () => {
     try {
@@ -27,7 +94,7 @@ const AccountPage = () => {
       console.error("Ошибка при выходе из системы:", error);
     }
   };
-  console.log(data);
+  // console.log(isSuccess ? data.id : "");
 
   const renderContent = () => {
     switch (activeTab) {
@@ -47,16 +114,19 @@ const AccountPage = () => {
               />
               <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">Изменить фото</button>
             </div>
-            <div className="mt-[0px] flex flex-col gap-[50px] max-w-[600px] w-full max-laptop:mt-[10px]">
+            <form
+              onSubmit={form.handleSubmit(handleChange)}
+              className="mt-[0px] flex flex-col gap-[50px] max-w-[600px] w-full max-laptop:mt-[10px]"
+            >
               <div className="flex gap-[40px] max-minilaptop:flex-col">
                 <div className="flex flex-col space-y-2 w-full">
                   <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                    <input type="text" className="grow" placeholder="Имя" />
+                    <input type="text" className="grow" placeholder="Имя" {...form.register("firstName")} />
                   </label>
                 </div>
                 <div className="flex flex-col space-y-2 w-full">
                   <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                    <input type="text" className="grow" placeholder="Фамилия" />
+                    <input type="text" className="grow" placeholder="Фамилия" {...form.register("lastName")} />
                   </label>
                 </div>
               </div>
@@ -74,25 +144,30 @@ const AccountPage = () => {
               </div>
               <div className="flex flex-col space-y-2 w-full">
                 <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                  <input type="text" className="grow" placeholder="Почта" />
+                  <input type="text" className="grow" placeholder="Почта" {...form.register("email")} />
                 </label>
               </div>
               <div className="flex gap-[40px] max-minilaptop:flex-col">
                 <div className="flex flex-col space-y-2 w-full">
                   <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                    <input type="password" className="grow" placeholder="Пароль" />
+                    <input type="password" className="grow" placeholder="Пароль" {...form.register("password")} />
                   </label>
                 </div>
                 <div className="flex flex-col space-y-2 w-full">
                   <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                    <input type="password" className="grow" placeholder="Подтверждение пароля" />
+                    <input
+                      type="password"
+                      className="grow"
+                      placeholder="Подтверждение пароля"
+                      {...form.register("confirmPassword")}
+                    />
                   </label>
                 </div>
               </div>
               <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">
                 Сохранить изменения
               </button>
-            </div>
+            </form>
           </div>
         );
       case "Заказы":
