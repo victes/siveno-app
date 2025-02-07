@@ -12,6 +12,7 @@ import Select from "@/shared/ui/Select";
 import { useGetProductsByCategoryQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
 import { useGetCategoriesQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
 import { useParams } from "next/navigation";
+import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi";
 
 const CatalogProductsPage = () => {
   const { products_slug } = useParams();
@@ -20,6 +21,17 @@ const CatalogProductsPage = () => {
   const category = categories?.find(item => item.slug === products_slug);
 
   const { data: products, isLoading, error } = useGetProductsByCategoryQuery(category?.id || 0);
+
+  const { data: colors } = useGetColorsByProductQuery();
+
+  const colorOptions = colors
+    ? colors.map(color => ({
+        option: color.name, // Название цвета
+        value: color.name.toLowerCase(), // Значение (можно color.id, если нужно)
+      }))
+    : [];
+
+  const optionsColor = [{ option: "Все цвета", value: "all" }, ...colorOptions];
 
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
@@ -50,16 +62,7 @@ const CatalogProductsPage = () => {
               { option: "Цена по убыванию", value: "price_desc" },
             ]}
           />
-          <Select
-            name="Цвет"
-            options={[
-              { option: "Все цвета", value: "all" },
-              { option: "Синий", value: "blue" },
-              { option: "Серый", value: "gray" },
-              { option: "Зеленный", value: "green" },
-              { option: "Каштановый", value: "brown" },
-            ]}
-          />
+          <Select name="Цвет" options={optionsColor} />
         </div>
         <div className="flex items-center gap-2">
           <ButtonSizes />
