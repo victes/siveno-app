@@ -135,7 +135,7 @@ const ProductPage = () => {
           {/* ================================================== */}
 
           <div className="producti-page-price mx-auto mb-[10px]">
-            <span>68 000 руб.</span>
+            <span>{Number(products?.price).toFixed()} руб.</span>
           </div>
 
           {/* ================================================== */}

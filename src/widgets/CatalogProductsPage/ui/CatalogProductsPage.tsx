@@ -78,7 +78,7 @@ const CatalogProductsPage = () => {
               img={item.images[0].image_path} // Используем первый URL из массива
               href={`/product/${item.id}`}
               name={item.name}
-              price={item.price}
+              price={Number(item.price).toFixed()}
             />
           );
         })}
