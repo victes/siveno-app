@@ -1,25 +1,43 @@
+
+
+
+
+
 import { configureStore } from "@reduxjs/toolkit";
+
 import { CategoriesApi } from "@/shared/api/CategoriesApi/CategoriesApi";
 import { LoginApi } from "@/shared/api/LoginApi/LoginApi";
 import { RegApi } from "@/shared/api/RegApi/RegApi";
 import { ProfileApi } from "@/shared/api/ProfileApi/ProfileApi";
 import { LogoutApi } from "@/shared/api/LogoutApi/LogoutApi";
+import { colorsApi } from "@/shared/api/ColorsApi/ui/ColorsApi";
+import { productsApi } from "@/shared/api/ProductsApi/ui/ProductsApi";
+import { sizesApi } from "@/shared/api/SizesApi/ui/SizesApi";
 
 export const store = configureStore({
   reducer: {
-    [CategoriesApi.reducerPath]: CategoriesApi.reducer,
+
+    [CategoriesApi.reducerPath]: CategoriesApi.reducer, // Добавляем редюсер API
+    [productsApi.reducerPath]: productsApi.reducer,
+    [sizesApi.reducerPath]: sizesApi.reducer,
+    [colorsApi.reducerPath]: colorsApi.reducer,
     [LoginApi.reducerPath]: LoginApi.reducer,
     [RegApi.reducerPath]: RegApi.reducer,
     [ProfileApi.reducerPath]: ProfileApi.reducer,
     [LogoutApi.reducerPath]: LogoutApi.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware()
-      .concat(CategoriesApi.middleware)
-      .concat(LoginApi.middleware)
-      .concat(RegApi.middleware)
-      .concat(ProfileApi.middleware)
-      .concat(LogoutApi.middleware), // Подключаем middleware для всех API
+    getDefaultMiddleware().concat(
+      CategoriesApi.middleware,
+      productsApi.middleware, // Подключаем middleware для обоих APIs
+      sizesApi.middleware,
+      colorsApi.middleware,
+      LoginApi.middleware,
+      RegApi.middleware,
+      ProfileApi.middleware,
+      LogoutApi.middleware
+    ),
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

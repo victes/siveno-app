@@ -1,6 +1,10 @@
+"use client";
+
 import ButtonColors from "@/entities/ButtonColors";
 import ButtonSizes from "@/entities/ButtonSizes";
 import ProductSlider from "@/entities/ProductSlider/ui/ProductSlider";
+
+import { useParams } from "next/navigation";
 
 import React from "react";
 
@@ -9,20 +13,22 @@ import ButtonsProduct from "@/features/ButtonsProduct";
 import Accordion from "@/shared/ui/Accordion";
 import Carousel from "@/shared/ui/Carousel";
 
-const carousel = [
-  {
-    src: "/images/MainPage/13.jpg",
-  },
-  {
-    src: "/images/MainPage/10.jpg",
-  },
-  {
-    src: "/images/MainPage/11.jpg",
-  },
-  {
-    src: "/images/MainPage/12.jpg",
-  },
-];
+import { useGetProductsByIdQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
+
+// const carousel = [
+//   {
+//     src: "/images/MainPage/13.jpg",
+//   },
+//   {
+//     src: "/images/MainPage/10.jpg",
+//   },
+//   {
+//     src: "/images/MainPage/11.jpg",
+//   },
+//   {
+//     src: "/images/MainPage/12.jpg",
+//   },
+// ];
 
 const accordion = [
   { name: "Состав и Уход", value: "" },
@@ -82,6 +88,11 @@ const Slides = [
 ];
 
 const ProductPage = () => {
+  const { product_id } = useParams();
+  const { data: products, isLoading, error } = useGetProductsByIdQuery(Number(product_id));
+
+  const carousel = products?.images;
+
   return (
     <section className="mb-[60px] pb-[20px] ">
       <div className="breadcrumbs text-sm mx-auto mb-[30px]">
@@ -97,7 +108,10 @@ const ProductPage = () => {
       </div>
       <div className="flex flex-col items-center largeDesk:flex-row justify-between">
         <div className="mb-[40px] largeDesk:mb-0">
-          <ProductSlider carousel={carousel} />
+          {isLoading && <p>Загрузка...</p>}
+          {error && <p>Ошибка загрузки товаров</p>}
+
+          <ProductSlider carousel={carousel ? carousel : []} />
         </div>
         <div className="flex flex-col gap-[20px] items-center tablet:mx-auto tablet:max-w-[500px]">
           {/* ================================================== */}
@@ -121,7 +135,7 @@ const ProductPage = () => {
           {/* ================================================== */}
 
           <div className="producti-page-price mx-auto mb-[10px]">
-            <span>68 000 руб.</span>
+            <span>{Number(products?.price).toFixed()} руб.</span>
           </div>
 
           {/* ================================================== */}
