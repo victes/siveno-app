@@ -19,8 +19,6 @@ const CatalogProductsPage = () => {
   const { data: categories } = useGetCategoriesQuery();
   const category = categories?.find(item => item.slug === products_slug);
 
-  console.log(category?.title);
-
   const { data: products, isLoading, error } = useGetProductsByCategoryQuery(category?.id || 0);
 
   return (
