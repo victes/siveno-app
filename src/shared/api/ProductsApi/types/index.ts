@@ -58,3 +58,28 @@ export interface ProductResponse {
   to: number | null;
   total: number;
 }
+
+/////////////// Product page
+
+export interface IProductImage {
+  id: number;
+  product_id: number;
+  image_path: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IProduct {
+  id: number;
+  name: string;
+  category_id: number;
+  video_url: string;
+  price: string;
+  description: string;
+  composition_care: string;
+  preference: Record<string, string[]>; // Объект с размерами и их параметрами
+  measurements: Record<string, string[]>; // Аналогично preference
+  created_at: string;
+  updated_at: string;
+  images: IProductImage[];
+}

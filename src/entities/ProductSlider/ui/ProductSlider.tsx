@@ -2,10 +2,11 @@
 
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import { TCarousel } from "../types";
+// import { TCarousel } from "../types";
 import Image from "next/image";
+import { IProductImage } from "@/shared/api/ProductsApi/types";
 
-const ProductSlider: React.FC<{ carousel: TCarousel }> = ({ carousel }) => {
+const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
@@ -30,9 +31,9 @@ const ProductSlider: React.FC<{ carousel: TCarousel }> = ({ carousel }) => {
             <Image
               width={550}
               height={730}
-              src={item.src}
+              src={item.image_path}
               alt={`Slide ${idx + 1}`}
-              className="object-contain max-h-full max-w-full rounded-sm"
+              className="object-cover h-full  max-w-full rounded-sm"
             />
           </div>
         ))}
@@ -61,7 +62,7 @@ const ProductSlider: React.FC<{ carousel: TCarousel }> = ({ carousel }) => {
             className={`border-2 ${currentIndex === idx ? "border-black" : "border-transparent"} rounded-sm transition`}
           >
             <img
-              src={item.src}
+              src={item.image_path}
               alt={`Thumbnail ${idx + 1}`}
               className="h-20 w-20 flex-shrink-0 object-cover rounded-sm"
             />
