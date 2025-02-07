@@ -32,8 +32,9 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
               width={550}
               height={730}
               src={item.image_path}
+              priority={false}
               alt={`Slide ${idx + 1}`}
-              className="object-cover h-full  max-w-full rounded-sm"
+              className="object-cover h-full w-auto  max-w-full rounded-sm"
             />
           </div>
         ))}
