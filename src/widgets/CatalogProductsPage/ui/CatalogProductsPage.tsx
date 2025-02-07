@@ -2,7 +2,7 @@
 
 import React from "react";
 
-// import CatalogCard from "@/entities/CatalogCard";
+import CatalogCard from "@/entities/CatalogCard";
 import ButtonSizes from "@/entities/ButtonSizes";
 
 import "../styles/catalog-products-page.scss";
@@ -10,11 +10,18 @@ import "../styles/catalog-products-page.scss";
 import Select from "@/shared/ui/Select";
 
 import { useGetProductsByCategoryQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
+import { useGetCategoriesQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
+import { useParams } from "next/navigation";
 
 const CatalogProductsPage = () => {
-  const { data: products, isLoading, error } = useGetProductsByCategoryQuery(0);
+  const { products_slug } = useParams();
 
-  console.log(products);
+  const { data: categories } = useGetCategoriesQuery();
+  const category = categories?.find(item => item.slug === products_slug);
+
+  console.log(category?.title);
+
+  const { data: products, isLoading, error } = useGetProductsByCategoryQuery(category?.id || 0);
 
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
@@ -31,7 +38,7 @@ const CatalogProductsPage = () => {
       </div>
 
       <div className="mb-[40px]">
-        <h1 className="title-h1">{"Категория не найдена"}</h1>
+        <h1 className="title-h1">{category?.title || "Категория не найдена"}</h1>
       </div>
 
       <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row mindesk:justify-between items-center mb-[30px]">
@@ -64,19 +71,19 @@ const CatalogProductsPage = () => {
       <div className="products-card-container">
         {isLoading && <p>Загрузка...</p>}
         {error && <p>Ошибка загрузки товаров</p>}
-        {/* {products?.map(item => {
+        {products?.data.map(item => {
           // Парсим строку JSON в массив URL
-          const imageUrls = JSON.parse(item.image_urls); // Теперь это массив
+          // const imageUrls = JSON.parse(item.image_urls); // Теперь это массив
           return (
             <CatalogCard
               key={item.id}
-              img={imageUrls[0]} // Используем первый URL из массива
+              img={item.images[0].image_path} // Используем первый URL из массива
               href={`/product/${item.id}`}
               name={item.name}
               price={item.price}
             />
           );
-        })} */}
+        })}
       </div>
     </div>
   );

@@ -23,6 +23,7 @@ const CatalogPage = () => {
       </div>
       <div className="mb-[20px]">
         <h1 className="title-h1">Каталог</h1>
+        <ul>{/* {categories?.children.map(item => (} */}</ul>
       </div>
       <div className="categories-card-container">
         {isLoading && <div>Loading...</div>}

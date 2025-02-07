@@ -26,9 +26,16 @@ const CatalogCard = ({ img, name, href, price }: ICCard) => {
   return (
     <div className="catalog-card flex flex-col items-center relative transition-all duration-300 pb-2 hover:shadow-lg">
       <div className="relative group">
-        <Link href={href} className="block">
+        <Link href={href} className="block w-full">
           {/* Используем Image компонент для загрузки изображения */}
-          <Image width={400} height={400} priority={true} src={img} alt={name} className={`w-full`} />
+          <Image
+            width={400}
+            height={400}
+            priority={true}
+            src={img}
+            alt={name}
+            className={`w-auto h-[600px] object-cover`}
+          />
         </Link>
 
         {price && (

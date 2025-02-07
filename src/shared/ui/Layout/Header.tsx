@@ -34,14 +34,14 @@ const Header = () => {
               onClick={() => setClick(prev => !prev)}
             />
             <Burger onOpen={click} setOpen={() => setClick(prev => !prev)} />
-            <a href="./">
+            <Link href="/">
               <p className="text-[30px] text-black max-tablet:text-[20px]">SIVENO</p>
-            </a>
-            <a href="/catalog-categories">
+            </Link>
+            <Link href="/catalog-categories">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
                 Каталог
               </p>
-            </a>
+            </Link>
             {/* <a href="">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
                 Магазины
