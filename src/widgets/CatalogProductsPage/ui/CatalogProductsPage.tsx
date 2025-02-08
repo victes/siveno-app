@@ -122,15 +122,20 @@ const CatalogProductsPage = () => {
       <div className="products-card-container">
         {isLoading && <p>Загрузка...</p>}
         {error && <p>Ошибка загрузки товаров</p>}
-        {products?.data.map(item => (
-          <CatalogCard
-            key={item.id}
-            img={item.images[0].image_path} // API должен возвращать `image_urls`
-            href={`/product/${item.id}`}
-            name={item.name}
-            price={Number(item.price).toFixed()}
-          />
-        ))}
+        {products?.data.map(item => {
+          // Парсим строку JSON в массив URL
+          // const imageUrls = JSON.parse(item.image_urls); // Теперь это массив
+          return (
+            <CatalogCard
+              id={item.id}
+              key={item.id}
+              img={item.images[0].image_path} // Используем первый URL из массива
+              href={`/product/${item.id}`}
+              name={item.name}
+              price={Number(item.price).toFixed()}
+            />
+          );
+        })}
       </div>
     </div>
   );

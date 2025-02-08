@@ -158,6 +158,7 @@ const ProductPage = () => {
           {/* ================================================== */}
           <div className="">
             <ButtonsProduct
+              id={Number(product_id)}
               price={"68000"}
               name="Двубортный тренч ICONIC"
               img={

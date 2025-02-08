@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ICCard } from "../types";
 
 import "../styles/catalog-card.scss";
@@ -8,18 +8,37 @@ import "../styles/catalog-card.scss";
 import { useFavStore } from "@/entities/favouriteStore/store";
 import Link from "next/link";
 import Image from "next/image";
+import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
 
-const CatalogCard = ({ img, name, href, price }: ICCard) => {
+const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   const { addFav } = useFavStore();
+  const [token, setToken] = useState("");
+  const [addToWishlist] = useAddToWishlistMutation();
+
+  useEffect(() => {
+    setToken(localStorage.getItem("access_token") || "");
+  }, []);
 
   const handleAddFavourite = () => {
-    if (name.trim() && price) {
-      addFav({
-        id: Date.now().toString(),
-        name,
-        price: parseFloat(price),
-        img,
-      });
+    addToWishlist({ product_id: id });
+    if (!token) {
+      if (name.trim() && price) {
+        addFav({
+          id: id.toString(),
+          name,
+          price: parseFloat(price),
+          img,
+        });
+      }
+    } else {
+      if (name.trim() && price) {
+        addFav({
+          id: id.toString(),
+          name,
+          price: parseFloat(price),
+          img,
+        });
+      }
     }
   };
 

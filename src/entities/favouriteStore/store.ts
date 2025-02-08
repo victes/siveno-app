@@ -19,12 +19,20 @@ interface FavouriteStore {
 export const useFavStore = create<FavouriteStore>((set, get) => ({
   favourite: [],
   addFav: fav => {
-    set(state => ({
-      favourite: [...state.favourite, fav],
-    }));
-    toast.success(`Добавлено в избранное: ${fav.name}`, {
-      position: "top-right",
-    });
+    const isAlreadyAdded = get().favourite.some(item => item.id === fav.id);
+
+    if (!isAlreadyAdded) {
+      set(state => ({
+        favourite: [...state.favourite, fav],
+      }));
+      toast.success(`Добавлено в избранное: ${fav.name}`, {
+        position: "top-right",
+      });
+    } else {
+      toast.warning(`Объект уже в избранном: ${fav.name}`, {
+        position: "top-right",
+      });
+    }
   },
   removeFav: id => {
     const favItem = get().favourite.find(fav => fav.id === id);
