@@ -38,7 +38,7 @@ const AccountPage = () => {
         return <Favourites />;
       case "Адреса":
         return <Address />;
-      case "Партнерская программа":
+      case "Карта лояльности":
         return <PartnerProgramm />;
         // case "Уровень и скидки":
         return <div className="max-w-[600px] w-full mt-[100px]">Ваши доступные промокоды будут находится здесь.</div>;
@@ -53,7 +53,7 @@ const AccountPage = () => {
     <div className="flex mt-[90px] mb-[50px] gap-[100px] justify-center max-laptop:flex-col max-laptop:gap-[40px]">
       <div>
         <ul className="flex gap-4 cursor-pointer flex-col max-laptop:flex-row overflow-x-auto">
-          {["Личные данные", "Заказы", "Избранное", "Адреса", "Партнерская программа", "Уровень и скидки", "Выйти"].map(
+          {["Личные данные", "Заказы", "Избранное", "Адреса", "Карта лояльности", "Уровень и скидки", "Выйти"].map(
             tab => (
               <li
                 key={tab}

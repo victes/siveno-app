@@ -1,9 +1,12 @@
 import { useFavStore } from "@/entities/favouriteStore/store";
+import { useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
 import React from "react";
 import { MdDeleteOutline } from "react-icons/md";
 
 const Favourites = () => {
   const { favourite, removeFav } = useFavStore();
+  const { data } = useGetWishListQuery({});
+  console.log(data);
   return (
     <div className="max-w-[600px] w-full mt-[100px] grid grid-cols-2 gap-[30px]">
       {favourite.length > 0

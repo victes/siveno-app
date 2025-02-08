@@ -74,6 +74,7 @@ const CatalogProductsPage = () => {
           // const imageUrls = JSON.parse(item.image_urls); // Теперь это массив
           return (
             <CatalogCard
+              id={item.id}
               key={item.id}
               img={item.images[0].image_path} // Используем первый URL из массива
               href={`/product/${item.id}`}

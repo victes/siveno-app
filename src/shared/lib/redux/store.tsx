@@ -10,7 +10,6 @@ import { productsApi } from "@/shared/api/ProductsApi/ui/ProductsApi";
 import { sizesApi } from "@/shared/api/SizesApi/ui/SizesApi";
 import { AddressesApi } from "@/shared/api/AddressApi/AddressApi";
 import { OrdersApi } from "@/shared/api/OrdersApi/OrdersApi";
-import { WishlistApi } from "@/shared/api/WishlistApi/WishlistApi";
 import { LoyaytiApi } from "@/shared/api/LoyaytyApi/Loyayti";
 
 export const store = configureStore({
@@ -25,7 +24,6 @@ export const store = configureStore({
     [LogoutApi.reducerPath]: LogoutApi.reducer,
     [OrdersApi.reducerPath]: OrdersApi.reducer,
     [AddressesApi.reducerPath]: AddressesApi.reducer,
-    [WishlistApi.reducerPath]: WishlistApi.reducer,
     [LoyaytiApi.reducerPath]: LoyaytiApi.reducer,
   },
   middleware: getDefaultMiddleware =>
@@ -40,7 +38,6 @@ export const store = configureStore({
       LogoutApi.middleware,
       OrdersApi.middleware,
       AddressesApi.middleware,
-      WishlistApi.middleware,
       LoyaytiApi.middleware,
     ),
 });

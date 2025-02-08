@@ -29,7 +29,15 @@ export const ProfileApi = createApi({
     getWishList: builder.query({
       query: () => "wishlist",
     }),
+    addToWishlist: builder.mutation({
+      query: user => ({
+        url: `wishlist`,
+        method: "POST",
+        body: user,
+      }),
+    }),
   }),
 });
 
-export const { useGetProfileQuery, useChangeProfileMutation, useGetWishListQuery } = ProfileApi;
+export const { useGetProfileQuery, useChangeProfileMutation, useGetWishListQuery, useAddToWishlistMutation } =
+  ProfileApi;

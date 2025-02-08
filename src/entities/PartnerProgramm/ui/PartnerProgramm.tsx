@@ -1,6 +1,9 @@
+import { useGetLoyaltyQuery } from "@/shared/api/LoyaytyApi/Loyayti";
 import React from "react";
 
 const PartnerProgramm = () => {
+  const { data } = useGetLoyaltyQuery();
+  console.log(data);
   return (
     <div className="mt-[100px] max-w-[600px] w-full flex flex-col gap-[50px]">
       <p>Партнерских программ нет</p>

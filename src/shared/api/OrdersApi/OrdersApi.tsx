@@ -7,7 +7,7 @@ export const OrdersApi = createApi({
   }),
   endpoints: builder => ({
     getOrders: builder.query<[], void>({
-      query: () => "orders", // эндпоинт для получения списка категорий
+      query: () => "orders",
     }),
   }),
 });
