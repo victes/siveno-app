@@ -26,7 +26,14 @@ export const AddressesApi = createApi({
         body: user,
       }),
     }),
+    updateAddresses: builder.mutation({
+      query: user => ({
+        url: `addresses/${user.id}`,
+        method: "PUT",
+        body: user,
+      }),
+    }),
   }),
 });
 
-export const { useGetAddressesQuery, useAddAddressesMutation } = AddressesApi;
+export const { useGetAddressesQuery, useAddAddressesMutation, useUpdateAddressesMutation } = AddressesApi;
