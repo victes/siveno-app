@@ -1,10 +1,31 @@
 // import { useGetAddressesQuery } from "@/shared/api/AddressApi/AddressApi";
 import { useAddAddressesMutation, useGetAddressesQuery } from "@/shared/api/AddressApi/AddressApi";
-import React from "react";
+import React, { useState } from "react";
+
+interface IModal {
+  click: boolean;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Modal = ({ click, setClick }: IModal) => {
+  return (
+    <>
+      {" "}
+      {click ? (
+        <div className="z-50 bg-black opacity-40 w-screen h-screen fixed">
+          <div onClick={() => setClick(false)}>X</div>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
+  );
+};
 
 const Address = () => {
   const { data } = useGetAddressesQuery();
   const [addAddresses] = useAddAddressesMutation();
+  const [click, setClick] = useState();
 
   const handleAddAddress = () => {
     addAddresses({
@@ -28,6 +49,7 @@ const Address = () => {
         {" "}
         Сохранить адрес{" "}
       </button>
+      <Modal click={click} setClick={() => setClick()} />
     </div>
   );
 };
