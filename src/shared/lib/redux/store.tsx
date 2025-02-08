@@ -1,8 +1,3 @@
-
-
-
-
-
 import { configureStore } from "@reduxjs/toolkit";
 
 import { CategoriesApi } from "@/shared/api/CategoriesApi/CategoriesApi";
@@ -16,7 +11,6 @@ import { sizesApi } from "@/shared/api/SizesApi/ui/SizesApi";
 
 export const store = configureStore({
   reducer: {
-
     [CategoriesApi.reducerPath]: CategoriesApi.reducer, // Добавляем редюсер API
     [productsApi.reducerPath]: productsApi.reducer,
     [sizesApi.reducerPath]: sizesApi.reducer,
@@ -35,9 +29,8 @@ export const store = configureStore({
       LoginApi.middleware,
       RegApi.middleware,
       ProfileApi.middleware,
-      LogoutApi.middleware
+      LogoutApi.middleware,
     ),
-  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
