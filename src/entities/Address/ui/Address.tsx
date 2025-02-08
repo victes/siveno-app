@@ -1,5 +1,9 @@
 // import { useGetAddressesQuery } from "@/shared/api/AddressApi/AddressApi";
-import { useAddAddressesMutation, useGetAddressesQuery } from "@/shared/api/AddressApi/AddressApi";
+import {
+  useAddAddressesMutation,
+  useGetAddressesQuery,
+  useUpdateAddressesMutation,
+} from "@/shared/api/AddressApi/AddressApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,6 +15,12 @@ import { FaRegTrashCan } from "react-icons/fa6";
 interface IModal {
   click: boolean;
   setClick: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface IUpdModal {
+  click: boolean;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+  item: any;
 }
 
 const formSchema = z.object({
@@ -60,8 +70,82 @@ const Modal = ({ click, setClick }: IModal) => {
         postal_code: values.postal_code,
         apartment: values.apartment,
       };
+      setClick(false);
       const result = await addAddresses(requestBody).unwrap();
       console.log("result: " + result);
+    } catch (err) {
+      console.error("Registration failed:", err);
+    }
+  };
+
+  return (
+    <>
+      {" "}
+      {click ? (
+        <div className="z-50 bg-black/50 w-screen h-screen fixed top-0 left-0 flex justify-center items-center">
+          <div className="w-[500px] transform bg-white p-6 py-8 rounded-[5px]">
+            <button onClick={() => setClick(false)}>
+              <RxCross2 className="absolute top-0 right-0 cursor-pointer m-3" size={30} />{" "}
+            </button>
+            <form onSubmit={form.handleSubmit(handleChange)} className="flex flex-col gap-[20px]">
+              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                <input type="text" placeholder="Государство" {...form.register("state")} />
+              </label>
+              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                <input type="text" placeholder="Город" {...form.register("city")} />
+              </label>
+              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                <input type="text" placeholder="Улица" {...form.register("street")} />
+              </label>
+              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                <input type="text" placeholder="Дом" {...form.register("house")} />
+              </label>
+              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                <input type="text" placeholder="Почтовый индекс" {...form.register("postal_code")} />
+              </label>
+              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+                <input type="text" placeholder="Квартира" {...form.register("apartment")} />
+              </label>
+              <button>Сохранить адрес</button>
+            </form>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
+  );
+};
+
+const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
+  const [updateAddresses] = useUpdateAddressesMutation();
+  const form = useForm<FormFields>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      state: item.state ? item.state : "",
+      city: item.city ? item.city : "",
+      street: item.street ? item.street : "",
+      house: item.house ? item.house : "",
+      postal_code: item.postal_code ? item.postal_code : "",
+      apartment: item.apartment ? item.apartment : "",
+    },
+  });
+
+  const handleChange = async (values: FormFields) => {
+    try {
+      const requestBody = {
+        id: item.id,
+        is_primary: false,
+        state: values.state,
+        city: values.city,
+        street: values.street,
+        house: values.house,
+        postal_code: values.postal_code,
+        apartment: values.apartment,
+      };
+      const result = await updateAddresses(requestBody).unwrap();
+      console.log("result: " + result);
+      setClick(false);
     } catch (err) {
       console.error("Registration failed:", err);
     }
@@ -82,7 +166,7 @@ const Modal = ({ click, setClick }: IModal) => {
     <>
       {" "}
       {click ? (
-        <div className="z-50 bg-black/85 w-screen h-screen fixed top-0 left-0 flex justify-center items-center">
+        <div className="z-50 bg-black/50 w-screen h-screen fixed top-0 left-0 flex justify-center items-center">
           <div className="w-[500px] transform bg-white p-6 py-8 rounded-[5px]">
             <button onClick={() => setClick(false)}>
               <RxCross2 className="absolute top-0 right-0 cursor-pointer m-3" size={30} />{" "}
@@ -142,6 +226,7 @@ const Address = () => {
   const { data, isSuccess } = useGetAddressesQuery();
 
   const [click, setClick] = useState(false);
+  const [click2, setClick2] = useState(false);
 
   // console.log(data);
 
@@ -167,7 +252,11 @@ const Address = () => {
               </div>
             </div>
             <div className="flex gap-[20px]">
-              <GoPencil size={20} className="cursor-pointer" />
+              <button onClick={() => setClick2(prev => !prev)}>
+                <GoPencil size={20} className="cursor-pointer" />
+              </button>
+
+              {click2 ? <UpdateModal click={click2} setClick={() => setClick2(prev => !prev)} item={item} /> : ""}
               <FaRegTrashCan size={20} className="cursor-pointer" />
             </div>
           </div>
