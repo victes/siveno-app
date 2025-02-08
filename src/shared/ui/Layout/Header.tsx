@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Container } from "../Container";
 import { RxHamburgerMenu } from "react-icons/rx";
 
-import { IoIosSearch } from "react-icons/io";
+// import { IoIosSearch } from "react-icons/io";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { IoIosLogIn } from "react-icons/io";
@@ -64,19 +64,10 @@ const Header = () => {
           <div className="flex text-center items-top ">
             <p className="text-[20px] max-mindesk:hidden">8 (800) 555-25-23</p>
             <div className="flex gap-5 ml-20 text-center items-center max-tablet:ml-0 max-tablet:gap-2">
-              <IoIosSearch
+              {/* <IoIosSearch
                 size={30}
                 className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-              />
-              {token === null ? (
-                <Link href={"/login"}>
-                  <IoIosLogIn size={30} />
-                </Link>
-              ) : (
-                <Link href={"/account"}>
-                  <GoPerson size={30} />
-                </Link>
-              )}
+              /> */}
 
               <div className="relative">
                 <div className="absolute text-black ml-5 -mt-4">{isSuccess ? data.data.length : "0"}</div>
@@ -97,6 +88,19 @@ const Header = () => {
               </div>
               <Cart click={cart} setClick={() => setCart(prev => !prev)} />
               <Favourite click={fav} setClick={() => setFav(prev => !prev)} />
+
+              {token === null ? (
+                <Link href={"/login"}>
+                  <IoIosLogIn
+                    size={30}
+                    className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+                  />
+                </Link>
+              ) : (
+                <Link href={"/account"}>
+                  <GoPerson size={30} />
+                </Link>
+              )}
             </div>
           </div>
         </div>
