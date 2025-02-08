@@ -3,12 +3,33 @@
 import React, { useRef, useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { IFav } from "../types/type";
-import { useFavStore } from "@/entities/favouriteStore/store";
 import { RxCross2 } from "react-icons/rx";
+import { useDeleteWishlistMutation, useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
+import { toast } from "react-toastify";
+
+interface ProductImage {
+  image_path: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  images: ProductImage[];
+}
 
 const Favourite = ({ click, setClick }: IFav) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
+  const [deleteWishlist] = useDeleteWishlistMutation();
+  const { data, isSuccess } = useGetWishListQuery({});
+
+  const handleDeleteWishlist = (id: number) => {
+    deleteWishlist({ id: id });
+    toast.error(`Удалено из корзины`, {
+      position: "top-right",
+    });
+  };
 
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
@@ -26,7 +47,7 @@ const Favourite = ({ click, setClick }: IFav) => {
       setAnimate(true); // Запуск анимации при открытии
     }
   }, [click]);
-  const { favourite, removeFav } = useFavStore();
+  // const { favourite, removeFav } = useFavStore();
   return (
     <>
       {click && (
@@ -43,26 +64,32 @@ const Favourite = ({ click, setClick }: IFav) => {
           >
             <RxCross2 className="absolute top-0 left-0 m-5 cursor-pointer" size={30} onClick={() => handleClose()} />
             <h2 className="text-black text-[30px]">Избранное</h2>
-            {favourite.map(product => (
-              <li key={product.id} className="flex gap-5 p-2 justify-between ">
-                <div className="flex gap-5 items-center">
-                  <div>
-                    <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
-                  </div>
-                  <div className="flex flex-col justify-start">
-                    <span className="text-black">{product.name}</span>
-                    <span className="text-[30px] text-black">{product.price} руб</span>
-                  </div>
-                </div>
-                <div>
-                  <MdDeleteOutline
-                    onClick={() => removeFav(product.id)}
-                    size={30}
-                    className="m-2 cursor-pointer hover:text-red-500"
-                  />
-                </div>
-              </li>
-            ))}
+            {isSuccess
+              ? data.data.map((product: Product) => (
+                  <li key={product.id} className="flex gap-5 p-2 justify-between ">
+                    <div className="flex gap-5 items-center">
+                      <div>
+                        <img
+                          src={product.images[0].image_path}
+                          alt={product.name}
+                          className="h-[300px] w-[200px] object-cover"
+                        />
+                      </div>
+                      <div className="flex flex-col justify-start">
+                        <span className="text-black">{product.name}</span>
+                        <span className="text-[30px] text-black">{product.price} руб</span>
+                      </div>
+                    </div>
+                    <div>
+                      <MdDeleteOutline
+                        onClick={() => handleDeleteWishlist(product.id)}
+                        size={30}
+                        className="m-2 cursor-pointer hover:text-red-500"
+                      />
+                    </div>
+                  </li>
+                ))
+              : "Товаров нет"}
           </div>
         </div>
       )}

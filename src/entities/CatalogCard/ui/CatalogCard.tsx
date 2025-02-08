@@ -14,8 +14,6 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   const { addFav } = useFavStore();
   const [token, setToken] = useState("");
   const [addToWishlist] = useAddToWishlistMutation();
-  console.log(id);
-  console.log(id);
 
   useEffect(() => {
     setToken(localStorage.getItem("access_token") || "");

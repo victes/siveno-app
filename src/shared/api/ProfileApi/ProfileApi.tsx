@@ -15,6 +15,7 @@ export const ProfileApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Wishlist"],
   endpoints: builder => ({
     getProfile: builder.query({
       query: () => "profile",
@@ -28,6 +29,7 @@ export const ProfileApi = createApi({
     }),
     getWishList: builder.query({
       query: () => "wishlist",
+      providesTags: ["Wishlist"],
     }),
     addToWishlist: builder.mutation({
       query: user => ({
@@ -35,9 +37,23 @@ export const ProfileApi = createApi({
         method: "POST",
         body: user,
       }),
+      invalidatesTags: ["Wishlist"],
+    }),
+    deleteWishlist: builder.mutation({
+      query: user => ({
+        url: `wishlist/${user.id}`,
+        method: "DELETE",
+        body: user,
+      }),
+      invalidatesTags: ["Wishlist"],
     }),
   }),
 });
 
-export const { useGetProfileQuery, useChangeProfileMutation, useGetWishListQuery, useAddToWishlistMutation } =
-  ProfileApi;
+export const {
+  useGetProfileQuery,
+  useChangeProfileMutation,
+  useGetWishListQuery,
+  useAddToWishlistMutation,
+  useDeleteWishlistMutation,
+} = ProfileApi;

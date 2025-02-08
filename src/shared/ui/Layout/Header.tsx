@@ -14,8 +14,8 @@ import { Favourite } from "@/widgets/Favourite";
 import { GoPerson } from "react-icons/go";
 
 import { useProductStore } from "@/entities/productStore/store";
-import { useFavStore } from "@/entities/favouriteStore/store";
 import Link from "next/link";
+import { useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
 // import Link from "next/link";
 
 const Header = () => {
@@ -23,7 +23,7 @@ const Header = () => {
   const [cart, setCart] = useState(false);
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
-  const { favourite } = useFavStore();
+  const { data, isSuccess } = useGetWishListQuery({});
   const [token, setToken] = useState(localStorage.getItem("access_token"));
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const Header = () => {
               )}
 
               <div className="relative">
-                <div className="absolute text-black ml-5 -mt-4">{favourite.length}</div>
+                <div className="absolute text-black ml-5 -mt-4">{isSuccess ? data.data.length : "0"}</div>
                 <IoMdHeartEmpty
                   size={30}
                   className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
