@@ -13,6 +13,7 @@ import { useGetProductsByCategoryQuery } from "@/shared/api/ProductsApi/ui/Produ
 import { useGetCategoriesQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
 import { useParams } from "next/navigation";
 import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi";
+import Breadcrumbs from "@/shared/ui/Breadcrumbs";
 
 const CatalogProductsPage = () => {
   const { products_slug } = useParams();
@@ -36,15 +37,16 @@ const CatalogProductsPage = () => {
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
       <div className="breadcrumbs text-sm mx-auto mb-[70px]">
-        <ul>
+        {/* <ul>
           <li>
             <a>Home</a>
           </li>
           <li>
             <a>Catalog</a>
           </li>
-          <li>{"Категория не найдена"}</li>
-        </ul>
+          <li>Add Document</li>
+        </ul> */}
+        <Breadcrumbs />
       </div>
 
       <div className="mb-[40px]">
@@ -73,8 +75,6 @@ const CatalogProductsPage = () => {
         {isLoading && <p>Загрузка...</p>}
         {error && <p>Ошибка загрузки товаров</p>}
         {products?.data.map(item => {
-          // Парсим строку JSON в массив URL
-          // const imageUrls = JSON.parse(item.image_urls); // Теперь это массив
           return (
             <CatalogCard
               key={item.id}

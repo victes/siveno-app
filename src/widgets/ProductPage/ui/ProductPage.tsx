@@ -7,6 +7,7 @@ import ProductSlider from "@/entities/ProductSlider/ui/ProductSlider";
 import ButtonsProduct from "@/features/ButtonsProduct";
 import Accordion from "@/shared/ui/Accordion";
 import Carousel from "@/shared/ui/Carousel";
+import BtnBack from "@/shared/ui/BtnBack";
 
 import { useParams } from "next/navigation";
 
@@ -121,16 +122,8 @@ const ProductPage = () => {
 
   return (
     <section className="mb-[60px] pb-[20px] ">
-      <div className="breadcrumbs text-sm mx-auto mb-[30px]">
-        <ul>
-          <li>
-            <a>Home</a>
-          </li>
-          <li>
-            <a>Documents</a>
-          </li>
-          <li>Add Document</li>
-        </ul>
+      <div className="text-sm mx-auto mb-[30px]">
+        <BtnBack />
       </div>
       <div className="flex flex-col items-center largeDesk:flex-row justify-between">
         <div className="mb-[40px] largeDesk:mb-0">
