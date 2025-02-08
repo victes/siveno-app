@@ -4,6 +4,7 @@ import CatalogCard from "@/entities/CatalogCard";
 import React from "react";
 import "../styles/catalog-categories.scss";
 import { useGetCategoriesQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
+import Breadcrumbs from "@/shared/ui/Breadcrumbs";
 
 const CatalogPage = () => {
   const { data: categories, error, isLoading } = useGetCategoriesQuery();
@@ -11,7 +12,7 @@ const CatalogPage = () => {
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
       <div className="breadcrumbs text-sm mx-auto mb-[70px]">
-        <ul>
+        {/* <ul>
           <li>
             <a>Home</a>
           </li>
@@ -19,7 +20,8 @@ const CatalogPage = () => {
             <a>Documents</a>
           </li>
           <li>Add Document</li>
-        </ul>
+        </ul> */}
+        <Breadcrumbs />
       </div>
       <div className="mb-[20px]">
         <h1 className="title-h1">Каталог</h1>

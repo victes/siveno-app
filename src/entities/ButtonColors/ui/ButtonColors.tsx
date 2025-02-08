@@ -14,8 +14,6 @@ import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi"
 const ButtonColors = () => {
   const { data: colors } = useGetColorsByProductQuery();
 
-  console.log(colors);
-
   const [activeColor, setActiveColor] = useState<string | null>(null); // Типизируем активный цвет
 
   // Обработчик клика по кнопке
