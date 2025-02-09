@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file://D%3A/Portfolio/Shop-kwork/shop-kwork/src/widgets/CatalogPage/styles/catalog-categories.scss.css"],"sourcesContent":[".categories-card-container{display:grid;gap:50px}@media screen and (min-width: 1920px){.categories-card-container{grid-template-columns:repeat(4, 1fr)}}@media(min-width: 1366px)and (max-width: 1920px){.categories-card-container{grid-template-columns:repeat(3, 1fr)}}@media(min-width: 768px)and (max-width: 1366px){.categories-card-container{grid-template-columns:repeat(2, 1fr)}}@media(min-width: 480px)and (max-width: 768px){.categories-card-container{grid-template-columns:repeat(1fr)}}@media(max-width: 480px){.categories-card-container{grid-template-columns:1fr}}"],"names":[],"mappings":"AAAA;;;;;AAAiD;EAAsC;;;;;AAAiE;EAAiD;;;;;AAAiE;EAAgD;;;;;AAAiE;EAA+C;;;;;AAA8D;EAAyB"}},
-    {"offset": {"line": 35, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}
