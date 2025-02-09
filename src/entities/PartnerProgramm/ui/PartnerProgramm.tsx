@@ -12,15 +12,15 @@ const LoayltyLevel = () => {
 };
 
 const LoyaytiPoints = () => {
-  const { data } = useGetLoyaltyPointsQuery();
+  const { data, isSuccess } = useGetLoyaltyPointsQuery();
   console.log(data);
-  return <p>Баллы лояльности: </p>;
+  return <p>Баллы лояльности: {isSuccess ? data : 0}</p>;
 };
 
 const LoyaytiPointsHistory = () => {
-  const { data } = useGetLoyaltyPointsHistoryQuery();
+  const { data, isSuccess } = useGetLoyaltyPointsHistoryQuery();
   console.log(data);
-  return <p>История Баллов: </p>;
+  return <p>История Баллов: {isSuccess ? data : 0}</p>;
 };
 
 const PartnerProgramm = () => {
