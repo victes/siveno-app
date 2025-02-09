@@ -16,9 +16,11 @@ export const AddressesApi = createApi({
     },
   }),
   tagTypes: ["Addresses"],
+  tagTypes: ["Addresses"],
   endpoints: builder => ({
     getAddresses: builder.query({
       query: () => "addresses",
+      providesTags: ["Addresses"],
       providesTags: ["Addresses"],
     }),
     addAddresses: builder.mutation({
@@ -29,7 +31,24 @@ export const AddressesApi = createApi({
       }),
       invalidatesTags: ["Addresses"],
     }),
+    updateAddresses: builder.mutation({
+      query: user => ({
+        url: `addresses/${user.id}`,
+        method: "PUT",
+        body: user,
+      }),
+      invalidatesTags: ["Addresses"],
+    }),
+    deleteAddresses: builder.mutation({
+      query: user => ({
+        url: `addresses/${user.id}`,
+        method: "DELETE",
+        body: user,
+      }),
+      invalidatesTags: ["Addresses"],
+    }),
   }),
 });
 
-export const { useGetAddressesQuery, useAddAddressesMutation } = AddressesApi;
+export const { useGetAddressesQuery, useAddAddressesMutation, useUpdateAddressesMutation, useDeleteAddressesMutation } =
+  AddressesApi;

@@ -27,6 +27,13 @@ export const ProfileApi = createApi({
         body: user,
       }),
     }),
+    changeAvatar: builder.mutation({
+      query: user => ({
+        url: `/user/avatar`,
+        method: "POST",
+        body: user,
+      }),
+    }),
     getWishList: builder.query({
       query: () => "wishlist",
       providesTags: ["Wishlist"],
@@ -56,4 +63,5 @@ export const {
   useGetWishListQuery,
   useAddToWishlistMutation,
   useDeleteWishlistMutation,
+  useChangeAvatarMutation,
 } = ProfileApi;

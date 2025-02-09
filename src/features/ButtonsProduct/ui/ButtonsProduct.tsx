@@ -6,9 +6,9 @@ import React, { useEffect, useState } from "react";
 
 interface IProduct {
   id: number;
-  name: string;
+  name: string | undefined;
   price: string;
-  img: string;
+  img: string | undefined;
 }
 
 const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
@@ -26,7 +26,7 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   const handleAddProduct = () => {
     if (name.trim() && price) {
       addProduct({
-        id: Date.now().toString(),
+        id: id.toString(),
         name,
         price: parseFloat(price),
         img,

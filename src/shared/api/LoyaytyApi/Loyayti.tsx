@@ -16,10 +16,16 @@ export const LoyaytiApi = createApi({
     },
   }),
   endpoints: builder => ({
-    getLoyalty: builder.query<[], void>({
+    getLoyaltyLevel: builder.query<[], void>({
       query: () => "loyalty/level",
+    }),
+    getLoyaltyPoints: builder.query<[], void>({
+      query: () => "loyalty/points",
+    }),
+    getLoyaltyPointsHistory: builder.query<[], void>({
+      query: () => "loyalty/points-history",
     }),
   }),
 });
 
-export const { useGetLoyaltyQuery } = LoyaytiApi; // экспорт хука
+export const { useGetLoyaltyLevelQuery, useGetLoyaltyPointsQuery, useGetLoyaltyPointsHistoryQuery } = LoyaytiApi; // экспорт хука
