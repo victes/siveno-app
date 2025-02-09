@@ -165,6 +165,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
         use_loyalty_points: true,
       }).unwrap();
 
+      if (!orderResponse?.id) {
+        throw new Error("Не удалось создать заказ. Попробуйте позже.");
+      }
+
       setOrderId(orderResponse.id);
 
       const paymentResponse = await payOrder({
@@ -174,7 +178,12 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       window.location.href = paymentResponse.payment_url;
     } catch (error) {
       console.error("Ошибка при создании заказа:", error);
-      alert("Произошла ошибка при оформлении заказа");
+
+      if (error.data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
+        alert("Произошла ошибка на сервере. Попробуйте позже.");
+      } else {
+        alert("Произошла ошибка при оформлении заказа");
+      }
     }
   };
 
