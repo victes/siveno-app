@@ -1,16 +1,18 @@
 // import { useGetAddressesQuery } from "@/shared/api/AddressApi/AddressApi";
 import {
   useAddAddressesMutation,
+  useDeleteAddressesMutation,
   useGetAddressesQuery,
   useUpdateAddressesMutation,
 } from "@/shared/api/AddressApi/AddressApi";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { RxCross2 } from "react-icons/rx";
 import { z } from "zod";
 import { GoPencil } from "react-icons/go";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { toast } from "react-toastify";
 
 interface IModal {
   click: boolean;
@@ -20,7 +22,15 @@ interface IModal {
 interface IUpdModal {
   click: boolean;
   setClick: React.Dispatch<React.SetStateAction<boolean>>;
-  item: any;
+  item: {
+    id: number;
+    state: string;
+    city: string;
+    street: string;
+    house: string;
+    postal_code: string;
+    apartment: string;
+  };
 }
 
 const formSchema = z.object({
@@ -119,17 +129,36 @@ const Modal = ({ click, setClick }: IModal) => {
 
 const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
   const [updateAddresses] = useUpdateAddressesMutation();
+
+  const getDefaultValues = (item: AddressItem) => ({
+    id: item.id,
+    state: item.state || "",
+    city: item.city || "",
+    street: item.street || "",
+    house: item.house || "",
+    postal_code: item.postal_code || "",
+    apartment: item.apartment || "",
+    created_at: item.created_at || "",
+    is_primary: 0,
+    pivot: {
+      user_id: item.pivot.user_id || "",
+      address_id: item.pivot.address_id || "",
+      created_at: item.pivot.created_at || "",
+      updated_at: item.pivot.updated_at || "",
+    },
+    updated_at: item.updated_at || "",
+  });
+
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      state: item.state ? item.state : "",
-      city: item.city ? item.city : "",
-      street: item.street ? item.street : "",
-      house: item.house ? item.house : "",
-      postal_code: item.postal_code ? item.postal_code : "",
-      apartment: item.apartment ? item.apartment : "",
-    },
+    defaultValues: getDefaultValues(item),
   });
+
+  useEffect(() => {
+    if (item) {
+      form.reset(getDefaultValues(item));
+    }
+  }, [item, form]);
 
   const handleChange = async (values: FormFields) => {
     try {
@@ -146,22 +175,14 @@ const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
       const result = await updateAddresses(requestBody).unwrap();
       console.log("result: " + result);
       setClick(false);
+      toast.info(`Адрес изменен`, {
+        position: "top-right",
+      });
     } catch (err) {
       console.error("Registration failed:", err);
     }
   };
 
-  // const handleAddAddress = () => {
-  //   addAddresses({
-  //     is_primary: false,
-  //     state: "State",
-  //     city: "State",
-  //     street: "State",
-  //     house: "State",
-  //     postal_code: "State",
-  //     apartment: "State",
-  //   });
-  // };
   return (
     <>
       {" "}
@@ -226,9 +247,16 @@ const Address = () => {
   const { data, isSuccess } = useGetAddressesQuery();
 
   const [click, setClick] = useState(false);
-  const [click2, setClick2] = useState(false);
+  // const [click2, setClick2] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [deleteAddresses] = useDeleteAddressesMutation();
 
-  // console.log(data);
+  const handleDelete = (id: number) => {
+    deleteAddresses({ id: id });
+    toast.error(`Адрес удален `, {
+      position: "top-right",
+    });
+  };
 
   return (
     <div className="mt-[100px] max-w-[600px] h-[300px] w-full flex flex-col gap-[50px] overflow-x-auto">
@@ -252,12 +280,18 @@ const Address = () => {
               </div>
             </div>
             <div className="flex gap-[20px]">
-              <button onClick={() => setClick2(prev => !prev)}>
+              <button onClick={() => setEditingId(item.id)}>
                 <GoPencil size={20} className="cursor-pointer" />
               </button>
 
-              {click2 ? <UpdateModal click={click2} setClick={() => setClick2(prev => !prev)} item={item} /> : ""}
-              <FaRegTrashCan size={20} className="cursor-pointer" />
+              {editingId === item.id ? (
+                <UpdateModal click={true} setClick={() => setEditingId(null)} item={item} />
+              ) : (
+                ""
+              )}
+              <button onClick={() => handleDelete(item.id)}>
+                <FaRegTrashCan size={20} className="cursor-pointer" />
+              </button>
             </div>
           </div>
         ))
