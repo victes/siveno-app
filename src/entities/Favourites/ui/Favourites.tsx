@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useDeleteWishlistMutation, useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
 import React from "react";
 import { MdDeleteOutline } from "react-icons/md";

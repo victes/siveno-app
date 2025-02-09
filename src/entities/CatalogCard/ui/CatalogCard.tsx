@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useState } from "react";
 import { ICCard } from "../types";
@@ -16,7 +15,9 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   const [addToWishlist] = useAddToWishlistMutation();
 
   useEffect(() => {
-    setToken(localStorage.getItem("access_token") || "");
+    if (typeof window !== "undefined") {
+      setToken(localStorage.getItem("access_token") || "");
+    }
   }, []);
 
   const handleAddFavourite = () => {

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import { useChangeProfileMutation, useGetProfileQuery } from "@/shared/api/ProfileApi/ProfileApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect } from "react";

@@ -1,5 +1,4 @@
-// import { useGetAddressesQuery } from "@/shared/api/AddressApi/AddressApi";
-import { useAddAddressesMutation, useGetAddressesQuery } from "@/shared/api/AddressApi/AddressApi";
+import { useAddAddressesMutation } from "@/shared/api/AddressApi/AddressApi";
 import React, { useState } from "react";
 
 interface IModal {
@@ -7,25 +6,22 @@ interface IModal {
   setClick: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Modal = ({ click, setClick }: IModal) => {
+const Modal: React.FC<IModal> = ({ click, setClick }) => {
   return (
     <>
-      {" "}
       {click ? (
         <div className="z-50 bg-black opacity-40 w-screen h-screen fixed">
           <div onClick={() => setClick(false)}>X</div>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </>
   );
 };
 
-const Address = () => {
-  const { data } = useGetAddressesQuery();
+const Address: React.FC = () => {
+  // const { data } = useGetAddressesQuery();
   const [addAddresses] = useAddAddressesMutation();
-  const [click, setClick] = useState();
+  const [click, setClick] = useState<boolean>(false);
 
   const handleAddAddress = () => {
     addAddresses({
@@ -38,18 +34,16 @@ const Address = () => {
       apartment: "State",
     });
   };
-  console.log(data);
+
+  // console.log(data);
+
   return (
     <div className="mt-[100px] max-w-[600px] w-full flex flex-col gap-[50px]">
-      <p>Сохранненых адресов нет</p>
-      <button
-        className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full"
-        onClick={() => handleAddAddress()}
-      >
-        {" "}
-        Сохранить адрес{" "}
+      <p>Сохраненных адресов нет</p>
+      <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full" onClick={handleAddAddress}>
+        Сохранить адрес
       </button>
-      <Modal click={click} setClick={() => setClick()} />
+      <Modal click={click} setClick={setClick} />
     </div>
   );
 };

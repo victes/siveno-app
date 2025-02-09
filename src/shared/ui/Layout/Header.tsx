@@ -24,16 +24,20 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
   const { data, isSuccess } = useGetWishListQuery({});
-  const [token, setToken] = useState(localStorage.getItem("access_token"));
+  const [token, setToken] = useState<string | null>(
+    typeof window !== "undefined" ? localStorage.getItem("access_token") : null,
+  );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (typeof window !== "undefined") {
-        setToken(localStorage.getItem("access_token"));
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "access_token") {
+        setToken(event.newValue);
       }
-    }, 1000); // Проверка каждую секунду
+    };
 
-    return () => clearInterval(interval);
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
   return (

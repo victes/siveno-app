@@ -33,7 +33,11 @@ const LoginPage = () => {
     try {
       const result = await loginUser(values).unwrap();
       console.log("Login successful:", result);
-      localStorage.setItem("access_token", result.access_token);
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("access_token", result.access_token);
+      }
+
       push("/");
     } catch (err) {
       console.error("Login failed:", err);
