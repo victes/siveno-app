@@ -1,34 +1,21 @@
+"use client";
+
 import ButtonColors from "@/entities/ButtonColors";
 import ButtonSizes from "@/entities/ButtonSizes";
 import ProductSlider from "@/entities/ProductSlider/ui/ProductSlider";
 
-import React from "react";
-
-import "../styles/product-page.scss";
 import ButtonsProduct from "@/features/ButtonsProduct";
 import Accordion from "@/shared/ui/Accordion";
 import Carousel from "@/shared/ui/Carousel";
+import BtnBack from "@/shared/ui/BtnBack";
 
-const carousel = [
-  {
-    src: "https://lesyanebo.com/upload/resize_cache/iblock/83e/1380_2760_1/40npmby0a9hw3gcqlj479mpnma91q8xq.jpg",
-  },
-  {
-    src: "https://lesyanebo.com/upload/resize_cache/iblock/668/1380_2760_1/wn61ulv6puak2wbjh1aesfvwhh2njjfn.jpg",
-  },
-  {
-    src: "https://lesyanebo.com/upload/resize_cache/iblock/83e/1380_2760_1/40npmby0a9hw3gcqlj479mpnma91q8xq.jpg",
-  },
-  {
-    src: "https://lesyanebo.com/upload/resize_cache/iblock/83e/1380_2760_1/40npmby0a9hw3gcqlj479mpnma91q8xq.jpg",
-  },
-];
+import { useParams } from "next/navigation";
 
-const accordion = [
-  { name: "Состав и Уход", value: "" },
-  { name: "Обмеры", value: "" },
-  { name: "Параметры Модели", value: "" },
-];
+import React from "react";
+
+import "../styles/product-page.scss";
+
+import { useGetProductsByIdQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
 
 const Slides = [
   {
@@ -82,31 +69,75 @@ const Slides = [
 ];
 
 const ProductPage = () => {
+  const { product_id } = useParams();
+  const { data: products, isLoading, error } = useGetProductsByIdQuery(Number(product_id));
+
+  const carousel = products?.images;
+
+  const accordion = [
+    { name: "Состав и Уход", value: <>{products?.composition_care}</> },
+    {
+      name: "Обмеры",
+      value: (
+        <table>
+          <thead>
+            <tr>
+              <th>Размер</th>
+              <th>Параметры</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(products?.preference || {}).map(([size, measures]) => (
+              <tr key={size}>
+                <td>{size}</td>
+                <td>{measures.join(", ")}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ),
+    },
+    {
+      name: "Параметры Модели",
+      value: (
+        <table>
+          <thead>
+            <tr>
+              <th>Размер</th>
+              <th>Параметры</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(products?.measurements || {}).map(([size, measures]) => (
+              <tr key={size}>
+                <td>{size}</td>
+                <td>{measures.join(", ")}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ),
+    },
+  ];
+
   return (
-    <section className="mb-[60px] border-b-[1px] pb-[20px] border-solid border-[#423c3d]">
-      <div className="breadcrumbs text-sm mx-auto mb-[30px]">
-        <ul>
-          <li>
-            <a>Home</a>
-          </li>
-          <li>
-            <a>Documents</a>
-          </li>
-          <li>Add Document</li>
-        </ul>
+    <section className="mb-[60px] pb-[20px] ">
+      <div className="text-sm mx-auto mb-[30px]">
+        <BtnBack />
       </div>
       <div className="flex flex-col items-center largeDesk:flex-row justify-between">
         <div className="mb-[40px] largeDesk:mb-0">
-          <ProductSlider carousel={carousel} />
+          {isLoading && <p className="mx-auto">Загрузка...</p>}
+          {error && <p>Ошибка загрузки товаров</p>}
+
+          <ProductSlider carousel={carousel ? carousel : []} />
         </div>
         <div className="flex flex-col gap-[20px] items-center tablet:mx-auto tablet:max-w-[500px]">
           {/* ================================================== */}
           <div className="flex flex-col items-center justify-center gap-[20px]">
-            <h1 className="title-h1">Двубортный тренч ICONIC</h1>
+            <h1 className="title-h1">{products?.name}</h1>
             <p className="text-center max-w-[200px] tablet:max-w-full text-[10px] tablet:text-[14px]">
-              Базовая модель тренча из плотного хлопкового материала надёжно защищает от ветра и лёгких осадков.
-              Объёмный крой, спущенная линия плеч, объёмный воротник, декоративные ремешки. Рекомендуем выбирать тренч
-              на 1-2 размера меньше, чем вы носите обычно.
+              {products?.description}
             </p>
           </div>
           {/* ================================================== */}
@@ -121,12 +152,13 @@ const ProductPage = () => {
           {/* ================================================== */}
 
           <div className="producti-page-price mx-auto mb-[10px]">
-            <span>68 000 руб.</span>
+            <span>{Number(products?.price).toFixed()} руб.</span>
           </div>
 
           {/* ================================================== */}
           <div className="">
             <ButtonsProduct
+              id={Number(product_id)}
               price={"68000"}
               name="Двубортный тренч ICONIC"
               img={
@@ -144,7 +176,6 @@ const ProductPage = () => {
       </div>
       {/* ================================================== */}
       <div className="flex flex-col gap-5 mt-8">
-        {/* <Slider slides={Slides} className="mt-[40px]" /> */}
         <Carousel heading="Идеи от стилиста" items={Slides} />
         <Carousel heading="Вам может понравиться" items={Slides} />
       </div>

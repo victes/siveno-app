@@ -2,9 +2,11 @@
 
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import { TCarousel } from "../types";
+// import { TCarousel } from "../types";
+import Image from "next/image";
+import { IProductImage } from "@/shared/api/ProductsApi/types";
 
-const ProductSlider: React.FC<{ carousel: TCarousel }> = ({ carousel }) => {
+const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
@@ -21,12 +23,19 @@ const ProductSlider: React.FC<{ carousel: TCarousel }> = ({ carousel }) => {
       <div
         className="flex relative h-[400px] tablet:h-[500px] laptop:h-[800px] flex-col transition-transform duration-500"
         style={{
-          transform: `translateY(-${currentIndex * 100}%)`, // Плавная прокрутка по оси Y
+          transform: `translateY(-${currentIndex * 100}%)`,
         }}
       >
         {carousel.map((item, idx) => (
           <div key={idx} className="h-full w-full flex-shrink-0 flex justify-center items-center z-10">
-            <img src={item.src} alt={`Slide ${idx + 1}`} className="object-contain max-h-full max-w-full rounded-sm" />
+            <Image
+              width={550}
+              height={730}
+              src={item.image_path}
+              priority={false}
+              alt={`Slide ${idx + 1}`}
+              className="object-cover h-full w-auto  max-w-full rounded-sm"
+            />
           </div>
         ))}
       </div>
@@ -54,7 +63,7 @@ const ProductSlider: React.FC<{ carousel: TCarousel }> = ({ carousel }) => {
             className={`border-2 ${currentIndex === idx ? "border-black" : "border-transparent"} rounded-sm transition`}
           >
             <img
-              src={item.src}
+              src={item.image_path}
               alt={`Thumbnail ${idx + 1}`}
               className="h-20 w-20 flex-shrink-0 object-cover rounded-sm"
             />

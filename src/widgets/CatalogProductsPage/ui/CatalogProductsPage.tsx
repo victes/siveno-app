@@ -1,137 +1,141 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import React, { useState } from "react";
+import { useParams, useSearchParams, useRouter } from "next/navigation";
+
 import CatalogCard from "@/entities/CatalogCard";
-import React from "react";
+import ButtonSizes from "@/entities/ButtonSizes";
+import Select from "@/shared/ui/Select";
+import Breadcrumbs from "@/shared/ui/Breadcrumbs";
+
+import { useGetProductsByCategoryQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
+import { useGetCategoriesQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
+import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi";
 
 import "../styles/catalog-products-page.scss";
 
-import Select from "@/shared/ui/Select";
-
-import ButtonSizes from "@/entities/ButtonSizes";
-
-const data = [
-  {
-    img: "https://lesyanebo.com/upload/iblock/3d5/xxionigeyz5yvy5s9p196sa4n5z7cw2z.jpg",
-    href: "/product",
-    name: "Шорты",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/resize_cache/iblock/e9a/1380_2760_1/idhpbzr0zy0rhpegyzz5ll8va6tiip5e.jpg",
-    href: "/product",
-    name: "Юбка макси",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/iblock/b42/d6sf79qahurentncbeczj4jadlmdasv8.jpg",
-    href: "/product",
-    name: "Костюм",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/iblock/199/mbmh82y96ebi8jovb8wsjwq7912bnle3.jpg",
-    href: "/product",
-    name: "Блуза сверкающая",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/resize_cache/iblock/54e/1380_2760_1/1ljxc9w0ixguqf0lck7tyykrwen5y7md.jpg",
-    href: "/product",
-    name: "Рубашка",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/iblock/5a6/mgoxqvczlab4egf837nghbejhmw0izn2.jpg",
-    href: "/product",
-    name: "Пиджаки и Жакеты",
-    price: "800",
-  },
-  {
-    img: "https://avatars.mds.yandex.net/i?id=a8e182180827be387759392cf99da10f_l-5244544-images-thumbs&n=13",
-    href: "/product",
-    name: "Пальто",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/resize_cache/iblock/f8a/1380_2760_1/y8ihliiv7ikktfath9d8ykgz16jskly0.jpg",
-    href: "/product",
-    name: "Платья",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/iblock/8ab/duig7ge6sbumy15x74ffu8q38gi2n1d0.jpg",
-    href: "/product",
-    name: "Holiday",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/resize_cache/iblock/a53/1380_2760_1/5daugwpvspt0amih4hxejfa6vboynyv3.jpg",
-    href: "/product",
-    name: "Кардиган",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/iblock/d44/ljwcb9i0rvgpnj0s0lbeb4ndxsastdzm.jpeg",
-    href: "/product",
-    name: "Свитер",
-    price: "800",
-  },
-  {
-    img: "https://lesyanebo.com/upload/iblock/af2/qzy0hg32ddp8u74f11lvaqlqvw1dltw2.jpg",
-    href: "/product",
-    name: "Джемпер",
-    price: "800",
-  },
-];
-
 const CatalogProductsPage = () => {
+  const { products_slug } = useParams();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Получаем категории и текущую категорию
+  const { data: categories } = useGetCategoriesQuery();
+  const category = categories?.find(item => item.slug === products_slug);
+
+  // Фильтры из URL (если уже были установлены)
+  const initialSort = searchParams.get("sort") || "newest";
+  const initialColor = searchParams.get("color") || "all";
+  const initialSize = searchParams.get("size") || "all";
+
+  // Состояния фильтров
+  const [sort, setSort] = useState(initialSort);
+  const [color, setColor] = useState(initialColor);
+  const [size, setSize] = useState(initialSize);
+
+  // Загружаем цвета
+  const { data: colors } = useGetColorsByProductQuery();
+  const colorOptions = colors
+    ? colors.map(color => ({
+        option: color.name,
+        value: color.name.toLowerCase(),
+      }))
+    : [];
+  const optionsColor = [{ option: "Все цвета", value: "all" }, ...colorOptions];
+
+  // Формируем query params
+  const queryParams = new URLSearchParams();
+  if (category?.slug) queryParams.set("category_slug", category.slug);
+  if (color !== "all") queryParams.set("color", color);
+  if (size !== "all") queryParams.set("size", size);
+  if (sort) queryParams.set("sort", sort);
+
+  const queryString = queryParams.toString();
+  const { data: products, isLoading, error } = useGetProductsByCategoryQuery(queryString as any);
+
+  // Тип для ключей фильтра
+  type FilterKey = "color" | "size" | "sort";
+
+  // Функция обновления фильтров
+  const updateFilters = (key: FilterKey, value: string) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+
+    if (value === "all") {
+      newParams.delete(key);
+    } else {
+      newParams.set(key, value);
+    }
+
+    router.push(`?${newParams.toString()}`);
+  };
+
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
       <div className="breadcrumbs text-sm mx-auto mb-[70px]">
-        <ul>
-          <li>
-            <a>Home</a>
-          </li>
-          <li>
-            <a>Documents</a>
-          </li>
-          <li>Add Document</li>
-        </ul>
+        <Breadcrumbs />
       </div>
-      {/* ====================================================== */}
+
       <div className="mb-[40px]">
-        <h1 className="title-h1">Новинки</h1>
+        <h1 className="title-h1">{category?.title || "Категория не найдена"}</h1>
       </div>
-      {/* ========================================================== */}
-      <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row  mindesk:justify-between items-center mb-[30px]">
+
+      {/* Фильтры */}
+      <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row mindesk:justify-between items-center mb-[30px]">
         <div className="flex flex-col tablet:flex-row gap-[20px]">
           <Select
             name="По Популярности"
             options={[
-              { option: "Сначала старые", value: "Сначала старые" },
-              { option: "Сначала новые", value: "Сначала новые" },
-              { option: "Цена по возрастанию", value: "Цена по возрастанию" },
-              { option: "Цена по убыванию", value: "Цена по убыванию" },
+              { option: "Сначала старые", value: "oldest" },
+              { option: "Сначала новые", value: "newest" },
+              { option: "Цена по возрастанию", value: "price_asc" },
+              { option: "Цена по убыванию", value: "price_desc" },
             ]}
+            value={sort}
+            onChange={value => {
+              setSort(value);
+              updateFilters("sort", value);
+            }}
           />
           <Select
             name="Цвет"
-            options={[
-              { option: "Все цвета", value: "Все цвета" },
-              { option: "Синий", value: "Синий" },
-              { option: "Серый", value: "Серый" },
-              { option: "Зеленный", value: "Зеленный" },
-              { option: "Каштановый", value: "Каштановый" },
-            ]}
+            options={optionsColor}
+            value={color}
+            onChange={value => {
+              setColor(value);
+              updateFilters("color", value);
+            }}
           />
         </div>
         <div className="flex items-center gap-2">
-          <ButtonSizes />
+          <ButtonSizes
+            selectedSize={size}
+            onSizeSelect={value => {
+              setSize(value);
+              updateFilters("size", value);
+            }}
+          />
         </div>
       </div>
-      {/* ============================================================= */}
-      <div className={`products-card-container`}>
-        {data.map((item, idx) => (
-          <CatalogCard key={idx} img={item.img} href={item.href} name={item.name} price={item.price} />
-        ))}
+
+      {/* Карточки товаров */}
+      <div className="products-card-container">
+        {isLoading && <p>Загрузка...</p>}
+        {error && <p>Ошибка загрузки товаров</p>}
+        {products?.data.map(item => {
+          // Парсим строку JSON в массив URL
+          // const imageUrls = JSON.parse(item.image_urls); // Теперь это массив
+          return (
+            <CatalogCard
+              id={item.id}
+              key={item.id}
+              img={item.images[0].image_path} // Используем первый URL из массива
+              href={`/product/${item.id}`}
+              name={item.name}
+              price={Number(item.price).toFixed()}
+            />
+          );
+        })}
       </div>
     </div>
   );

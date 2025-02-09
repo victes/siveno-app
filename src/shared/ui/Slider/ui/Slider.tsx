@@ -15,8 +15,8 @@ const Slider = ({ slides, className }: ISliders) => {
         slidesPerView={6}
         navigation
         loop={true}
-        onSwiper={swiper => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
+        // onSwiper={swiper => console.log(swiper)}
+        // onSlideChange={() => console.log("slide change")}
         breakpoints={{
           // when window width is >= 320px
           320: {

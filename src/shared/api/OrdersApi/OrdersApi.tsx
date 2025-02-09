@@ -1,0 +1,15 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+export const OrdersApi = createApi({
+  reducerPath: "orders",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://kudzer5h.beget.tech/api/",
+  }),
+  endpoints: builder => ({
+    getOrders: builder.query<[], void>({
+      query: () => "orders",
+    }),
+  }),
+});
+
+export const { useGetOrdersQuery } = OrdersApi; // экспорт хука

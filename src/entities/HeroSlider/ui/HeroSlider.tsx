@@ -25,8 +25,8 @@ const HeroSlider = () => {
       }}
       //   navigation
       //   pagination={{ clickable: true }}
-      onSwiper={swiper => console.log(swiper)}
-      onSlideChange={() => console.log("slide change")}
+      // onSwiper={swiper => console.log(swiper)}
+      // onSlideChange={() => console.log("slide change")}
     >
       <SwiperSlide className="w-full h-screen">
         <img

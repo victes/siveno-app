@@ -1,17 +1,25 @@
 "use client";
 import { useFavStore } from "@/entities/favouriteStore/store";
 import { useProductStore } from "@/entities/productStore/store";
-import React from "react";
+import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
+import React, { useEffect, useState } from "react";
 
 interface IProduct {
+  id: number;
   name: string;
   price: string;
   img: string;
 }
 
-const ButtonsProduct = ({ name, price, img }: IProduct) => {
+const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   const { addProduct } = useProductStore();
   const { addFav } = useFavStore();
+  const [token, setToken] = useState("");
+  const [addToWishlist] = useAddToWishlistMutation();
+
+  useEffect(() => {
+    setToken(localStorage.getItem("access_token") || "");
+  }, []);
 
   const handleAddProduct = () => {
     if (name.trim() && price) {
@@ -23,14 +31,27 @@ const ButtonsProduct = ({ name, price, img }: IProduct) => {
       });
     }
   };
+
   const handleAddFavourite = () => {
-    if (name.trim() && price) {
-      addFav({
-        id: Date.now().toString(),
-        name,
-        price: parseFloat(price),
-        img,
-      });
+    addToWishlist({ product_id: id });
+    if (!token) {
+      if (name.trim() && price) {
+        addFav({
+          id: id.toString(),
+          name,
+          price: parseFloat(price),
+          img,
+        });
+      }
+    } else {
+      if (name.trim() && price) {
+        addFav({
+          id: id.toString(),
+          name,
+          price: parseFloat(price),
+          img,
+        });
+      }
     }
   };
   return (

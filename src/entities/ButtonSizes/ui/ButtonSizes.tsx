@@ -1,37 +1,27 @@
 "use client";
 
+import React from "react";
 import ButtonSize from "@/shared/ui/ButtonSize";
-import React, { useState } from "react";
+import { useGetSizesByProductQuery } from "@/shared/api/SizesApi/ui/SizesApi";
 
-const sizes = [
-  { name: "all", className: "", onClick: () => {} },
-  { name: "os", className: "", onClick: () => {} },
-  { name: "xs", className: "", onClick: () => {} },
-  { name: "s", className: "", onClick: () => {} },
-  { name: "m", className: "", onClick: () => {} },
-  { name: "l", className: "", onClick: () => {} },
-];
+interface ButtonSizesProps {
+  selectedSize?: string;
+  onSizeSelect?: (size: string) => void;
+}
 
-const ButtonSizes = () => {
-  const [activeSize, setActiveSize] = useState<string | null>(sizes[0].name);
-
-  const handleClick = (size: string) => {
-    setActiveSize(size); // Устанавливаем активный размер
-  };
+const ButtonSizes: React.FC<ButtonSizesProps> = ({ selectedSize, onSizeSelect }) => {
+  const { data: sizes } = useGetSizesByProductQuery();
 
   return (
     <div className="flex flex-wrap tablet:flex-nowrap gap-3">
-      {sizes.map((item, idx) => {
-        const isActive = activeSize === item.name; // Проверяем, активен ли размер
+      {sizes?.map((item, idx) => {
+        const isActive = selectedSize === item.name;
         return (
           <ButtonSize
             key={idx}
             name={item.name}
             className={`${item.className} ${isActive ? "border-2 border-[#423c3d]" : ""}`}
-            onClick={() => {
-              handleClick(item.name);
-              item.onClick(); // Вызываем оригинальную функцию onClick, если она есть
-            }}
+            onClick={() => onSizeSelect && onSizeSelect(item.name)}
           />
         );
       })}

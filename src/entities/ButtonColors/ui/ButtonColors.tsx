@@ -4,27 +4,31 @@ import React, { useState } from "react";
 import ButtonColor from "@/shared/ui/ButtonColor";
 
 import "../styles/btn-colors.scss";
+import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi";
 
-const buttonColorsList = ["primary", "secondary", "danger", "warning", "success", "info"] as const; // Используем as const, чтобы типизировать массив как конкретные строки
+// const buttonColorsList = ["primary", "secondary", "danger", "warning", "success", "info"] as const; // Используем as const, чтобы типизировать массив как конкретные строки
+// type ButtonColorKey = (typeof buttonColorsList)[number];
 
-type ButtonColorKey = (typeof buttonColorsList)[number]; // Тип для элемента массива
+// Тип для элемента массива
 
 const ButtonColors = () => {
-  const [activeColor, setActiveColor] = useState<ButtonColorKey | null>(null); // Типизируем активный цвет
+  const { data: colors } = useGetColorsByProductQuery();
+
+  const [activeColor, setActiveColor] = useState<string | null>(null); // Типизируем активный цвет
 
   // Обработчик клика по кнопке
-  const handleClick = (color: ButtonColorKey) => {
+  const handleClick = (color: string) => {
     setActiveColor(color); // Устанавливаем активный цвет
   };
 
   return (
     <div className="flex items-center space-x-2">
-      {buttonColorsList.map(color => (
+      {colors?.map(color => (
         <ButtonColor
-          key={color}
-          color={color}
-          onClick={() => handleClick(color)}
-          className={activeColor === color ? "active-btn-colors" : ""}
+          key={color.id}
+          color={color.code}
+          onClick={() => handleClick(color.code)}
+          className={activeColor === color.code ? "active-btn-colors" : ""}
         />
       ))}
     </div>

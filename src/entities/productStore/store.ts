@@ -32,7 +32,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       products: state.products.filter(product => product.id !== id),
     }));
     if (productItem) {
-      toast.error(`Удалено из продуктов: ${productItem.name}`, {
+      toast.error(`Удалено из корзины: ${productItem.name}`, {
         position: "top-right",
       });
     }

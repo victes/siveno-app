@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import Image from "next/image";
 
 type ImageType = {
   src: string;
@@ -28,7 +29,7 @@ type SliderProps = {
 const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
   return (
     <div className="w-full mx-auto tablet:p-6">
-      <h2 className="text-3xl font-bold title-h1 text-center uppercase tracking-wide">{heading}</h2>
+      <h2 className="text-3xl  font-bold title-h1 text-start uppercase tracking-wide">{heading}</h2>
       <Swiper
         modules={[Navigation]}
         navigation={{
@@ -60,7 +61,9 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
         {items.map((item, index) => (
           <SwiperSlide key={index}>
             <div className="flex flex-col items-center mt-10 tablet:p-4 duration-300">
-              <img
+              <Image
+                width={200}
+                height={200}
                 src={item.img[0].src}
                 alt={item.img[0].alt}
                 className="w-[15rem] h-[20rem] object-cover rounded-sm mb-4"
