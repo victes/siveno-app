@@ -1,6 +1,10 @@
-import { useChangeProfileMutation, useGetProfileQuery } from "@/shared/api/ProfileApi/ProfileApi";
+import {
+  useChangeAvatarMutation,
+  useChangeProfileMutation,
+  useGetProfileQuery,
+} from "@/shared/api/ProfileApi/ProfileApi";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -32,15 +36,17 @@ type FormFields = z.infer<typeof formSchema>;
 const PersonalAcc = () => {
   const { data, isLoading, isSuccess } = useGetProfileQuery({});
   const [changeProfile] = useChangeProfileMutation();
+  const [changeAvatar] = useChangeAvatarMutation();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: data?.email || "", // Используем опциональную цепочку
+      email: data?.email || "",
       password: "",
       confirmPassword: "",
-      firstName: data?.name || "", // Используем опциональную цепочку
-      lastName: data?.surname || "", // Используем опциональную цепочку
+      firstName: data?.name || "",
+      lastName: data?.surname || "",
     },
   });
 
@@ -71,20 +77,46 @@ const PersonalAcc = () => {
     }
   };
 
+  const handleAvatarChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      // formData.append("avatar", file);
+
+      try {
+        const result = await changeAvatar(formData).unwrap();
+        console.log("Avatar changed:", result);
+      } catch (err) {
+        console.error("Failed to change avatar:", err);
+      }
+    }
+  };
+
+  const handleAvatarButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
   return (
     <div className="flex flex-row-reverse gap-[50px] max-mindesk:flex-col">
       <div className="flex flex-col gap-[20px] mr-auto max-w-[200px] w-full object-cover rounded-md max-mindesk:m-auto">
         <img
-          src={
-            isLoading
-              ? "/images/Account/icon.png" // Пока данные загружаются, показываем заглушку
-              : data?.avatar_url // Если данные загружены, проверяем, есть ли avatar_url
-                ? data.avatar_url
-                : "/images/Account/icon.png"
-          }
+          src={isLoading ? "/images/Account/icon.png" : data?.avatar_url ? data.avatar_url : "/images/Account/icon.png"}
           className="object-cover max-w-[200px] w-full border-solid border-[1px] border-gray-400"
         />
-        <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">Изменить фото</button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleAvatarChange}
+          accept="image/*"
+        />
+        <button
+          type="button"
+          className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full"
+          onClick={handleAvatarButtonClick}
+        >
+          Изменить фото
+        </button>
       </div>
       <form
         onSubmit={form.handleSubmit(handleChange)}

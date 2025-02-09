@@ -53,17 +53,15 @@ const AccountPage = () => {
     <div className="flex mt-[90px] mb-[50px] gap-[100px] justify-center max-laptop:flex-col max-laptop:gap-[40px]">
       <div>
         <ul className="flex gap-4 cursor-pointer flex-col max-laptop:flex-row overflow-x-auto">
-          {["Личные данные", "Заказы", "Избранное", "Адреса", "Карта лояльности", "Уровень и скидки", "Выйти"].map(
-            tab => (
-              <li
-                key={tab}
-                className={`p-2 ${activeTab === tab ? "font-bold underline" : ""}`}
-                onClick={tab === "Выйти" ? () => handleLogout() : () => setActiveTab(tab)}
-              >
-                {tab}
-              </li>
-            ),
-          )}
+          {["Личные данные", "Заказы", "Избранное", "Адреса", "Карта лояльности", "Выйти"].map(tab => (
+            <li
+              key={tab}
+              className={`p-2 ${activeTab === tab ? "font-bold underline" : ""}`}
+              onClick={tab === "Выйти" ? () => handleLogout() : () => setActiveTab(tab)}
+            >
+              {tab}
+            </li>
+          ))}
         </ul>
       </div>
       {renderContent()}

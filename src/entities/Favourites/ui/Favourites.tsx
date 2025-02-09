@@ -21,7 +21,7 @@ const Favourites = () => {
 
   const handleDeleteWishlist = (id: number) => {
     deleteWishlist({ id: id });
-    toast.error(`Удалено из корзины`, {
+    toast.error(`Удалено из избранного `, {
       position: "top-right",
     });
   };
