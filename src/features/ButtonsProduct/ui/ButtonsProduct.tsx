@@ -18,7 +18,9 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   const [addToWishlist] = useAddToWishlistMutation();
 
   useEffect(() => {
-    setToken(localStorage.getItem("access_token") || "");
+    if (typeof window !== "undefined") {
+      setToken(localStorage.getItem("access_token") || "");
+    }
   }, []);
 
   const handleAddProduct = () => {

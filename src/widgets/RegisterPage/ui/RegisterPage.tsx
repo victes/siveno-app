@@ -62,7 +62,11 @@ const RegisterPage = () => {
 
       const result = await registerUser(requestBody).unwrap();
       console.log("Registration successful:", result);
-      localStorage.setItem("access_token", result.access_token);
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("access_token", result.access_token);
+      }
+
       push("/");
     } catch (err) {
       console.error("Registration failed:", err);

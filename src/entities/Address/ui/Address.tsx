@@ -185,7 +185,6 @@ const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
 
   return (
     <>
-      {" "}
       {click ? (
         <div className="z-50 bg-black/50 w-screen h-screen fixed top-0 left-0 flex justify-center items-center">
           <div className="w-[500px] transform bg-white p-6 py-8 rounded-[5px]">
@@ -215,9 +214,7 @@ const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
             </form>
           </div>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </>
   );
 };

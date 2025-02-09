@@ -18,14 +18,21 @@ const AccountPage = () => {
 
   const handleLogout = async () => {
     try {
-      await logout({ access_token: localStorage.getItem("access_token") }).unwrap(); // Выполняем запрос на выход
-      localStorage.removeItem("access_token");
+      const accessToken = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+
+      await logout({ access_token: accessToken }).unwrap(); // Выполняем запрос на выход
+
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("access_token");
+      }
+
       console.log("Успешный выход из системы");
       push("/");
     } catch (error) {
       console.error("Ошибка при выходе из системы:", error);
     }
   };
+
   // console.log(isSuccess ? data.id : "");
 
   const renderContent = () => {
