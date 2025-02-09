@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file://D%3A/Portfolio/Shop-kwork/shop-kwork/src/widgets/CatalogProductsPage/styles/catalog-products-page.scss.css"],"sourcesContent":[".products-card-container{display:grid;gap:20px}@media screen and (min-width: 1920px){.products-card-container{grid-template-columns:repeat(5, 1fr)}}@media(min-width: 1366px)and (max-width: 1920px){.products-card-container{grid-template-columns:repeat(4, 1fr)}}@media(min-width: 768px)and (max-width: 1366px){.products-card-container{grid-template-columns:repeat(3, 1fr)}}@media(min-width: 480px)and (max-width: 768px){.products-card-container{grid-template-columns:repeat(2, 1fr)}}@media(max-width: 480px){.products-card-container{grid-template-columns:1fr}}"],"names":[],"mappings":"AAAA;;;;;AAA+C;EAAsC;;;;;AAA+D;EAAiD;;;;;AAA+D;EAAgD;;;;;AAA+D;EAA+C;;;;;AAA+D;EAAyB"}},
+    {"offset": {"line": 35, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

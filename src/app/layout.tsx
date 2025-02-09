@@ -10,6 +10,7 @@ import Footer from "@/shared/ui/Layout/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReduxProvider } from "@/shared/lib/redux/provider";
+import { AuthProvider } from "@/shared/hook/AuthContext/ui/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,14 +40,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} bona antialiased`}>
-        <ReduxProvider>
-          <div className="flex flex-col min-h-screen">
-            <ToastContainer />
-            <Header />
-            {children}
-            <Footer />
-          </div>
-        </ReduxProvider>
+        <AuthProvider>
+          <ReduxProvider>
+            <div className="flex flex-col min-h-screen">
+              <ToastContainer />
+              <Header />
+              {children}
+              <Footer />
+            </div>
+          </ReduxProvider>
+        </AuthProvider>
       </body>
     </html>
   );

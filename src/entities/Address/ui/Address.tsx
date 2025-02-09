@@ -24,12 +24,16 @@ interface IUpdModal {
   setClick: React.Dispatch<React.SetStateAction<boolean>>;
   item: {
     id: number;
-    state: string;
+    apartment: string | null;
     city: string;
-    street: string;
-    house: string;
+    created_at: string;
+    house: string | null;
+    is_primary: 0 | 1;
+    pivot: Pivot;
     postal_code: string;
-    apartment: string;
+    state: string;
+    street: string | null;
+    updated_at: string;
   };
 }
 
@@ -241,7 +245,7 @@ interface AddressItem {
 }
 
 const Address = () => {
-  const { data, isSuccess } = useGetAddressesQuery();
+  const { data, isSuccess } = useGetAddressesQuery({});
 
   const [click, setClick] = useState(false);
   // const [click2, setClick2] = useState(false);

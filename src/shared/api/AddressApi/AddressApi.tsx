@@ -1,3 +1,5 @@
+"use client";
+
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const AddressesApi = createApi({
@@ -16,11 +18,9 @@ export const AddressesApi = createApi({
     },
   }),
   tagTypes: ["Addresses"],
-  tagTypes: ["Addresses"],
   endpoints: builder => ({
     getAddresses: builder.query({
       query: () => "addresses",
-      providesTags: ["Addresses"],
       providesTags: ["Addresses"],
     }),
     addAddresses: builder.mutation({

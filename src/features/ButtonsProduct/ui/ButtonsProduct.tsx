@@ -8,7 +8,7 @@ interface IProduct {
   id: number;
   name: string | undefined;
   price: string;
-  img: string | undefined;
+  img: string;
 }
 
 const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
@@ -24,7 +24,7 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   }, []);
 
   const handleAddProduct = () => {
-    if (name.trim() && price) {
+    if (name?.trim() && price) {
       addProduct({
         id: id.toString(),
         name,
@@ -37,7 +37,7 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   const handleAddFavourite = () => {
     addToWishlist({ product_id: id });
     if (!token) {
-      if (name.trim() && price) {
+      if (name?.trim() && price) {
         addFav({
           id: id.toString(),
           name,
@@ -46,7 +46,7 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
         });
       }
     } else {
-      if (name.trim() && price) {
+      if (name?.trim() && price) {
         addFav({
           id: id.toString(),
           name,

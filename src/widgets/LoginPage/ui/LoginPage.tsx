@@ -6,10 +6,11 @@ import { z } from "zod";
 import Link from "next/link";
 import { useLoginUserMutation } from "@/shared/api/LoginApi/LoginApi";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 
 const formSchema = z.object({
   email: z.string().email({
-    message: "почта введена не правильно",
+    message: "Почта введена не правильно",
   }),
   password: z.string().min(8, {
     message: "Пароль должен содержать не менее 8 символов",
@@ -21,6 +22,8 @@ type FormFields = z.infer<typeof formSchema>;
 const LoginPage = () => {
   const [loginUser] = useLoginUserMutation();
   const { push } = useRouter();
+  const { setToken } = useAuth();
+
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,11 +36,7 @@ const LoginPage = () => {
     try {
       const result = await loginUser(values).unwrap();
       console.log("Login successful:", result);
-
-      if (typeof window !== "undefined") {
-        localStorage.setItem("access_token", result.access_token);
-      }
-
+      setToken(result.access_token); // Обновит токен глобально
       push("/");
     } catch (err) {
       console.error("Login failed:", err);
@@ -55,16 +54,7 @@ const LoginPage = () => {
       >
         {/* Email Field */}
         <div className="flex flex-col space-y-2 w-full">
-          <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4 opacity-70"
-            >
-              <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-              <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-            </svg>
+          <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
             <input type="text" className="grow" placeholder="Почта" {...form.register("email")} />
           </label>
           {form.formState.errors.email && (
@@ -74,19 +64,7 @@ const LoginPage = () => {
 
         {/* Password Field */}
         <div className="flex flex-col space-y-2 w-full">
-          <label className="input border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none bg-transparent flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4 opacity-70"
-            >
-              <path
-                fillRule="evenodd"
-                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                clipRule="evenodd"
-              />
-            </svg>
+          <label className="input border-b border-[#423C3D] border-x-0 border-t-0 rounded-none bg-transparent flex items-center gap-2">
             <input
               type="password"
               className="grow bg-transparent focus:outline-none"

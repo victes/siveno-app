@@ -1,3 +1,4 @@
+"use client";
 import {
   useGetLoyaltyLevelQuery,
   useGetLoyaltyPointsHistoryQuery,
@@ -14,13 +15,13 @@ const LoayltyLevel = () => {
 const LoyaytiPoints = () => {
   const { data, isSuccess } = useGetLoyaltyPointsQuery();
   console.log(data);
-  return <p>Баллы лояльности: {isSuccess ? data : 0}</p>;
+  return <p>Баллы лояльности: {isSuccess ? data.total_points : 0}</p>;
 };
 
 const LoyaytiPointsHistory = () => {
-  const { data, isSuccess } = useGetLoyaltyPointsHistoryQuery();
+  const { data } = useGetLoyaltyPointsHistoryQuery();
   console.log(data);
-  return <p>История Баллов: {isSuccess ? data : 0}</p>;
+  return <p>История Баллов: Истории нет</p>;
 };
 
 const PartnerProgramm = () => {
