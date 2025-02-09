@@ -19,7 +19,21 @@ export const AddressesApi = createApi({
   }),
   tagTypes: ["Addresses"],
   endpoints: builder => ({
-    getAddresses: builder.query({
+    getAddresses: builder.query<
+      [
+        {
+          id: number;
+          city: string;
+          street: string;
+          house: string;
+          apartment: string;
+          postal_code: string;
+          state: string;
+          is_primary: boolean;
+        },
+      ],
+      void
+    >({
       query: () => "addresses",
       providesTags: ["Addresses"],
     }),

@@ -37,7 +37,7 @@ const LoginPage = () => {
       const result = await loginUser(values).unwrap();
       console.log("Login successful:", result);
       setToken(result.access_token); // Обновит токен глобально
-      push("/");
+      push("/account");
     } catch (err) {
       console.error("Login failed:", err);
     }

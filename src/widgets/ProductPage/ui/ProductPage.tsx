@@ -161,7 +161,7 @@ const ProductPage = () => {
               id={Number(product_id)}
               price={Number(products?.price).toFixed()}
               name={products?.name.toString()}
-              img={products?.images[0].image_path}
+              img={products?.images[0]?.image_path || ""}
             />
           </div>
           {/* ================================================== */}

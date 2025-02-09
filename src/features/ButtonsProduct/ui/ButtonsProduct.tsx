@@ -30,6 +30,8 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
         name,
         price: parseFloat(price),
         img,
+        selectedSize: "",
+        quantity: 0,
       });
     }
   };
