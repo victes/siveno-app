@@ -529,7 +529,7 @@ const formSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$
         message: "Подтверждение пароля должно содержать не менее 8 символов"
     }),
     house: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$lib$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["z"].string().nonempty({
-        message: "Имя обязательно для заполнения"
+        message: "Дом обязательно для заполнения"
     }),
     postal_code: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$lib$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["z"].string().nonempty({
         message: "Почтовый индекс обязательна для заполнения"
@@ -582,14 +582,14 @@ const Modal = ({ click, setClick })=>{
                                 size: 30
                             }, void 0, false, {
                                 fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                lineNumber: 83,
+                                lineNumber: 82,
                                 columnNumber: 15
                             }, this),
                             " "
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                        lineNumber: 82,
+                        lineNumber: 81,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -604,12 +604,12 @@ const Modal = ({ click, setClick })=>{
                                     ...form.register("state")
                                 }, void 0, false, {
                                     fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                    lineNumber: 87,
+                                    lineNumber: 86,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                lineNumber: 86,
+                                lineNumber: 85,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -620,12 +620,12 @@ const Modal = ({ click, setClick })=>{
                                     ...form.register("city")
                                 }, void 0, false, {
                                     fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                    lineNumber: 90,
+                                    lineNumber: 89,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                lineNumber: 89,
+                                lineNumber: 88,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -636,12 +636,12 @@ const Modal = ({ click, setClick })=>{
                                     ...form.register("street")
                                 }, void 0, false, {
                                     fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                    lineNumber: 93,
+                                    lineNumber: 92,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                lineNumber: 92,
+                                lineNumber: 91,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -652,12 +652,12 @@ const Modal = ({ click, setClick })=>{
                                     ...form.register("house")
                                 }, void 0, false, {
                                     fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                    lineNumber: 96,
+                                    lineNumber: 95,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                lineNumber: 95,
+                                lineNumber: 94,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -668,12 +668,12 @@ const Modal = ({ click, setClick })=>{
                                     ...form.register("postal_code")
                                 }, void 0, false, {
                                     fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                    lineNumber: 99,
+                                    lineNumber: 98,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                lineNumber: 98,
+                                lineNumber: 97,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -684,36 +684,36 @@ const Modal = ({ click, setClick })=>{
                                     ...form.register("apartment")
                                 }, void 0, false, {
                                     fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                    lineNumber: 102,
+                                    lineNumber: 101,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                lineNumber: 101,
+                                lineNumber: 100,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 children: "Сохранить адрес"
                             }, void 0, false, {
                                 fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                                lineNumber: 104,
+                                lineNumber: 103,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                        lineNumber: 85,
+                        lineNumber: 84,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-                lineNumber: 81,
+                lineNumber: 80,
                 columnNumber: 11
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/widgets/PayCard/ui/PayCard.tsx",
-            lineNumber: 80,
+            lineNumber: 79,
             columnNumber: 9
         }, this) : ""
     }, void 0, false);
@@ -726,6 +726,7 @@ const PayCard = ({ onOpen, open })=>{
     const [click, setClick] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [selectedAddress, setSelectedAddress] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [orderId, setOrderId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    // const { data } = useGetProfileQuery({});
     const [createOrder] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$OrdersApi$2f$OrdersApi$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCreateOrderMutation"])();
     const [payOrder] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$OrdersApi$2f$OrdersApi$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePayOrderMutation"])();
     const [cancelOrder] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$OrdersApi$2f$OrdersApi$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCancelOrderMutation"])();
@@ -760,7 +761,7 @@ const PayCard = ({ onOpen, open })=>{
                 items: products.map((p)=>({
                         product_id: Number(p.id),
                         size_id: 1,
-                        quantity: p.quantity || 1
+                        quantity: 1
                     })),
                 delivery: "courier",
                 use_loyalty_points: true
@@ -775,7 +776,7 @@ const PayCard = ({ onOpen, open })=>{
             window.location.href = paymentResponse.payment_url;
         } catch (error) {
             console.error("Ошибка при создании заказа:", error);
-        // if (error.data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
+        // if (data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
         //   alert("Произошла ошибка на сервере. Попробуйте позже.");
         // } else {
         //   alert("Произошла ошибка при оформлении заказа");
