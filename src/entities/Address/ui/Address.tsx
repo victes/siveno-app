@@ -24,12 +24,15 @@ interface IUpdModal {
   setClick: React.Dispatch<React.SetStateAction<boolean>>;
   item: {
     id: number;
-    state: string;
+    apartment: string | null; // Accepts null
     city: string;
-    street: string;
-    house: string;
+    created_at?: string; // Optional
+    house: string | null; // Accepts null
+    is_primary: boolean; // Changed to boolean
     postal_code: string;
-    apartment: string;
+    state: string;
+    street: string | null; // Accepts null
+    updated_at?: string; // Optional
   };
 }
 
@@ -134,19 +137,13 @@ const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
     id: item.id,
     state: item.state || "",
     city: item.city || "",
-    street: item.street || "",
-    house: item.house || "",
+    street: item.street || "", // Handles null/undefined
+    house: item.house || "", // Handles null/undefined
     postal_code: item.postal_code || "",
-    apartment: item.apartment || "",
-    created_at: item.created_at || "",
-    is_primary: 0,
-    pivot: {
-      user_id: item.pivot.user_id || "",
-      address_id: item.pivot.address_id || "",
-      created_at: item.pivot.created_at || "",
-      updated_at: item.pivot.updated_at || "",
-    },
-    updated_at: item.updated_at || "",
+    apartment: item.apartment || "", // Handles null/undefined
+    created_at: item.created_at || "", // Provides default
+    is_primary: item.is_primary || false, // Uses boolean
+    updated_at: item.updated_at || "", // Provides default
   });
 
   const form = useForm<FormFields>({
@@ -185,7 +182,6 @@ const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
 
   return (
     <>
-      {" "}
       {click ? (
         <div className="z-50 bg-black/50 w-screen h-screen fixed top-0 left-0 flex justify-center items-center">
           <div className="w-[500px] transform bg-white p-6 py-8 rounded-[5px]">
@@ -215,32 +211,29 @@ const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
             </form>
           </div>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </>
   );
 };
 
-interface Pivot {
-  user_id: number;
-  address_id: number;
-  created_at: string;
-  updated_at: string;
-}
+// interface Pivot {
+//   user_id: number;
+//   address_id: number;
+//   created_at: string;
+//   updated_at: string;
+// }
 
 interface AddressItem {
   id: number;
-  apartment: string | null;
+  apartment: string | null; // Accepts null
   city: string;
-  created_at: string;
-  house: string | null;
-  is_primary: 0 | 1;
-  pivot: Pivot;
+  created_at?: string; // Optional
+  house: string | null; // Accepts null
+  is_primary: boolean; // Changed to boolean
   postal_code: string;
   state: string;
-  street: string | null;
-  updated_at: string;
+  street: string | null; // Accepts null
+  updated_at?: string;
 }
 
 const Address = () => {
@@ -261,7 +254,7 @@ const Address = () => {
   return (
     <div className="mt-[100px] max-w-[600px] h-[300px] w-full flex flex-col gap-[50px] overflow-x-auto">
       {isSuccess ? (
-        data.map((item: AddressItem) => (
+        data.map(item => (
           <div key={item.id} className="flex max-w-[800px] w-full">
             {/* <h3>Адрес #{item.id}</h3> */}
             <div className="address-details max-w-[500px] w-full">
@@ -275,8 +268,8 @@ const Address = () => {
               )}
               {item.postal_code && <p>Почтовый индекс: {item.postal_code}</p>}
               <div className="meta-info">
-                <small>Создан: {new Date(item.created_at).toLocaleDateString()}</small>
-                <small>Обновлён: {new Date(item.updated_at).toLocaleDateString()}</small>
+                {/* <small>Создан: {new Date(item.created_at).toLocaleDateString()}</small>
+                <small>Обновлён: {new Date(item.updated_at).toLocaleDateString()}</small> */}
               </div>
             </div>
             <div className="flex gap-[20px]">

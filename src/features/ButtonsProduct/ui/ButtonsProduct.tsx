@@ -8,7 +8,7 @@ interface IProduct {
   id: number;
   name: string | undefined;
   price: string;
-  img: string | undefined;
+  img: string;
 }
 
 const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
@@ -18,16 +18,20 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   const [addToWishlist] = useAddToWishlistMutation();
 
   useEffect(() => {
-    setToken(localStorage.getItem("access_token") || "");
+    if (typeof window !== "undefined") {
+      setToken(localStorage.getItem("access_token") || "");
+    }
   }, []);
 
   const handleAddProduct = () => {
-    if (name.trim() && price) {
+    if (name?.trim() && price) {
       addProduct({
         id: id.toString(),
         name,
         price: parseFloat(price),
         img,
+        selectedSize: "",
+        quantity: 0,
       });
     }
   };
@@ -35,7 +39,7 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   const handleAddFavourite = () => {
     addToWishlist({ product_id: id });
     if (!token) {
-      if (name.trim() && price) {
+      if (name?.trim() && price) {
         addFav({
           id: id.toString(),
           name,
@@ -44,7 +48,7 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
         });
       }
     } else {
-      if (name.trim() && price) {
+      if (name?.trim() && price) {
         addFav({
           id: id.toString(),
           name,

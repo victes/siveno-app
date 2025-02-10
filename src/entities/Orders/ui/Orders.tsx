@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { useProductStore } from "@/entities/productStore/store";
-import { useGetOrdersQuery } from "@/shared/api/OrdersApi/OrdersApi";
+// import { useGetOrdersQuery } from "@/shared/api/OrdersApi/OrdersApi";
 import React from "react";
 import { MdDeleteOutline } from "react-icons/md";
 

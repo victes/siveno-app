@@ -16,6 +16,7 @@ import { GoPerson } from "react-icons/go";
 import { useProductStore } from "@/entities/productStore/store";
 import Link from "next/link";
 import { useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
+import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 // import Link from "next/link";
 
 const Header = () => {
@@ -24,17 +25,28 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
   const { data, isSuccess } = useGetWishListQuery({});
-  const [token, setToken] = useState(localStorage.getItem("access_token"));
+  // const [token, setToken] = useState<string | null>(
+  //   typeof window !== "undefined" ? localStorage.getItem("access_token") : null,
+  // );
+
+  const { token } = useAuth(); // Теперь токен приходит из контекста
+  const [localToken, setLocalToken] = useState<string | null>(token);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (typeof window !== "undefined") {
-        setToken(localStorage.getItem("access_token"));
-      }
-    }, 1000); // Проверка каждую секунду
+    setLocalToken(token); // Синхронизируем состояние с контекстомW
+  }, [token]);
 
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const handleStorageChange = (event: StorageEvent) => {
+  //     if (event.key === "access_token") {
+  //       setToken(event.newValue);
+  //     }
+  //   };
+
+  //   window.addEventListener("storage", handleStorageChange);
+
+  //   return () => window.removeEventListener("storage", handleStorageChange);
+  // }, []);
 
   return (
     <header className="bg-white">
@@ -89,7 +101,7 @@ const Header = () => {
               <Cart click={cart} setClick={() => setCart(prev => !prev)} />
               <Favourite click={fav} setClick={() => setFav(prev => !prev)} />
 
-              {token === null ? (
+              {!localToken ? (
                 <Link href={"/login"}>
                   <IoIosLogIn
                     size={30}

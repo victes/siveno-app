@@ -6,7 +6,7 @@ import { useAddAddressesMutation, useGetAddressesQuery } from "@/shared/api/Addr
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useGetProfileQuery } from "@/shared/api/ProfileApi/ProfileApi";
+
 import {
   useCancelOrderMutation,
   useCreateOrderMutation,
@@ -115,17 +115,16 @@ const Modal = ({ click, setClick }: IModal) => {
 const PayCard = ({ onOpen, open }: IPayCard) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
-  const { products, totalCost, clearCart } = useProductStore();
+  const { products, totalCost, clearProducts } = useProductStore();
   const { data: addresses, isSuccess } = useGetAddressesQuery();
   const [click, setClick] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<number | null>(null);
   const [orderId, setOrderId] = useState<number | null>(null);
-  const { data: userProfile } = useGetProfileQuery({});
 
   const [createOrder] = useCreateOrderMutation();
   const [payOrder] = usePayOrderMutation();
   const [cancelOrder] = useCancelOrderMutation();
-  const { data: orderData, refetch } = useGetOrderByIdQuery(orderId!, {
+  const { data: orderData } = useGetOrderByIdQuery(orderId!, {
     skip: !orderId,
   });
 
@@ -158,7 +157,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
         address_id: selectedAddress,
         items: products.map(p => ({
           product_id: Number(p.id),
-          size_id: p.selectedSize?.id || 1,
+          size_id: 1,
           quantity: p.quantity || 1,
         })),
         delivery: "courier",
@@ -179,11 +178,11 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     } catch (error) {
       console.error("Ошибка при создании заказа:", error);
 
-      if (error.data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
-        alert("Произошла ошибка на сервере. Попробуйте позже.");
-      } else {
-        alert("Произошла ошибка при оформлении заказа");
-      }
+      // if (error.data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
+      //   alert("Произошла ошибка на сервере. Попробуйте позже.");
+      // } else {
+      //   alert("Произошла ошибка при оформлении заказа");
+      // }
     }
   };
 
@@ -197,7 +196,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
 
   useEffect(() => {
     if (orderData?.status === "completed") {
-      clearCart();
+      clearProducts();
       alert("Заказ успешно оплачен!");
       handleClose();
     }

@@ -8,25 +8,23 @@ import { Favourites } from "@/entities/Favourites";
 import { Address } from "@/entities/Address";
 import { PartnerProgramm } from "@/entities/PartnerProgramm";
 import { Logout } from "@/entities/Logout";
+import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 
 const AccountPage = () => {
   const [activeTab, setActiveTab] = useState("Личные данные");
   const [logout] = useLogoutMutation();
   const { push } = useRouter();
-
-  // const {getWishList} = useGetWishListQuery({})
+  const { setToken } = useAuth();
 
   const handleLogout = async () => {
     try {
-      await logout({ access_token: localStorage.getItem("access_token") }).unwrap(); // Выполняем запрос на выход
-      localStorage.removeItem("access_token");
-      console.log("Успешный выход из системы");
+      await logout({ access_token: localStorage.getItem("access_token") }).unwrap();
+      setToken(null); // Удалит токен из состояния и localStorage
       push("/");
     } catch (error) {
       console.error("Ошибка при выходе из системы:", error);
     }
   };
-  // console.log(isSuccess ? data.id : "");
 
   const renderContent = () => {
     switch (activeTab) {
@@ -40,8 +38,6 @@ const AccountPage = () => {
         return <Address />;
       case "Карта лояльности":
         return <PartnerProgramm />;
-        // case "Уровень и скидки":
-        return <div className="max-w-[600px] w-full mt-[100px]">Ваши доступные промокоды будут находится здесь.</div>;
       case "Выйти":
         return <Logout />;
       default:
