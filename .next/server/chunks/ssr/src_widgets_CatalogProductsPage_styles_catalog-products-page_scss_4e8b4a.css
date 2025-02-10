@@ -1,0 +1,38 @@
+/* [project]/src/widgets/CatalogProductsPage/styles/catalog-products-page.scss.css [app-client] (css) */
+.products-card-container {
+  display: grid;
+  gap: 20px;
+}
+
+@media screen and (width >= 1920px) {
+  .products-card-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (width >= 1366px) and (width <= 1920px) {
+  .products-card-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (width >= 768px) and (width <= 1366px) {
+  .products-card-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width >= 480px) and (width <= 768px) {
+  .products-card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 480px) {
+  .products-card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/*# sourceMappingURL=src_widgets_CatalogProductsPage_styles_catalog-products-page_scss_4e8b4a.css.map*/

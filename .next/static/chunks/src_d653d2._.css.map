@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/Ilyas/Desktop/projects/shop-kwork/src/entities/ButtonColors/styles/btn-colors.scss.css"],"sourcesContent":[".active-btn-colors{width:20px;height:20px;transition:2}"],"names":[],"mappings":"AAAA"}},
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
+    {"offset": {"line": 9, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/Ilyas/Desktop/projects/shop-kwork/src/widgets/ProductPage/styles/product-page.scss.css"],"sourcesContent":[".producti-page-price{display:block;padding:0 10px;font-family:\"Jost\",\"Arial\",sans-serif;font-weight:500;font-size:20px;line-height:18px;letter-spacing:.1em;text-transform:uppercase;color:#423c3d;text-align:center}"],"names":[],"mappings":"AAAA"}},
+    {"offset": {"line": 21, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

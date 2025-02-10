@@ -1,0 +1,11 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":""}},
+    {"offset": {"line": 9, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
+    {"offset": {"line": 15, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":""}},
+    {"offset": {"line": 21, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
+    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/Ilyas/Desktop/projects/shop-kwork/src/app/page.tsx"],"sourcesContent":["\"use client\";\r\n\r\nimport { MainPage } from \"@/widgets/MainPage\";\r\n\r\nexport default function Home() {\r\n  return (\r\n    <div className=\"\">\r\n      <MainPage />\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;AAEA;AAAA;AAFA;;;AAIe,SAAS;IACtB,qBACE,6LAAC;QAAI,WAAU;kBACb,cAAA,6LAAC,uLAAA,CAAA,WAAQ;;;;;;;;;;AAGf;KANwB"}},
+    {"offset": {"line": 75, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

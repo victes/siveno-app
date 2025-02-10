@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/Ilyas/Desktop/projects/shop-kwork/src/entities/CatalogCard/styles/catalog-card.scss.css"],"sourcesContent":[".catalog-card:hover{opacity:50% #000}.categories__item-name{font-family:\"CSTM Xprmntl 02\",\"Jost\",\"Arial\",sans-serif;font-style:italic;font-weight:400;font-size:25px;line-height:50px;text-align:center;letter-spacing:.02em;text-transform:uppercase;color:#423c3d;margin-top:10px}.productions__item-name{display:block;font-weight:500;font-size:12px;line-height:18px;letter-spacing:.1em;text-transform:uppercase;color:#423c3d;margin-top:20px}.productions__item-price{display:block;padding:0 10px;font-family:\"Jost\",\"Arial\",sans-serif;font-weight:500;font-size:12px;line-height:18px;letter-spacing:.1em;text-transform:uppercase;color:#423c3d;text-align:center}"],"names":[],"mappings":"AAAA;;;;AAAqC;;;;;;;;;;;;;AAA+O;;;;;;;;;;;AAAiK"}},
+    {"offset": {"line": 41, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
