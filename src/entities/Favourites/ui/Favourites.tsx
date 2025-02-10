@@ -27,7 +27,6 @@ const Favourites = () => {
     });
   };
 
-  console.log(data);
   return (
     <div className="max-w-[800px] w-full mt-[100px] grid grid-cols-1 gap-[30px] overflow-y-auto h-[400px]">
       {isSuccess

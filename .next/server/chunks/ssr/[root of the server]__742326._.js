@@ -1635,6 +1635,13 @@ const Header = ()=>{
     const { products } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$entities$2f$productStore$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useProductStore"])();
     const { data, isSuccess } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$ProfileApi$2f$ProfileApi$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useGetWishListQuery"])({});
     const [token, setToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(("TURBOPACK compile-time falsy", 0) ? ("TURBOPACK unreachable", undefined) : null);
+    const { token } = useAuth(); // Теперь токен приходит из контекста
+    const [localToken, setLocalToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(token);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        setLocalToken(token); // Синхронизируем состояние с контекстом
+    }, [
+        token
+    ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const handleStorageChange = (event)=>{
             if (event.key === "access_token") {
@@ -1659,7 +1666,7 @@ const Header = ()=>{
                                 onClick: ()=>setClick((prev)=>!prev)
                             }, void 0, false, {
                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                lineNumber: 48,
+                                lineNumber: 55,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$widgets$2f$Burger$2f$ui$2f$Burger$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Burger$3e$__["Burger"], {
@@ -1667,7 +1674,7 @@ const Header = ()=>{
                                 setOpen: ()=>setClick((prev)=>!prev)
                             }, void 0, false, {
                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                lineNumber: 53,
+                                lineNumber: 60,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1677,12 +1684,12 @@ const Header = ()=>{
                                     children: "SIVENO"
                                 }, void 0, false, {
                                     fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                    lineNumber: 55,
+                                    lineNumber: 62,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                lineNumber: 54,
+                                lineNumber: 61,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1692,18 +1699,18 @@ const Header = ()=>{
                                     children: "Каталог"
                                 }, void 0, false, {
                                     fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                    lineNumber: 58,
+                                    lineNumber: 65,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                lineNumber: 57,
+                                lineNumber: 64,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                        lineNumber: 47,
+                        lineNumber: 54,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1714,7 +1721,7 @@ const Header = ()=>{
                                 children: "8 (800) 555-25-23"
                             }, void 0, false, {
                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                lineNumber: 69,
+                                lineNumber: 76,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1728,7 +1735,7 @@ const Header = ()=>{
                                                 children: isSuccess ? data.data.length : "0"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                                lineNumber: 77,
+                                                lineNumber: 84,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$io$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IoMdHeartEmpty"], {
@@ -1737,13 +1744,13 @@ const Header = ()=>{
                                                 onClick: ()=>setFav((prev)=>!prev)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                                lineNumber: 78,
+                                                lineNumber: 85,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                        lineNumber: 76,
+                                        lineNumber: 83,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1754,7 +1761,7 @@ const Header = ()=>{
                                                 children: products.length
                                             }, void 0, false, {
                                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                                lineNumber: 86,
+                                                lineNumber: 93,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$io5$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IoCartOutline"], {
@@ -1763,13 +1770,13 @@ const Header = ()=>{
                                                 onClick: ()=>setCart((prev)=>!prev)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                                lineNumber: 87,
+                                                lineNumber: 94,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                        lineNumber: 85,
+                                        lineNumber: 92,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$widgets$2f$Cart$2f$ui$2f$Cart$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Cart$3e$__["Cart"], {
@@ -1777,7 +1784,7 @@ const Header = ()=>{
                                         setClick: ()=>setCart((prev)=>!prev)
                                     }, void 0, false, {
                                         fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                        lineNumber: 93,
+                                        lineNumber: 100,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$widgets$2f$Favourite$2f$ui$2f$Favourite$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Favourite$3e$__["Favourite"], {
@@ -1785,27 +1792,14 @@ const Header = ()=>{
                                         setClick: ()=>setFav((prev)=>!prev)
                                     }, void 0, false, {
                                         fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                        lineNumber: 94,
+                                        lineNumber: 101,
                                         columnNumber: 15
                                     }, this),
-                                    token === null ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                    !token ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/login",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$io$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IoIosLogIn"], {
                                             size: 30,
                                             className: "hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                            lineNumber: 98,
-                                            columnNumber: 19
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                        lineNumber: 97,
-                                        columnNumber: 17
-                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                        href: "/account",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$go$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["GoPerson"], {
-                                            size: 30
                                         }, void 0, false, {
                                             fileName: "[project]/src/shared/ui/Layout/Header.tsx",
                                             lineNumber: 105,
@@ -1815,33 +1809,46 @@ const Header = ()=>{
                                         fileName: "[project]/src/shared/ui/Layout/Header.tsx",
                                         lineNumber: 104,
                                         columnNumber: 17
+                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                        href: "/account",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$go$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["GoPerson"], {
+                                            size: 30
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/shared/ui/Layout/Header.tsx",
+                                            lineNumber: 112,
+                                            columnNumber: 19
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/shared/ui/Layout/Header.tsx",
+                                        lineNumber: 111,
+                                        columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                                lineNumber: 70,
+                                lineNumber: 77,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                        lineNumber: 68,
+                        lineNumber: 75,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-                lineNumber: 46,
+                lineNumber: 53,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-            lineNumber: 45,
+            lineNumber: 52,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/shared/ui/Layout/Header.tsx",
-        lineNumber: 44,
+        lineNumber: 51,
         columnNumber: 5
     }, this);
 };
@@ -2434,9 +2441,20 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 const AuthContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(undefined);
 const AuthProvider = ({ children })=>{
-    const [token, setToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [token, setToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(()=>{
+        if ("TURBOPACK compile-time falsy", 0) {
+            "TURBOPACK unreachable";
+        }
+        return null;
+    });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        setToken(localStorage.getItem("access_token"));
+        const handleStorageChange = ()=>{
+            setToken(localStorage.getItem("access_token"));
+        };
+        window.addEventListener("storage", handleStorageChange);
+        return ()=>{
+            window.removeEventListener("storage", handleStorageChange);
+        };
     }, []);
     const updateToken = (newToken)=>{
         if (newToken) {
@@ -2445,6 +2463,7 @@ const AuthProvider = ({ children })=>{
             localStorage.removeItem("access_token");
         }
         setToken(newToken);
+        window.dispatchEvent(new Event("storage")); // Триггерим событие обновления
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AuthContext.Provider, {
         value: {
@@ -2454,7 +2473,7 @@ const AuthProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/src/shared/hook/AuthContext/ui/AuthContext.tsx",
-        lineNumber: 28,
+        lineNumber: 42,
         columnNumber: 10
     }, this);
 };

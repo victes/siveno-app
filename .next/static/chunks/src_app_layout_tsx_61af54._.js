@@ -6,7 +6,7 @@
   "path": "static/chunks/src_app_layout_tsx_61af54._.js",
   "chunks": [
     "static/chunks/[root of the server]__0a177b._.css",
-    "static/chunks/src_5314d7._.js",
+    "static/chunks/src_003aa2._.js",
     "static/chunks/node_modules_next_dist_532a10._.js",
     "static/chunks/node_modules_react-icons_rx_index_mjs_ecd194._.js",
     "static/chunks/node_modules_react-icons_md_index_mjs_78df2b._.js",
