@@ -1,0 +1,15 @@
+/* [project]/src/widgets/ProductPage/styles/product-page.scss.css [app-client] (css) */
+.producti-page-price {
+  display: block;
+  padding: 0 10px;
+  font-family: Jost, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 18px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #423c3d;
+  text-align: center;
+}
+
+/*# sourceMappingURL=src_widgets_ProductPage_styles_product-page_scss_b52d8e.css.map*/
