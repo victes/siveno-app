@@ -6,7 +6,6 @@ import { useAddAddressesMutation, useGetAddressesQuery } from "@/shared/api/Addr
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-
 import {
   useCancelOrderMutation,
   useCreateOrderMutation,
@@ -30,7 +29,7 @@ const formSchema = z.object({
     message: "Подтверждение пароля должно содержать не менее 8 символов",
   }),
   house: z.string().nonempty({
-    message: "Имя обязательно для заполнения",
+    message: "Дом обязательно для заполнения",
   }),
   postal_code: z.string().nonempty({
     message: "Почтовый индекс обязательна для заполнения",
@@ -120,6 +119,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [click, setClick] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<number | null>(null);
   const [orderId, setOrderId] = useState<number | null>(null);
+  // const { data } = useGetProfileQuery({});
 
   const [createOrder] = useCreateOrderMutation();
   const [payOrder] = usePayOrderMutation();
@@ -158,7 +158,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
         items: products.map(p => ({
           product_id: Number(p.id),
           size_id: 1,
-          quantity: p.quantity || 1,
+          quantity: 1,
         })),
         delivery: "courier",
         use_loyalty_points: true,
@@ -178,7 +178,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     } catch (error) {
       console.error("Ошибка при создании заказа:", error);
 
-      // if (error.data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
+      // if (data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
       //   alert("Произошла ошибка на сервере. Попробуйте позже.");
       // } else {
       //   alert("Произошла ошибка при оформлении заказа");

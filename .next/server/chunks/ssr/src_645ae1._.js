@@ -90,7 +90,7 @@ const PersonalAcc = ()=>{
         const file = event.target.files?.[0];
         if (file) {
             const formData = new FormData();
-            // formData.append("avatar", file);
+            formData.append("avatar", file);
             try {
                 const result = await changeAvatar(formData).unwrap();
                 console.log("Avatar changed:", result);
