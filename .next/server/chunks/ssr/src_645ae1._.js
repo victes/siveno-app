@@ -5,7 +5,7 @@ module.exports = {
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
-__turbopack_esm__({
+/* eslint-disable jsx-a11y/alt-text */ /* eslint-disable @next/next/no-img-element */ __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
@@ -113,7 +113,7 @@ const PersonalAcc = ()=>{
                         className: "object-cover max-w-[200px] w-full border-solid border-[1px] border-gray-400"
                     }, void 0, false, {
                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                        lineNumber: 102,
+                        lineNumber: 104,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -126,7 +126,7 @@ const PersonalAcc = ()=>{
                         accept: "image/*"
                     }, void 0, false, {
                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                        lineNumber: 106,
+                        lineNumber: 108,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -136,13 +136,13 @@ const PersonalAcc = ()=>{
                         children: "Изменить фото"
                     }, void 0, false, {
                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                        lineNumber: 113,
+                        lineNumber: 115,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                lineNumber: 101,
+                lineNumber: 103,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -163,17 +163,17 @@ const PersonalAcc = ()=>{
                                         ...form.register("firstName")
                                     }, void 0, false, {
                                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                        lineNumber: 128,
+                                        lineNumber: 130,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                    lineNumber: 127,
+                                    lineNumber: 129,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                lineNumber: 126,
+                                lineNumber: 128,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -187,23 +187,23 @@ const PersonalAcc = ()=>{
                                         ...form.register("lastName")
                                     }, void 0, false, {
                                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                        lineNumber: 133,
+                                        lineNumber: 135,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                    lineNumber: 132,
+                                    lineNumber: 134,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                lineNumber: 131,
+                                lineNumber: 133,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                        lineNumber: 125,
+                        lineNumber: 127,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -219,17 +219,17 @@ const PersonalAcc = ()=>{
                                         placeholder: "Дата рождения"
                                     }, void 0, false, {
                                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                        lineNumber: 140,
+                                        lineNumber: 142,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                    lineNumber: 139,
+                                    lineNumber: 141,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                lineNumber: 138,
+                                lineNumber: 140,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -242,23 +242,23 @@ const PersonalAcc = ()=>{
                                         placeholder: "Номер телефона"
                                     }, void 0, false, {
                                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                        lineNumber: 145,
+                                        lineNumber: 147,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                    lineNumber: 144,
+                                    lineNumber: 146,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                lineNumber: 143,
+                                lineNumber: 145,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                        lineNumber: 137,
+                        lineNumber: 139,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -272,17 +272,17 @@ const PersonalAcc = ()=>{
                                 ...form.register("email")
                             }, void 0, false, {
                                 fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                lineNumber: 151,
+                                lineNumber: 153,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                            lineNumber: 150,
+                            lineNumber: 152,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                        lineNumber: 149,
+                        lineNumber: 151,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -299,17 +299,17 @@ const PersonalAcc = ()=>{
                                         ...form.register("password")
                                     }, void 0, false, {
                                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                        lineNumber: 157,
+                                        lineNumber: 159,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                    lineNumber: 156,
+                                    lineNumber: 158,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                lineNumber: 155,
+                                lineNumber: 157,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -323,23 +323,23 @@ const PersonalAcc = ()=>{
                                         ...form.register("confirmPassword")
                                     }, void 0, false, {
                                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                        lineNumber: 162,
+                                        lineNumber: 164,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                    lineNumber: 161,
+                                    lineNumber: 163,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                                lineNumber: 160,
+                                lineNumber: 162,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                        lineNumber: 154,
+                        lineNumber: 156,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -347,19 +347,19 @@ const PersonalAcc = ()=>{
                         children: "Сохранить изменения"
                     }, void 0, false, {
                         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                        lineNumber: 171,
+                        lineNumber: 173,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-                lineNumber: 121,
+                lineNumber: 123,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/entities/PersonalAcc/ui/PersonalAcc.tsx",
-        lineNumber: 100,
+        lineNumber: 102,
         columnNumber: 5
     }, this);
 };
@@ -532,7 +532,6 @@ const Favourites = ()=>{
             position: "top-right"
         });
     };
-    console.log(data);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "max-w-[800px] w-full mt-[100px] grid grid-cols-1 gap-[30px] overflow-y-auto h-[400px]",
         children: isSuccess ? data.data.map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -548,12 +547,12 @@ const Favourites = ()=>{
                                     className: "h-[300px] w-[200px] object-cover"
                                 }, void 0, false, {
                                     fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-                                    lineNumber: 38,
+                                    lineNumber: 37,
                                     columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-                                lineNumber: 37,
+                                lineNumber: 36,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -564,7 +563,7 @@ const Favourites = ()=>{
                                         children: product.name
                                     }, void 0, false, {
                                         fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-                                        lineNumber: 45,
+                                        lineNumber: 44,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -575,19 +574,19 @@ const Favourites = ()=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-                                        lineNumber: 46,
+                                        lineNumber: 45,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-                                lineNumber: 44,
+                                lineNumber: 43,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-                        lineNumber: 36,
+                        lineNumber: 35,
                         columnNumber: 15
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -597,23 +596,23 @@ const Favourites = ()=>{
                             className: "m-2 cursor-pointer hover:text-red-500"
                         }, void 0, false, {
                             fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-                            lineNumber: 50,
+                            lineNumber: 49,
                             columnNumber: 17
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-                        lineNumber: 49,
+                        lineNumber: 48,
                         columnNumber: 15
                     }, this)
                 ]
             }, product.id, true, {
                 fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-                lineNumber: 35,
+                lineNumber: 34,
                 columnNumber: 13
             }, this)) : "Товаров нет"
     }, void 0, false, {
         fileName: "[project]/src/entities/Favourites/ui/Favourites.tsx",
-        lineNumber: 32,
+        lineNumber: 31,
         columnNumber: 5
     }, this);
 };
