@@ -40,16 +40,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} bona antialiased`}>
-        <AuthProvider>
-          <ReduxProvider>
+        <ReduxProvider>
+          <AuthProvider>
             <div className="flex flex-col min-h-screen">
               <ToastContainer />
               <Header />
               {children}
               <Footer />
             </div>
-          </ReduxProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
