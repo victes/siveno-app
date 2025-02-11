@@ -54,6 +54,7 @@ const AboutPage = () => {
               <Image
                 width={550}
                 height={730}
+                loading="lazy"
                 src="https://lesyanebo.com/local/templates/nebo_2022/images/about-lesya.jpg"
                 alt=""
                 className="shadow-lg"
@@ -111,6 +112,7 @@ const AboutPage = () => {
               <Image
                 width={550}
                 height={730}
+                loading="lazy"
                 src="https://lesyanebo.com/upload/resize_cache/iblock/e9a/1380_2760_1/idhpbzr0zy0rhpegyzz5ll8va6tiip5e.jpg"
                 alt=""
                 className="shadow-lg"

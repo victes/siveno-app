@@ -2327,7 +2327,8 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 __turbopack_esm__({
     "productsApi": (()=>productsApi),
     "useGetProductsByCategoryQuery": (()=>useGetProductsByCategoryQuery),
-    "useGetProductsByIdQuery": (()=>useGetProductsByIdQuery)
+    "useGetProductsByIdQuery": (()=>useGetProductsByIdQuery),
+    "useGetProductsPopularQuery": (()=>useGetProductsPopularQuery)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$react$2f$rtk$2d$query$2d$react$2e$modern$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/query/react/rtk-query-react.modern.mjs [app-ssr] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$rtk$2d$query$2e$modern$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/@reduxjs/toolkit/dist/query/rtk-query.modern.mjs [app-ssr] (ecmascript)");
@@ -2343,10 +2344,13 @@ const productsApi = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mod
             }),
             getProductsById: builder.query({
                 query: (productId)=>`products/${productId}`
+            }),
+            getProductsPopular: builder.query({
+                query: (limit)=>`products/popular?limit=${limit}`
             })
         })
 });
-const { useGetProductsByCategoryQuery, useGetProductsByIdQuery } = productsApi;
+const { useGetProductsByCategoryQuery, useGetProductsByIdQuery, useGetProductsPopularQuery } = productsApi;
 }}),
 "[project]/src/shared/api/SizesApi/ui/SizesApi.tsx [app-ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";

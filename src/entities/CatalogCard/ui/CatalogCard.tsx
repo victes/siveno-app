@@ -51,7 +51,7 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
           <Image
             width={400}
             height={400}
-            priority={true}
+            loading="lazy"
             src={img}
             alt={name}
             className={`w-auto h-[600px] object-cover`}
