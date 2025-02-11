@@ -131,7 +131,7 @@ const CatalogCard = ({ id, img, name, href, price })=>{
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                             width: 400,
                             height: 400,
-                            priority: true,
+                            loading: "lazy",
                             src: img,
                             alt: name,
                             className: `w-auto h-[600px] object-cover`
@@ -275,7 +275,7 @@ var _s = __turbopack_refresh__.signature();
 "use client";
 ;
 ;
-const ButtonSizes = ({ selectedSize, onSizeSelect })=>{
+const ButtonSizes = ({ selectedSize = "ALL", onSizeSelect })=>{
     _s();
     const { data: sizes } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$SizesApi$2f$ui$2f$SizesApi$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useGetSizesByProductQuery"])();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -445,7 +445,6 @@ const Breadcrumbs = ()=>{
                 pathSegments.map((segment, index)=>{
                     const href = "/" + pathSegments.slice(0, index + 1).join("/");
                     const isLast = index === pathSegments.length - 1;
-                    console.log(href);
                     let displayName = segmentNames[segment] || decodeURIComponent(segment);
                     if (isSlug(segment) && !segmentNames[segment]) displayName = segment;
                     if (isProductId(segment)) displayName = "Product";
@@ -457,7 +456,7 @@ const Breadcrumbs = ()=>{
                                 children: "/"
                             }, void 0, false, {
                                 fileName: "[project]/src/shared/ui/Breadcrumbs/ui/Breadcrumbs.tsx",
-                                lineNumber: 38,
+                                lineNumber: 36,
                                 columnNumber: 15
                             }, this),
                             isLast ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -465,7 +464,7 @@ const Breadcrumbs = ()=>{
                                 children: displayName
                             }, void 0, false, {
                                 fileName: "[project]/src/shared/ui/Breadcrumbs/ui/Breadcrumbs.tsx",
-                                lineNumber: 40,
+                                lineNumber: 38,
                                 columnNumber: 17
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                 href: href === "/catalog-products" ? "/catalog-categories" : href,
@@ -473,13 +472,13 @@ const Breadcrumbs = ()=>{
                                 children: displayName
                             }, void 0, false, {
                                 fileName: "[project]/src/shared/ui/Breadcrumbs/ui/Breadcrumbs.tsx",
-                                lineNumber: 42,
+                                lineNumber: 40,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, href, true, {
                         fileName: "[project]/src/shared/ui/Breadcrumbs/ui/Breadcrumbs.tsx",
-                        lineNumber: 37,
+                        lineNumber: 35,
                         columnNumber: 13
                     }, this);
                 })
@@ -565,7 +564,7 @@ const CatalogProductsPage = ()=>{
     // Фильтры из URL (если уже были установлены)
     const initialSort = searchParams.get("sort") || "newest";
     const initialColor = searchParams.get("color") || "all";
-    const initialSize = searchParams.get("size") || "all";
+    const initialSize = searchParams.get("size") || "ALL";
     // Состояния фильтров
     const [sort, setSort] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(initialSort);
     const [color, setColor] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(initialColor);

@@ -100,6 +100,14 @@ const ProductPage = () => {
 
   const carousel = products?.images;
 
+  console.log("Продукт:", products);
+
+  const sizes = Object.entries(products?.measurements || {}).map(([size]) => {
+    return size;
+  });
+
+  console.log(sizes);
+
   const accordion = [
     { name: "Состав и Уход", value: <>{products?.composition_care}</> },
     {
@@ -169,7 +177,7 @@ const ProductPage = () => {
           {/* ================================================== */}
           <div className="flex flex-col items-center justify-center">
             <div className="">
-              <ButtonSizes />
+              <ButtonSizes selectedSize={sizes.toString()} />
             </div>
             <div className="py-2">
               <ButtonColors />
