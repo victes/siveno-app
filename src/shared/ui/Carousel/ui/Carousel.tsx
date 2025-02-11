@@ -31,7 +31,9 @@ type SliderProps = {
 const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
   return (
     <div className="w-full mx-auto tablet:p-6">
-      <h2 className="text-3xl  font-bold title-h1 text-start uppercase tracking-wide">{heading}</h2>
+      <div className="w-full flex mt-[40px]">
+        <h2 className="text-3xl  title-h1 text-start uppercase tracking-wide">{heading}</h2>
+      </div>
       <Swiper
         modules={[Navigation]}
         navigation={{

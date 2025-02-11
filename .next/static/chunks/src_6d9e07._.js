@@ -679,9 +679,16 @@ const Carousel = ({ items, heading })=>{
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "w-full mx-auto tablet:p-6",
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                className: "text-3xl  font-bold title-h1 text-start uppercase tracking-wide",
-                children: heading
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "w-full flex mt-[40px]",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                    className: "text-3xl  title-h1 text-start uppercase tracking-wide",
+                    children: heading
+                }, void 0, false, {
+                    fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
+                    lineNumber: 35,
+                    columnNumber: 9
+                }, this)
             }, void 0, false, {
                 fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
                 lineNumber: 34,
@@ -734,19 +741,19 @@ const Carousel = ({ items, heading })=>{
                                             className: "w-[15rem] h-[20rem] object-cover rounded-sm mb-4"
                                         }, void 0, false, {
                                             fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                                            lineNumber: 71,
+                                            lineNumber: 73,
                                             columnNumber: 21
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                                        lineNumber: 70,
+                                        lineNumber: 72,
                                         columnNumber: 19
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         className: "text-gray-500",
                                         children: "Нет изображения"
                                     }, void 0, false, {
                                         fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                                        lineNumber: 81,
+                                        lineNumber: 83,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -754,7 +761,7 @@ const Carousel = ({ items, heading })=>{
                                         children: item.title
                                     }, void 0, false, {
                                         fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                                        lineNumber: 83,
+                                        lineNumber: 85,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -765,18 +772,18 @@ const Carousel = ({ items, heading })=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                                        lineNumber: 84,
+                                        lineNumber: 86,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                                lineNumber: 68,
+                                lineNumber: 70,
                                 columnNumber: 15
                             }, this)
                         }, index, false, {
                             fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                            lineNumber: 67,
+                            lineNumber: 69,
                             columnNumber: 13
                         }, this);
                     }),
@@ -784,20 +791,20 @@ const Carousel = ({ items, heading })=>{
                         className: "swiper-button-prev text-gray-500 hover:text-gray-800 duration-300"
                     }, void 0, false, {
                         fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                        lineNumber: 90,
+                        lineNumber: 92,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "swiper-button-next text-gray-500 hover:text-gray-800 duration-300"
                     }, void 0, false, {
                         fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                        lineNumber: 91,
+                        lineNumber: 93,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/shared/ui/Carousel/ui/Carousel.tsx",
-                lineNumber: 35,
+                lineNumber: 37,
                 columnNumber: 7
             }, this)
         ]
