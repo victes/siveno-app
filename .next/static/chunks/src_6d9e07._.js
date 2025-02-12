@@ -432,6 +432,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$entities$2f$favouriteStore$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/entities/favouriteStore/store.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$entities$2f$productStore$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/entities/productStore/store.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$ProfileApi$2f$ProfileApi$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/shared/api/ProfileApi/ProfileApi.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hook$2f$AuthContext$2f$ui$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/shared/hook/AuthContext/ui/AuthContext.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_refresh__.signature();
@@ -440,53 +442,71 @@ var _s = __turbopack_refresh__.signature();
 ;
 ;
 ;
+;
+;
 const ButtonsProduct = ({ id, name, price, img })=>{
     _s();
     const { addProduct } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$entities$2f$productStore$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useProductStore"])();
     const { addFav } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$entities$2f$favouriteStore$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useFavStore"])();
-    const [token, setToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    // const [token, setToken] = useState("");
+    const { push } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const [addToWishlist] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$ProfileApi$2f$ProfileApi$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAddToWishlistMutation"])();
+    const { token } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hook$2f$AuthContext$2f$ui$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"])(); // Теперь токен приходит из контекста
+    const [localToken, setLocalToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(token);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ButtonsProduct.useEffect": ()=>{
-            if ("TURBOPACK compile-time truthy", 1) {
-                setToken(localStorage.getItem("access_token") || "");
-            }
+            setLocalToken(token); // Синхронизируем состояние с контекстомW
         }
-    }["ButtonsProduct.useEffect"], []);
+    }["ButtonsProduct.useEffect"], [
+        token
+    ]);
+    // useEffect(() => {
+    //   if (typeof window !== "undefined") {
+    //     setToken(localStorage.getItem("access_token") || "");
+    //   }
+    // }, []);
     const handleAddProduct = ()=>{
-        if (name?.trim() && price) {
-            addProduct({
-                id: id.toString(),
-                name,
-                price: parseFloat(price),
-                img,
-                selectedSize: "",
-                quantity: 0
-            });
-        }
-    };
-    const handleAddFavourite = ()=>{
-        addToWishlist({
-            product_id: id
-        });
-        if (!token) {
+        if (localToken) {
             if (name?.trim() && price) {
-                addFav({
+                addProduct({
                     id: id.toString(),
                     name,
                     price: parseFloat(price),
-                    img
+                    img,
+                    selectedSize: "",
+                    quantity: 0
                 });
             }
         } else {
-            if (name?.trim() && price) {
-                addFav({
-                    id: id.toString(),
-                    name,
-                    price: parseFloat(price),
-                    img
-                });
+            push("/login");
+        }
+    };
+    const handleAddFavourite = ()=>{
+        if (localToken) {
+            addToWishlist({
+                product_id: id
+            });
+            if (!localToken) {
+                if (name?.trim() && price) {
+                    addFav({
+                        id: id.toString(),
+                        name,
+                        price: parseFloat(price),
+                        img
+                    });
+                }
+            } else {
+                if (name?.trim() && price) {
+                    addFav({
+                        id: id.toString(),
+                        name,
+                        price: parseFloat(price),
+                        img
+                    });
+                }
             }
+        } else {
+            push("/login");
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -503,12 +523,12 @@ const ButtonsProduct = ({ id, name, price, img })=>{
                             children: "Добавить в корзину"
                         }, void 0, false, {
                             fileName: "[project]/src/features/ButtonsProduct/ui/ButtonsProduct.tsx",
-                            lineNumber: 65,
+                            lineNumber: 83,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/features/ButtonsProduct/ui/ButtonsProduct.tsx",
-                        lineNumber: 64,
+                        lineNumber: 82,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -519,18 +539,18 @@ const ButtonsProduct = ({ id, name, price, img })=>{
                             children: "❤"
                         }, void 0, false, {
                             fileName: "[project]/src/features/ButtonsProduct/ui/ButtonsProduct.tsx",
-                            lineNumber: 70,
+                            lineNumber: 88,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/features/ButtonsProduct/ui/ButtonsProduct.tsx",
-                        lineNumber: 69,
+                        lineNumber: 87,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/features/ButtonsProduct/ui/ButtonsProduct.tsx",
-                lineNumber: 63,
+                lineNumber: 81,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -540,26 +560,28 @@ const ButtonsProduct = ({ id, name, price, img })=>{
                     children: "Оформить рассрочку"
                 }, void 0, false, {
                     fileName: "[project]/src/features/ButtonsProduct/ui/ButtonsProduct.tsx",
-                    lineNumber: 79,
+                    lineNumber: 97,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/features/ButtonsProduct/ui/ButtonsProduct.tsx",
-                lineNumber: 78,
+                lineNumber: 96,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/features/ButtonsProduct/ui/ButtonsProduct.tsx",
-        lineNumber: 62,
+        lineNumber: 80,
         columnNumber: 5
     }, this);
 };
-_s(ButtonsProduct, "Q5wLe7XwjWmv7tZ16vT9Jzmo0E4=", false, function() {
+_s(ButtonsProduct, "A4HhaCKD6sa+55r+cKDZ46+RIp0=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$entities$2f$productStore$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useProductStore"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$entities$2f$favouriteStore$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useFavStore"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$ProfileApi$2f$ProfileApi$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAddToWishlistMutation"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$ProfileApi$2f$ProfileApi$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAddToWishlistMutation"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hook$2f$AuthContext$2f$ui$2f$AuthContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"]
     ];
 });
 _c = ButtonsProduct;

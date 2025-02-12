@@ -2383,10 +2383,6 @@ details.collapse summary::-webkit-details-marker {
   margin-left: 50px;
 }
 
-.mr-2 {
-  margin-right: .5rem;
-}
-
 .mr-auto {
   margin-right: auto;
 }
@@ -3206,10 +3202,6 @@ details.collapse summary::-webkit-details-marker {
 
 .underline {
   text-decoration-line: underline;
-}
-
-.line-through {
-  text-decoration-line: line-through;
 }
 
 .antialiased {

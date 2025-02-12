@@ -71,7 +71,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$entities$2f$favourite
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/image.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$ProfileApi$2f$ProfileApi$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/shared/api/ProfileApi/ProfileApi.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hook$2f$AuthContext$2f$ui$2f$AuthContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/shared/hook/AuthContext/ui/AuthContext.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
 "use client";
+;
+;
 ;
 ;
 ;
@@ -81,35 +85,46 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$Prof
 ;
 const CatalogCard = ({ id, img, name, href, price })=>{
     const { addFav } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$entities$2f$favouriteStore$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useFavStore"])();
-    const [token, setToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
+    const { push } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const [addToWishlist] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$api$2f$ProfileApi$2f$ProfileApi$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAddToWishlistMutation"])();
+    const { token } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hook$2f$AuthContext$2f$ui$2f$AuthContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAuth"])(); // Теперь токен приходит из контекста
+    const [localToken, setLocalToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(token);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if ("TURBOPACK compile-time falsy", 0) {
-            "TURBOPACK unreachable";
-        }
-    }, []);
+        setLocalToken(token); // Синхронизируем состояние с контекстомW
+    }, [
+        token
+    ]);
+    // useEffect(() => {
+    //   if (typeof window !== "undefined") {
+    //     setToken(localStorage.getItem("access_token") || "");
+    //   }
+    // }, []);
     const handleAddFavourite = ()=>{
-        addToWishlist({
-            product_id: id
-        });
-        if (!token) {
-            if (name.trim() && price) {
-                addFav({
-                    id: id.toString(),
-                    name,
-                    price: parseFloat(price),
-                    img
-                });
+        if (localToken) {
+            addToWishlist({
+                product_id: id
+            });
+            if (!localToken) {
+                if (name.trim() && price) {
+                    addFav({
+                        id: id.toString(),
+                        name,
+                        price: parseFloat(price),
+                        img
+                    });
+                }
+            } else {
+                if (name.trim() && price) {
+                    addFav({
+                        id: id.toString(),
+                        name,
+                        price: parseFloat(price),
+                        img
+                    });
+                }
             }
         } else {
-            if (name.trim() && price) {
-                addFav({
-                    id: id.toString(),
-                    name,
-                    price: parseFloat(price),
-                    img
-                });
-            }
+            push("/login");
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -130,12 +145,12 @@ const CatalogCard = ({ id, img, name, href, price })=>{
                             className: `w-auto h-[600px] object-cover`
                         }, void 0, false, {
                             fileName: "[project]/src/entities/CatalogCard/ui/CatalogCard.tsx",
-                            lineNumber: 51,
+                            lineNumber: 63,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/entities/CatalogCard/ui/CatalogCard.tsx",
-                        lineNumber: 49,
+                        lineNumber: 61,
                         columnNumber: 9
                     }, this),
                     price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -145,13 +160,13 @@ const CatalogCard = ({ id, img, name, href, price })=>{
                         children: "❤"
                     }, void 0, false, {
                         fileName: "[project]/src/entities/CatalogCard/ui/CatalogCard.tsx",
-                        lineNumber: 62,
+                        lineNumber: 74,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/entities/CatalogCard/ui/CatalogCard.tsx",
-                lineNumber: 48,
+                lineNumber: 60,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -159,7 +174,7 @@ const CatalogCard = ({ id, img, name, href, price })=>{
                 children: name
             }, void 0, false, {
                 fileName: "[project]/src/entities/CatalogCard/ui/CatalogCard.tsx",
-                lineNumber: 71,
+                lineNumber: 83,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -167,13 +182,13 @@ const CatalogCard = ({ id, img, name, href, price })=>{
                 children: price ? `${price} руб.` : ""
             }, void 0, false, {
                 fileName: "[project]/src/entities/CatalogCard/ui/CatalogCard.tsx",
-                lineNumber: 73,
+                lineNumber: 85,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/entities/CatalogCard/ui/CatalogCard.tsx",
-        lineNumber: 47,
+        lineNumber: 59,
         columnNumber: 5
     }, this);
 };
