@@ -1,6 +1,1 @@
-{
-  "/page": "app/page.js",
-  "/(page)/catalog-categories/page": "app/(page)/catalog-categories/page.js",
-  "/(page)/catalog-products/[products_slug]/page": "app/(page)/catalog-products/[products_slug]/page.js",
-  "/(page)/product/[product_id]/page": "app/(page)/product/[product_id]/page.js"
-}
+{}

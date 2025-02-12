@@ -27,7 +27,7 @@ const CatalogProductsPage = () => {
   // Фильтры из URL (если уже были установлены)
   const initialSort = searchParams.get("sort") || "newest";
   const initialColor = searchParams.get("color") || "all";
-  const initialSize = searchParams.get("size") || "all";
+  const initialSize = searchParams.get("size") || "ALL";
 
   // Состояния фильтров
   const [sort, setSort] = useState(initialSort);

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ProductResponse, IProduct } from "../types";
+import { ProductResponse, IProduct, IPopular } from "../types";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
@@ -11,7 +11,10 @@ export const productsApi = createApi({
     getProductsById: builder.query<IProduct, number>({
       query: productId => `products/${productId}`,
     }),
+    getProductsPopular: builder.query<IPopular, number>({
+      query: limit => `products/popular?limit=${limit}`,
+    }),
   }),
 });
 
-export const { useGetProductsByCategoryQuery, useGetProductsByIdQuery } = productsApi;
+export const { useGetProductsByCategoryQuery, useGetProductsByIdQuery, useGetProductsPopularQuery } = productsApi;
