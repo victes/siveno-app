@@ -27,8 +27,6 @@ const Breadcrumbs = () => {
           const href = "/" + pathSegments.slice(0, index + 1).join("/");
           const isLast = index === pathSegments.length - 1;
 
-          console.log(href);
-
           let displayName = segmentNames[segment] || decodeURIComponent(segment);
           if (isSlug(segment) && !segmentNames[segment]) displayName = segment;
           if (isProductId(segment)) displayName = "Product";
