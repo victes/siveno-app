@@ -42,7 +42,7 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
         spaceBetween={15}
         slidesPerView={5}
         breakpoints={{
-          400: {
+          300: {
             slidesPerView: 1,
             spaceBetween: 10,
           },
