@@ -17,98 +17,35 @@ import "../styles/product-page.scss";
 
 import { useGetProductsByIdQuery, useGetProductsPopularQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
 import { IPopular } from "@/shared/api/ProductsApi/types";
-
-// const Slides = [
-//   {
-//     img: [{ src: "/images/MainPage/13.jpg", alt: "Img" }],
-//     title: "Кардиган из пряжи с Мериносом",
-//     description: "Description",
-//     price: 10000,
-//   },
-//   {
-//     img: [{ src: "/images/MainPage/10.jpg", alt: "Img" }],
-//     title: "Рубашка Декоррованная цветами",
-//     description: "Description",
-//     price: 7895,
-//   },
-//   {
-//     img: [{ src: "/images/MainPage/11.jpg", alt: "Img" }],
-//     title: "Жакет-балон из атласа",
-//     description: "Description",
-//     price: 87954,
-//   },
-//   {
-//     img: [{ src: "/images/MainPage/12.jpg", alt: "Img" }],
-//     title: "Рубашка в пижамном стиле с буфами",
-//     description: "Description",
-//     price: 1204,
-//   },
-//   {
-//     img: [{ src: "/images/MainPage/13.jpg", alt: "Img" }],
-//     title: "Кардиган из пряжи с Мериносом",
-//     description: "Description",
-//     price: 20415,
-//   },
-//   {
-//     img: [{ src: "/images/MainPage/14.jpg", alt: "Img" }],
-//     title: "Жакет-балон из атласа",
-//     description: "Description",
-//     price: 45689,
-//   },
-//   {
-//     img: [{ src: "/images/MainPage/10.jpg", alt: "Img" }],
-//     title: "Кардиган из пряжи с Мериносом",
-//     description: "Description",
-//     price: 48986,
-//   },
-//   {
-//     img: [{ src: "/images/MainPage/13.jpg", alt: "Img" }],
-//     title: "Рубашка в пижамном стиле с буфами",
-//     description: "Description",
-//     price: 17894,
-//   },
-// ];
-
-interface Slide {
-  id: number;
-  img: { src: string; alt: string }[];
-  title: string;
-  description: string;
-  price: number;
-}
+import { SliderItem } from "@/shared/ui/Carousel/ui/Carousel";
 
 const ProductPage = () => {
   const { product_id } = useParams();
   const { data: products, isLoading, error } = useGetProductsByIdQuery(Number(product_id));
   const { data } = useGetProductsPopularQuery(10);
 
-  console.log("Продукт:", products);
+  console.log(data);
 
-  const transformProductsToSlides = (items: IPopular[] = []): Slide[] => {
+  const transformProductsToSlides = (items: IPopular[] = []): SliderItem[] => {
     return items.map(product => ({
       id: product.id,
-      img: product.image_urls?.length
-        ? product.image_urls.map(url => ({ src: url, alt: product.name }))
-        : [{ src: "/images/placeholder.jpg", alt: "Нет изображения" }], // Фолбэк на случай отсутствия фото
+      img: product.images?.length
+        ? product.images.map(image => ({ src: image.image_path, alt: product.name }))
+        : [{ src: "/images/MainPage/1.jpg", alt: "Нет изображения" }], // Фолбэк на случай отсутствия фото
       title: product.name,
-      description: product.description,
       price: product.price,
     }));
   };
 
   const popular: IPopular[] = Array.isArray(data) ? data : [];
 
-  const slides: Slide[] = transformProductsToSlides(popular);
+  const slides: SliderItem[] = transformProductsToSlides(popular);
 
   const carousel = products?.images;
-
-  console.log("Продукт:", products);
 
   const sizes = Object.entries(products?.measurements || {}).map(([size]) => {
     return size;
   });
-
-  console.log(sizes);
 
   const accordion = [
     { name: "Состав и Уход", value: <>{products?.composition_care}</> },

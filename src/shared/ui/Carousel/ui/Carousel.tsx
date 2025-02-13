@@ -13,8 +13,7 @@ type ImageType = {
   src: string;
   alt: string;
 };
-
-type SliderItem = {
+export type SliderItem = {
   id: number;
   img: ImageType[];
   title: string;
