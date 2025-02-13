@@ -24,8 +24,6 @@ const ProductPage = () => {
   const { data: products, isLoading, error } = useGetProductsByIdQuery(Number(product_id));
   const { data } = useGetProductsPopularQuery(10);
 
-  console.log(data);
-
   const transformProductsToSlides = (items: IPopular[] = []): SliderItem[] => {
     return items.map(product => ({
       id: product.id,
@@ -147,7 +145,7 @@ const ProductPage = () => {
       </div>
       {/* ================================================== */}
       <div className="flex flex-col gap-5 mt-8">
-        <Carousel heading="Идеи от стилиста" items={slides} />
+        {/* <Carousel heading="Идеи от стилиста" items={slides} /> */}
         <Carousel heading="Вам может понравиться" items={slides} />
       </div>
     </section>
