@@ -83,3 +83,20 @@ export interface IProduct {
   updated_at: string;
   images: IProductImage[];
 }
+
+// ====================================================== Popular Products =================================
+export interface IPopular {
+  id: number;
+  name: string;
+  category_id: number;
+  description: string;
+  video_url: string;
+  price: number;
+  discount_percentage: number;
+  is_discount: boolean;
+  image_urls: string[];
+  preference: Record<string, { длина: number; обхват_груди: number }>;
+  measurements: Record<string, { длина: number; обхват_груди: number }>;
+  created_at: string;
+  updated_at: string;
+}
