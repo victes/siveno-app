@@ -25,9 +25,6 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
   const { data, isSuccess } = useGetWishListQuery({});
-  // const [token, setToken] = useState<string | null>(
-  //   typeof window !== "undefined" ? localStorage.getItem("access_token") : null,
-  // );
 
   const { token } = useAuth(); // Теперь токен приходит из контекста
   const [localToken, setLocalToken] = useState<string | null>(token);
@@ -35,18 +32,6 @@ const Header = () => {
   useEffect(() => {
     setLocalToken(token); // Синхронизируем состояние с контекстомW
   }, [token]);
-
-  // useEffect(() => {
-  //   const handleStorageChange = (event: StorageEvent) => {
-  //     if (event.key === "access_token") {
-  //       setToken(event.newValue);
-  //     }
-  //   };
-
-  //   window.addEventListener("storage", handleStorageChange);
-
-  //   return () => window.removeEventListener("storage", handleStorageChange);
-  // }, []);
 
   return (
     <header className="bg-white">

@@ -82,6 +82,8 @@ const ProductPage = () => {
   const { data: products, isLoading, error } = useGetProductsByIdQuery(Number(product_id));
   const { data } = useGetProductsPopularQuery(10);
 
+  console.log("Продукт:", products);
+
   const transformProductsToSlides = (items: IPopular[] = []): Slide[] => {
     return items.map(product => ({
       id: product.id,

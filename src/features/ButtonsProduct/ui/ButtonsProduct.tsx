@@ -5,6 +5,7 @@ import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { IoMdHeartEmpty } from "react-icons/io";
 
 interface IProduct {
   id: number;
@@ -89,7 +90,10 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
             className="btn bg-transparent border-none shadow-none hover:bg-transparent btn-active uppercase"
             onClick={handleAddFavourite}
           >
-            ❤
+            <IoMdHeartEmpty
+              size={30}
+              className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+            />
           </button>
         </div>
       </div>
