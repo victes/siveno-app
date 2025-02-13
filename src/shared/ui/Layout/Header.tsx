@@ -35,8 +35,8 @@ const Header = () => {
 
   return (
     <header className="bg-white">
-      <Container>
-        <div className="flex flex-row text-center items-center h-[90px] justify-between">
+      <Container className="!px-[20px]">
+        <div className="flex flex-row text-center items-center  h-[90px] justify-between">
           <div className="flex justify-center items-center  text-center gap-5">
             <RxHamburgerMenu
               size={30}
