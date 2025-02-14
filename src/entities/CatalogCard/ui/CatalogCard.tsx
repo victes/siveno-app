@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
+import { IoMdHeartEmpty } from "react-icons/io";
 
 const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   const { addFav } = useFavStore();
@@ -21,12 +22,6 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   useEffect(() => {
     setLocalToken(token); // Синхронизируем состояние с контекстомW
   }, [token]);
-
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     setToken(localStorage.getItem("access_token") || "");
-  //   }
-  // }, []);
 
   const handleAddFavourite = () => {
     if (localToken) {
@@ -76,7 +71,10 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
             aria-label="Добавить в избранное"
             onClick={handleAddFavourite}
           >
-            ❤
+            <IoMdHeartEmpty
+              size={30}
+              className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+            />
           </button>
         )}
       </div>

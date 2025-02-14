@@ -25,9 +25,6 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
   const { data, isSuccess } = useGetWishListQuery({});
-  // const [token, setToken] = useState<string | null>(
-  //   typeof window !== "undefined" ? localStorage.getItem("access_token") : null,
-  // );
 
   const { token } = useAuth(); // Теперь токен приходит из контекста
   const [localToken, setLocalToken] = useState<string | null>(token);
@@ -36,22 +33,10 @@ const Header = () => {
     setLocalToken(token); // Синхронизируем состояние с контекстомW
   }, [token]);
 
-  // useEffect(() => {
-  //   const handleStorageChange = (event: StorageEvent) => {
-  //     if (event.key === "access_token") {
-  //       setToken(event.newValue);
-  //     }
-  //   };
-
-  //   window.addEventListener("storage", handleStorageChange);
-
-  //   return () => window.removeEventListener("storage", handleStorageChange);
-  // }, []);
-
   return (
     <header className="bg-white">
-      <Container>
-        <div className="flex flex-row text-center items-center h-[90px] justify-between">
+      <Container className="!px-[20px]">
+        <div className="flex flex-row text-center items-center  h-[90px] justify-between">
           <div className="flex justify-center items-center  text-center gap-5">
             <RxHamburgerMenu
               size={30}
