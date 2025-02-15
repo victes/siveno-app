@@ -20,6 +20,8 @@ const Favourites = () => {
   const { data, isSuccess } = useGetWishListQuery({});
   const [deleteWishlist] = useDeleteWishlistMutation();
 
+  // console.log(isSuccess);
+
   const handleDeleteWishlist = (id: number) => {
     deleteWishlist({ id: id });
     toast.error(`Удалено из избранного `, {
@@ -28,8 +30,8 @@ const Favourites = () => {
   };
 
   return (
-    <div className="max-w-[800px] w-full mt-[100px] grid grid-cols-1 gap-[30px] overflow-y-auto h-[400px]">
-      {isSuccess
+    <div className="max-w-[700px] w-full mt-[100px] grid grid-cols-1 gap-[30px] overflow-y-auto h-[350px]">
+      {isSuccess && data.lenght
         ? data.data.map((product: Product) => (
             <li key={product.id} className="flex gap-5 p-2 justify-between ">
               <div className="flex gap-5 items-center">

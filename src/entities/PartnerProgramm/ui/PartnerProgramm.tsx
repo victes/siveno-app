@@ -26,7 +26,7 @@ const LoyaytiPointsHistory = () => {
 
 const PartnerProgramm = () => {
   return (
-    <div className="mt-[100px] max-w-[600px] w-full flex flex-col gap-[50px]">
+    <div className="mt-[100px] max-w-[700px] w-full flex flex-col gap-[50px] h-[350px]">
       <LoayltyLevel />
       <LoyaytiPoints />
       <LoyaytiPointsHistory />
