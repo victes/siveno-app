@@ -17,6 +17,7 @@ import { useProductStore } from "@/entities/productStore/store";
 import Link from "next/link";
 import { useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
+import { useRouter } from "next/navigation";
 // import Link from "next/link";
 
 const Header = () => {
@@ -25,12 +26,29 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
   const { data, isSuccess } = useGetWishListQuery({});
+  const { push } = useRouter();
   // const [token, setToken] = useState<string | null>(
   //   typeof window !== "undefined" ? localStorage.getItem("access_token") : null,
   // );
 
   const { token } = useAuth(); // Теперь токен приходит из контекста
   const [localToken, setLocalToken] = useState<string | null>(token);
+
+  const handleCart = () => {
+    if (localToken) {
+      setCart(prev => !prev);
+    } else {
+      push("/login");
+    }
+  };
+
+  const handleFav = () => {
+    if (localToken) {
+      setFav(prev => !prev);
+    } else {
+      push("/login");
+    }
+  };
 
   useEffect(() => {
     setLocalToken(token); // Синхронизируем состояние с контекстомW
@@ -86,7 +104,7 @@ const Header = () => {
                 <IoMdHeartEmpty
                   size={30}
                   className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                  onClick={() => setFav(prev => !prev)}
+                  onClick={() => handleFav()}
                 />
               </div>
 
@@ -95,9 +113,10 @@ const Header = () => {
                 <IoCartOutline
                   size={30}
                   className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                  onClick={() => setCart(prev => !prev)}
+                  onClick={() => handleCart()}
                 />
               </div>
+
               <Cart click={cart} setClick={() => setCart(prev => !prev)} />
               <Favourite click={fav} setClick={() => setFav(prev => !prev)} />
 
