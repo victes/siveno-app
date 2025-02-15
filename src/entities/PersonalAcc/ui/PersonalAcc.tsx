@@ -103,7 +103,7 @@ const PersonalAcc = () => {
       <div className="flex flex-col gap-[20px] mr-auto max-w-[200px] w-full object-cover rounded-md max-mindesk:m-auto">
         <img
           src={isLoading ? "/images/Account/icon.png" : data?.avatar_url ? data.avatar_url : "/images/Account/icon.png"}
-          className="object-cover max-w-[200px] w-full border-solid border-[1px] border-gray-400"
+          className="object-cover max-w-[200px] min-h-[200px] w-full border-solid border-[1px] border-gray-400"
         />
         <input
           type="file"
@@ -112,6 +112,7 @@ const PersonalAcc = () => {
           onChange={handleAvatarChange}
           accept="image/*"
         />
+        <p className="text-[13px] text-black">* Максимум 5мб</p>
         <button
           type="button"
           className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full"
@@ -170,7 +171,10 @@ const PersonalAcc = () => {
             </label>
           </div>
         </div>
-        <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">Сохранить изменения</button>
+        <div>
+          <p className="text-[10px] text-black">* Все поля должны быть заполенены</p>
+          <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">Сохранить изменения</button>
+        </div>
       </form>
     </div>
   );

@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { InputHTMLAttributes } from "react";
+import { FieldError } from "react-hook-form";
 import { IPayCard } from "../types/type";
 import { RxCross2 } from "react-icons/rx";
 import { useProductStore } from "@/entities/productStore/store";
@@ -12,11 +14,6 @@ import {
   useGetOrderByIdQuery,
   usePayOrderMutation,
 } from "@/shared/api/OrdersApi/OrdersApi";
-
-interface IModal {
-  click: boolean;
-  setClick: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 const formSchema = z.object({
   state: z.string().nonempty({
@@ -41,6 +38,11 @@ const formSchema = z.object({
 
 type FormFields = z.infer<typeof formSchema>;
 
+interface IModal {
+  click: boolean;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 const Modal = ({ click, setClick }: IModal) => {
   const [addAddresses] = useAddAddressesMutation();
   const form = useForm<FormFields>({
@@ -51,65 +53,115 @@ const Modal = ({ click, setClick }: IModal) => {
       street: "",
       house: "",
       postal_code: "",
+      apartment: "",
     },
   });
 
-  const handleChange = async (values: FormFields) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [animate, setAnimate] = useState(false);
+
+  const handleOutsideClick = (e: React.MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      setAnimate(false);
+      setTimeout(() => setClick(false), 300);
+    }
+  };
+
+  const handleClose = () => {
+    setAnimate(false);
+    setTimeout(() => setClick(false), 300);
+  };
+
+  useEffect(() => {
+    if (click) {
+      setAnimate(true);
+    }
+  }, [click]);
+
+  const handleSubmit = async (values: FormFields) => {
     try {
       const requestBody = {
         is_primary: false,
-        state: values.state,
-        city: values.city,
-        street: values.street,
-        house: values.house,
-        postal_code: values.postal_code,
-        apartment: values.apartment,
+        ...values,
       };
-      setClick(false);
-      const result = await addAddresses(requestBody).unwrap();
-      console.log("result: " + result);
+      await addAddresses(requestBody).unwrap();
+      form.reset();
+      handleClose();
     } catch (err) {
-      console.error("Registration failed:", err);
+      console.error("Ошибка добавления адреса:", err);
     }
   };
 
   return (
-    <>
-      {click ? (
-        <div className="z-50 bg-black/50 w-screen h-screen fixed top-0 left-0 flex justify-center items-center">
-          <div className="w-[500px] transform bg-white p-6 py-8 rounded-[5px]">
-            <button onClick={() => setClick(false)}>
-              <RxCross2 className="absolute top-0 right-0 cursor-pointer m-3" size={30} />{" "}
-            </button>
-            <form onSubmit={form.handleSubmit(handleChange)} className="flex flex-col gap-[20px]">
-              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                <input type="text" placeholder="Государство" {...form.register("state")} />
-              </label>
-              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                <input type="text" placeholder="Город" {...form.register("city")} />
-              </label>
-              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                <input type="text" placeholder="Улица" {...form.register("street")} />
-              </label>
-              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                <input type="text" placeholder="Дом" {...form.register("house")} />
-              </label>
-              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                <input type="text" placeholder="Почтовый индекс" {...form.register("postal_code")} />
-              </label>
-              <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
-                <input type="text" placeholder="Квартира" {...form.register("apartment")} />
-              </label>
-              <button>Сохранить адрес</button>
-            </form>
-          </div>
+    <div
+      className="fixed w-screen h-screen bg-black bg-opacity-20 top-0 left-0 flex justify-end z-[70]"
+      onClick={handleOutsideClick}
+    >
+      <div
+        ref={modalRef}
+        className={`bg-white p-6 relative rounded-lg shadow-lg transform max-w-[800px] w-full h-full overflow-y-auto ${
+          animate ? "translate-x-0" : "translate-x-full"
+        } transition-transform duration-300`}
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-bold">Добавить новый адрес</h2>
+          <button onClick={handleClose}>
+            <RxCross2 className="text-gray-600 hover:text-gray-800" size={24} />
+          </button>
         </div>
-      ) : (
-        ""
-      )}
-    </>
+
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-6">
+          <div className="space-y-4">
+            {Object.entries(form.formState.errors).map(([field, error]) => (
+              <p key={field} className="text-red-500 text-sm">
+                {error.message}
+              </p>
+            ))}
+          </div>
+
+          <div className="space-y-6">
+            <InputField label="Государство" {...form.register("state")} error={form.formState.errors.state} />
+            <InputField label="Город" {...form.register("city")} error={form.formState.errors.city} />
+            <InputField label="Улица" {...form.register("street")} error={form.formState.errors.street} />
+            <InputField label="Дом" {...form.register("house")} error={form.formState.errors.house} />
+            <InputField
+              label="Почтовый индекс"
+              {...form.register("postal_code")}
+              error={form.formState.errors.postal_code}
+            />
+            <InputField label="Квартира" {...form.register("apartment")} error={form.formState.errors.apartment} />
+          </div>
+
+          <button
+            type="submit"
+            className="mt-8 bg-gray-100 text-[#423C3D] px-6 py-3 hover:bg-gray-200 transition-colors w-full"
+          >
+            Сохранить адрес
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
+
+interface IInputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+  error?: FieldError;
+}
+const InputField: React.FC<IInputFieldProps> = ({ label, error, ...props }) => (
+  <div className="flex flex-col gap-1">
+    <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+      <input {...props} type="text" className="grow" placeholder={label} />
+    </label>
+    {/* <label className="text-sm text-gray-600">{label}</label>
+    <input
+      {...props}
+      className={`p-2 border-b ${error ? "border-red-500" : "border-gray-300"} focus:outline-none focus:border-black`}
+    /> */}
+    {error && <span className="text-red-500 text-sm">{error.message}</span>}
+  </div>
+);
 
 const PayCard = ({ onOpen, open }: IPayCard) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -160,8 +212,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
           size_id: 1,
           quantity: 1,
         })),
-        delivery: "courier",
-        use_loyalty_points: true,
+        delivery: "express",
+        use_loyalty_points: false,
+        payment_method: "cash",
       }).unwrap();
 
       if (!orderResponse?.id) {

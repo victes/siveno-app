@@ -8,7 +8,7 @@ const Orders = () => {
   const { products, removeProduct } = useProductStore();
   // const {data,isSuccess} = useGetOrdersQuery()
   return (
-    <div className="max-w-[600px] w-full mt-[100px] grid grid-cols-2 gap-[30px]">
+    <div className="max-w-[700px] w-full mt-[100px] grid grid-cols-2 gap-[30px] h-[350px]">
       {products.length > 0
         ? products.map(product => (
             <li key={product.id} className="flex gap-5 p-2 justify-between">
