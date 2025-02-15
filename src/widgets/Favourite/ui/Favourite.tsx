@@ -28,7 +28,7 @@ const Favourite = ({ click, setClick }: IFav) => {
 
   const handleDeleteWishlist = (id: number) => {
     deleteWishlist({ id: id });
-    toast.error(`Удалено из корзины`, {
+    toast.error(`Удалено из Избранного`, {
       position: "top-right",
     });
   };
