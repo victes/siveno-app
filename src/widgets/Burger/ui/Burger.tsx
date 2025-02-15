@@ -27,7 +27,7 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
           </div>
           <div className="flex justify-start gap-8 text-white p-8 max-laptop:flex-col">
             {/** SAMPLE SALE */}
-            <div className="max-laptop:w-full">
+            {/* <div className="max-laptop:w-full">
               <h3
                 className="text-xl font-semibold mb-4 cursor-pointer max-laptop:mb-0"
                 onClick={() => toggleSection("sample")}
@@ -66,7 +66,7 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             {/** CAMPAIGN */}
             <div className="w-full sm:w-1/3 max-laptop:w-full">
@@ -74,22 +74,28 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                 className="text-xl font-semibold mb-4 cursor-pointer max-laptop:mb-0"
                 onClick={() => toggleSection("campaign")}
               >
-                CAMPAIGN
+                КОМПАНИЯ
               </h3>
               <ul
                 className={`space-y-2 ${
                   openSection === "campaign" || window.innerWidth > 1024 ? "block" : "hidden"
                 } max-laptop:mt-2`}
               >
-                {["О компании", "О нас", "Магазины (где купить)", "Контакты", "Работа у нас", "Оптовым партнерам"].map(
-                  item => (
-                    <li key={item}>
-                      <a href="#" className="hover:underline">
-                        {item}
-                      </a>
-                    </li>
-                  ),
-                )}
+                {[
+                  "О компании",
+                  "О нас",
+                  "Магазины (где купить)",
+                  "Контакты",
+                  "Работа у нас",
+                  "Оптовым партнерам",
+                  "Каталог",
+                ].map(item => (
+                  <li key={item}>
+                    <a href="#" className="hover:underline">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
