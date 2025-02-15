@@ -149,14 +149,6 @@ interface IInputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: FieldError;
 }
-
-// // Если используется Zod, можно дополнительно типизировать ошибку:
-// interface IInputFieldZodProps extends InputHTMLAttributes<HTMLInputElement> {
-//   label: string;
-//   error?: z.ZodIssue | null; // Для ошибок Zod
-// }
-
-// Базовый вариант использования с react-hook-form:
 const InputField: React.FC<IInputFieldProps> = ({ label, error, ...props }) => (
   <div className="flex flex-col gap-1">
     <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
@@ -220,8 +212,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
           size_id: 1,
           quantity: 1,
         })),
-        delivery: "courier",
-        use_loyalty_points: true,
+        delivery: "express",
+        use_loyalty_points: false,
+        payment_method: "cash",
       }).unwrap();
 
       if (!orderResponse?.id) {

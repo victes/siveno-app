@@ -84,10 +84,10 @@ const CatalogProductsPage = () => {
       <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row mindesk:justify-between items-center mb-[30px]">
         <div className="flex flex-col tablet:flex-row gap-[20px]">
           <Select
-            name="По Популярности"
+            // name="По Популярности"
             options={[
-              { option: "Сначала старые", value: "oldest" },
               { option: "Сначала новые", value: "newest" },
+              { option: "Сначала старые", value: "oldest" },
               { option: "Цена по возрастанию", value: "price_asc" },
               { option: "Цена по убыванию", value: "price_desc" },
             ]}
@@ -98,7 +98,7 @@ const CatalogProductsPage = () => {
             }}
           />
           <Select
-            name="Цвет"
+            // name="Цвет"
             options={optionsColor}
             value={color}
             onChange={value => {

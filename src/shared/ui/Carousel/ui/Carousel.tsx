@@ -13,8 +13,7 @@ type ImageType = {
   src: string;
   alt: string;
 };
-
-type SliderItem = {
+export type SliderItem = {
   id: number;
   img: ImageType[];
   title: string;
@@ -43,7 +42,11 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
         spaceBetween={15}
         slidesPerView={5}
         breakpoints={{
-          320: {
+          300: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          480: {
             slidesPerView: 2,
             spaceBetween: 10,
           },
