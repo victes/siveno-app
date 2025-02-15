@@ -112,7 +112,7 @@ const PersonalAcc = () => {
           onChange={handleAvatarChange}
           accept="image/*"
         />
-        <p className="text-[13px]">* Максимум 5мб</p>
+        <p className="text-[13px] text-black">* Максимум 5мб</p>
         <button
           type="button"
           className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full"
@@ -171,7 +171,10 @@ const PersonalAcc = () => {
             </label>
           </div>
         </div>
-        <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">Сохранить изменения</button>
+        <div>
+          <p className="text-[10px] text-black">* Все поля должны быть заполенены</p>
+          <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full">Сохранить изменения</button>
+        </div>
       </form>
     </div>
   );
