@@ -17,10 +17,11 @@ export const ProfileApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Wishlist"],
+  tagTypes: ["Wishlist", "Profile"],
   endpoints: builder => ({
     getProfile: builder.query({
       query: () => "profile",
+      providesTags: ["Profile"],
     }),
     changeProfile: builder.mutation({
       query: user => ({
@@ -28,6 +29,7 @@ export const ProfileApi = createApi({
         method: "PUT",
         body: user,
       }),
+      invalidatesTags: ["Profile"],
     }),
     changeAvatar: builder.mutation({
       query: user => ({
@@ -35,6 +37,7 @@ export const ProfileApi = createApi({
         method: "POST",
         body: user,
       }),
+      invalidatesTags: ["Profile"],
     }),
     getWishList: builder.query({
       query: () => "wishlist",
