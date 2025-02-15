@@ -6,6 +6,7 @@ import { IFav } from "../types/type";
 import { RxCross2 } from "react-icons/rx";
 import { useDeleteWishlistMutation, useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
 import { toast } from "react-toastify";
+import { useProductStore } from "@/entities/productStore/store";
 
 interface ProductImage {
   image_path: string;
@@ -23,6 +24,7 @@ const Favourite = ({ click, setClick }: IFav) => {
   const [animate, setAnimate] = useState(false);
   const [deleteWishlist] = useDeleteWishlistMutation();
   const { data, isSuccess } = useGetWishListQuery({});
+  const { addProduct } = useProductStore();
 
   const handleDeleteWishlist = (id: number) => {
     deleteWishlist({ id: id });
@@ -37,6 +39,22 @@ const Favourite = ({ click, setClick }: IFav) => {
       setTimeout(() => setClick(false), 300); // Задержка для завершения анимации
     }
   };
+
+  // console.log(data);
+
+  const handleAddProduct = (product: Product) => {
+    if (isSuccess) {
+      addProduct({
+        id: product.id.toString() || "",
+        name: product.name || "",
+        price: product.price || 0,
+        img: product.images[0].image_path,
+        selectedSize: "",
+        quantity: 1,
+      });
+    }
+  };
+
   const handleClose = () => {
     setAnimate(false);
     setTimeout(() => setClick(false), 300);
@@ -80,12 +98,18 @@ const Favourite = ({ click, setClick }: IFav) => {
                         <span className="text-[30px] text-black">{product.price} руб</span>
                       </div>
                     </div>
-                    <div>
+                    <div className="flex">
                       <MdDeleteOutline
                         onClick={() => handleDeleteWishlist(product.id)}
                         size={30}
                         className="m-2 cursor-pointer hover:text-red-500"
                       />
+                      <button
+                        className="btn bg-transparent rounded-none btn-active uppercase"
+                        onClick={() => handleAddProduct(product)}
+                      >
+                        Добавить в корзину
+                      </button>
                     </div>
                   </li>
                 ))
