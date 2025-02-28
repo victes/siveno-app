@@ -2,7 +2,10 @@
 import { useFavStore } from "@/entities/favouriteStore/store";
 import { useProductStore } from "@/entities/productStore/store";
 import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
+import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { IoMdHeartEmpty } from "react-icons/io";
 
 interface IProduct {
   id: number;
@@ -14,48 +17,64 @@ interface IProduct {
 const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   const { addProduct } = useProductStore();
   const { addFav } = useFavStore();
-  const [token, setToken] = useState("");
+  // const [token, setToken] = useState("");
+  const { push } = useRouter();
   const [addToWishlist] = useAddToWishlistMutation();
 
+  const { token } = useAuth(); // Теперь токен приходит из контекста
+  const [localToken, setLocalToken] = useState<string | null>(token);
+
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setToken(localStorage.getItem("access_token") || "");
-    }
-  }, []);
+    setLocalToken(token); // Синхронизируем состояние с контекстомW
+  }, [token]);
+
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     setToken(localStorage.getItem("access_token") || "");
+  //   }
+  // }, []);
 
   const handleAddProduct = () => {
-    if (name?.trim() && price) {
-      addProduct({
-        id: id.toString(),
-        name,
-        price: parseFloat(price),
-        img,
-        selectedSize: "",
-        quantity: 0,
-      });
+    if (localToken) {
+      if (name?.trim() && price) {
+        addProduct({
+          id: id.toString(),
+          name,
+          price: parseFloat(price),
+          img,
+          selectedSize: "",
+          quantity: 0,
+        });
+      }
+    } else {
+      push("/login");
     }
   };
 
   const handleAddFavourite = () => {
-    addToWishlist({ product_id: id });
-    if (!token) {
-      if (name?.trim() && price) {
-        addFav({
-          id: id.toString(),
-          name,
-          price: parseFloat(price),
-          img,
-        });
+    if (localToken) {
+      addToWishlist({ product_id: id });
+      if (!localToken) {
+        if (name?.trim() && price) {
+          addFav({
+            id: id.toString(),
+            name,
+            price: parseFloat(price),
+            img,
+          });
+        }
+      } else {
+        if (name?.trim() && price) {
+          addFav({
+            id: id.toString(),
+            name,
+            price: parseFloat(price),
+            img,
+          });
+        }
       }
     } else {
-      if (name?.trim() && price) {
-        addFav({
-          id: id.toString(),
-          name,
-          price: parseFloat(price),
-          img,
-        });
-      }
+      push("/login");
     }
   };
   return (
@@ -71,7 +90,10 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
             className="btn bg-transparent border-none shadow-none hover:bg-transparent btn-active uppercase"
             onClick={handleAddFavourite}
           >
-            ❤
+            <IoMdHeartEmpty
+              size={30}
+              className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+            />
           </button>
         </div>
       </div>

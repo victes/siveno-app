@@ -10,10 +10,23 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("access_token");
+    }
+    return null;
+  });
 
   useEffect(() => {
-    setToken(localStorage.getItem("access_token"));
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem("access_token"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const updateToken = (newToken: string | null) => {
@@ -23,6 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem("access_token");
     }
     setToken(newToken);
+    window.dispatchEvent(new Event("storage")); // Триггерим событие обновления
   };
 
   return <AuthContext.Provider value={{ token, setToken: updateToken }}>{children}</AuthContext.Provider>;

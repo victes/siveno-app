@@ -16,6 +16,8 @@ import { GoPerson } from "react-icons/go";
 import { useProductStore } from "@/entities/productStore/store";
 import Link from "next/link";
 import { useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
+import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
+import { useRouter } from "next/navigation";
 // import Link from "next/link";
 
 const Header = () => {
@@ -24,26 +26,38 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const { products } = useProductStore();
   const { data, isSuccess } = useGetWishListQuery({});
-  const [token, setToken] = useState<string | null>(
-    typeof window !== "undefined" ? localStorage.getItem("access_token") : null,
-  );
+  const { push } = useRouter();
+  // const [token, setToken] = useState<string | null>(
+  //   typeof window !== "undefined" ? localStorage.getItem("access_token") : null,
+  // );
+
+  const { token } = useAuth(); // Теперь токен приходит из контекста
+  const [localToken, setLocalToken] = useState<string | null>(token);
+
+  const handleCart = () => {
+    if (localToken) {
+      setCart(prev => !prev);
+    } else {
+      push("/login");
+    }
+  };
+
+  const handleFav = () => {
+    if (localToken) {
+      setFav(prev => !prev);
+    } else {
+      push("/login");
+    }
+  };
 
   useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === "access_token") {
-        setToken(event.newValue);
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
+    setLocalToken(token); // Синхронизируем состояние с контекстомW
+  }, [token]);
 
   return (
     <header className="bg-white">
-      <Container>
-        <div className="flex flex-row text-center items-center h-[90px] justify-between">
+      <Container className="!px-[20px]">
+        <div className="flex flex-row text-center items-center  h-[90px] justify-between">
           <div className="flex justify-center items-center  text-center gap-5">
             <RxHamburgerMenu
               size={30}
@@ -78,7 +92,7 @@ const Header = () => {
                 <IoMdHeartEmpty
                   size={30}
                   className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                  onClick={() => setFav(prev => !prev)}
+                  onClick={() => handleFav()}
                 />
               </div>
 
@@ -87,13 +101,14 @@ const Header = () => {
                 <IoCartOutline
                   size={30}
                   className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-                  onClick={() => setCart(prev => !prev)}
+                  onClick={() => handleCart()}
                 />
               </div>
+
               <Cart click={cart} setClick={() => setCart(prev => !prev)} />
               <Favourite click={fav} setClick={() => setFav(prev => !prev)} />
 
-              {token === null ? (
+              {!localToken ? (
                 <Link href={"/login"}>
                   <IoIosLogIn
                     size={30}

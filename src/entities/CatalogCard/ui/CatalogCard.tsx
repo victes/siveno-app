@@ -8,38 +8,45 @@ import { useFavStore } from "@/entities/favouriteStore/store";
 import Link from "next/link";
 import Image from "next/image";
 import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
+import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
+import { useRouter } from "next/navigation";
+import { IoMdHeartEmpty } from "react-icons/io";
 
 const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   const { addFav } = useFavStore();
-  const [token, setToken] = useState("");
+  const { push } = useRouter();
   const [addToWishlist] = useAddToWishlistMutation();
+  const { token } = useAuth(); // Теперь токен приходит из контекста
+  const [localToken, setLocalToken] = useState<string | null>(token);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setToken(localStorage.getItem("access_token") || "");
-    }
-  }, []);
+    setLocalToken(token); // Синхронизируем состояние с контекстомW
+  }, [token]);
 
   const handleAddFavourite = () => {
-    addToWishlist({ product_id: id });
-    if (!token) {
-      if (name.trim() && price) {
-        addFav({
-          id: id.toString(),
-          name,
-          price: parseFloat(price),
-          img,
-        });
+    if (localToken) {
+      addToWishlist({ product_id: id });
+      if (!localToken) {
+        if (name.trim() && price) {
+          addFav({
+            id: id.toString(),
+            name,
+            price: parseFloat(price),
+            img,
+          });
+        }
+      } else {
+        if (name.trim() && price) {
+          addFav({
+            id: id.toString(),
+            name,
+            price: parseFloat(price),
+            img,
+          });
+        }
       }
     } else {
-      if (name.trim() && price) {
-        addFav({
-          id: id.toString(),
-          name,
-          price: parseFloat(price),
-          img,
-        });
-      }
+      push("/login");
     }
   };
 
@@ -51,7 +58,7 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
           <Image
             width={400}
             height={400}
-            priority={true}
+            loading="lazy"
             src={img}
             alt={name}
             className={`w-auto h-[600px] object-cover`}
@@ -64,7 +71,10 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
             aria-label="Добавить в избранное"
             onClick={handleAddFavourite}
           >
-            ❤
+            <IoMdHeartEmpty
+              size={30}
+              className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
+            />
           </button>
         )}
       </div>

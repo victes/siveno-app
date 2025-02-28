@@ -252,7 +252,7 @@ const Address = () => {
   };
 
   return (
-    <div className="mt-[100px] max-w-[600px] h-[300px] w-full flex flex-col gap-[50px] overflow-x-auto">
+    <div className="mt-[100px] max-w-[700px] h-[350px] w-full flex flex-col gap-[50px] overflow-x-auto">
       {isSuccess ? (
         data.map(item => (
           <div key={item.id} className="flex max-w-[800px] w-full">
