@@ -83,3 +83,69 @@ export interface IProduct {
   updated_at: string;
   images: IProductImage[];
 }
+
+// ====================================================== Popular Products =================================
+type Image = {
+  id: number;
+  product_id: number;
+  image_path: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type Size = {
+  id: number;
+  name: string;
+  slug: string;
+  created_at: string;
+  updated_at: string;
+  pivot: {
+    product_id: number;
+    size_id: number;
+  };
+};
+
+type Color = {
+  id: number;
+  name: string;
+  code: string;
+  created_at: string;
+  updated_at: string;
+  pivot: {
+    product_id: number;
+    color_id: number;
+  };
+};
+
+type Category = {
+  id: number;
+  slug: string;
+  title: string;
+  category_id: number;
+  created_at: string;
+  updated_at: string;
+  image: string;
+  is_sale: number;
+};
+
+export type IPopular = {
+  id: number;
+  name: string;
+  category_id: number;
+  video_url: string;
+  price: number;
+  description: string;
+  composition_care: string;
+  preference: Record<string, string[]>;
+  measurements: Record<string, string[]>;
+  created_at: string;
+  updated_at: string;
+  is_discount: boolean;
+  discount_percentage: string;
+  wishlisted_by_count: number;
+  discounted_price: number;
+  images: Image[];
+  sizes: Size[];
+  colors: Color[];
+  category: Category;
+};

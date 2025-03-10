@@ -1,4 +1,4 @@
 export interface ISelect {
-  name: string;
+  name?: string;
   options: { option: string; value: string }[]; // Массив объектов
 }
