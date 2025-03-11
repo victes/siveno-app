@@ -25,7 +25,7 @@ const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
             alt={name}
             className="w-full h-full object-cover"
           />
-          <div className="absolute top-[20px] right-3 text-center">
+          <div className="absolute top-[20px] right-5 text-center">
             <span className={"text-[20px] tablet:text-[25px] laptop:text-[30px] mb-[50px] text-white bona"}>
               {name}
             </span>
@@ -34,11 +34,11 @@ const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
 
         {cart ? (
           <button
-            className="absolute top-5 left-3 hover:bg-white p-2 rounded-full shadow-md "
+            className="absolute top-5 left-5 hover:bg-white p-2 rounded-full shadow-md "
             aria-label="Добавить в избранное"
           >
             <IoCartOutline
-              size={30}
+              size={20}
               className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
             />
           </button>

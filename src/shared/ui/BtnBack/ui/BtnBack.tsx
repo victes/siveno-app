@@ -10,7 +10,7 @@ export default function BtnBack({ label = "", className = "", ...props }) {
   return (
     <button
       onClick={() => router.back()}
-      className={`${className} font-serif font-thin hover:bg-transparent hover:ml-2  btn btn-ghost`}
+      className={`${className} font-serif font-thin hover:bg-transparent hover:ml-2 transition-all  btn btn-ghost`}
       {...props}
     >
       <span>

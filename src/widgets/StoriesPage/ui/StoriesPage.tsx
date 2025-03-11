@@ -1,8 +1,8 @@
 import StoriesCard from "@/entities/StoriesCard";
-import Breadcrumbs from "@/shared/ui/Breadcrumbs";
 import React from "react";
 
 import "../styles/stories-categories.scss";
+import BtnBack from "@/shared/ui/BtnBack";
 
 const categories = [
   {
@@ -46,8 +46,8 @@ const categories = [
 const StoriesPage = () => {
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
-      <div className="breadcrumbs text-sm mx-auto mb-[20px]">
-        <Breadcrumbs />
+      <div className="breadcrumbs text-sm mb-[20px]">
+        <BtnBack />
       </div>
       {/* <div className="mb-[20px]">
     <h1 className="title-h1">Истории</h1>

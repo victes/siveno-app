@@ -10,12 +10,7 @@
       "static/media/92zatBhPNqw73oTd4jQmfxI-s.p.ba172912.woff2",
       "static/media/or3nQ6H_1_WfwkMZI_qYFrcdmhHkjko-s.p.be19f591.woff2"
     ],
-    "[project]/src/app/_not-found/page": [
-      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
-      "static/media/92zatBhPNqw73oTd4jQmfxI-s.p.ba172912.woff2",
-      "static/media/or3nQ6H_1_WfwkMZI_qYFrcdmhHkjko-s.p.be19f591.woff2"
-    ],
-    "[project]/src/app/(page)/stories-page/page": [
+    "[project]/src/app/(page)/stories-page/[stories_slug]/page": [
       "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
       "static/media/92zatBhPNqw73oTd4jQmfxI-s.p.ba172912.woff2",
       "static/media/or3nQ6H_1_WfwkMZI_qYFrcdmhHkjko-s.p.be19f591.woff2"

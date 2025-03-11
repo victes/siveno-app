@@ -1,6 +1,5 @@
 {
   "/page": "app/page.js",
   "/(page)/stories-categories/page": "app/(page)/stories-categories/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/(page)/stories-page/page": "app/(page)/stories-page/page.js"
+  "/(page)/stories-page/[stories_slug]/page": "app/(page)/stories-page/[stories_slug]/page.js"
 }
