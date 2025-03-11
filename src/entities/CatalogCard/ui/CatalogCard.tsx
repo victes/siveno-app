@@ -51,7 +51,7 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   };
 
   return (
-    <div className="catalog-card flex flex-col items-center relative transition-all duration-300 pb-2 hover:shadow-lg">
+    <div className="catalog-card flex flex-col items-center relative transition-all duration-300 pb-2 hover:shadow-[0_4px_10px_rgba(0,0,0,0.2)]">
       <div className="relative group">
         <Link href={href} className="block w-full">
           {/* Используем Image компонент для загрузки изображения */}
@@ -61,7 +61,7 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
             loading="lazy"
             src={img}
             alt={name}
-            className={`w-auto h-[600px] object-cover`}
+            className={`w-auto h-[600px]  object-cover`}
           />
         </Link>
 
