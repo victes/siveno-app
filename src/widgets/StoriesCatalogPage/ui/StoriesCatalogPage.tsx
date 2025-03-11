@@ -43,7 +43,7 @@ const categories = [
   },
 ];
 
-const StroriesCatalogPage = () => {
+const StoriesCatalogPage = () => {
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
       <div className="breadcrumbs text-sm mx-auto mb-[20px]">
@@ -61,7 +61,7 @@ const StroriesCatalogPage = () => {
             key={item.id}
             id={item.id}
             img={item.image} // Здесь можно добавить дефолтное изображение
-            href={`/catalog-products/${item.slug}`} // Формируем ссылку на категорию
+            href={`/stories-page/${item.slug}`} // Формируем ссылку на категорию
             name={item.title} // Передаем название категории
             cart={false}
           />
@@ -71,4 +71,4 @@ const StroriesCatalogPage = () => {
   );
 };
 
-export default StroriesCatalogPage;
+export default StoriesCatalogPage;

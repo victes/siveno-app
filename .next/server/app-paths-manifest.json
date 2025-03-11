@@ -1,4 +1,6 @@
 {
+  "/page": "app/page.js",
   "/(page)/stories-categories/page": "app/(page)/stories-categories/page.js",
-  "/(page)/catalog-products/[products_slug]/page": "app/(page)/catalog-products/[products_slug]/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(page)/stories-page/page": "app/(page)/stories-page/page.js"
 }

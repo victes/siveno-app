@@ -1,11 +1,11 @@
 import { Container } from "@/shared/ui/Container";
-import StoriesCatalogPage from "@/widgets/StoriesCatalogPage";
+import StoriesPage from "@/widgets/StoriesPage";
 import React from "react";
 
 const page = () => {
   return (
     <Container>
-      <StoriesCatalogPage />
+      <StoriesPage />
       <hr />
     </Container>
   );

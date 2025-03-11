@@ -7,7 +7,7 @@ export interface IStoriesCard {
   id?: number;
   img: string;
   name: string;
-  href: string;
+  href?: string;
   cart: boolean;
 }
 
@@ -15,7 +15,7 @@ const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
   return (
     <div key={id} className="stories-card relative transition-all duration-300 ">
       <div className="relative group">
-        <Link href={href} className="block hover:shadow-[0_4px_10px_rgba(0,0,0,0.2)] z-10">
+        <Link href={href ? href : ""} className="block hover:shadow-[0_4px_10px_rgba(0,0,0,0.2)] z-10">
           <Image
             width={0}
             height={0}
@@ -34,7 +34,7 @@ const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
 
         {cart ? (
           <button
-            className="absolute bottom-2 right-2 hover:bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute top-5 left-3 hover:bg-white p-2 rounded-full shadow-md "
             aria-label="Добавить в избранное"
           >
             <IoCartOutline
