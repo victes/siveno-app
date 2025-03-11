@@ -1,5 +1,5 @@
 import { Container } from "@/shared/ui/Container";
-import StroriesCatalogPage from "@/widgets/StroriesCatalogPage/ui/StroriesCatalogPage";
+import StroriesCatalogPage from "@/widgets/StroriesCatalogPage";
 import React from "react";
 
 const page = () => {
