@@ -14,10 +14,12 @@ interface LoginResponse {
   message: string;
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 export const LoginApi = createApi({
   reducerPath: "login",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://kudzer5h.beget.tech/api/",
+    baseUrl: BASE_URL,
   }),
   endpoints: builder => ({
     loginUser: builder.mutation<LoginResponse, LoginRequest>({

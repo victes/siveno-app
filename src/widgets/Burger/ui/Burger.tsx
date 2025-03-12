@@ -82,17 +82,18 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                 } max-laptop:mt-2`}
               >
                 {[
-                  "О компании",
-                  "О нас",
-                  "Магазины (где купить)",
-                  "Контакты",
-                  "Работа у нас",
-                  "Оптовым партнерам",
-                  "Каталог",
-                ].map(item => (
-                  <li key={item}>
-                    <a href="#" className="hover:underline">
-                      {item}
+                  { label: "О компании", link: "/about" },
+                  { label: "О нас", link: "/about-us" },
+                  { label: "Магазины (где купить)", link: "/stores" },
+                  { label: "Контакты", link: "/contacts" },
+                  { label: "Работа у нас", link: "/careers" },
+                  { label: "Оптовым партнерам", link: "/partners" },
+                  { label: "Каталог", link: "/catalog-categories" },
+                  { label: "Истории", link: "/stories-categories" },
+                ].map(({ label, link }) => (
+                  <li key={label}>
+                    <a href={link} className="hover:underline">
+                      {label}
                     </a>
                   </li>
                 ))}
@@ -113,18 +114,18 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                 } max-laptop:mt-2`}
               >
                 {[
-                  "Личный кабинет",
-                  "Часто задаваемые вопросы",
-                  "Как сделать заказ",
-                  "Оплата и доставка",
-                  "Возврат",
-                  "Политика конфиденциальности",
-                  "Оферта",
-                  "Уход за материалами",
-                ].map(item => (
-                  <li key={item}>
-                    <a href="#" className="hover:underline">
-                      {item}
+                  { label: "Личный кабинет", link: "/account" },
+                  { label: "Часто задаваемые вопросы", link: "/faq" },
+                  { label: "Как сделать заказ", link: "/how-to-order" },
+                  { label: "Оплата и доставка", link: "/payment-delivery" },
+                  { label: "Возврат", link: "/returns" },
+                  { label: "Политика конфиденциальности", link: "/privacy-policy" },
+                  { label: "Оферта", link: "/offer" },
+                  { label: "Уход за материалами", link: "/material-care" },
+                ].map(({ label, link }) => (
+                  <li key={label}>
+                    <a href={link} className="hover:underline">
+                      {label}
                     </a>
                   </li>
                 ))}

@@ -11,6 +11,7 @@ import { sizesApi } from "@/shared/api/SizesApi/ui/SizesApi";
 import { AddressesApi } from "@/shared/api/AddressApi/AddressApi";
 import { OrdersApi } from "@/shared/api/OrdersApi/OrdersApi";
 import { LoyaytiApi } from "@/shared/api/LoyaytyApi/Loyayti";
+import { storiesApi } from "@/shared/api/StoriesApi/ui/StoriesApi";
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
     [OrdersApi.reducerPath]: OrdersApi.reducer,
     [AddressesApi.reducerPath]: AddressesApi.reducer,
     [LoyaytiApi.reducerPath]: LoyaytiApi.reducer,
+    [storiesApi.reducerPath]: storiesApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -39,6 +41,7 @@ export const store = configureStore({
       OrdersApi.middleware,
       AddressesApi.middleware,
       LoyaytiApi.middleware,
+      storiesApi.middleware,
     ),
 });
 

@@ -29,13 +29,25 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "static.tildacdn.com",
+        hostname: "yandex.kz",
         port: "",
         pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "www.pokupkalux.ru",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "static.tildacdn.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.youtube.com",
         port: "",
         pathname: "/**",
       },
