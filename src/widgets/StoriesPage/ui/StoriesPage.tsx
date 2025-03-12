@@ -1,8 +1,11 @@
-import StoriesCard from "@/entities/StoriesCard";
+"use client";
+
 import React from "react";
 
 import "../styles/stories-categories.scss";
 import BtnBack from "@/shared/ui/BtnBack";
+import StoriesSlider from "@/entities/StoriesSlider";
+import StoriesCard from "@/entities/StoriesCard";
 
 const categories = [
   {
@@ -45,26 +48,34 @@ const categories = [
 
 const StoriesPage = () => {
   return (
-    <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
-      <div className="breadcrumbs text-sm mb-[20px]">
-        <BtnBack />
+    <div>
+      <div className="stories fixed  inset-0 bg-white z-[100] flex flex-col laptop:!hidden">
+        <div className="breadcrumbs z-50 text-sm my-[15px]">
+          <BtnBack className="px-0" />
+        </div>
+        <StoriesSlider categories={categories} />
       </div>
-      {/* <div className="mb-[20px]">
-    <h1 className="title-h1">Истории</h1>
-  </div> */}
-      <div className="stories-card-container">
-        {/* {isLoading && <div>Loading...</div>}
-    {error && <div>Error fetching categories</div>} */}
+      <div className="hidden flex-col gap-4 mt-[10px] laptop:flex justify-center mb-[70px]">
+        <div className="breadcrumbs text-sm mb-[20px]">
+          <BtnBack />
+        </div>
+        <div className="mb-[20px]">
+          <h1 className="title-h1">{categories[0].title}</h1>
+        </div>
+        <div className="stories-card-container">
+          {/* {isLoading && <div>Loading...</div>}
+        {error && <div>Error fetching categories</div>} */}
 
-        {categories?.map(item => (
-          <StoriesCard
-            key={item.id}
-            id={item.id}
-            img={item.image} // Здесь можно добавить дефолтное изображение
-            name={item.title} // Передаем название категории
-            cart={true}
-          />
-        ))}
+          {categories?.map(item => (
+            <StoriesCard
+              key={item.id}
+              id={item.id}
+              img={item.image} // Здесь можно добавить дефолтное изображение
+              name={item.title} // Передаем название категории
+              cart={true}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
