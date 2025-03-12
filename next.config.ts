@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "static.tildacdn.com",
+        hostname: "yandex.kz",
         port: "",
         pathname: "/**",
       },

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 const segmentNames: Record<string, string> = {
   "catalog-categories": "Каталог",
   "catalog-products": "Каталог",
+  "stories-categories": "Истории",
 };
 
 const isSlug = (segment: string) => /^[a-zA-Z0-9-_]+$/.test(segment);

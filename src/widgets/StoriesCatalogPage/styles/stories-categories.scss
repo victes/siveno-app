@@ -1,0 +1,73 @@
+.stories-card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(400px, auto); // Автоматическая высота, минимум 400px
+  gap: 20px;
+  padding: 20px;
+}
+
+.stories-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+
+  &:first-child {
+    grid-column: 1 / -1; // Первая карточка на всю ширину
+    height: 100%;
+  }
+
+  &:nth-child(2) {
+    grid-column: span 2; // Вторая карточка шире, чтобы убрать пробел
+    height: 600px;
+  }
+
+  &:nth-child(3) {
+    grid-column: span 1;
+    height: 600px;
+  }
+
+  &:nth-child(4),
+  &:nth-child(5),
+  &:nth-child(6) {
+    grid-column: span 1; // Три карточки в третьем ряду
+    height: 400px;
+  }
+
+  // &:hover {
+  //   transform: scale(1.02);
+  // }
+}
+
+/* Адаптация */
+@media (max-width: 1024px) {
+  .stories-card-container {
+    grid-template-columns: repeat(2, 1fr); // Две колонки на планшетах
+  }
+
+  .stories-card:first-child {
+    height: 300px;
+  }
+
+  .stories-card:nth-child(2),
+  .stories-card:nth-child(3) {
+    grid-column: span 1; // Две карточки в ряд
+  }
+
+  .stories-card:nth-child(4),
+  .stories-card:nth-child(5),
+  .stories-card:nth-child(6) {
+    grid-column: span 2; // Последние три в один ряд
+  }
+}
+
+@media (max-width: 767px) {
+  .stories-card-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stories-card {
+    grid-column: 1 / -1; // Явно указываем, что карточка должна занимать всю строку
+    height: auto !important; // Сбрасываем высоту
+  }
+}
