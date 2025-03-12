@@ -1,3 +1,4 @@
+"use client";
 import { useProductStore } from "@/entities/productStore/store";
 import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
 import Image from "next/image";
@@ -17,57 +18,135 @@ export interface IStoriesCard {
 const products = [
   {
     id: 1,
-    image: "https://lesyanebo.com/upload/iblock/801/jvogw8zq6qkcs2uy44mb305msozkobff.jpg",
-    title: "Брюки из фактурной пряжи",
-    price: "19 000 ₽",
-    available: false,
+    name: 'Плащ "Burberry Kensington"',
+    category_id: 17,
+    video_url: "https://www.youtube.com/watch?v=LHCob76kigA",
+    price: 33866,
+    description: "Rerum nisi ratione et ut voluptas voluptas nisi cupiditate sed id aut quas labore nisi.",
+    composition_care: "100% хлопок, машинная стирка при 30°",
+    preference: {
+      S: ["длина 60, обхват груди 90"],
+      M: ["длина 62, обхват груди 94"],
+      L: ["длина 64, обхват груди 98"],
+    },
+    measurements: {
+      S: ["длина 60, обхват груди 90"],
+    },
+    created_at: "2025-02-14T05:19:36.000000Z",
+    updated_at: "2025-02-14T05:19:36.000000Z",
+    is_discount: false,
+    discount_percentage: "0.00",
+    pivot: {
+      stories_id: 2,
+      product_id: 1,
+    },
   },
   {
     id: 2,
-    image: "https://lesyanebo.com/upload/iblock/801/jvogw8zq6qkcs2uy44mb305msozkobff.jpg",
-    title: "Кардиган из фактурной пряжи",
-    price: "19 000 ₽",
-    available: false,
+    name: 'Перчатки "The North Face Etip"',
+    category_id: 16,
+    video_url: "https://www.youtube.com/watch?v=YQHsXMglC9A",
+    price: 16210,
+    description: "Est nulla beatae rerum labore rerum dolorum qui at natus distinctio qui quia doloribus est nobis.",
+    composition_care: "100% хлопок, машинная стирка при 30°",
+    preference: {
+      S: ["длина 60, обхват груди 90"],
+      M: ["длина 62, обхват груди 94"],
+      L: ["длина 64, обхват груди 98"],
+    },
+    measurements: {
+      S: ["длина 60, обхват груди 90"],
+    },
+    created_at: "2025-02-14T05:19:36.000000Z",
+    updated_at: "2025-02-14T05:19:36.000000Z",
+    is_discount: false,
+    discount_percentage: "0.00",
+    pivot: {
+      stories_id: 2,
+      product_id: 2,
+    },
   },
   {
     id: 3,
-    image: "https://lesyanebo.com/upload/iblock/801/jvogw8zq6qkcs2uy44mb305msozkobff.jpg",
-    title: "Платье из тонкого льна",
-    price: "21 000 ₽",
-    available: false,
+    name: 'Джинсы "Levi\'s 501"',
+    category_id: 7,
+    video_url: "https://www.youtube.com/watch?v=YQHsXMglC9A",
+    price: 7088,
+    description:
+      "Soluta omnis qui corporis est magnam et doloremque eos id architecto exercitationem dolor ducimus nulla nostrum error in qui dolorem quia.",
+    composition_care: "100% хлопок, машинная стирка при 30°",
+    preference: {
+      S: ["длина 60, обхват груди 90"],
+      M: ["длина 62, обхват груди 94"],
+      L: ["длина 64, обхват груди 98"],
+    },
+    measurements: {
+      S: ["длина 60, обхват груди 90"],
+    },
+    created_at: "2025-02-14T05:19:36.000000Z",
+    updated_at: "2025-02-14T05:19:36.000000Z",
+    is_discount: false,
+    discount_percentage: "0.00",
+    pivot: {
+      stories_id: 2,
+      product_id: 3,
+    },
   },
 ];
 
-interface IClother {
+interface Preference {
+  [size: string]: string[];
+}
+
+interface Measurements {
+  [size: string]: string[];
+}
+
+interface Pivot {
+  stories_id: number;
+  product_id: number;
+}
+
+interface Product {
   id: number;
-  image: string;
-  title: string;
-  price: string;
-  soon?: boolean;
+  name: string;
+  category_id: number;
+  video_url: string;
+  price: number;
+  description: string;
+  composition_care: string;
+  preference: Preference;
+  measurements: Measurements;
+  created_at: string;
+  updated_at: string;
+  is_discount: boolean;
+  discount_percentage: string;
+  pivot: Pivot;
 }
 
 interface ModalProps {
-  clothers: IClother[];
+  products: Product[];
 }
 
-const Modal = ({ clothers }: ModalProps) => {
+const Modal = ({ products }: ModalProps) => {
   const [addToWishlist] = useAddToWishlistMutation();
   const { addProduct } = useProductStore();
+
   return (
     <div className="absolute top-20 left-5 bg-white p-3 rounded-lg shadow-md max-w-[400px] w-full">
-      {clothers.map(item => (
-        <div key={item.id} className="flex items-start mb-4 last:mb-0">
+      {products.map(product => (
+        <div key={product.id} className="flex items-start mb-4 last:mb-0">
           <div className="relative w-[60px] h-[80px] mr-3">
-            <Image src={item.image} alt={item.title} fill className="object-cover rounded" />
+            <img src={product.video_url} alt={product.name} className="object-cover rounded w-full h-full" />
           </div>
           <div className="flex-1">
-            <h3 className="text-sm font-semibold mb-1">{item.title}</h3>
+            <h3 className="text-sm font-semibold mb-1">{product.name}</h3>
             <div className="flex items-center text-sm text-gray-700 mb-1">
-              <span>{item.price}</span>
+              <span>{product.price.toLocaleString()} ₽</span>
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-gray-400 mx-2" />
-              {item.soon && <span className="text-orange-500">СКОРО</span>}
+              {!product.is_discount && <span className="text-orange-500">СКОРО</span>}
             </div>
-            <button onClick={() => addToWishlist({ product_id: item.id })}>
+            <button onClick={() => addToWishlist({ product_id: product.id })}>
               <div className="text-sm text-gray-800">В вишлист</div>
             </button>
           </div>
@@ -76,12 +155,12 @@ const Modal = ({ clothers }: ModalProps) => {
             aria-label="Добавить в корзину"
             onClick={() =>
               addProduct({
-                id: item.id.toString(),
-                name: item.title,
-                price: parseFloat(item.price),
-                img: item.image,
+                id: product.id.toString(),
+                name: product.name,
+                price: product.price,
+                img: product.video_url,
                 selectedSize: "",
-                quantity: 0,
+                quantity: 1,
               })
             }
           >
@@ -127,7 +206,7 @@ const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
             />
           </button>
         ) : null}
-        {click ? <Modal clothers={products} /> : null}
+        {click ? <Modal products={products} /> : null}
       </div>
     </div>
   );

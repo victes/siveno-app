@@ -7081,11 +7081,11 @@ class Router {
                     });
                     return new Promise(()=>{});
                 }
-                const routerFilterSValue = ("TURBOPACK compile-time value", JSON.parse('{"numItems":16,"errorRate":0.0001,"numBits":307,"numHashes":14,"bitArray":[1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1,0,1,0,1,0,1,1,1,1,0,1,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,0,0,1,1,1,0,1,0,0,0,1,0,0,1,0,0,0,0,1,1,1,0,1,1,0,0,1,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,1,0,0,1,0,0,0,0,1,1,1,1,0,1,1,0,1,1,1,0,0,1,0,1,1,0,1,1,1,1,1,1,0,1,0,1,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,1,0,0,1,1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,0,0,0,1,1,1,1,0,1,1,0,1,1,0,1,0,0,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,0,0,0,1,0,0,0,1,0,1,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,1,1,1,0,1,0,0,1,1,0,1]}'));
+                const routerFilterSValue = ("TURBOPACK compile-time value", JSON.parse('{"numItems":15,"errorRate":0.0001,"numBits":288,"numHashes":14,"bitArray":[0,1,0,0,1,0,1,1,1,0,1,1,0,1,0,0,0,0,1,1,0,0,0,1,0,1,1,1,1,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,0,1,0,0,1,0,0,0,1,0,1,0,1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,1,0,0,1,0,0,0,1,0,1,0,1,1,1,1,1,0,0,0,0,1,1,0,0,1,1,0,1,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0,0,0,1,1,1,0,1,1,1,0,0,1,0,1,0,1,0,1,0,1,0,0,0,1,1,0,0,1,1,0,1,1,1,1,1,0,0,1,1,1,0,0,1,0,1,1,0,1,0,1,0,0,0,0,1,0,0,1,1,1,1,0,1,1,0,0,1,1,1,1,0,0,1,1,1,0,1,0,1,1,1,0,1,0,0,1,0,0,1,1,0,1,0,1,1,0,1,0,0,0,1,1,1,1,0,1,1,1,1,0,1,0,1,0,0,1,0,1,1,0,0,1,0,0,1,1,0,0,0,0,1,1,0,0,1,1,0,1,1,0,1,0,0]}'));
                 if (!staticFilterData && routerFilterSValue) {
                     staticFilterData = routerFilterSValue ? routerFilterSValue : undefined;
                 }
-                const routerFilterDValue = ("TURBOPACK compile-time value", JSON.parse('{"numItems":0,"errorRate":0.0001,"numBits":0,"numHashes":null,"bitArray":[]}'));
+                const routerFilterDValue = ("TURBOPACK compile-time value", JSON.parse('{"numItems":3,"errorRate":0.0001,"numBits":58,"numHashes":14,"bitArray":[1,0,0,0,0,0,1,0,1,1,1,0,1,0,1,0,1,1,1,0,1,1,1,1,0,0,1,0,0,0,1,0,0,1,0,1,0,1,1,0,1,0,1,0,0,1,0,0,1,0,0,0,1,1,0,0,1,1]}'));
                 if (!dynamicFilterData && routerFilterDValue) {
                     dynamicFilterData = routerFilterDValue ? routerFilterDValue : undefined;
                 }
@@ -18824,7 +18824,7 @@ function AppContainer(param) {
                             children: /*#__PURE__*/ (0, _jsxruntime.jsx)(_headmanagercontextsharedruntime.HeadManagerContext.Provider, {
                                 value: headManager,
                                 children: /*#__PURE__*/ (0, _jsxruntime.jsx)(_imageconfigcontextsharedruntime.ImageConfigContext.Provider, {
-                                    value: ("TURBOPACK compile-time value", JSON.parse('{"deviceSizes":[640,750,828,1080,1200,1920,2048,3840],"imageSizes":[16,32,48,64,96,128,256,384],"path":"/_next/image","loader":"default","dangerouslyAllowSVG":false,"unoptimized":false,"domains":[],"remotePatterns":[]}')),
+                                    value: ("TURBOPACK compile-time value", JSON.parse('{"deviceSizes":[640,750,828,1080,1200,1920,2048,3840],"imageSizes":[16,32,48,64,96,128,256,384],"path":"/_next/image","loader":"default","dangerouslyAllowSVG":false,"unoptimized":false,"domains":[],"remotePatterns":[{"protocol":"https","hostname":"via.placeholder.com","port":"","pathname":"/**"},{"protocol":"https","hostname":"avatars.mds.yandex.net","port":"","pathname":"/**"},{"protocol":"https","hostname":"lesyanebo.com","port":"","pathname":"/**"},{"protocol":"https","hostname":"i.pinimg.com","port":"","pathname":"/**"},{"protocol":"https","hostname":"yandex.kz","port":"","pathname":"/**"},{"protocol":"https","hostname":"www.pokupkalux.ru","port":"","pathname":"/**"}]}')),
                                     children: children
                                 })
                             })
