@@ -38,8 +38,12 @@ export const storiesApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: builder => ({
     getStories: builder.query<Story[], void>({
-      query: () => `stories`, // Запрос без пагинации
-      transformResponse: (response: { data: Story[] }) => response.data, // Извлекаем только массив историй
+      query: () => `stories`,
+      transformResponse: (response: { data: Story[] }) => response.data,
+    }),
+    getStoriesProducts: builder.query<Story[], void>({
+      query: () => `stories`,
+      transformResponse: (response: { data: Story[] }) => response.data,
     }),
   }),
 });

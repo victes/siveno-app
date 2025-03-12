@@ -1,4 +1,0 @@
-{
-  "/(page)/stories-categories/page": "app/(page)/stories-categories/page.js",
-  "/(page)/stories-page/[stories_slug]/page": "app/(page)/stories-page/[stories_slug]/page.js"
-}

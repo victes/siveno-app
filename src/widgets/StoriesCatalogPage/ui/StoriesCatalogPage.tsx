@@ -7,36 +7,6 @@ import "../styles/stories-categories.scss";
 import StoriesCard from "@/entities/StoriesCard";
 import { useGetStoriesQuery } from "@/shared/api/StoriesApi/ui/StoriesApi";
 
-// Определяем типы
-// interface Product {
-//   id: number;
-//   name: string;
-//   category_id: number;
-//   video_url: string;
-//   price: number;
-//   description: string;
-//   composition_care: string;
-//   preference: Record<string, string[]>;
-//   measurements: Record<string, string[]>;
-//   created_at: string;
-//   updated_at: string;
-//   is_discount: boolean;
-//   discount_percentage: string;
-//   pivot: {
-//     stories_id: number;
-//     product_id: number;
-//   };
-// }
-
-// interface Story {
-//   id: number;
-//   title: string;
-//   image_url: string;
-//   created_at: string;
-//   updated_at: string;
-//   products: Product[];
-// }
-
 const StoriesCatalogPage: React.FC = () => {
   const { data: stories, isLoading, error } = useGetStoriesQuery();
 
