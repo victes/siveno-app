@@ -1,68 +1,62 @@
-import Breadcrumbs from "@/shared/ui/Breadcrumbs";
+"use client";
+
 import React from "react";
+import Breadcrumbs from "@/shared/ui/Breadcrumbs";
 
 import "../styles/stories-categories.scss";
 import StoriesCard from "@/entities/StoriesCard";
+import { useGetStoriesQuery } from "@/shared/api/StoriesApi/ui/StoriesApi";
 
-const categories = [
-  {
-    id: 1,
-    image: "https://avatars.mds.yandex.net/i?id=933bf714ef19f744c23f9e03932a90bb_l-7731990-images-thumbs&n=13", // Дефолтное изображение
-    slug: "electronics",
-    title: "Электроника",
-  },
-  {
-    id: 2,
-    image: "https://lesyanebo.com/upload/iblock/801/jvogw8zq6qkcs2uy44mb305msozkobff.jpg",
-    slug: "clothing",
-    title: "Одежда",
-  },
-  {
-    id: 3,
-    image: "https://lesyanebo.com/upload/iblock/801/jvogw8zq6qkcs2uy44mb305msozkobff.jpg",
-    slug: "books",
-    title: "Книги",
-  },
-  {
-    id: 4,
-    image: "https://lesyanebo.com/upload/iblock/801/jvogw8zq6qkcs2uy44mb305msozkobff.jpg",
-    slug: "furniture",
-    title: "Мебель",
-  },
-  {
-    id: 5,
-    image: "https://lesyanebo.com/upload/iblock/801/jvogw8zq6qkcs2uy44mb305msozkobff.jpg",
-    slug: "furniture",
-    title: "Мебель",
-  },
-  {
-    id: 6,
-    image: "https://lesyanebo.com/upload/iblock/801/jvogw8zq6qkcs2uy44mb305msozkobff.jpg",
-    slug: "furniture",
-    title: "Мебель",
-  },
-];
+// Определяем типы
+// interface Product {
+//   id: number;
+//   name: string;
+//   category_id: number;
+//   video_url: string;
+//   price: number;
+//   description: string;
+//   composition_care: string;
+//   preference: Record<string, string[]>;
+//   measurements: Record<string, string[]>;
+//   created_at: string;
+//   updated_at: string;
+//   is_discount: boolean;
+//   discount_percentage: string;
+//   pivot: {
+//     stories_id: number;
+//     product_id: number;
+//   };
+// }
 
-const StoriesCatalogPage = () => {
+// interface Story {
+//   id: number;
+//   title: string;
+//   image_url: string;
+//   created_at: string;
+//   updated_at: string;
+//   products: Product[];
+// }
+
+const StoriesCatalogPage: React.FC = () => {
+  const { data: stories, isLoading, error } = useGetStoriesQuery();
+
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
       <div className="breadcrumbs text-sm mx-auto mb-[20px]">
         <Breadcrumbs />
       </div>
-      {/* <div className="mb-[20px]">
-        <h1 className="title-h1">Истории</h1>
-      </div> */}
-      <div className="stories-card-container">
-        {/* {isLoading && <div>Loading...</div>}
-        {error && <div>Error fetching categories</div>} */}
 
-        {categories?.map(item => (
+      <div className="stories-card-container">
+        {isLoading && <div>Loading...</div>}
+        {error && <div>Error fetching stories</div>}
+
+        {stories?.map(story => (
           <StoriesCard
-            key={item.id}
-            id={item.id}
-            img={item.image} // Здесь можно добавить дефолтное изображение
-            href={`/stories-page/${item.slug}`} // Формируем ссылку на категорию
-            name={item.title} // Передаем название категории
+            key={story.id}
+            id={story.id}
+            img={story.image_url}
+            href={`/stories-page/${story.id}`}
+            name={story.title}
             cart={false}
           />
         ))}

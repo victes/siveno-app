@@ -137,7 +137,14 @@ const Modal = ({ products }: ModalProps) => {
       {products.map(product => (
         <div key={product.id} className="flex items-start mb-4 last:mb-0">
           <div className="relative w-[60px] h-[80px] mr-3">
-            <img src={product.video_url} alt={product.name} className="object-cover rounded w-full h-full" />
+            <Image
+              width={0}
+              height={0}
+              loading="lazy"
+              src={product.video_url}
+              alt={product.name}
+              className="object-cover rounded w-full h-full"
+            />
           </div>
           <div className="flex-1">
             <h3 className="text-sm font-semibold mb-1">{product.name}</h3>

@@ -39,6 +39,18 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "static.tildacdn.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.youtube.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

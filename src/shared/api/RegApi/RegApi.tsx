@@ -16,10 +16,12 @@ interface RegisterResponse {
   message: string;
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 export const RegApi = createApi({
   reducerPath: "register",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://kudzer5h.beget.tech/api/",
+    baseUrl: BASE_URL,
   }),
   endpoints: builder => ({
     registerUser: builder.mutation<RegisterResponse, RegisterRequest>({
