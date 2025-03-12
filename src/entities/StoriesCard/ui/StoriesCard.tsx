@@ -1,6 +1,7 @@
 "use client";
 import { useProductStore } from "@/entities/productStore/store";
 import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
+import { useGetStoriesQuery } from "@/shared/api/StoriesApi/ui/StoriesApi";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -15,84 +16,84 @@ export interface IStoriesCard {
   cart: boolean;
 }
 
-const products = [
-  {
-    id: 1,
-    name: 'Плащ "Burberry Kensington"',
-    category_id: 17,
-    video_url: "https://www.youtube.com/watch?v=LHCob76kigA",
-    price: 33866,
-    description: "Rerum nisi ratione et ut voluptas voluptas nisi cupiditate sed id aut quas labore nisi.",
-    composition_care: "100% хлопок, машинная стирка при 30°",
-    preference: {
-      S: ["длина 60, обхват груди 90"],
-      M: ["длина 62, обхват груди 94"],
-      L: ["длина 64, обхват груди 98"],
-    },
-    measurements: {
-      S: ["длина 60, обхват груди 90"],
-    },
-    created_at: "2025-02-14T05:19:36.000000Z",
-    updated_at: "2025-02-14T05:19:36.000000Z",
-    is_discount: false,
-    discount_percentage: "0.00",
-    pivot: {
-      stories_id: 2,
-      product_id: 1,
-    },
-  },
-  {
-    id: 2,
-    name: 'Перчатки "The North Face Etip"',
-    category_id: 16,
-    video_url: "https://www.youtube.com/watch?v=YQHsXMglC9A",
-    price: 16210,
-    description: "Est nulla beatae rerum labore rerum dolorum qui at natus distinctio qui quia doloribus est nobis.",
-    composition_care: "100% хлопок, машинная стирка при 30°",
-    preference: {
-      S: ["длина 60, обхват груди 90"],
-      M: ["длина 62, обхват груди 94"],
-      L: ["длина 64, обхват груди 98"],
-    },
-    measurements: {
-      S: ["длина 60, обхват груди 90"],
-    },
-    created_at: "2025-02-14T05:19:36.000000Z",
-    updated_at: "2025-02-14T05:19:36.000000Z",
-    is_discount: false,
-    discount_percentage: "0.00",
-    pivot: {
-      stories_id: 2,
-      product_id: 2,
-    },
-  },
-  {
-    id: 3,
-    name: 'Джинсы "Levi\'s 501"',
-    category_id: 7,
-    video_url: "https://www.youtube.com/watch?v=YQHsXMglC9A",
-    price: 7088,
-    description:
-      "Soluta omnis qui corporis est magnam et doloremque eos id architecto exercitationem dolor ducimus nulla nostrum error in qui dolorem quia.",
-    composition_care: "100% хлопок, машинная стирка при 30°",
-    preference: {
-      S: ["длина 60, обхват груди 90"],
-      M: ["длина 62, обхват груди 94"],
-      L: ["длина 64, обхват груди 98"],
-    },
-    measurements: {
-      S: ["длина 60, обхват груди 90"],
-    },
-    created_at: "2025-02-14T05:19:36.000000Z",
-    updated_at: "2025-02-14T05:19:36.000000Z",
-    is_discount: false,
-    discount_percentage: "0.00",
-    pivot: {
-      stories_id: 2,
-      product_id: 3,
-    },
-  },
-];
+// const products = [
+//   {
+//     id: 1,
+//     name: 'Плащ "Burberry Kensington"',
+//     category_id: 17,
+//     video_url: "https://www.youtube.com/watch?v=LHCob76kigA",
+//     price: 33866,
+//     description: "Rerum nisi ratione et ut voluptas voluptas nisi cupiditate sed id aut quas labore nisi.",
+//     composition_care: "100% хлопок, машинная стирка при 30°",
+//     preference: {
+//       S: ["длина 60, обхват груди 90"],
+//       M: ["длина 62, обхват груди 94"],
+//       L: ["длина 64, обхват груди 98"],
+//     },
+//     measurements: {
+//       S: ["длина 60, обхват груди 90"],
+//     },
+//     created_at: "2025-02-14T05:19:36.000000Z",
+//     updated_at: "2025-02-14T05:19:36.000000Z",
+//     is_discount: false,
+//     discount_percentage: "0.00",
+//     pivot: {
+//       stories_id: 2,
+//       product_id: 1,
+//     },
+//   },
+//   {
+//     id: 2,
+//     name: 'Перчатки "The North Face Etip"',
+//     category_id: 16,
+//     video_url: "https://www.youtube.com/watch?v=YQHsXMglC9A",
+//     price: 16210,
+//     description: "Est nulla beatae rerum labore rerum dolorum qui at natus distinctio qui quia doloribus est nobis.",
+//     composition_care: "100% хлопок, машинная стирка при 30°",
+//     preference: {
+//       S: ["длина 60, обхват груди 90"],
+//       M: ["длина 62, обхват груди 94"],
+//       L: ["длина 64, обхват груди 98"],
+//     },
+//     measurements: {
+//       S: ["длина 60, обхват груди 90"],
+//     },
+//     created_at: "2025-02-14T05:19:36.000000Z",
+//     updated_at: "2025-02-14T05:19:36.000000Z",
+//     is_discount: false,
+//     discount_percentage: "0.00",
+//     pivot: {
+//       stories_id: 2,
+//       product_id: 2,
+//     },
+//   },
+//   {
+//     id: 3,
+//     name: 'Джинсы "Levi\'s 501"',
+//     category_id: 7,
+//     video_url: "https://www.youtube.com/watch?v=YQHsXMglC9A",
+//     price: 7088,
+//     description:
+//       "Soluta omnis qui corporis est magnam et doloremque eos id architecto exercitationem dolor ducimus nulla nostrum error in qui dolorem quia.",
+//     composition_care: "100% хлопок, машинная стирка при 30°",
+//     preference: {
+//       S: ["длина 60, обхват груди 90"],
+//       M: ["длина 62, обхват груди 94"],
+//       L: ["длина 64, обхват груди 98"],
+//     },
+//     measurements: {
+//       S: ["длина 60, обхват груди 90"],
+//     },
+//     created_at: "2025-02-14T05:19:36.000000Z",
+//     updated_at: "2025-02-14T05:19:36.000000Z",
+//     is_discount: false,
+//     discount_percentage: "0.00",
+//     pivot: {
+//       stories_id: 2,
+//       product_id: 3,
+//     },
+//   },
+// ];
 
 interface Preference {
   [size: string]: string[];
@@ -137,7 +138,14 @@ const Modal = ({ products }: ModalProps) => {
       {products.map(product => (
         <div key={product.id} className="flex items-start mb-4 last:mb-0">
           <div className="relative w-[60px] h-[80px] mr-3">
-            <img src={product.video_url} alt={product.name} className="object-cover rounded w-full h-full" />
+            <Image
+              width={0}
+              height={0}
+              loading="lazy"
+              src={product.video_url}
+              alt={product.name}
+              className="object-cover rounded w-full h-full"
+            />
           </div>
           <div className="flex-1">
             <h3 className="text-sm font-semibold mb-1">{product.name}</h3>
@@ -173,6 +181,9 @@ const Modal = ({ products }: ModalProps) => {
 };
 
 const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
+  const { data: stories } = useGetStoriesQuery();
+  const products = stories?.flatMap(story => story.products) || [];
+  console.log(products);
   const [click, setClick] = useState(false);
   return (
     <div key={id} className="stories-card relative transition-all duration-300 ">
@@ -196,7 +207,7 @@ const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
 
         {cart ? (
           <button
-            className="absolute top-5 left-5 hover:bg-white p-2 rounded-full shadow-md "
+            className="absolute top-5 left-5 bg-white p-2 rounded-full shadow-md "
             aria-label="Добавить в избранное"
             onClick={() => setClick(prev => !prev)}
           >

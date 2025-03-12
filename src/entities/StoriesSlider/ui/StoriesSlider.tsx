@@ -7,10 +7,10 @@ import StoriesCard from "@/entities/StoriesCard";
 import "../styles/stories-slider.scss";
 
 export interface IStoriesCard {
-  id?: number;
+  id: number;
   image: string;
   title: string;
-  cart?: boolean;
+  cart: boolean;
 }
 
 interface IStoriesSlider {
