@@ -66,7 +66,13 @@ const Header = () => {
             />
             <Burger onOpen={click} setOpen={() => setClick(prev => !prev)} />
             <Link href="/">
-              <p className="text-[30px] text-black max-tablet:text-[20px]">SIVENO</p>
+              <div className="h-[40px] flex items-center">
+                <img 
+                  src="/images/Hero/LogoHor.png" 
+                  alt="SIVENO" 
+                  className="h-full object-contain" 
+                />
+              </div>
             </Link>
             <Link href="/catalog-categories">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
