@@ -55,7 +55,7 @@ const Header = () => {
     <header className="bg-white">
       <Container className="!px-[20px]">
         <div className="flex flex-row text-center items-center  h-[90px] justify-between">
-          <div className="flex justify-center items-center  text-center gap-5">
+          <div className="flex justify-center items-center  text-center gap-10">
             <RxHamburgerMenu
               size={30}
               className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
@@ -67,7 +67,8 @@ const Header = () => {
                 <img 
                   src="/images/Hero/LogoHor.png" 
                   alt="SIVENO" 
-                  className="h-full object-contain" 
+                  className="h-full object-contain max-w-[280px] transform -translate-y-1 md:max-w-[200px] lg:max-w-[280px]" 
+                  style={{ transform: 'translateY(-4px)' }}
                 />
               </div>
             </Link>
@@ -91,7 +92,7 @@ const Header = () => {
           </div>
           <div className="flex text-center items-top ">
             <p className="text-[20px] max-mindesk:hidden">8 (800) 555-25-23</p>
-            <div className="flex gap-5 ml-20 text-center items-center max-tablet:ml-0 max-tablet:gap-2">
+            <div className="flex gap-10 ml-20 text-center items-center max-tablet:ml-0 max-tablet:gap-2">
               {/* <IoIosSearch
                 size={30}
                 className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
