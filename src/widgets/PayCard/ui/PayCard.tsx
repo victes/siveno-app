@@ -14,6 +14,8 @@ import {
   useGetOrderByIdQuery,
   usePayOrderMutation,
 } from "@/shared/api/OrdersApi/OrdersApi";
+import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   state: z.string().nonempty({
@@ -171,8 +173,8 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [click, setClick] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<number | null>(null);
   const [orderId, setOrderId] = useState<number | null>(null);
-  // const { data } = useGetProfileQuery({});
-
+  const { token } = useAuth();
+  const router = useRouter();
   const [createOrder] = useCreateOrderMutation();
   const [payOrder] = usePayOrderMutation();
   const [cancelOrder] = useCancelOrderMutation();
@@ -200,6 +202,15 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
 
   const handlePayment = async () => {
     try {
+      // Проверяем авторизацию перед оформлением заказа
+      if (!token) {
+        // Если пользователь не авторизован, перенаправляем на страницу входа
+        alert("Для оформления заказа необходимо войти в аккаунт");
+        handleClose();
+        router.push("/login");
+        return;
+      }
+
       if (!selectedAddress) {
         alert("Выберите адрес доставки");
         return;
@@ -274,57 +285,75 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             <p className="uppercase">
               {products.length} Товаров на {totalCost()} руб.
             </p>
-            <p className="text-black uppercase">Адреса</p>
-            {isSuccess && addresses.length > 0 ? (
-              <div className="flex flex-col justify-center items-center gap-[30px] mt-[30px] w-full">
-                {addresses.map(address => (
-                  <label key={address.id} className="flex justify-center gap-[20px] w-full">
-                    <input
-                      type="radio"
-                      name="address"
-                      value={address.id}
-                      checked={selectedAddress === address.id}
-                      onChange={() => setSelectedAddress(address.id)}
-                      className="w-[20px] h-[20px]"
-                    />
-                    <div className="w-full flex flex-col">
-                      <p>{`Город: ${address.city}`}</p>
-                      <p>{`Улица: ${address.street || "Не указано"}`}</p>
-                      <p>{`Дом: ${address.house || "Не указано"}`}</p>
-                      <p>{`Квартира: ${address.apartment || "Не указано"}`}</p>
-                      <p>{`Почтовый индекс: ${address.postal_code}`}</p>
-                      <p>{`Область: ${address.state}`}</p>
-                      <p>{`Основной адрес: ${address.is_primary ? "Да" : "Нет"}`}</p>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            ) : (
-              <div>
-                <p>Адресов нет</p>
+            
+            {!token ? (
+              <div className="flex flex-col gap-4 items-center justify-center py-8">
+                <p className="text-lg text-center">Для оформления заказа необходимо войти в аккаунт</p>
                 <button
-                  className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full"
-                  onClick={() => setClick(true)}
+                  className="bg-gray-100 text-[#423C3D] px-6 py-3 hover:bg-gray-300 w-full max-w-md"
+                  onClick={() => {
+                    handleClose();
+                    router.push("/login");
+                  }}
                 >
-                  Добавить новый адрес
+                  Войти или зарегистрироваться
                 </button>
               </div>
-            )}
-            <div className="flex flex-col justify-start text-left px-[100px] gap-[20px]">
-              <p className="text-black uppercase">Итого</p>
-              <p className="text-[20px] text-black uppercase">{totalCost()} руб.</p>
-            </div>
-            <button
-              className="bg-gray-100 text-[#423C3D] px-6 py-2 hover:bg-gray-300 w-full mt-[40px]"
-              onClick={handlePayment}
-              disabled={!selectedAddress}
-            >
-              {orderId ? "Ожидание оплаты..." : "Оплатить заказ"}
-            </button>
-            {orderId && (
-              <button className="bg-red-100 text-red-600 px-6 py-2 hover:bg-red-200 w-full" onClick={handleCancelOrder}>
-                Отменить заказ
-              </button>
+            ) : (
+              <>
+                <p className="text-black uppercase">Адреса</p>
+                {isSuccess && addresses.length > 0 ? (
+                  <div className="flex flex-col justify-center items-center gap-[30px] mt-[30px] w-full">
+                    {addresses.map(address => (
+                      <label key={address.id} className="flex justify-center gap-[20px] w-full">
+                        <input
+                          type="radio"
+                          name="address"
+                          value={address.id}
+                          checked={selectedAddress === address.id}
+                          onChange={() => setSelectedAddress(address.id)}
+                          className="w-[20px] h-[20px]"
+                        />
+                        <div className="w-full flex flex-col">
+                          <p>{`Город: ${address.city}`}</p>
+                          <p>{`Улица: ${address.street || "Не указано"}`}</p>
+                          <p>{`Дом: ${address.house || "Не указано"}`}</p>
+                          <p>{`Квартира: ${address.apartment || "Не указано"}`}</p>
+                          <p>{`Почтовый индекс: ${address.postal_code}`}</p>
+                          <p>{`Область: ${address.state}`}</p>
+                          <p>{`Основной адрес: ${address.is_primary ? "Да" : "Нет"}`}</p>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <div>
+                    <p>Адресов нет</p>
+                    <button
+                      className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full"
+                      onClick={() => setClick(true)}
+                    >
+                      Добавить новый адрес
+                    </button>
+                  </div>
+                )}
+                <div className="flex flex-col justify-start text-left px-[100px] gap-[20px]">
+                  <p className="text-black uppercase">Итого</p>
+                  <p className="text-[20px] text-black uppercase">{totalCost()} руб.</p>
+                </div>
+                <button
+                  className="bg-gray-100 text-[#423C3D] px-6 py-2 hover:bg-gray-300 w-full mt-[40px]"
+                  onClick={handlePayment}
+                  disabled={!selectedAddress}
+                >
+                  {orderId ? "Ожидание оплаты..." : "Оплатить заказ"}
+                </button>
+                {orderId && (
+                  <button className="bg-red-100 text-red-600 px-6 py-2 hover:bg-red-200 w-full" onClick={handleCancelOrder}>
+                    Отменить заказ
+                  </button>
+                )}
+              </>
             )}
           </div>
           {click && <Modal click={click} setClick={() => setClick(prev => !prev)} />}

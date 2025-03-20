@@ -35,19 +35,16 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   // }, []);
 
   const handleAddProduct = () => {
-    if (localToken) {
-      if (name?.trim() && price) {
-        addProduct({
-          id: id.toString(),
-          name,
-          price: parseFloat(price),
-          img,
-          selectedSize: "",
-          quantity: 0,
-        });
-      }
-    } else {
-      push("/login");
+    // Добавляем товар в корзину без проверки авторизации
+    if (name?.trim() && price) {
+      addProduct({
+        id: id.toString(),
+        name,
+        price: parseFloat(price),
+        img,
+        selectedSize: "",
+        quantity: 0,
+      });
     }
   };
 

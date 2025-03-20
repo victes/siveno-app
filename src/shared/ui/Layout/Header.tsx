@@ -35,11 +35,8 @@ const Header = () => {
   const [localToken, setLocalToken] = useState<string | null>(token);
 
   const handleCart = () => {
-    if (localToken) {
-      setCart(prev => !prev);
-    } else {
-      push("/login");
-    }
+    // Открываем корзину без проверки авторизации
+    setCart(prev => !prev);
   };
 
   const handleFav = () => {
@@ -79,6 +76,13 @@ const Header = () => {
                 Каталог
               </p>
             </Link>
+            {localToken && (
+              <Link href="/account">
+                <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden ml-5">
+                  Личный кабинет
+                </p>
+              </Link>
+            )}
             {/* <a href="">
               <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
                 Магазины
