@@ -55,7 +55,8 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
         name,
         price: parseFloat(price),
         img,
-        count: 1,
+        quantity: 1,
+        selectedSize: "",
       });
     }
   };
