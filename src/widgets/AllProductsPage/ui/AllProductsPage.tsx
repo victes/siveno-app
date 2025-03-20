@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
-import { useParams, useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 import CatalogCard from "@/entities/CatalogCard";
 import ButtonSizes from "@/entities/ButtonSizes";
@@ -10,19 +9,13 @@ import Select from "@/shared/ui/Select";
 import Breadcrumbs from "@/shared/ui/Breadcrumbs";
 
 import { useGetProductsQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
-import { useGetCategoriesQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
 import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi";
 
-import "../styles/catalog-products-page.scss";
+import "../../CatalogProductsPage/styles/catalog-products-page.scss";
 
-const CatalogProductsPage = () => {
-  const { products_slug } = useParams();
+const AllProductsPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  // Получаем категории и текущую категорию
-  const { data: categories } = useGetCategoriesQuery();
-  const category = categories?.find(item => item.slug === products_slug);
 
   // Фильтры из URL (если уже были установлены)
   const initialSort = searchParams.get("sort") || "newest";
@@ -46,7 +39,6 @@ const CatalogProductsPage = () => {
 
   // Формируем query params
   const queryParams = new URLSearchParams();
-  if (products_slug) queryParams.set("category_slug", products_slug as string);
   if (color !== "all") queryParams.set("color", color);
   if (size !== "all") queryParams.set("size", size);
   if (sort) queryParams.set("sort", sort);
@@ -77,14 +69,13 @@ const CatalogProductsPage = () => {
       </div>
 
       <div className="mb-[40px]">
-        <h1 className="title-h1">{category?.title || "Категория не найдена"}</h1>
+        <h1 className="title-h1">Все товары</h1>
       </div>
 
       {/* Фильтры */}
       <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row mindesk:justify-between items-center mb-[30px]">
         <div className="flex flex-col tablet:flex-row gap-[20px]">
           <Select
-            // name="По Популярности"
             options={[
               { option: "Сначала новые", value: "newest" },
               { option: "Сначала старые", value: "oldest" },
@@ -98,7 +89,6 @@ const CatalogProductsPage = () => {
             }}
           />
           <Select
-            // name="Цвет"
             options={optionsColor}
             value={color}
             onChange={value => {
@@ -122,23 +112,22 @@ const CatalogProductsPage = () => {
       <div className="products-card-container">
         {isLoading && <p>Загрузка...</p>}
         {error && <p>Ошибка загрузки товаров</p>}
-        {products?.data.map(item => {
-          // Парсим строку JSON в массив URL
-          // const imageUrls = JSON.parse(item.image_urls); // Теперь это массив
-          return (
-            <CatalogCard
-              id={item.id}
-              key={item.id}
-              img={item.images[0].image_path} // Используем первый URL из массива
-              href={`/product/${item.id}`}
-              name={item.name}
-              price={Number(item.price).toFixed()}
-            />
-          );
-        })}
+        {!products?.data?.length && !isLoading && (
+          <p className="text-center w-full text-lg">Товары не найдены</p>
+        )}
+        {products?.data?.map(item => (
+          <CatalogCard
+            id={item.id}
+            key={item.id}
+            img={item.images[0]?.image_path || '/images/placeholder.jpg'}
+            href={`/product/${item.id}`}
+            name={item.name}
+            price={Number(item.price).toFixed()}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
-export default CatalogProductsPage;
+export default AllProductsPage;

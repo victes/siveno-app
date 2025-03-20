@@ -9,7 +9,7 @@ interface ButtonSizesProps {
   onSizeSelect?: (size: string) => void;
 }
 
-const ButtonSizes: React.FC<ButtonSizesProps> = ({ selectedSize = "ALL", onSizeSelect }) => {
+const ButtonSizes: React.FC<ButtonSizesProps> = ({ selectedSize = "all", onSizeSelect }) => {
   const { data: sizes } = useGetSizesByProductQuery();
 
   return (

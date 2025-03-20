@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 import { Geist, Geist_Mono } from "next/font/google";
-
 import { Jost } from "next/font/google";
+import { Raleway } from "next/font/google";
 
 import "./globals.scss";
 import Header from "@/shared/ui/Layout/Header";
@@ -22,6 +22,13 @@ const jost = Jost({
   subsets: ["latin"],
 });
 
+const raleway = Raleway({
+  variable: "--font-raleway",
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -39,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} bona antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} ${raleway.variable} font-raleway antialiased`}>
         <ReduxProvider>
           <AuthProvider>
             <div className="flex flex-col min-h-screen">

@@ -10,14 +10,14 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("access_token");
-    }
-    return null;
-  });
+  const [token, setToken] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+    const storedToken = localStorage.getItem("access_token");
+    setToken(storedToken);
+    
     const handleStorageChange = () => {
       setToken(localStorage.getItem("access_token"));
     };

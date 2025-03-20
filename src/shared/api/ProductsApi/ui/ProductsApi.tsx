@@ -7,8 +7,8 @@ export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }), // Убедитесь, что это полный URL
   endpoints: builder => ({
-    getProductsByCategory: builder.query<ProductResponse, number>({
-      query: categoryId => `products?category_id=${categoryId}`, // Правильно сформированный путь
+    getProductsByCategory: builder.query<ProductResponse, string>({
+      query: (categorySlug) => `products?category_slug=${categorySlug}`,
     }),
     getProductsById: builder.query<IProduct, number>({
       query: productId => `products/${productId}`,
@@ -16,7 +16,15 @@ export const productsApi = createApi({
     getProductsPopular: builder.query<IPopular, number>({
       query: limit => `products/popular?limit=${limit}`,
     }),
+    getProducts: builder.query<ProductResponse, string | void>({
+      query: (queryString = '') => queryString ? `products?${queryString}` : 'products',
+    }),
   }),
 });
 
-export const { useGetProductsByCategoryQuery, useGetProductsByIdQuery, useGetProductsPopularQuery } = productsApi;
+export const { 
+  useGetProductsByCategoryQuery, 
+  useGetProductsByIdQuery, 
+  useGetProductsPopularQuery,
+  useGetProductsQuery 
+} = productsApi;

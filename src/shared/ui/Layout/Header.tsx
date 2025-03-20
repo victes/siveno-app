@@ -32,7 +32,8 @@ const Header = () => {
   // );
 
   const { token } = useAuth(); // Теперь токен приходит из контекста
-  const [localToken, setLocalToken] = useState<string | null>(token);
+  const [localToken, setLocalToken] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
   const handleCart = () => {
     // Открываем корзину без проверки авторизации
@@ -48,7 +49,8 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setLocalToken(token); // Синхронизируем состояние с контекстомW
+    setIsClient(true);
+    setLocalToken(token); // Синхронизируем состояние с контекстом
   }, [token]);
 
   return (
@@ -77,7 +79,12 @@ const Header = () => {
                 Каталог
               </p>
             </Link>
-            {localToken && (
+            <Link href="/catalog-products">
+              <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden">
+                Все товары
+              </p>
+            </Link>
+            {isClient && localToken && (
               <Link href="/account">
                 <p className="text-[20px] hover:text-black transition-colors duration-200 ease-out max-mindesk:hidden ml-5">
                   Личный кабинет
@@ -92,7 +99,7 @@ const Header = () => {
           </div>
           <div className="flex text-center items-top ">
             <p className="text-[20px] max-mindesk:hidden">8 (800) 555-25-23</p>
-            <div className="flex gap-10 ml-20 text-center items-center max-tablet:ml-0 max-tablet:gap-2">
+            <div className="flex gap-10 ml-20 text-center items-center max-tablet:ml-0 max-tablet:gap-5">
               {/* <IoIosSearch
                 size={30}
                 className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
@@ -119,7 +126,7 @@ const Header = () => {
               <Cart click={cart} setClick={() => setCart(prev => !prev)} />
               <Favourite click={fav} setClick={() => setFav(prev => !prev)} />
 
-              {!localToken ? (
+              {!isClient || !localToken ? (
                 <Link href={"/login"}>
                   <IoIosLogIn
                     size={30}

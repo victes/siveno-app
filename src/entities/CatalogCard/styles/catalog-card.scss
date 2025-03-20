@@ -13,14 +13,14 @@
 // }
 
 .categories__item-name {
-  font-family: "CSTM Xprmntl 02", "Jost", "Arial", sans-serif;
+  font-family: "Raleway", sans-serif;
   font-style: italic;
   font-weight: 400;
-  font-size: 25px;
+  font-size: 28px;
   line-height: 50px;
   text-align: center;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
+  text-transform: none;
   color: #423c3d;
   margin-top: 10px;
 }
@@ -41,23 +41,27 @@
 .productions__item-name {
   display: block;
   font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.05em;
+  text-transform: none;
   color: #423c3d;
   margin-top: 20px;
+  padding: 0 10px;
+  text-align: center;
+  min-height: 44px; /* Для двух строк текста */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .productions__item-price {
-  display: block;
-  padding: 0 10px;
-  font-family: "Jost", "Arial", sans-serif;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: #423c3d;
+  margin-top: 8px;
   text-align: center;
 }

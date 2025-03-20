@@ -4,6 +4,12 @@ export default {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      fontFamily: {
+        'raleway': ['var(--font-raleway)', 'sans-serif'],
+        'jost': ['var(--font-jost)', 'sans-serif'],
+        'geist-sans': ['var(--font-geist-sans)', 'sans-serif'],
+        'geist-mono': ['var(--font-geist-mono)', 'monospace'],
+      },
       screens: {
         phone: "360px",
         tablet: "480px",

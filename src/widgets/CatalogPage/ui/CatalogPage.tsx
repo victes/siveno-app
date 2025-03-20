@@ -5,6 +5,7 @@ import React from "react";
 import "../styles/catalog-categories.scss";
 import { useGetCategoriesQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
 import Breadcrumbs from "@/shared/ui/Breadcrumbs";
+import Link from "next/link";
 
 const CatalogPage = () => {
   const { data: categories, error, isLoading } = useGetCategoriesQuery();
@@ -17,6 +18,11 @@ const CatalogPage = () => {
       </div>
       <div className="mb-[20px]">
         <h1 className="title-h1">Каталог</h1>
+        <div className="mt-4 mb-8">
+          <Link href="/catalog-products" className="inline-block py-3 px-6 bg-black text-white hover:bg-gray-800 transition-colors duration-200 ease-out">
+            Смотреть все товары
+          </Link>
+        </div>
         <ul>{/* {categories?.children.map(item => (} */}</ul>
       </div>
       <div className="categories-card-container">
