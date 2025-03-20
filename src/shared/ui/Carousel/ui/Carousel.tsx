@@ -40,16 +40,16 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         }}
-        spaceBetween={15}
+        spaceBetween={20}
         slidesPerView={5}
         breakpoints={{
           300: {
             slidesPerView: 1,
-            spaceBetween: 10,
+            spaceBetween: 20,
           },
           480: {
             slidesPerView: 2,
-            spaceBetween: 10,
+            spaceBetween: 20,
           },
           768: {
             slidesPerView: 3,
@@ -57,11 +57,11 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
           },
           1024: {
             slidesPerView: 4,
-            spaceBetween: 30,
+            spaceBetween: 20,
           },
           1440: {
             slidesPerView: 5,
-            spaceBetween: 40,
+            spaceBetween: 20,
           },
         }}
         className="rounded-sm"
@@ -70,7 +70,7 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
           const firstImage = item.img?.[0]; // Проверяем, есть ли изображение
 
           return (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={index} className="flex items-stretch h-auto">
               <Link href={`/product/${item.id}`} className="slider-card-wrapper">
                 <div className="slider-card">
                   {firstImage ? (

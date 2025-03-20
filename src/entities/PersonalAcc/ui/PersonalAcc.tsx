@@ -82,35 +82,74 @@ const PersonalAcc = () => {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, ''); // Оставляем только цифры
     
-    if (value.length > 0 && value[0] !== '7') {
-      if (value[0] === '8') {
-        value = '7' + value.substring(1);
-      } else {
-        value = '7' + value;
+    // Обработка ввода первой цифры
+    if (value.length > 0) {
+      // Если первая цифра не 7, преобразуем её
+      if (value[0] !== '7') {
+        if (value[0] === '8') {
+          // Заменяем 8 на 7 (российская традиция)
+          value = '7' + value.substring(1);
+        } else if (value[0] === '9' || value[0] === '3' || value[0] === '4' || value[0] === '5' || value[0] === '6') {
+          // Если начинается с 9, 3, 4, 5, 6 (мобильные коды), добавляем 7 в начало
+          value = '7' + value;
+        }
       }
     }
     
-    // Ограничиваем длину до 11 цифр
+    // Ограничиваем длину до 11 цифр (стандарт для России)
     value = value.substring(0, 11);
     
-    // Форматируем номер
+    // Форматируем номер в стиле +7 (999) 999-99-99
     let formattedValue = '';
     if (value.length > 0) {
-      formattedValue = '+' + value[0];
+      formattedValue = '+' + value[0]; // Код страны
+      
       if (value.length > 1) {
-        formattedValue += ' (' + value.substring(1, 4);
+        // Код оператора/региона (3 цифры)
+        formattedValue += ' (' + value.substring(1, Math.min(4, value.length));
+        if (value.length < 4) {
+          formattedValue += '_'.repeat(4 - value.length);
+        }
+        formattedValue += ')';
+      } else {
+        formattedValue += ' (___)'
       }
+      
       if (value.length > 4) {
-        formattedValue += ') ' + value.substring(4, 7);
+        // Первая часть номера (3 цифры)
+        formattedValue += ' ' + value.substring(4, Math.min(7, value.length));
+        if (value.length < 7) {
+          formattedValue += '_'.repeat(7 - value.length);
+        }
+      } else {
+        formattedValue += ' ___';
       }
+      
       if (value.length > 7) {
-        formattedValue += '-' + value.substring(7, 9);
+        // Вторая часть номера (2 цифры)
+        formattedValue += '-' + value.substring(7, Math.min(9, value.length));
+        if (value.length < 9) {
+          formattedValue += '_'.repeat(9 - value.length);
+        }
+      } else {
+        formattedValue += '-__';
       }
+      
       if (value.length > 9) {
+        // Третья часть номера (2 цифры)
         formattedValue += '-' + value.substring(9, 11);
+        if (value.length < 11) {
+          formattedValue += '_'.repeat(11 - value.length);
+        }
+      } else {
+        formattedValue += '-__';
       }
+    } else {
+      // Пустой шаблон для пустого поля
+      formattedValue = '+7 (___) ___-__-__';
     }
     
+    // Устанавливаем отформатированное значение в форму
     form.setValue('phone', formattedValue);
   };
 
@@ -227,10 +266,9 @@ const PersonalAcc = () => {
               <input
                 type="tel"
                 className="grow outline-none bg-transparent"
-                placeholder="Номер телефона"
-                {...form.register("phone")}
+                placeholder="+7 (___) ___-__-__"
+                value={form.watch("phone") || "+7 (___) ___-__-__"}
                 onChange={(e) => {
-                  form.register("phone").onChange(e);
                   handlePhoneChange(e);
                 }}
               />
