@@ -181,8 +181,8 @@ const PersonalAcc = () => {
       try {
         const result = await changeAvatar(formData).unwrap();
         console.log("Avatar changed:", result);
-      } catch (err) {
-        console.error("Failed to change avatar:", err);
+      } catch (_) {
+        console.error("Failed to change avatar:", _);
       }
     }
   };
@@ -197,7 +197,7 @@ const PersonalAcc = () => {
     try {
       const date = new Date(isoDate);
       return date.toISOString().split('T')[0]; // Формат YYYY-MM-DD
-    } catch (e) {
+    } catch (_) {
       return "";
     }
   };

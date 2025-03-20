@@ -264,7 +264,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       alert("Заказ успешно оплачен!");
       handleClose();
     }
-  }, [orderData]);
+  }, [orderData, clearProducts, handleClose]);
 
   return (
     <>

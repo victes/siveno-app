@@ -26,7 +26,6 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
   const { token } = useAuth();
   const [localToken, setLocalToken] = useState<string | null>(token);
   const [selectedSize, setSelectedSize] = useState<string>(propSelectedSize || "");
-  const [selectedSizeId, setSelectedSizeId] = useState<number | null>(null);
 
   useEffect(() => {
     setLocalToken(token);
@@ -41,9 +40,6 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
   useEffect(() => {
     if (selectedSize && sizes) {
       const sizeObj = sizes.find(s => s.name === selectedSize);
-      if (sizeObj) {
-        setSelectedSizeId(sizeObj.id);
-      }
     }
   }, [selectedSize, sizes]);
 
@@ -54,9 +50,6 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
         
         if (sizes) {
           const sizeObj = sizes.find(s => s.name === event.detail.size);
-          if (sizeObj) {
-            setSelectedSizeId(sizeObj.id);
-          }
         }
       }
     };

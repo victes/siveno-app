@@ -56,9 +56,10 @@ const ProductPage = () => {
 
   const carousel = products?.images;
 
-  const sizes = Object.entries(products?.measurements || {}).map(([size]) => {
-    return size;
-  });
+  // Преобразуем в комментарий или используем переменную
+  // const sizes = Object.entries(products?.measurements || {}).map(([size]) => {
+  //   return size;
+  // });
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
