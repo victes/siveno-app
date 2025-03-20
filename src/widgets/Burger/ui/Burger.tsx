@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { RxCross1 } from "react-icons/rx";
+import Link from "next/link";
 
 // Интерфейс для пропсов
 export interface IBurger {
@@ -9,78 +10,22 @@ export interface IBurger {
 }
 
 const Burger = ({ onOpen, setOpen }: IBurger) => {
-  // Типизация состояния openSection, оно может быть строкой или null
-  const [openSection, setOpenSection] = useState<string | null>(null);
-
-  // Типизация параметра section как строки
-  const toggleSection = (section: string) => {
-    setOpenSection(openSection === section ? null : section);
-  };
-
   return (
     <>
       {onOpen ? (
-        <div className="fixed top-0 left-0 h-screen w-screen bg-black bg-opacity-80 z-50 p-[40px]">
-          <div className="flex text-center items-center gap-6">
-            <RxCross1 onClick={() => setOpen(prev => !prev)} size={50} color="White" className="cursor-pointer" />
-            <h2 className="text-bold text-[50px] text-white">SIVENO</h2>
+        <div className="fixed top-0 left-0 h-screen w-screen bg-black bg-opacity-80 z-50 p-[20px] md:p-[40px] overflow-y-auto">
+          <div className="flex text-center items-center gap-6 mb-6">
+            <RxCross1 onClick={() => setOpen(prev => !prev)} size={30} color="White" className="cursor-pointer md:text-[50px]" />
+            <h2 className="text-bold text-[30px] md:text-[50px] text-white">SIVENO</h2>
           </div>
-          <div className="flex justify-start gap-8 text-white p-8 max-laptop:flex-col">
-            {/** SAMPLE SALE */}
-            {/* <div className="max-laptop:w-full">
-              <h3
-                className="text-xl font-semibold mb-4 cursor-pointer max-laptop:mb-0"
-                onClick={() => toggleSection("sample")}
-              >
-                SAMPLE SALE
-              </h3>
-              <ul
-                className={`space-y-2 ${
-                  openSection === "sample" || window.innerWidth > 1024 ? "block" : "hidden"
-                } max-laptop:mt-2`}
-              >
-                {[
-                  "Каталог",
-                  "Верхняя одежда",
-                  "Свитеры и кардиганы",
-                  "Пиджаки и жакеты",
-                  "Брюки",
-                  "Рубашки и блузы",
-                  "Лонгсливы и боди",
-                  "Деним",
-                  "Юбки",
-                  "Трикотаж",
-                  "Платья",
-                  "Футболки и топы",
-                  "Аксессуары",
-                  "Сумки",
-                  "Носки",
-                  "Сертификаты",
-                  "Смотреть все",
-                  "Last Chance",
-                ].map(item => (
-                  <li key={item}>
-                    <a href="#" className="hover:underline">
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div> */}
-
-            {/** CAMPAIGN */}
-            <div className="w-full sm:w-1/3 max-laptop:w-full">
-              <h3
-                className="text-xl font-semibold mb-4 cursor-pointer max-laptop:mb-0"
-                onClick={() => toggleSection("campaign")}
-              >
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-white p-4 md:p-8">
+            {/* КОМПАНИЯ */}
+            <div className="w-full">
+              <h3 className="text-xl font-semibold mb-4 text-white">
                 КОМПАНИЯ
               </h3>
-              <ul
-                className={`space-y-2 ${
-                  openSection === "campaign" || window.innerWidth > 1024 ? "block" : "hidden"
-                } max-laptop:mt-2`}
-              >
+              <ul className="space-y-3">
                 {[
                   { label: "О компании", link: "/about" },
                   { label: "О нас", link: "/about-us" },
@@ -92,27 +37,20 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   { label: "Истории", link: "/stories-categories" },
                 ].map(({ label, link }) => (
                   <li key={label}>
-                    <a href={link} className="hover:underline">
+                    <Link href={link} className="text-white hover:text-gray-300 transition-colors">
                       {label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/** ПОКУПАТЕЛЯМ */}
-            <div className="w-full sm:w-1/3 max-laptop:w-full">
-              <h3
-                className="text-xl font-semibold mb-4 cursor-pointer max-laptop:mb-0"
-                onClick={() => toggleSection("customers")}
-              >
+            {/* ПОКУПАТЕЛЯМ */}
+            <div className="w-full">
+              <h3 className="text-xl font-semibold mb-4 text-white">
                 ПОКУПАТЕЛЯМ
               </h3>
-              <ul
-                className={`space-y-2 ${
-                  openSection === "customers" || window.innerWidth > 1024 ? "block" : "hidden"
-                } max-laptop:mt-2`}
-              >
+              <ul className="space-y-3">
                 {[
                   { label: "Личный кабинет", link: "/account" },
                   { label: "Часто задаваемые вопросы", link: "/faq" },
@@ -124,9 +62,35 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   { label: "Уход за материалами", link: "/material-care" },
                 ].map(({ label, link }) => (
                   <li key={label}>
-                    <a href={link} className="hover:underline">
+                    <Link href={link} className="text-white hover:text-gray-300 transition-colors">
                       {label}
-                    </a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* КАТЕГОРИИ */}
+            <div className="w-full">
+              <h3 className="text-xl font-semibold mb-4 text-white">
+                КАТЕГОРИИ
+              </h3>
+              <ul className="space-y-3">
+                {[
+                  { label: "Верхняя одежда", link: "/catalog/outerwear" },
+                  { label: "Свитеры и кардиганы", link: "/catalog/sweaters" },
+                  { label: "Пиджаки и жакеты", link: "/catalog/jackets" },
+                  { label: "Брюки", link: "/catalog/pants" },
+                  { label: "Рубашки и блузы", link: "/catalog/shirts" },
+                  { label: "Платья", link: "/catalog/dresses" },
+                  { label: "Футболки и топы", link: "/catalog/t-shirts" },
+                  { label: "Аксессуары", link: "/catalog/accessories" },
+                  { label: "Смотреть все", link: "/catalog" },
+                ].map(({ label, link }) => (
+                  <li key={label}>
+                    <Link href={link} className="text-white hover:text-gray-300 transition-colors">
+                      {label}
+                    </Link>
                   </li>
                 ))}
               </ul>

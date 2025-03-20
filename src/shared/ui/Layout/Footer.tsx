@@ -2,63 +2,127 @@
 import React from "react";
 import { Container } from "../Container";
 import Link from "next/link";
+import { FaInstagram, FaTelegram, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col border-solid text-sm mt-[70px] border-t border-text bg-white gap-[40px] py-10 text-text">
-      <Container className="flex flex-col gap-[40px]">
-        <div className="flex justify-between max-mindesk:flex-col max-mindesk:text-center max-mindesk:items-center max-mindesk:gap-[20px]">
-          <ul className="flex gap-[10px] max-mindesk:flex-col">
-            <li>
-              <Link href={"/account"}>Личный кабинет</Link>
-            </li>
-            <li>
-              <Link href={"/shipping"}>Доставка</Link>
-            </li>
-            <li>
-              <Link href={"/returns"}>Возврат</Link>
-            </li>
-            <li>
-              <Link href={"/faq"}>FAQ</Link>
-            </li>
-            <li>
-              <Link href={"/product-care"}>Уход за изделиями</Link>
-            </li>
-          </ul>
-          <form action="">
-            <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="h-4 w-4 opacity-70"
-              >
-                <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-                <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-              </svg>
-              <input type="text" className="grow" placeholder="Ваша почта" />
-              <button type="submit" className="bg-transparent text-[#423C3D] px-4 py-2">
-                Подписаться
-              </button>
-            </label>
-          </form>
+    <footer className="border-t border-gray-200 pt-16 pb-8 mt-20">
+      <Container>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          <div>
+            <h3 className="text-sm font-normal mb-6 uppercase tracking-wide">О компании</h3>
+            <ul className="space-y-4">
+              <li>
+                <Link href="/about" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  О нас
+                </Link>
+              </li>
+              <li>
+                <Link href="/contacts" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  Контакты
+                </Link>
+              </li>
+              <li>
+                <Link href="/stores" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  Магазины
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-sm font-normal mb-6 uppercase tracking-wide">Покупателям</h3>
+            <ul className="space-y-4">
+              <li>
+                <Link href="/account" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  Личный кабинет
+                </Link>
+              </li>
+              <li>
+                <Link href="/shipping" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  Доставка
+                </Link>
+              </li>
+              <li>
+                <Link href="/returns" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  Возврат
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="/product-care" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  Уход за изделиями
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-sm font-normal mb-6 uppercase tracking-wide">Документы</h3>
+            <ul className="space-y-4">
+              <li>
+                <Link href="/politika" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  Политика конфиденциальности
+                </Link>
+              </li>
+              <li>
+                <Link href="/oferta" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  Публичная оферта
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-sm font-normal mb-6 uppercase tracking-wide">Подписка</h3>
+            <p className="text-sm text-gray-500 mb-4">Подпишитесь на нашу рассылку, чтобы первыми узнавать о новых коллекциях и акциях</p>
+            <form className="mb-6">
+              <div className="flex border-b border-gray-300 pb-1">
+                <input 
+                  type="email" 
+                  placeholder="Ваш email" 
+                  className="w-full bg-transparent text-sm focus:outline-none"
+                />
+                <button 
+                  type="submit" 
+                  className="text-sm font-normal whitespace-nowrap"
+                >
+                  Подписаться
+                </button>
+              </div>
+            </form>
+            
+            <div className="flex gap-6">
+              <a href="#" className="text-gray-500 hover:text-black transition-colors">
+                <FaInstagram size={18} />
+              </a>
+              <a href="#" className="text-gray-500 hover:text-black transition-colors">
+                <FaTelegram size={18} />
+              </a>
+              <a href="#" className="text-gray-500 hover:text-black transition-colors">
+                <FaWhatsapp size={18} />
+              </a>
+            </div>
+          </div>
         </div>
-        <div className="flex justify-between max-mindesk:flex-col max-mindesk:text-center">
-          <ul className="flex gap-[10px] max-mindesk:flex-col">
-            <li>
-              {" "}
-              <Link href={"/politika"}>Политика</Link>
-            </li>
-            <li>
-              {" "}
-              <Link href={"/oferta"}>Публичная Оферта</Link>
-            </li>
-            <li>
-              {" "}
-              <Link href={"/contacts"}>Контакты</Link>
-            </li>
-          </ul>
-          <p>@ SIVENO 2025 | Все права защищены</p>
+        
+        <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-gray-400"> SIVENO 2025 | Все права защищены</p>
+          <div className="flex gap-6">
+            <Link href="/politika" className="text-xs text-gray-400 hover:text-black transition-colors">
+              Политика
+            </Link>
+            <Link href="/oferta" className="text-xs text-gray-400 hover:text-black transition-colors">
+              Публичная оферта
+            </Link>
+            <Link href="/contacts" className="text-xs text-gray-400 hover:text-black transition-colors">
+              Контакты
+            </Link>
+          </div>
         </div>
       </Container>
     </footer>

@@ -1,0 +1,100 @@
+// Стили для карточек в слайдере
+
+.slider-card-wrapper {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  margin-top: 2.5rem;
+  padding: 8px;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    .slider-card {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      
+      &::after {
+        opacity: 0.05;
+      }
+    }
+    
+    .slider-card__image img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.slider-card {
+  position: relative;
+  transition: all 0.3s ease;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  padding-bottom: 12px;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: black;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+.slider-card__image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  
+  img {
+    transition: transform 0.5s ease;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.slider-card__no-image {
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  border-radius: 2px;
+}
+
+.slider-card__info {
+  padding: 12px 16px;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.slider-card__title {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #333;
+  margin-bottom: 4px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+}
+
+.slider-card__price {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  display: block;
+  text-align: left;
+}

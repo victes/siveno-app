@@ -11,77 +11,89 @@ import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { IoCartOutline } from "react-icons/io5";
+import { useProductStore } from "@/entities/productStore/store";
 
 const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   const { addFav } = useFavStore();
+  const { addProduct } = useProductStore();
   const { push } = useRouter();
   const [addToWishlist] = useAddToWishlistMutation();
-  const { token } = useAuth(); // Теперь токен приходит из контекста
+  const { token } = useAuth();
   const [localToken, setLocalToken] = useState<string | null>(token);
 
   useEffect(() => {
-    setLocalToken(token); // Синхронизируем состояние с контекстомW
+    setLocalToken(token);
   }, [token]);
 
-  const handleAddFavourite = () => {
+  const handleAddFavourite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
     if (localToken) {
       addToWishlist({ product_id: id });
-      if (!localToken) {
-        if (name.trim() && price) {
-          addFav({
-            id: id.toString(),
-            name,
-            price: parseFloat(price),
-            img,
-          });
-        }
-      } else {
-        if (name.trim() && price) {
-          addFav({
-            id: id.toString(),
-            name,
-            price: parseFloat(price),
-            img,
-          });
-        }
+      if (name.trim() && price) {
+        addFav({
+          id: id.toString(),
+          name,
+          price: parseFloat(price),
+          img,
+        });
       }
     } else {
       push("/login");
     }
   };
 
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (name.trim() && price) {
+      addProduct({
+        id: id.toString(),
+        name,
+        price: parseFloat(price),
+        img,
+        count: 1,
+      });
+    }
+  };
+
   return (
-    <div className="catalog-card flex flex-col items-center relative transition-all duration-300 pb-2 hover:shadow-[0_4px_10px_rgba(0,0,0,0.2)]">
-      <div className="relative group">
-        <Link href={href} className="block w-full">
-          {/* Используем Image компонент для загрузки изображения */}
+    <Link href={href} className="block product-card-wrapper">
+      <div className="product-card">
+        <div className="product-card__image">
           <Image
             width={400}
-            height={400}
+            height={600}
             loading="lazy"
             src={img}
             alt={name}
-            className={`w-auto h-[600px]  object-cover`}
           />
-        </Link>
-
-        {price && (
-          <button
-            className="absolute bottom-2 right-2 hover:bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            aria-label="Добавить в избранное"
-            onClick={handleAddFavourite}
-          >
-            <IoMdHeartEmpty
-              size={30}
-              className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-            />
-          </button>
-        )}
+          
+          <div className="product-card__actions">
+            <button
+              aria-label="Добавить в избранное"
+              onClick={handleAddFavourite}
+            >
+              <IoMdHeartEmpty size={18} />
+            </button>
+            <button
+              aria-label="Добавить в корзину"
+              onClick={handleAddToCart}
+            >
+              <IoCartOutline size={18} />
+            </button>
+          </div>
+        </div>
+        
+        <div className="product-card__info">
+          <h3 className="product-card__title">{name}</h3>
+          <p className="product-card__price">{price ? `${price} ₽` : ""}</p>
+        </div>
       </div>
-      <span className={price ? "productions__item-name" : "categories__item-name"}>{name}</span>
-      {/* Убедитесь, что price всегда строка или пустая строка */}
-      <span className="productions__item-price">{price ? `${price} руб.` : ""}</span>
-    </div>
+    </Link>
   );
 };
 

@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import "../styles/carousel.scss";
 
 type ImageType = {
   src: string;
@@ -31,7 +32,7 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
   return (
     <div className="w-full mx-auto tablet:p-6">
       <div className="w-full flex mt-[40px]">
-        <h2 className="text-3xl  title-h1 text-start uppercase tracking-wide">{heading}</h2>
+        <h2 className="text-3xl title-h1 text-start uppercase tracking-wide">{heading}</h2>
       </div>
       <Swiper
         modules={[Navigation]}
@@ -70,24 +71,30 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
 
           return (
             <SwiperSlide key={index}>
-              <div className="flex flex-col items-center mt-10 tablet:p-4 duration-300">
-                {firstImage ? (
-                  <Link href={`/product/${item.id}`}>
-                    <Image
-                      width={200}
-                      height={200}
-                      loading="lazy"
-                      src={firstImage.src}
-                      alt={firstImage.alt}
-                      className="w-[15rem] h-[20rem] object-cover rounded-sm mb-4"
-                    />
-                  </Link>
-                ) : (
-                  <span className="text-gray-500">Нет изображения</span>
-                )}
-                <h3 className="text-xs text-start font-semibold text-gray-800">{item.title}</h3>
-                <span className="text-xl font-bold text-gray-900">{Number(item.price).toFixed()} руб.</span>
-              </div>
+              <Link href={`/product/${item.id}`} className="slider-card-wrapper">
+                <div className="slider-card">
+                  {firstImage ? (
+                    <div className="slider-card__image">
+                      <Image
+                        width={200}
+                        height={200}
+                        loading="lazy"
+                        src={firstImage.src}
+                        alt={firstImage.alt}
+                        className="w-full h-[20rem] object-cover rounded-sm"
+                      />
+                    </div>
+                  ) : (
+                    <div className="slider-card__no-image">
+                      <span className="text-gray-500">Нет изображения</span>
+                    </div>
+                  )}
+                  <div className="slider-card__info">
+                    <h3 className="slider-card__title">{item.title}</h3>
+                    <span className="slider-card__price">{Number(item.price).toFixed()} руб.</span>
+                  </div>
+                </div>
+              </Link>
             </SwiperSlide>
           );
         })}

@@ -1,3 +1,11 @@
 .swiper-wrapper {
-    transition-timing-function: ease-in-out; /* Плавный эффект */
-  }
+  transition-timing-function: linear !important; /* Плавный эффект */
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
