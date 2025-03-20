@@ -27,8 +27,18 @@ const formSchema = z
     lastName: z.string().nonempty({
       message: "Фамилия обязательна для заполнения",
     }),
+    phone: z.string().min(10, {
+      message: "Телефон обязателен для заполнения",
+    }).refine((val) => {
+      // Удаляем все нецифровые символы и проверяем длину
+      const digitsOnly = val.replace(/\D/g, '');
+      return digitsOnly.length === 11 && digitsOnly.startsWith('7');
+    }, {
+      message: "Введите корректный номер телефона",
+    }),
+    birthDate: z.string().optional(),
   })
-  .refine(data => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: "Пароли не совпадают",
     path: ["confirmPassword"],
   });
@@ -44,23 +54,65 @@ const PersonalAcc = () => {
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: data?.email || "",
+      email: "",
       password: "",
       confirmPassword: "",
-      firstName: data?.name || "",
-      lastName: data?.surname || "",
+      firstName: "",
+      lastName: "",
+      phone: "",
+      birthDate: "",
     },
   });
 
   useEffect(() => {
     if (isSuccess && data) {
       form.reset({
-        email: data.email,
-        firstName: data.name,
-        lastName: data.surname,
+        email: data.email || "",
+        firstName: data.name || "",
+        lastName: data.surname || "",
+        phone: data.phone || "",
+        birthDate: formatDateForInput(data.birth_date),
+        password: "",
+        confirmPassword: "",
       });
     }
   }, [isSuccess, data, form]);
+
+  // Форматирование телефонного номера при вводе
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, ''); // Оставляем только цифры
+    
+    if (value.length > 0 && value[0] !== '7') {
+      if (value[0] === '8') {
+        value = '7' + value.substring(1);
+      } else {
+        value = '7' + value;
+      }
+    }
+    
+    // Ограничиваем длину до 11 цифр
+    value = value.substring(0, 11);
+    
+    // Форматируем номер
+    let formattedValue = '';
+    if (value.length > 0) {
+      formattedValue = '+' + value[0];
+      if (value.length > 1) {
+        formattedValue += ' (' + value.substring(1, 4);
+      }
+      if (value.length > 4) {
+        formattedValue += ') ' + value.substring(4, 7);
+      }
+      if (value.length > 7) {
+        formattedValue += '-' + value.substring(7, 9);
+      }
+      if (value.length > 9) {
+        formattedValue += '-' + value.substring(9, 11);
+      }
+    }
+    
+    form.setValue('phone', formattedValue);
+  };
 
   const handleChange = async (values: FormFields) => {
     try {
@@ -71,11 +123,13 @@ const PersonalAcc = () => {
         email: values.email,
         password: values.password,
         password_confirmation: values.confirmPassword,
+        phone: values.phone,
+        birth_date: values.birthDate || null,
       };
       const result = await changeProfile(requestBody).unwrap();
-      console.log("result: " + result);
+      console.log("Profile updated:", result);
     } catch (err) {
-      console.error("Registration failed:", err);
+      console.error("Profile update failed:", err);
     }
   };
 
@@ -96,6 +150,17 @@ const PersonalAcc = () => {
 
   const handleAvatarButtonClick = () => {
     fileInputRef.current?.click();
+  };
+
+  // Форматирование даты из ISO в формат для input type="date"
+  const formatDateForInput = (isoDate: string | null | undefined): string => {
+    if (!isoDate) return "";
+    try {
+      const date = new Date(isoDate);
+      return date.toISOString().split('T')[0]; // Формат YYYY-MM-DD
+    } catch (e) {
+      return "";
+    }
   };
 
   return (
@@ -127,41 +192,73 @@ const PersonalAcc = () => {
       >
         <div className="flex gap-[40px] max-minilaptop:flex-col">
           <div className="flex flex-col space-y-2 w-full">
-            <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+            <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
               <input type="text" className="grow" placeholder="Имя" {...form.register("firstName")} />
             </label>
+            {form.formState.errors.firstName && (
+              <p className="text-red-500 text-xs">{form.formState.errors.firstName.message}</p>
+            )}
           </div>
           <div className="flex flex-col space-y-2 w-full">
-            <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+            <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
               <input type="text" className="grow" placeholder="Фамилия" {...form.register("lastName")} />
             </label>
+            {form.formState.errors.lastName && (
+              <p className="text-red-500 text-xs">{form.formState.errors.lastName.message}</p>
+            )}
           </div>
         </div>
         <div className="flex gap-[40px] max-minilaptop:flex-col">
           <div className="flex flex-col space-y-2 w-full">
-            <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-              <input type="text" className="grow" placeholder="Дата рождения" />
+            <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+              <input 
+                type="date" 
+                className="grow outline-none bg-transparent" 
+                placeholder="Дата рождения"
+                {...form.register("birthDate")}
+              />
             </label>
+            {form.formState.errors.birthDate && (
+              <p className="text-red-500 text-xs">{form.formState.errors.birthDate.message}</p>
+            )}
           </div>
           <div className="flex flex-col space-y-2 w-full">
-            <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
-              <input type="text" className="grow" placeholder="Номер телефона" />
+            <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+              <input
+                type="tel"
+                className="grow outline-none bg-transparent"
+                placeholder="Номер телефона"
+                {...form.register("phone")}
+                onChange={(e) => {
+                  form.register("phone").onChange(e);
+                  handlePhoneChange(e);
+                }}
+              />
             </label>
+            {form.formState.errors.phone && (
+              <p className="text-red-500 text-xs">{form.formState.errors.phone.message}</p>
+            )}
           </div>
         </div>
         <div className="flex flex-col space-y-2 w-full">
-          <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+          <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
             <input type="text" className="grow" placeholder="Почта" {...form.register("email")} />
           </label>
+          {form.formState.errors.email && (
+            <p className="text-red-500 text-xs">{form.formState.errors.email.message}</p>
+          )}
         </div>
         <div className="flex gap-[40px] max-minilaptop:flex-col">
           <div className="flex flex-col space-y-2 w-full">
-            <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+            <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
               <input type="password" className="grow" placeholder="Пароль" {...form.register("password")} />
             </label>
+            {form.formState.errors.password && (
+              <p className="text-red-500 text-xs">{form.formState.errors.password.message}</p>
+            )}
           </div>
           <div className="flex flex-col space-y-2 w-full">
-            <label className="input bg-transparent border-b border-[#423C3D]  border-x-0 border-t-0 rounded-none flex items-center gap-2">
+            <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
               <input
                 type="password"
                 className="grow"
@@ -169,6 +266,9 @@ const PersonalAcc = () => {
                 {...form.register("confirmPassword")}
               />
             </label>
+            {form.formState.errors.confirmPassword && (
+              <p className="text-red-500 text-xs">{form.formState.errors.confirmPassword.message}</p>
+            )}
           </div>
         </div>
         <div>

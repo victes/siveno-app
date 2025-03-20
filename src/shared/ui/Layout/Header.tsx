@@ -9,10 +9,10 @@ import { Burger } from "@/widgets/Burger";
 import { Cart } from "@/widgets/Cart";
 import { Favourite } from "@/widgets/Favourite";
 import { GoPerson } from "react-icons/go";
+import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useProductStore } from "@/entities/productStore/store";
 import Link from "next/link";
 import { useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
-import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -72,43 +72,43 @@ const Header = () => {
             
             <Burger onOpen={click} setOpen={() => setClick(prev => !prev)} />
             
-            <Link href="/" className="mr-10">
+            <Link href="/" className="mr-6 lg:mr-10 flex-shrink-0">
               <div className="logo" style={{ transform: 'translateY(-2px)' }}>
                 <Image 
                   src="/images/Hero/LogoHor.png" 
                   alt="SIVENO" 
-                  width={120} 
-                  height={40}
-                  className="max-w-[280px] md:max-w-[200px] lg:max-w-[280px]"
+                  width={140} 
+                  height={46}
+                  className="w-[120px] md:w-[140px] lg:w-[160px] h-auto"
                 />
               </div>
             </Link>
             
-            <nav className="hidden md:flex space-x-10">
-              <Link href="/catalog-categories" className="text-sm hover:text-gray-500 transition-colors">
+            <nav className="hidden md:flex space-x-4 lg:space-x-6 xl:space-x-10">
+              <Link href="/catalog-categories" className="text-sm whitespace-nowrap hover:text-gray-500 transition-colors">
                 Каталог
               </Link>
               {localToken && (
-                <Link href="/account" className="text-sm hover:text-gray-500 transition-colors">
+                <Link href="/account" className="text-sm whitespace-nowrap hover:text-gray-500 transition-colors">
                   Личный кабинет
                 </Link>
               )}
-              <Link href="/about" className="text-sm hover:text-gray-500 transition-colors">
+              <Link href="/about" className="text-sm whitespace-nowrap hover:text-gray-500 transition-colors">
                 О нас
               </Link>
-              <Link href="/contacts" className="text-sm hover:text-gray-500 transition-colors">
+              <Link href="/contacts" className="text-sm whitespace-nowrap hover:text-gray-500 transition-colors">
                 Контакты
               </Link>
             </nav>
           </div>
           
           {/* Правая часть шапки */}
-          <div className="flex items-center space-x-5 md:space-x-10">
-            <div className="hidden md:block">
-              <p className="text-sm font-light">8 (800) 555-25-23</p>
+          <div className="flex items-center space-x-3 md:space-x-5 lg:space-x-10">
+            <div className="hidden lg:block flex-shrink-0">
+              <p className="text-sm font-light whitespace-nowrap">8 (800) 555-25-23</p>
             </div>
             
-            <div className="flex items-center space-x-5 md:space-x-10">
+            <div className="flex items-center space-x-3 md:space-x-5">
               {/* Избранное */}
               <button 
                 className="relative text-black hover:text-gray-500 transition-colors"
@@ -117,7 +117,7 @@ const Header = () => {
               >
                 <IoMdHeartEmpty size={20} />
                 {isSuccess && data.data.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-black text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                  <span className="absolute -top-2.5 -right-1.5 bg-white border border-gray-400 text-gray-700 text-[9px] w-3.5 h-3.5 flex items-center justify-center rounded-full">
                     {data.data.length}
                   </span>
                 )}
@@ -131,7 +131,7 @@ const Header = () => {
               >
                 <IoCartOutline size={20} />
                 {products.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-black text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                  <span className="absolute -top-2.5 -right-1.5 bg-white border border-gray-400 text-gray-700 text-[9px] w-3.5 h-3.5 flex items-center justify-center rounded-full">
                     {products.length}
                   </span>
                 )}

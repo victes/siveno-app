@@ -1,17 +1,19 @@
 import React from "react";
 
-import { IBtnSize } from "../types";
+interface ButtonSizeProps {
+  name: string;
+  className?: string;
+  onClick?: () => void;
+}
 
-const ButtonSize = ({ name, className, onClick }: IBtnSize) => {
+const ButtonSize: React.FC<ButtonSizeProps> = ({ name, className, onClick }) => {
   return (
-    <>
-      <button
-        onClick={onClick}
-        className={`${className} btn bg-transparent btn-ghost shadow-none    uppercase text-[12px]`}
-      >
-        {name}
-      </button>
-    </>
+    <button
+      className={`size-button w-10 h-10 flex items-center justify-center border border-gray-300 hover:border-black transition-colors duration-200 uppercase text-sm font-medium ${className}`}
+      onClick={onClick}
+    >
+      {name}
+    </button>
   );
 };
 

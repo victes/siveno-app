@@ -280,8 +280,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             } transition-transform duration-300`}
             onClick={e => e.stopPropagation()}
           >
-            <RxCross2 className="absolute top-0 left-0 m-5 cursor-pointer" size={30} onClick={() => handleClose()} />
-            <h2 className="text-black text-[30px]">Оформление заказа</h2>
+            <div className="flex justify-between items-center mb-5">
+              <h2 className="text-black text-[30px]">Оформление заказа</h2>
+              <RxCross2 className="cursor-pointer" size={30} onClick={() => handleClose()} />
+            </div>
             <p className="uppercase">
               {products.length} Товаров на {totalCost()} руб.
             </p>

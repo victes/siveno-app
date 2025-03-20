@@ -11,7 +11,7 @@ import BtnBack from "@/shared/ui/BtnBack";
 
 import { useParams } from "next/navigation";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import "../styles/product-page.scss";
 
@@ -23,6 +23,21 @@ const ProductPage = () => {
   const { product_id } = useParams();
   const { data: products, isLoading, error } = useGetProductsByIdQuery(Number(product_id));
   const { data } = useGetProductsPopularQuery(10);
+  const [selectedSize, setSelectedSize] = useState<string>("");
+
+  useEffect(() => {
+    const handleSizeSelected = (event: CustomEvent) => {
+      if (event.detail && event.detail.size) {
+        setSelectedSize(event.detail.size);
+      }
+    };
+
+    window.addEventListener('sizeSelected', handleSizeSelected as EventListener);
+    
+    return () => {
+      window.removeEventListener('sizeSelected', handleSizeSelected as EventListener);
+    };
+  }, []);
 
   const transformProductsToSlides = (items: IPopular[] = []): SliderItem[] => {
     return items.map(product => ({
@@ -44,6 +59,10 @@ const ProductPage = () => {
   const sizes = Object.entries(products?.measurements || {}).map(([size]) => {
     return size;
   });
+
+  const handleSizeSelect = (size: string) => {
+    setSelectedSize(size);
+  };
 
   const accordion = [
     { name: "Состав и Уход", value: <>{products?.composition_care}</> },
@@ -107,32 +126,35 @@ const ProductPage = () => {
           {/* ================================================== */}
           <div className="flex flex-col items-center justify-center gap-[20px]">
             <h1 className="title-h1">{products?.name}</h1>
-            <p className="text-center max-w-[200px] tablet:max-w-full text-[10px] tablet:text-[14px]">
+            <p className="product-page__price text-center">{Number(products?.price).toFixed()} руб.</p>
+            <p className="text-center max-w-[200px] tablet:max-w-full text-[10px] tablet:text-[14px] text-gray-600">
               {products?.description}
             </p>
           </div>
           {/* ================================================== */}
-          <div className="flex flex-col items-center justify-center">
-            <div className="">
-              <ButtonSizes selectedSize={sizes.toString()} />
+          <div className="product-page__controls w-full max-w-[400px] flex flex-col gap-5 mt-2 mb-4">
+            <div className="product-page__sizes">
+              <p className="text-xs uppercase mb-2 font-medium tracking-wider">Размер</p>
+              <ButtonSizes 
+                selectedSize={selectedSize} 
+                onSizeSelect={handleSizeSelect}
+              />
             </div>
-            <div className="py-2">
+            <div className="product-page__colors">
+              <p className="text-xs uppercase mb-2 font-medium tracking-wider">Цвет</p>
               <ButtonColors />
             </div>
           </div>
           {/* ================================================== */}
 
-          <div className="producti-page-price mx-auto mb-[10px]">
-            <span>{Number(products?.price).toFixed()} руб.</span>
-          </div>
-
           {/* ================================================== */}
-          <div className="">
+          <div className="product-page__actions w-full max-w-[400px]">
             <ButtonsProduct
               id={Number(product_id)}
               price={Number(products?.price).toFixed()}
-              name={products?.name.toString()}
+              name={products?.name?.toString()}
               img={products?.images[0]?.image_path || ""}
+              selectedSize={selectedSize}
             />
           </div>
           {/* ================================================== */}

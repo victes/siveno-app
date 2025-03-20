@@ -2,6 +2,7 @@
 import { useFavStore } from "@/entities/favouriteStore/store";
 import { useProductStore } from "@/entities/productStore/store";
 import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
+import { useGetSizesByProductQuery } from "@/shared/api/SizesApi/ui/SizesApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -12,38 +13,75 @@ interface IProduct {
   name: string | undefined;
   price: string;
   img: string;
+  selectedSize?: string;
 }
 
-const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
+const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }: IProduct) => {
   const { addProduct } = useProductStore();
   const { addFav } = useFavStore();
-  // const [token, setToken] = useState("");
   const { push } = useRouter();
   const [addToWishlist] = useAddToWishlistMutation();
+  const { data: sizes } = useGetSizesByProductQuery();
 
-  const { token } = useAuth(); // Теперь токен приходит из контекста
+  const { token } = useAuth();
   const [localToken, setLocalToken] = useState<string | null>(token);
+  const [selectedSize, setSelectedSize] = useState<string>(propSelectedSize || "");
+  const [selectedSizeId, setSelectedSizeId] = useState<number | null>(null);
 
   useEffect(() => {
-    setLocalToken(token); // Синхронизируем состояние с контекстомW
+    setLocalToken(token);
   }, [token]);
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     setToken(localStorage.getItem("access_token") || "");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (propSelectedSize) {
+      setSelectedSize(propSelectedSize);
+    }
+  }, [propSelectedSize]);
+
+  useEffect(() => {
+    if (selectedSize && sizes) {
+      const sizeObj = sizes.find(s => s.name === selectedSize);
+      if (sizeObj) {
+        setSelectedSizeId(sizeObj.id);
+      }
+    }
+  }, [selectedSize, sizes]);
+
+  useEffect(() => {
+    const handleSizeSelected = (event: CustomEvent) => {
+      if (event.detail && event.detail.size) {
+        setSelectedSize(event.detail.size);
+        
+        if (sizes) {
+          const sizeObj = sizes.find(s => s.name === event.detail.size);
+          if (sizeObj) {
+            setSelectedSizeId(sizeObj.id);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('sizeSelected', handleSizeSelected as EventListener);
+    
+    return () => {
+      window.removeEventListener('sizeSelected', handleSizeSelected as EventListener);
+    };
+  }, [sizes]);
 
   const handleAddProduct = () => {
-    // Добавляем товар в корзину без проверки авторизации
+    if (!selectedSize) {
+      alert("Пожалуйста, выберите размер");
+      return;
+    }
+    
     if (name?.trim() && price) {
       addProduct({
         id: id.toString(),
         name,
         price: parseFloat(price),
         img,
-        selectedSize: "",
-        quantity: 0,
+        selectedSize,
+        quantity: 1,
       });
     }
   };
@@ -51,52 +89,38 @@ const ButtonsProduct = ({ id, name, price, img }: IProduct) => {
   const handleAddFavourite = () => {
     if (localToken) {
       addToWishlist({ product_id: id });
-      if (!localToken) {
-        if (name?.trim() && price) {
-          addFav({
-            id: id.toString(),
-            name,
-            price: parseFloat(price),
-            img,
-          });
-        }
-      } else {
-        if (name?.trim() && price) {
-          addFav({
-            id: id.toString(),
-            name,
-            price: parseFloat(price),
-            img,
-          });
-        }
+      if (name?.trim() && price) {
+        addFav({
+          id: id.toString(),
+          name,
+          price: parseFloat(price),
+          img,
+        });
       }
     } else {
       push("/login");
     }
   };
+  
   return (
-    <div className="flex flex-col items-center gap-[15px]">
-      <div className="flex gap-4">
-        <div className="">
-          <button className="btn bg-transparent rounded-none btn-active uppercase" onClick={handleAddProduct}>
-            Добавить в корзину
-          </button>
-        </div>
-        <div className="">
-          <button
-            className="btn bg-transparent border-none shadow-none hover:bg-transparent btn-active uppercase"
-            onClick={handleAddFavourite}
-          >
-            <IoMdHeartEmpty
-              size={30}
-              className="hover:text-black transition-colors duration-200 ease-out cursor-pointer"
-            />
-          </button>
-        </div>
+    <div className="product-buttons w-full">
+      <div className="product-buttons__main flex w-full mb-5">
+        <button 
+          className="product-buttons__cart flex-1 h-12 border-0 bg-black text-white uppercase text-xs tracking-widest font-medium hover:bg-gray-900 transition-all duration-300" 
+          onClick={handleAddProduct}
+        >
+          Добавить в корзину
+        </button>
+        <button
+          className="product-buttons__favorite w-12 h-12 flex items-center justify-center border border-gray-300 hover:bg-gray-50 transition-all duration-300"
+          onClick={handleAddFavourite}
+        >
+          <IoMdHeartEmpty size={22} />
+        </button>
       </div>
-      <div className="">
-        <button className="btn btn-outline btn-warning rounded-none uppercase">Оформить рассрочку</button>
-      </div>
+      <button className="product-buttons__installment w-full h-12 border border-gray-300 text-gray-700 uppercase text-xs tracking-widest font-medium hover:border-black transition-all duration-300">
+        Оформить рассрочку
+      </button>
     </div>
   );
 };
