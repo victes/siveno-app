@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { InputHTMLAttributes } from "react";
 import { FieldError } from "react-hook-form";
 import { IPayCard } from "../types/type";
@@ -69,10 +69,10 @@ const Modal = ({ click, setClick }: IModal) => {
     }
   };
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAnimate(false);
     setTimeout(() => setClick(false), 300);
-  };
+  }, [setClick]);
 
   useEffect(() => {
     if (click) {
@@ -189,10 +189,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     }
   };
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAnimate(false);
     setTimeout(() => onOpen(false), 300);
-  };
+  }, [onOpen]);
 
   useEffect(() => {
     if (open) {

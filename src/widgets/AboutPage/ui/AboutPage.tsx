@@ -1,6 +1,5 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { motion } from "framer-motion";
 import { useScroll, useTransform } from "framer-motion";

@@ -39,7 +39,8 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
 
   useEffect(() => {
     if (selectedSize && sizes) {
-      const sizeObj = sizes.find(s => s.name === selectedSize);
+      // Убираем неиспользуемую переменную
+      // const sizeObj = sizes.find(s => s.name === selectedSize);
     }
   }, [selectedSize, sizes]);
 
@@ -48,9 +49,10 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
       if (event.detail && event.detail.size) {
         setSelectedSize(event.detail.size);
         
-        if (sizes) {
-          const sizeObj = sizes.find(s => s.name === event.detail.size);
-        }
+        // Убираем неиспользуемую переменную
+        // if (sizes) {
+        //   const sizeObj = sizes.find(s => s.name === event.detail.size);
+        // }
       }
     };
 
