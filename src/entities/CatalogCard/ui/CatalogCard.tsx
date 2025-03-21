@@ -71,6 +71,7 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
             loading="lazy"
             src={img}
             alt={name}
+            unoptimized={img.startsWith('http://') || img.startsWith('https://')}
           />
           
           <div className="product-card__actions">
