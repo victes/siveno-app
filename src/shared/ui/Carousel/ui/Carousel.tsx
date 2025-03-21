@@ -68,6 +68,7 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
       >
         {items.map((item, index) => {
           const firstImage = item.img?.[0]; // Проверяем, есть ли изображение
+          const isExternalImage = firstImage?.src && (firstImage.src.startsWith('http://') || firstImage.src.startsWith('https://'));
 
           return (
             <SwiperSlide key={index} className="flex items-stretch h-auto">
@@ -75,14 +76,26 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
                 <div className="slider-card">
                   {firstImage ? (
                     <div className="slider-card__image">
-                      <Image
-                        width={200}
-                        height={200}
-                        loading="lazy"
-                        src={firstImage.src}
-                        alt={firstImage.alt}
-                        className="w-full h-[20rem] object-cover rounded-sm"
-                      />
+                      {isExternalImage ? (
+                        <Image
+                          width={400}
+                          height={600}
+                          loading="lazy"
+                          src={firstImage.src}
+                          alt={firstImage.alt}
+                          className="w-full h-[20rem] object-cover rounded-sm"
+                          unoptimized={true}
+                        />
+                      ) : (
+                        <Image
+                          width={400}
+                          height={600}
+                          loading="lazy"
+                          src={firstImage.src}
+                          alt={firstImage.alt}
+                          className="w-full h-[20rem] object-cover rounded-sm"
+                        />
+                      )}
                     </div>
                   ) : (
                     <div className="slider-card__no-image">

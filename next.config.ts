@@ -69,6 +69,18 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "wear.loc",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "wear.loc",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -35,6 +35,7 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
               priority={true}
               alt={`Slide ${idx + 1}`}
               className="object-cover h-full w-auto  max-w-full rounded-sm"
+              unoptimized={item.image_path.startsWith('http://') || item.image_path.startsWith('https://')}
             />
           </div>
         ))}
