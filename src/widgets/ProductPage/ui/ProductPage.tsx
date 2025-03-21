@@ -81,7 +81,7 @@ const ProductPage = () => {
             {Object.entries(products?.preference || {}).map(([size, measures]) => (
               <tr key={size}>
                 <td>{size}</td>
-                <td>{measures.join(", ")}</td>
+                <td>{Array.isArray(measures) ? measures.join(", ") : String(measures)}</td>
               </tr>
             ))}
           </tbody>
@@ -102,7 +102,7 @@ const ProductPage = () => {
             {Object.entries(products?.measurements || {}).map(([size, measures]) => (
               <tr key={size}>
                 <td>{size}</td>
-                <td>{measures.join(", ")}</td>
+                <td>{Array.isArray(measures) ? measures.join(", ") : String(measures)}</td>
               </tr>
             ))}
           </tbody>

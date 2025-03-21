@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -10,8 +9,15 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
+import { useEffect, useState } from "react";
 
 const HeroSlider = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
@@ -22,17 +28,24 @@ const HeroSlider = () => {
       autoplay={false}
     >
       <SwiperSlide className="w-full h-screen">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-screen object-cover max-laptop:h-[500px]"
-        >
-          <source src="/images/Hero/hero_video.mov" type="video/quicktime" />
-          <source src="/images/Hero/heroVid.mp4" type="video/mp4" />
-          Ваш браузер не поддерживает видео.
-        </video>
+        {isMounted ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-screen object-cover max-laptop:h-[500px]"
+          >
+            {/* Приоритет отдаем MP4 формату, так как он лучше поддерживается */}
+            <source src="/images/Hero/heroVid.mp4" type="video/mp4" />
+            <source src="/images/Hero/hero_video.mov" type="video/quicktime" />
+            Ваш браузер не поддерживает видео.
+          </video>
+        ) : (
+          <div className="w-full h-screen bg-gray-100 flex items-center justify-center">
+            <p className="text-gray-500">Загрузка видео...</p>
+          </div>
+        )}
       </SwiperSlide>
     </Swiper>
   );
