@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import CatalogCard from "@/entities/CatalogCard";
 import { useGetProductsQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
 import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi";
@@ -139,9 +140,9 @@ const AllProductsPage = () => {
         <nav aria-label="breadcrumb">
           <ul className="flex space-x-2 text-gray-600">
             <li>
-              <a href="/" className="hover:underline">
+              <Link href="/" className="hover:underline">
                 Главная
-              </a>
+              </Link>
             </li>
             <li className="flex items-center">
               <span className="mx-2">/</span>
