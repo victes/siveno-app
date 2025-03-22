@@ -56,20 +56,40 @@ const AllProductsPage = () => {
   // Обработка результатов запроса
   useEffect(() => {
     if (products) {
+      console.log('Received products:', products);
+      
       if (currentPage === 1) {
         // Если это первая страница, заменяем все продукты
-        setAllProducts(products.data || []);
+        if (Array.isArray(products)) {
+          setAllProducts(products || []);
+        } else if (products.data && Array.isArray(products.data)) {
+          setAllProducts(products.data || []);
+        } else {
+          console.error('Unexpected products structure:', products);
+          setAllProducts([]);
+        }
       } else {
         // Иначе добавляем новые продукты к существующим
-        setAllProducts(prev => [...prev, ...(products.data || [])]);
+        if (Array.isArray(products)) {
+          setAllProducts(prev => [...prev, ...(products || [])]);
+        } else if (products.data && Array.isArray(products.data)) {
+          setAllProducts(prev => [...prev, ...(products.data || [])]);
+        } else {
+          console.error('Unexpected products structure for page > 1:', products);
+        }
       }
 
       // Проверяем, есть ли еще страницы для загрузки
-      setHasMore(products.current_page < products.last_page);
+      if ('current_page' in products && 'last_page' in products) {
+        setHasMore(products.current_page < products.last_page);
+      } else {
+        setHasMore(false);
+      }
       setIsLoadingMore(false);
     }
     
     if (error) {
+      console.error('Error loading products:', error);
       setIsLoadingMore(false);
     }
   }, [products, currentPage, error]);
