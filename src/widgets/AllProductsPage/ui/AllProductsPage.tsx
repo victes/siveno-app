@@ -125,7 +125,7 @@ const AllProductsPage = () => {
     }
     
     newParams.set("page", "1"); // Сбрасываем страницу на первую при изменении фильтров
-    router.push(`/all-products?${newParams.toString()}`);
+    router.push(`/catalog-products?${newParams.toString()}`);
 
     // Обновляем локальное состояние
     if (key === "color") setColor(value);
