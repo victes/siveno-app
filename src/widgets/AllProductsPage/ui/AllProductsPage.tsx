@@ -19,10 +19,10 @@ const AllProductsPage = () => {
   const loaderRef = useRef<HTMLDivElement>(null);
 
   // Получаем параметры из URL
-  const initialSort = searchParams.get("sort") || "newest";
-  const initialColor = searchParams.get("color") || "all";
-  const initialSize = searchParams.get("size") || "all";
-  const initialPage = Number(searchParams.get("page")) || 1;
+  const initialSort = searchParams?.get("sort") || "newest";
+  const initialColor = searchParams?.get("color") || "all";
+  const initialSize = searchParams?.get("size") || "all";
+  const initialPage = Number(searchParams?.get("page")) || 1;
 
   // Состояние компонента
   const [sort, setSort] = useState(initialSort);
@@ -58,10 +58,10 @@ const AllProductsPage = () => {
     if (products) {
       if (currentPage === 1) {
         // Если это первая страница, заменяем все продукты
-        setAllProducts(products.data);
+        setAllProducts(products.data || []);
       } else {
         // Иначе добавляем новые продукты к существующим
-        setAllProducts(prev => [...prev, ...products.data]);
+        setAllProducts(prev => [...prev, ...(products.data || [])]);
       }
 
       // Проверяем, есть ли еще страницы для загрузки
@@ -84,7 +84,7 @@ const AllProductsPage = () => {
   // Настройка Intersection Observer для бесконечной прокрутки
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const [target] = entries;
-    if (target.isIntersecting && hasMore && !isLoading && !isLoadingMore) {
+    if (target?.isIntersecting && hasMore && !isLoading && !isLoadingMore) {
       setIsLoadingMore(true);
       setCurrentPage(prev => prev + 1);
     }
@@ -92,6 +92,8 @@ const AllProductsPage = () => {
 
   // Инициализация Intersection Observer
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const observer = new IntersectionObserver(handleObserver, {
       root: null,
       rootMargin: '0px',
@@ -116,7 +118,9 @@ const AllProductsPage = () => {
 
   // Функция обновления фильтров
   const updateFilters = (key: FilterKey, value: string) => {
-    const newParams = new URLSearchParams(searchParams.toString());
+    if (typeof window === 'undefined') return;
+    
+    const newParams = new URLSearchParams(searchParams?.toString() || "");
     
     if (value === "all") {
       newParams.delete(key);
@@ -208,7 +212,7 @@ const AllProductsPage = () => {
           <CatalogCard
             id={item.id}
             key={`${item.id}-${currentPage}-${index}`}
-            img={item.images[0]?.image_path || '/images/placeholder.jpg'}
+            img={item.images && item.images[0] ? item.images[0].image_path : '/images/placeholder.jpg'}
             href={`/product/${item.id}`}
             name={item.name}
             price={Number(item.price).toFixed()}
