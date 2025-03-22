@@ -11,15 +11,9 @@ import Breadcrumbs from "@/shared/ui/Breadcrumbs";
 import { useGetProductsQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
 import { useGetCategoriesQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
 import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi";
+import { Product } from "@/shared/api/ProductsApi/types";
 
 import "../styles/catalog-products-page.scss";
-
-interface Product {
-  id: number;
-  images: { image_path: string }[];
-  name: string;
-  price: number;
-}
 
 const CatalogProductsPage = () => {
   const { products_slug } = useParams();
