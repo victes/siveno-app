@@ -45,7 +45,7 @@ const AllProductsPage = () => {
     : [];
   const optionsColor = [{ option: "Все цвета", value: "all" }, ...colorOptions];
 
-  // Формируем query params
+  // Формирование строки запроса
   const queryParams = new URLSearchParams();
   if (color !== "all") queryParams.set("color", color);
   if (size !== "all") queryParams.set("size", size);
@@ -53,24 +53,48 @@ const AllProductsPage = () => {
   queryParams.set("page", currentPage.toString());
 
   const queryString = queryParams.toString();
+  console.log("Query String:", queryString);
+  console.log("Full API URL:", `${process.env.NEXT_PUBLIC_BASE_URL}products?${queryString}`);
+  
   const { data: products, isLoading, error } = useGetProductsQuery(queryString);
 
   // Обработка результатов запроса
   useEffect(() => {
-    if (products && !isLoading) {
-      if (currentPage === 1) {
-        // Если это первая страница, заменяем все продукты
-        setAllProducts(products.data);
-      } else {
-        // Иначе добавляем новые продукты к существующим
-        setAllProducts(prev => [...prev, ...products.data]);
-      }
+    if (products) {
+      console.log("API Response:", products);
+      console.log("Current Page:", currentPage);
+      console.log("Has data:", products.data && products.data.length > 0);
+      console.log("Response structure:", {
+        current_page: products.current_page,
+        last_page: products.last_page,
+        data_length: products.data ? products.data.length : 0,
+        total: products.total
+      });
+      
+      // Проверяем, что products.data существует и является массивом
+      if (products.data && Array.isArray(products.data)) {
+        if (currentPage === 1) {
+          // Если это первая страница, заменяем все продукты
+          setAllProducts(products.data);
+        } else {
+          // Иначе добавляем новые продукты к существующим
+          setAllProducts(prev => [...prev, ...products.data]);
+        }
 
-      // Проверяем, есть ли еще страницы для загрузки
-      setHasMore(products.current_page < products.last_page);
+        // Проверяем, есть ли еще страницы для загрузки
+        setHasMore(products.current_page < products.last_page);
+      } else {
+        console.error("Invalid products data structure:", products);
+      }
+      
       setIsLoadingMore(false);
     }
-  }, [products, isLoading, currentPage]);
+    
+    if (error) {
+      console.error("API Error:", error);
+      setIsLoadingMore(false);
+    }
+  }, [products, currentPage, error]);
 
   // Сброс продуктов при изменении фильтров
   useEffect(() => {
@@ -82,11 +106,19 @@ const AllProductsPage = () => {
   // Настройка Intersection Observer для бесконечной прокрутки
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const [target] = entries;
+    console.log("Intersection Observer triggered:", {
+      isIntersecting: target.isIntersecting,
+      hasMore,
+      isLoading,
+      isLoadingMore
+    });
+    
     if (target.isIntersecting && hasMore && !isLoading && !isLoadingMore) {
+      console.log("Loading more products, incrementing page to:", currentPage + 1);
       setIsLoadingMore(true);
       setCurrentPage(prev => prev + 1);
     }
-  }, [hasMore, isLoading, isLoadingMore]);
+  }, [hasMore, isLoading, isLoadingMore, currentPage]);
 
   // Инициализация Intersection Observer
   useEffect(() => {
@@ -176,7 +208,13 @@ const AllProductsPage = () => {
         {isLoading && currentPage === 1 && <p>Загрузка...</p>}
         {error && <p>Ошибка загрузки товаров</p>}
         {!allProducts.length && !isLoading && (
-          <p className="text-center w-full text-lg">Товары не найдены</p>
+          <div>
+            <p className="text-center w-full text-lg">Товары не найдены</p>
+            <p className="text-center text-sm text-gray-500">
+              Debug: isLoading={String(isLoading)}, hasError={String(!!error)}, 
+              currentPage={currentPage}, hasMore={String(hasMore)}
+            </p>
+          </div>
         )}
         {allProducts.map((item, index) => (
           <CatalogCard
