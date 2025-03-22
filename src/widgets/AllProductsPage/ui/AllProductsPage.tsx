@@ -82,7 +82,7 @@ const AllProductsPage = () => {
   }, [sort, color, size]);
 
   // Настройка Intersection Observer для бесконечной прокрутки
-  const handleObserver = useCallback((entries) => {
+  const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const [target] = entries;
     if (target.isIntersecting && hasMore && !isLoading && !isLoadingMore) {
       setIsLoadingMore(true);
