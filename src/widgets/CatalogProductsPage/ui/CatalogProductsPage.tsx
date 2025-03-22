@@ -14,6 +14,13 @@ import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi"
 
 import "../styles/catalog-products-page.scss";
 
+interface Product {
+  id: number;
+  images: { image_path: string }[];
+  name: string;
+  price: number;
+}
+
 const CatalogProductsPage = () => {
   const { products_slug } = useParams();
   const searchParams = useSearchParams();
@@ -36,7 +43,7 @@ const CatalogProductsPage = () => {
   const [color, setColor] = useState(initialColor);
   const [size, setSize] = useState(initialSize);
   const [currentPage, setCurrentPage] = useState(initialPage);
-  const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 

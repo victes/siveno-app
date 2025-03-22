@@ -96,13 +96,15 @@ const AllProductsPage = () => {
       threshold: 0.1
     });
 
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
+    const currentLoaderRef = loaderRef.current;
+    
+    if (currentLoaderRef) {
+      observer.observe(currentLoaderRef);
     }
 
     return () => {
-      if (loaderRef.current) {
-        observer.unobserve(loaderRef.current);
+      if (currentLoaderRef) {
+        observer.unobserve(currentLoaderRef);
       }
     };
   }, [handleObserver]);
