@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 
 import CatalogCard from "@/entities/CatalogCard";
@@ -18,6 +18,8 @@ const CatalogProductsPage = () => {
   const { products_slug } = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
   // Получаем категории и текущую категорию
   const { data: categories } = useGetCategoriesQuery();
@@ -27,11 +29,16 @@ const CatalogProductsPage = () => {
   const initialSort = searchParams.get("sort") || "newest";
   const initialColor = searchParams.get("color") || "all";
   const initialSize = searchParams.get("size") || "all";
+  const initialPage = Number(searchParams.get("page") || "1");
 
-  // Состояния фильтров
+  // Состояния фильтров и пагинации
   const [sort, setSort] = useState(initialSort);
   const [color, setColor] = useState(initialColor);
   const [size, setSize] = useState(initialSize);
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // Загружаем цвета
   const { data: colors } = useGetColorsByProductQuery();
@@ -49,6 +56,7 @@ const CatalogProductsPage = () => {
   if (color !== "all") queryParams.set("color", color);
   if (size !== "all") queryParams.set("size", size);
   if (sort) queryParams.set("sort", sort);
+  queryParams.set("page", currentPage.toString());
 
   const queryString = queryParams.toString();
   const { data: products, isLoading, error } = useGetProductsQuery(queryString);
@@ -66,8 +74,64 @@ const CatalogProductsPage = () => {
       newParams.set(key, value);
     }
 
+    // При изменении фильтров сбрасываем страницу и накопленные товары
+    newParams.delete("page");
+    setCurrentPage(1);
+    setAllProducts([]);
+    setHasMore(true);
+
     router.push(`?${newParams.toString()}`);
   };
+
+  // Обработчик загрузки следующей страницы
+  const loadNextPage = useCallback(() => {
+    if (isLoadingMore || !hasMore) return;
+    
+    setIsLoadingMore(true);
+    setCurrentPage(prev => prev + 1);
+  }, [isLoadingMore, hasMore]);
+
+  // Обновляем список товаров при получении новых данных
+  useEffect(() => {
+    if (products?.data) {
+      if (currentPage === 1) {
+        setAllProducts(products.data);
+      } else {
+        setAllProducts(prev => [...prev, ...products.data]);
+      }
+      
+      setHasMore(products.current_page < products.last_page);
+      setIsLoadingMore(false);
+    }
+  }, [products, currentPage]);
+
+  // Настраиваем Intersection Observer для бесконечного скролла
+  useEffect(() => {
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting && hasMore && !isLoading && !isLoadingMore) {
+          loadNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observerRef.current = observer;
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [hasMore, isLoading, isLoadingMore, loadNextPage]);
 
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
@@ -83,7 +147,6 @@ const CatalogProductsPage = () => {
       <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row mindesk:justify-between items-center mb-[30px]">
         <div className="flex flex-col tablet:flex-row gap-[20px]">
           <Select
-            // name="По Популярности"
             options={[
               { option: "Сначала новые", value: "newest" },
               { option: "Сначала старые", value: "oldest" },
@@ -97,7 +160,6 @@ const CatalogProductsPage = () => {
             }}
           />
           <Select
-            // name="Цвет"
             options={optionsColor}
             value={color}
             onChange={value => {
@@ -119,22 +181,34 @@ const CatalogProductsPage = () => {
 
       {/* Карточки товаров */}
       <div className="products-card-container">
-        {isLoading && <p>Загрузка...</p>}
+        {isLoading && currentPage === 1 && <p>Загрузка...</p>}
         {error && <p>Ошибка загрузки товаров</p>}
-        {products?.data.map(item => {
-          // Парсим строку JSON в массив URL
-          // const imageUrls = JSON.parse(item.image_urls); // Теперь это массив
-          return (
+        {allProducts.length > 0 ? (
+          allProducts.map((item, index) => (
             <CatalogCard
               id={item.id}
-              key={item.id}
-              img={item.images[0].image_path} // Используем первый URL из массива
+              key={`${item.id}-${currentPage}-${index}`}
+              img={item.images[0]?.image_path || "/images/placeholder.jpg"}
               href={`/product/${item.id}`}
               name={item.name}
               price={Number(item.price).toFixed()}
             />
-          );
-        })}
+          ))
+        ) : (
+          !isLoading && <p className="col-span-full text-center py-8">Товары не найдены</p>
+        )}
+      </div>
+
+      {/* Индикатор загрузки и элемент для Intersection Observer */}
+      <div ref={loadMoreRef} className="w-full py-8 text-center">
+        {isLoadingMore && (
+          <div className="flex justify-center items-center py-4">
+            <div className="spinner w-8 h-8 border-2 border-[rgba(0,0,0,0.1)] border-t-[#423c3d] rounded-full animate-spin"></div>
+          </div>
+        )}
+        {!hasMore && allProducts.length > 0 && (
+          <p className="text-center text-gray-500 py-4">Все товары загружены</p>
+        )}
       </div>
     </div>
   );
