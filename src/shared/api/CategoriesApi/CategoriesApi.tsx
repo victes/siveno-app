@@ -5,7 +5,7 @@ import { Category } from "./types";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const CategoriesApi = createApi({
-  reducerPath: "categories",
+  reducerPath: "categoriesApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),

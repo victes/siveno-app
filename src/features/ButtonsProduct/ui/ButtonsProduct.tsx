@@ -20,10 +20,9 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
   const { addProduct } = useProductStore();
   const { addFav } = useFavStore();
   const { push } = useRouter();
+  const {token} = useAuth();
   const [addToWishlist] = useAddToWishlistMutation();
   const { data: sizes } = useGetSizesByProductQuery();
-
-  const { token } = useAuth();
   const [localToken, setLocalToken] = useState<string | null>(token);
   const [selectedSize, setSelectedSize] = useState<string>(propSelectedSize || "");
 
@@ -114,7 +113,7 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
         </button>
       </div>
       <button className="product-buttons__installment w-full h-12 border border-gray-300 text-gray-700 uppercase text-xs tracking-widest font-medium hover:border-black transition-all duration-300">
-        Оформить рассрочку
+        Купить долями
       </button>
     </div>
   );

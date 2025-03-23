@@ -30,10 +30,54 @@ body {
   }
 }
 
+.video-slider {
+  @media(max-width:1140px){
+    height: 700px;
+  }
+  @media(max-width:870px){
+    height: 500px;
+  }
+  @media(max-width:630px){
+    height: 400px;
+  }
+  @media(max-width:520px){
+    height: 300px;
+  }
+  @media(max-width:390px){
+    height: 250px;
+  }
+}
+
+@media not all and (width >= 769px) {
+  .max-laptop\:pb-\[40px\] {
+      padding-bottom: 40px;
+  }
+}
+@media not all and (width >= 390px) {
+  .max-laptop\:pb-\[40px\] {
+      padding-bottom: 20px;
+  }
+}
+
+@media (max-width:390px) {
+  .max-laptop-390 {
+    padding-bottom: 20px;
+  }
+}
+
 .bona {
   font-family: "Bona Nova SC", serif;
   font-weight: 400;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'lineyka';
+  src: url('/public/fonts/Lineyka.ttf');
+}
+
+.lineyka {
+  font-family: 'lineyka';
 }
 
 // .yeseva {

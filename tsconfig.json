@@ -46,7 +46,7 @@
     ".next/types/**/*.ts",
     "next-env.d.ts",
     "build/types/**/*.ts"
-  ],
+, "../layout.tsx"  ],
   "exclude": [
     "node_modules"
   ]

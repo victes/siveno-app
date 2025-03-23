@@ -26,7 +26,7 @@ const Sales = () => {
     <div className="mt-[80px] flex flex-col gap-[40px]">
       <Container>
         <div className="flex tablet:p-6">
-          <h1 className="text-3xl title-h1 text-start uppercase tracking-wide">Популярное</h1>
+          <h1 className="text-3xl title-h1 text-start uppercase tracking-wide lineyka">Популярное</h1>
         </div>
       </Container>
       <div className="flex flex-col gap-[120px]">

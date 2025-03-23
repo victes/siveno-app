@@ -9,7 +9,7 @@ const Hero = () => {
     <div>
       <div className="relative flex justify-center tw-flex tw-flex-col">
         <HeroSlider />
-        <div className="absolute z-10 flex flex-col items-center justify-end w-full h-full text-white pb-[120px] max-laptop:pb-[80px]">
+        <div className="absolute z-10 flex flex-col items-center justify-end w-full h-full text-white pb-[120px] max-laptop:pb-[40px] max-laptop-390 btn-slider">
           {/* Название компании временно скрыто */}
           {/* <h1 className="text-[60px] max-mindesk:text-[40px] max-laptop:text-[30px] font-light mb-6">
             COMPANY NAME
@@ -21,7 +21,7 @@ const Hero = () => {
           </Link>
         </div>
       </div>
-      <LoopSlider text="Скидка 10%" />
+      <LoopSlider text="скидка 10% на первый заказ" />
     </div>
   );
 };

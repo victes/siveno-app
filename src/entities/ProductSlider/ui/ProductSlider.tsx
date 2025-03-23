@@ -18,7 +18,7 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
   };
 
   return (
-    <div className="relative  w-full max-w-[630px] overflow-hidden">
+    <div className="relative  w-full overflow-hidden">
       {/* Slider Content */}
       <div
         className="flex relative h-[400px] tablet:h-[500px] laptop:h-[800px] flex-col transition-transform duration-500"
@@ -61,13 +61,14 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
-            className={`border-2 ${currentIndex === idx ? "border-black" : "border-transparent"} rounded-sm transition`}
+            className={`${currentIndex === idx ? "scale-150" : "border-transparent"} rounded-sm transition`}
           >
-            <img
+            {/* <img
               src={item.image_path}
               alt={`Thumbnail ${idx + 1}`}
               className="h-20 w-20 flex-shrink-0 object-cover rounded-sm"
-            />
+            /> */}
+            <h2 className='h-5 w-5 bg-white mb-5 rounded-2xl'></h2>
           </button>
         ))}
       </div>

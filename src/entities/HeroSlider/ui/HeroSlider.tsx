@@ -30,17 +30,17 @@ const HeroSlider = () => {
       <SwiperSlide className="w-full h-screen">
         {isMounted ? (
           <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-screen object-cover max-laptop:h-[500px]"
-          >
-            {/* Приоритет отдаем MP4 формату, так как он лучше поддерживается */}
-            <source src="/images/Hero/heroVid.mp4" type="video/mp4" />
-            <source src="/images/Hero/hero_video.mov" type="video/quicktime" />
-            Ваш браузер не поддерживает видео.
-          </video>
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-screen object-cover video-slider"
+        >
+          {/* Приоритет отдаем MP4 формату, так как он лучше поддерживается */}
+          <source src="/images/Hero/heroVid.mp4" type="video/mp4" />
+          <source src="/images/Hero/hero_video.mov" type="video/quicktime" />
+          Ваш браузер не поддерживает видео.
+        </video>
         ) : (
           <div className="w-full h-screen bg-gray-100 flex items-center justify-center">
             <p className="text-gray-500">Загрузка видео...</p>

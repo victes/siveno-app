@@ -29,7 +29,7 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   const handleAddFavourite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (localToken) {
       addToWishlist({ product_id: id });
       if (name.trim() && price) {
@@ -48,7 +48,7 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (name.trim() && price) {
       addProduct({
         id: id.toString(),
@@ -64,37 +64,25 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   return (
     <Link href={href} className="block product-card-wrapper">
       <div className="product-card">
-        <div className="product-card__image">
-          <Image
-            width={400}
-            height={600}
-            loading="lazy"
-            src={img}
-            alt={name}
-            unoptimized={img.startsWith('http://') || img.startsWith('https://')}
-          />
-          
-          <div className="product-card__actions">
-            <button
-              aria-label="Добавить в избранное"
-              onClick={handleAddFavourite}
-            >
-              <IoMdHeartEmpty size={18} />
-            </button>
-            <button
-              aria-label="Добавить в корзину"
-              onClick={handleAddToCart}
-            >
-              <IoCartOutline size={18} />
-            </button>
-          </div>
-        </div>
-        
-        <div className="product-card__info">
-          <h3 className="product-card__title">{name}</h3>
-          <p className="product-card__price">{price ? `${price} ₽` : ""}</p>
+      <div className="product-card__image">
+        {/* проблема в базе данных, нужно изменить путь к изображению у каждого элемента */}
+        {/* <Image src={img} alt='...' width={600} height={400}  /> */}
+
+        <div className="product-card__actions">
+          <button aria-label="Добавить в избранное" onClick={handleAddFavourite}>
+            <IoMdHeartEmpty size={18} />
+          </button>
+          <button aria-label="Добавить в корзину" onClick={handleAddToCart}>
+            <IoCartOutline size={18} />
+          </button>
         </div>
       </div>
+
+      <div className="product-card__info">
+        <h3 className="product-card__title">{name}</h3>
+        <p className="product-card__price">{price ? `${price} ₽` : ""}</p>
+      </div>
+    </div>
     </Link>
   );
 };

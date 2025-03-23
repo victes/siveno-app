@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Jost } from "next/font/google";
 import { Raleway } from "next/font/google";
-
 import "./globals.scss";
 import Header from "@/shared/ui/Layout/Header";
 import Footer from "@/shared/ui/Layout/Footer";
@@ -11,6 +10,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReduxProvider } from "@/shared/lib/redux/provider";
 import { AuthProvider } from "@/shared/hook/AuthContext/ui/AuthContext";
+import Head from 'next/head'
+import Link from 'next/link'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <Link rel='icon' type="image/ico" href='/favicon.ico' />
+      </Head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} ${raleway.variable} font-raleway antialiased`}>
         <ReduxProvider>
           <AuthProvider>
