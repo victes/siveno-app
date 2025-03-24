@@ -80,7 +80,7 @@ const Favourite = ({ click, setClick }: IFav) => {
             } transition-transform duration-300`}
             onClick={e => e.stopPropagation()} // Предотвращает всплытие события клика
           >
-            <RxCross2 className="absolute top-0 left-0 m-5 cursor-pointer" size={30} onClick={() => handleClose()} />
+            <RxCross2 className="absolute top-0 right-0 m-5 cursor-pointer" size={30} onClick={() => handleClose()} />
             <h2 className="text-black text-[30px]">Избранное</h2>
             {isSuccess
               ? data.data.map((product: Product) => (

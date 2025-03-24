@@ -69,6 +69,8 @@ const ProductPage = () => {
     setSelectedSize(size);
   };
 
+  console.log(products)
+
   const accordion = [
     { name: "Состав и Уход", value: <>{products?.composition_care}</> },
     {
@@ -82,7 +84,7 @@ const ProductPage = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(products?.preference || {}).map(([size, measures]) => (
+            {Object.entries(products?.measurements || {}).map(([size, measures]) => (
               <tr key={size}>
                 <td>{size}</td>
                 <td>{Array.isArray(measures) ? measures.join(", ") : String(measures)}</td>

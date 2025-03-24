@@ -2,7 +2,7 @@ import '../style/popup.scss'
 import Image from 'next/image'
 import close from '../../../../public/images/MainPage/close.png'
 
-const PopUp = ({setActive}: {setActive: Function}) => {
+const PopUp = ({setActive}: any) => {
 	return (
 		<div className='pop-up'>
 			<div className='pop-up__container'>

@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className="">
       <MainPage />
-      {active && <PopUp setActive={setActive} />}
+      {/* {active && <PopUp setActive={setActive} />} */}
     </div>
   );
 }

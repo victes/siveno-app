@@ -62,7 +62,7 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
               <h3 className="text-xl font-semibold mb-4 text-white">КАТЕГОРИИ</h3>
               <ul className="space-y-3">
                 {[
-                  { label: "Смотреть все", link: "/catalog-products" },
+                  { label: "Все изделия", link: "/catalog-products" },
                   { label: "Верхняя одежда", link: "/catalog-products/outerwear" },
                   { label: "Свитеры и кардиганы", link: "/catalog-products/sweaters" },
                   { label: "Пиджаки и жакеты", link: "/catalog-products/jackets" },
@@ -88,12 +88,11 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                 {[
                   { label: "Личный кабинет", link: "/account" },
                   { label: "Часто задаваемые вопросы", link: "/faq" },
-                  { label: "Как сделать заказ", link: "/how-to-order" },
-                  { label: "Оплата и доставка", link: "/payment-delivery" },
+                  { label: "Оплата и доставка", link: "/shipping" },
                   { label: "Возврат", link: "/returns" },
-                  { label: "Политика конфиденциальности", link: "/privacy-policy" },
-                  { label: "Оферта", link: "/offer" },
-                  { label: "Уход за материалами", link: "/material-care" },
+                  { label: "Политика конфиденциальности", link: "/politika" },
+                  { label: "Оферта", link: "/oferta" },
+                  { label: "Уход за материалами", link: "/product-care" },
                 ].map(({ label, link }) => (
                   <li key={label}>
                     <Link href={link} className="text-white hover:text-gray-300 transition-colors">

@@ -65,8 +65,7 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
     <Link href={href} className="block product-card-wrapper">
       <div className="product-card">
       <div className="product-card__image">
-        {/* проблема в базе данных, нужно изменить путь к изображению у каждого элемента */}
-        {/* <Image src={img} alt='...' width={600} height={400}  /> */}
+        <Image src={img} alt='...' width={600} height={400}  />
 
         <div className="product-card__actions">
           <button aria-label="Добавить в избранное" onClick={handleAddFavourite}>
