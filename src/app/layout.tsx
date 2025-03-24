@@ -13,27 +13,27 @@ import { AuthProvider } from "@/shared/hook/AuthContext/ui/AuthContext";
 import Head from 'next/head'
 import Link from 'next/link'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const jost = Jost({
-  variable: "--font-jost",
-  subsets: ["latin"],
-});
+// const jost = Jost({
+//   variable: "--font-jost",
+//   subsets: ["latin"],
+// });
 
-const raleway = Raleway({
-  variable: "--font-raleway",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  display: "swap",
-});
+// const raleway = Raleway({
+//   variable: "--font-raleway",
+//   subsets: ["latin"],
+//   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+//   display: "swap",
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "SIVENO",
@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <Link rel='icon' type="image/ico" href='/favicon.ico' />
+        <link rel='icon' href='./favicon.ico' sizes='any' />
       </Head>
       <body className={`font-raleway antialiased`}>
         <ReduxProvider>
