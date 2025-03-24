@@ -61,7 +61,6 @@ const CatalogProductsPage = () => {
 
   const queryString = queryParams.toString();
   const { data: products, isLoading, error } = useGetProductsQuery(queryString);
-  console.log(queryString)
 
   // Тип для ключей фильтра
   type FilterKey = "color" | "size" | "sort";
@@ -95,12 +94,10 @@ const CatalogProductsPage = () => {
 
   // Обновляем список товаров при получении новых данных
   useEffect(() => {
-    if (products?.data) {
-      if (currentPage === 1) {
-        setAllProducts(products.data);
-      } else {
-        setAllProducts(prev => [...prev, ...products.data]);
-      }
+    console.log(products)
+    if (products) {
+      const products1: any = products
+      setAllProducts(products1);
       
       setHasMore(products.current_page < products.last_page);
       setIsLoadingMore(false);
