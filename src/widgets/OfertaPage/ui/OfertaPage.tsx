@@ -1,5 +1,3 @@
-import React from "react";
-
 const OfertaPage = () => {
   return (
     <div className="flex flex-col mx-auto items-center max-w-[1200px] w-full text-text p-6 bona">
@@ -60,8 +58,8 @@ const OfertaPage = () => {
           <h2 className="text-xl font-semibold">7. Контактные данные</h2>
           <p>
             Если у вас есть вопросы, свяжитесь с нами: <br />
-            📧 Email: support@example.com <br />
-            📞 Телефон: +7 (XXX) XXX-XX-XX
+            📧 Email: info@siveno.store <br />
+            📞 Телефон: +7 (913) 470-23-11
           </p>
         </section>
       </div>
