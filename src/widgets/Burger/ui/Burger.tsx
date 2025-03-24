@@ -63,16 +63,16 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
               <ul className="space-y-3">
                 {[
                   { label: "Все изделия", link: "/catalog-products" },
-                  { label: "Верхняя одежда", link: "/catalog-products/outerwear" },
-                  { label: "Свитеры и кардиганы", link: "/catalog-products/sweaters" },
-                  { label: "Пиджаки и жакеты", link: "/catalog-products/jackets" },
-                  { label: "Брюки", link: "/catalog-products/pants" },
-                  { label: "Рубашки и блузы", link: "/catalog-products/shirts" },
-                  { label: "Платья", link: "/catalog-products/dresses" },
-                  { label: "Футболки и топы", link: "/catalog-products/t-shirts" },
-                  { label: "Аксессуары", link: "/catalog-products/accessories" },
+                  { label: "Верхняя одежда", link: "/catalog-products/Outerwear" },
+                  { label: "Свитеры и кардиганы", link: "/catalog-products/SweatersAndCardigans" },
+                  { label: "Пиджаки и жакеты", link: "/catalog-products/Jackets" },
+                  { label: "Брюки", link: "/catalog-products/TrousersAndShorts" },
+                  { label: "Рубашки и блузы", link: "/catalog-products/ShirtsAndBlouses" },
+                  { label: "Платья", link: "/catalog-products/Dresses" },
+                  { label: "Футболки и топы", link: "/catalog-products/TshirtsAndLongsleeves" },
+                  { label: "Аксессуары", link: "/catalog-products/Accessories" },
                 ].map(({ label, link }) => (
-                  <li key={label}>
+                  <li key={label} onClick={() => setOpen(prev => !prev)}>
                     <Link href={link} className="text-white hover:text-gray-300 transition-colors">
                       {label}
                     </Link>
@@ -94,7 +94,7 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   { label: "Оферта", link: "/oferta" },
                   { label: "Уход за материалами", link: "/product-care" },
                 ].map(({ label, link }) => (
-                  <li key={label}>
+                  <li key={label} onClick={() => setOpen(prev => !prev)}>
                     <Link href={link} className="text-white hover:text-gray-300 transition-colors">
                       {label}
                     </Link>
@@ -112,7 +112,7 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   { label: "Контакты", link: "/contacts" },
                   { label: "Каталог", link: "/catalog-categories" },
                 ].map(({ label, link }) => (
-                  <li key={label}>
+                  <li key={label} onClick={() => setOpen(prev => !prev)}>
                     <Link href={link} className="text-white hover:text-gray-300 transition-colors">
                       {label}
                     </Link>

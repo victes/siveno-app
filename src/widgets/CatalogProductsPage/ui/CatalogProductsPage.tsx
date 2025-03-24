@@ -21,11 +21,10 @@ const CatalogProductsPage = () => {
   const router = useRouter();
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
-  const products_slug_upper: string = `${products_slug?.toString().slice(0,1).toUpperCase()}${products_slug?.toString().slice(2).toLowerCase()}`
 
   // Получаем категории и текущую категорию
   const { data: categories } = useGetCategoriesQuery();
-  const category = categories?.find(item => item.slug.toLowerCase() === products_slug);
+  const category = categories?.find(item => item.slug === products_slug);
 
   // Фильтры из URL (если уже были установлены)
   const initialSort = searchParams.get("sort") || "newest";
@@ -61,8 +60,8 @@ const CatalogProductsPage = () => {
   queryParams.set("page", currentPage.toString());
 
   const queryString = queryParams.toString();
-  console.log(queryString)
   const { data: products, isLoading, error } = useGetProductsQuery(queryString);
+  console.log(queryString)
 
   // Тип для ключей фильтра
   type FilterKey = "color" | "size" | "sort";

@@ -50,7 +50,7 @@ export default function RootLayout({
       <Head>
         <Link rel='icon' type="image/ico" href='/favicon.ico' />
       </Head>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} ${raleway.variable} font-raleway antialiased`}>
+      <body className={`font-raleway antialiased`}>
         <ReduxProvider>
           <AuthProvider>
             <div className="flex flex-col min-h-screen">
