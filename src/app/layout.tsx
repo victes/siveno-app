@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <Link rel='icon' type="image/ico" href='/favicon.ico' />
+        <link rel='icon' type="image/ico" href='/favicon.ico'>
       </Head>
       <body className={`font-raleway antialiased`}>
         <ReduxProvider>
