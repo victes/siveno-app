@@ -18,9 +18,9 @@ interface IProduct {
 
 const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }: IProduct) => {
   const { addProduct } = useProductStore();
-  const { addFav } = useFavStore();
+  const { addFav, favourite } = useFavStore();
   const { push } = useRouter();
-  const {token} = useAuth();
+  const { token } = useAuth();
   const [addToWishlist] = useAddToWishlistMutation();
   const { data: sizes } = useGetSizesByProductQuery();
   const [localToken, setLocalToken] = useState<string | null>(token);
@@ -47,7 +47,7 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
     const handleSizeSelected = (event: CustomEvent) => {
       if (event.detail && event.detail.size) {
         setSelectedSize(event.detail.size);
-        
+
         // Убираем неиспользуемую переменную
         // if (sizes) {
         //   const sizeObj = sizes.find(s => s.name === event.detail.size);
@@ -55,10 +55,10 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
       }
     };
 
-    window.addEventListener('sizeSelected', handleSizeSelected as EventListener);
-    
+    window.addEventListener("sizeSelected", handleSizeSelected as EventListener);
+
     return () => {
-      window.removeEventListener('sizeSelected', handleSizeSelected as EventListener);
+      window.removeEventListener("sizeSelected", handleSizeSelected as EventListener);
     };
   }, [sizes]);
 
@@ -67,7 +67,7 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
       alert("Пожалуйста, выберите размер");
       return;
     }
-    
+
     if (name?.trim() && price) {
       addProduct({
         id: id.toString(),
@@ -81,26 +81,23 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
   };
 
   const handleAddFavourite = () => {
-    if (localToken) {
-      addToWishlist({ product_id: id });
-      if (name?.trim() && price) {
-        addFav({
-          id: id.toString(),
-          name,
-          price: parseFloat(price),
-          img,
-        });
-      }
-    } else {
-      push("/login");
+    addToWishlist({ product_id: id });
+    if (name?.trim() && price) {
+      addFav({
+        id: id.toString(),
+        name,
+        price: parseFloat(price),
+        img,
+      });
     }
+    console.log(favourite)
   };
-  
+
   return (
     <div className="product-buttons w-full">
       <div className="product-buttons__main flex w-full mb-5">
-        <button 
-          className="product-buttons__cart flex-1 h-12 border-0 bg-black text-white uppercase text-xs tracking-widest font-medium hover:bg-gray-900 transition-all duration-300" 
+        <button
+          className="product-buttons__cart flex-1 h-12 border-0 bg-black text-white uppercase text-xs tracking-widest font-medium hover:bg-gray-900 transition-all duration-300"
           onClick={handleAddProduct}
         >
           Добавить в корзину

@@ -16,6 +16,7 @@ import { useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaTelegram } from "react-icons/fa";
+import { useFavStore } from '@/entities/favouriteStore/store'
 
 const Header = () => {
   const [click, setClick] = useState(false);
@@ -23,6 +24,7 @@ const Header = () => {
   const [fav, setFav] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { products } = useProductStore();
+  const {favourites} = useFavStore();
   const { data, isSuccess } = useGetWishListQuery({});
   const { push } = useRouter();
   const { token } = useAuth();
@@ -47,11 +49,7 @@ const Header = () => {
   };
 
   const handleFav = () => {
-    if (localToken) {
       setFav(prev => !prev);
-    } else {
-      push("/login");
-    }
   };
 
   useEffect(() => {
@@ -129,9 +127,9 @@ const Header = () => {
                 aria-label="Избранное"
               >
                 <IoMdHeartEmpty size={20} />
-                {isSuccess && data.data.length > 0 && (
+                {favourites.length > 0 && (
                   <span className="absolute -top-2.5 -right-1.5 bg-white border border-gray-400 text-gray-700 text-[9px] w-3.5 h-3.5 flex items-center justify-center rounded-full">
-                    {data.data.length}
+                    {favourites.length}
                   </span>
                 )}
               </button>

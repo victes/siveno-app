@@ -43,7 +43,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     set(() => ({
       products: [],
     }));
-    toast.info("Продукты очищены.", {
+    toast.info("Товары очищены.", {
       position: "top-right",
     });
   },

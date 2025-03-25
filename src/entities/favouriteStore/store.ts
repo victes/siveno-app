@@ -1,60 +1,62 @@
 import { create } from "zustand";
 import { toast } from "react-toastify";
 
-interface Favourite {
+export interface favourite {
   id: string;
   name: string;
   price: number;
-  img: string;
+  img: string; // Новое поле для строки изображения
+  selectedSize: string; //
+  quantity: number; // Новое поле для количества
 }
 
 interface FavouriteStore {
-  favourite: Favourite[];
-  addFav: (fav: Favourite) => void;
+  favourites: favourite[];
+  addFav: (favourite: favourite) => void;
   removeFav: (id: string) => void;
-  clearFav: () => void;
+  clearFavs: () => void;
   totalCost: () => number;
 }
 
 export const useFavStore = create<FavouriteStore>((set, get) => ({
-  favourite: [],
-  addFav: fav => {
-    const isAlreadyAdded = get().favourite.some(item => item.id === fav.id);
+  favourites: [],
+  addFav: favourites => {
+    const isAlreadyAdded = get().favourites.some(item => item.id === favourites.id);
 
     if (!isAlreadyAdded) {
       set(state => ({
-        favourite: [...state.favourite, fav],
+        favourites: [...state.favourites, favourites],
       }));
-      toast.success(`Добавлено в избранное: ${fav.name}`, {
+      toast.success(`Добавлено в избранное: ${favourites.name}`, {
         position: "top-right",
       });
     } else {
-      toast.warning(`Объект уже в избранном: ${fav.name}`, {
+      toast.warning(`Объект уже в избранном: ${favourites.name}`, {
         position: "top-right",
       });
     }
   },
   removeFav: id => {
-    const favItem = get().favourite.find(fav => fav.id === id);
+    const productItem = get().favourites.find(favourite => favourite.id === id);
     set(state => ({
-      favourite: state.favourite.filter(fav => fav.id !== id),
+      favourites: state.favourites.filter(favourite => favourite.id !== id),
     }));
-    if (favItem) {
-      toast.error(`Удалено из избранного: ${favItem.name}`, {
+    if (productItem) {
+      toast.error(`Удалено из корзины: ${productItem.name}`, {
         position: "top-right",
       });
     }
   },
-  clearFav: () => {
+  clearFavs: () => {
     set(() => ({
-      favourite: [],
+      favourites: [],
     }));
-    toast.info("Избранное очищено.", {
+    toast.info("Товары очищены.", {
       position: "top-right",
     });
   },
   totalCost: () => {
-    const products = get().favourite;
-    return products.reduce((total, fav) => total + fav.price, 0);
+    const favourites = get().favourites;
+    return favourites.reduce((total, favourite) => total + favourite.price, 0);
   },
 }));
