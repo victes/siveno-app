@@ -35,6 +35,7 @@ const CatalogPage = () => {
             img={item.image} // Здесь можно добавить дефолтное изображение
             href={`/catalog-products/${item.slug}`} // Формируем ссылку на категорию
             name={item.title} // Передаем название категории
+            del={true}
           />
         ))}
       </div>

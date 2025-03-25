@@ -14,13 +14,12 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { useProductStore } from "@/entities/productStore/store";
 
-const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
+const CatalogCard = ({ id, img, name, href, price, del }: ICCard) => {
   const { addFav } = useFavStore();
   const { addProduct } = useProductStore();
-  const { push } = useRouter();
-  const [addToWishlist] = useAddToWishlistMutation();
   const { token } = useAuth();
   const [localToken, setLocalToken] = useState<string | null>(token);
+  console.log(href)
 
   useEffect(() => {
     setLocalToken(token);
@@ -29,19 +28,14 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
   const handleAddFavourite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
-    if (localToken) {
-      addToWishlist({ product_id: id });
-      if (name.trim() && price) {
-        addFav({
-          id: id.toString(),
-          name,
-          price: parseFloat(price),
-          img,
-        });
-      }
-    } else {
-      push("/login");
+    
+    if (name.trim() && price) {
+      addFav({
+        id: id.toString(),
+        name,
+        price: parseFloat(price),
+        img,
+      });
     }
   };
 
@@ -67,14 +61,14 @@ const CatalogCard = ({ id, img, name, href, price }: ICCard) => {
       <div className="product-card__image">
         <Image src={img} alt='...' width={600} height={400}  />
 
-        <div className="product-card__actions">
+        {!del && <div className="product-card__actions">
           <button aria-label="Добавить в избранное" onClick={handleAddFavourite}>
             <IoMdHeartEmpty size={18} />
           </button>
           <button aria-label="Добавить в корзину" onClick={handleAddToCart}>
             <IoCartOutline size={18} />
           </button>
-        </div>
+        </div>}
       </div>
 
       <div className="product-card__info">

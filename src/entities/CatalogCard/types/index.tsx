@@ -4,4 +4,5 @@ export interface ICCard {
   name: string;
   href: string;
   price?: string;
+  del?: boolean;
 }

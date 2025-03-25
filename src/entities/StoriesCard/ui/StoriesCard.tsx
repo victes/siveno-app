@@ -1,4 +1,5 @@
 "use client";
+import { useFavStore } from '@/entities/favouriteStore/store'
 import { useProductStore } from "@/entities/productStore/store";
 import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
 import { useGetStoriesQuery } from "@/shared/api/StoriesApi/ui/StoriesApi";
@@ -183,8 +184,8 @@ const Modal = ({ products }: ModalProps) => {
 const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
   const { data: stories } = useGetStoriesQuery();
   const products = stories?.flatMap(story => story.products) || [];
-  console.log(products);
   const [click, setClick] = useState(false);
+  const {addFav} = useFavStore();
   return (
     <div key={id} className="stories-card relative transition-all duration-300 ">
       <div className="relative group">
@@ -209,7 +210,6 @@ const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
           <button
             className="absolute top-5 left-5 bg-white p-2 rounded-full shadow-md "
             aria-label="Добавить в избранное"
-            onClick={() => setClick(prev => !prev)}
           >
             <IoCartOutline
               size={20}

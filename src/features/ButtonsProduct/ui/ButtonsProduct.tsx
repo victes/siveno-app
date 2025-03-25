@@ -18,17 +18,10 @@ interface IProduct {
 
 const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }: IProduct) => {
   const { addProduct } = useProductStore();
-  const { addFav, favourite } = useFavStore();
-  const { push } = useRouter();
-  const { token } = useAuth();
+  const { addFav } = useFavStore();
   const [addToWishlist] = useAddToWishlistMutation();
   const { data: sizes } = useGetSizesByProductQuery();
-  const [localToken, setLocalToken] = useState<string | null>(token);
   const [selectedSize, setSelectedSize] = useState<string>(propSelectedSize || "");
-
-  useEffect(() => {
-    setLocalToken(token);
-  }, [token]);
 
   useEffect(() => {
     if (propSelectedSize) {
@@ -81,7 +74,6 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
   };
 
   const handleAddFavourite = () => {
-    addToWishlist({ product_id: id });
     if (name?.trim() && price) {
       addFav({
         id: id.toString(),
@@ -90,7 +82,6 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
         img,
       });
     }
-    console.log(favourite)
   };
 
   return (
