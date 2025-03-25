@@ -62,15 +62,18 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
               <h3 className="text-xl font-semibold mb-4 text-white">КАТЕГОРИИ</h3>
               <ul className="space-y-3">
                 {[
+                  { label: 'Новинки', link: '/catalog-products/new'},
                   { label: "Все изделия", link: "/catalog-products" },
-                  { label: "Верхняя одежда", link: "/catalog-products/Outerwear" },
                   { label: "Свитеры и кардиганы", link: "/catalog-products/SweatersAndCardigans" },
                   { label: "Пиджаки и жакеты", link: "/catalog-products/Jackets" },
                   { label: "Брюки", link: "/catalog-products/TrousersAndShorts" },
                   { label: "Рубашки и блузы", link: "/catalog-products/ShirtsAndBlouses" },
+                  { label: "Юбки", link: "/catalog-products/Skirts"},
                   { label: "Платья", link: "/catalog-products/Dresses" },
+                  { label: "Толстовки и худи", link: "/catalog-products/Hoodies"},
                   { label: "Футболки и топы", link: "/catalog-products/TshirtsAndLongsleeves" },
-                  { label: "Аксессуары", link: "/catalog-products/Accessories" },
+                  { label: "Нижнее бельё", link: "/catalog-products/Lingerie"},
+                  
                 ].map(({ label, link }) => (
                   <li key={label} onClick={() => setOpen(prev => !prev)}>
                     <Link href={link} className="text-white hover:text-gray-300 transition-colors">

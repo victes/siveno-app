@@ -14,6 +14,7 @@ import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi"
 import { Product } from "@/shared/api/ProductsApi/types";
 
 import "../styles/catalog-products-page.scss";
+import { IOnChange } from '@/widgets/AllProductsPage/ui/AllProductsPage'
 
 const CatalogProductsPage = () => {
   let { products_slug } = useParams();
@@ -58,6 +59,11 @@ const CatalogProductsPage = () => {
   if (size !== "all") queryParams.set("size", size);
   if (sort) queryParams.set("sort", sort);
   queryParams.set("page", currentPage.toString());
+
+    const onChangeFunc= ({value, filter}: IOnChange) => {
+      setColor(value)
+      updateFilters(filter, value)
+    }
 
   const queryString = queryParams.toString();
   const { data: products, isLoading, error } = useGetProductsQuery(queryString);
@@ -143,38 +149,40 @@ const CatalogProductsPage = () => {
       </div>
 
       {/* Фильтры */}
-      <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row mindesk:justify-between items-center mb-[30px]">
-        <div className="flex flex-col tablet:flex-row gap-[20px]">
+      <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row mindesk:justify-between filters">
+        <div className="flex flex-col filters tablet:flex-row gap-[20px]">
+          <div>
+            <Select
+              title={"Сортировка"}
+              options={[
+                {option: "Сначала новые", value: "newest"},
+                {option: "Сначала старые", value: "oldest"},
+                {option: "Цена по возрастанию", value: "price_asc"},
+                {option: "Цена по убыванию", value: "price_desc"},
+              ]}
+              onChange1={value => {
+                setSort(value);
+                updateFilters("sort", value);
+              }}
+              onChange2 = {(value: IOnChange) => value}
+            />
+          </div>
+          <div>
           <Select
-            options={[
-              { option: "Сначала новые", value: "newest" },
-              { option: "Сначала старые", value: "oldest" },
-              { option: "Цена по возрастанию", value: "price_asc" },
-              { option: "Цена по убыванию", value: "price_desc" },
-            ]}
-            value={sort}
-            onChange={value => {
-              setSort(value);
-              updateFilters("sort", value);
-            }}
-          />
-          <Select
-            options={optionsColor}
-            value={color}
-            onChange={value => {
-              setColor(value);
-              updateFilters("color", value);
-            }}
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <ButtonSizes
-            selectedSize={size}
-            onSizeSelect={value => {
-              setSize(value);
-              updateFilters("size", value);
-            }}
-          />
+              title={"Фильтр"}
+              name_first={'Цвет'}
+              name_second={'Размер'}
+              options1={optionsColor}
+              options2={[
+                {option: 'S', value: 'S'},
+                {option: 'M', value: 'M'},
+                {option: 'L', value: 'L'},
+                {option: 'XL', value: 'XL'},
+              ]}
+              onChange2 = {(value: IOnChange) => onChangeFunc(value)}
+              onChange1={() => {}}
+            />
+          </div>
         </div>
       </div>
 

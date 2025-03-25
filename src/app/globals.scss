@@ -30,6 +30,15 @@ body {
   }
 }
 
+.containers {
+  @media(max-width:500px){
+    padding-left: 10px;
+    padding-right:10px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
 .video-slider {
   @media(max-width:1140px){
     height: 700px;

@@ -1,7 +1,7 @@
 "use client";
+import Catalog from '@/widgets/Catalog'
 import { Category } from "@/widgets/Category";
 import { Hero } from "@/widgets/Hero";
-import { Sales } from "@/widgets/Sales";
 import React from "react";
 
 const MainPage = () => {
@@ -9,7 +9,7 @@ const MainPage = () => {
     <div>
       <Hero />
       <Category />
-      <Sales />
+      {/* <Catalog /> */}
     </div>
   );
 };

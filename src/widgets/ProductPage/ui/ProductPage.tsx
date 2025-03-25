@@ -132,7 +132,7 @@ const ProductPage = () => {
           <div className="flex flex-col items-center justify-center gap-[20px]">
             <h1 className="title-h1 lineyka">{products?.name}</h1>
             <p className="product-page__price text-center">{Number(products?.price).toFixed()} руб.</p>
-            <p className=" max-w-[200px] tablet:max-w-full text-[14px] tablet:text-[14px] text-gray-600">
+            <p className=" tablet:max-w-full text-[14px] tablet:text-[14px] text-gray-600">
               {products?.description}
             </p>
           </div>

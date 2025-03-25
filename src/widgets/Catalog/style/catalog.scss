@@ -1,0 +1,20 @@
+.catalog__container {
+	display: grid;
+	grid-template-columns: repeat(2, 400px);
+	gap: 40px;
+
+	div {
+		cursor: pointer;
+		transition: .4s all;
+		img {
+			width: 400px;
+			height: 400px;
+			border-radius: 15px;
+			margin: auto;
+		}
+		&:hover {
+			transition: .4s all;
+			scale: 1.05;
+		}
+	}
+}

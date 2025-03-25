@@ -104,6 +104,12 @@
   line-height: 1.4;
 }
 
+.swiper-slide {
+  @media(max-width:480px) {
+    margin-right: 0;
+  }
+}
+
 .slider-card__price {
   font-size: 14px;
   font-weight: 500;

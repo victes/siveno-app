@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -12,6 +12,13 @@ import ButtonSizes from "@/entities/ButtonSizes";
 import { Product } from "@/shared/api/ProductsApi/types";
 
 import "../styles/all-products-page.scss";
+
+export interface IOnChange{
+  filter: FilterKey;
+  value: string;
+}
+
+export type FilterKey = "color" | "size" | "sort";
 
 const AllProductsPage = () => {
   const router = useRouter();
@@ -101,6 +108,11 @@ const AllProductsPage = () => {
     setHasMore(true);
   }, [sort, color, size]);
 
+  const onChangeFunc= ({value, filter}: IOnChange) => {
+    setColor(value)
+    updateFilters(filter, value)
+  }
+
   // Настройка Intersection Observer для бесконечной прокрутки
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const [target] = entries;
@@ -182,42 +194,40 @@ const AllProductsPage = () => {
       </div>
 
       {/* Фильтры */}
-      <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row mindesk:justify-between items-center mb-[30px]">
-        <div className="flex flex-col tablet:flex-row gap-[20px]">
-          <div className="border-b-[1px] border-x-none border-[#423c3d]">
+      <div className="flex flex-col gap-8 mindesk:gap-0 mindesk:flex-row mindesk:justify-between filters">
+        <div className="flex flex-col filters tablet:flex-row gap-[20px]">
+          <div>
             <Select
+              title={"Сортировка"}
               options={[
-                { option: "Сначала новые", value: "newest" },
-                { option: "Сначала старые", value: "oldest" },
-                { option: "Цена по возрастанию", value: "price_asc" },
-                { option: "Цена по убыванию", value: "price_desc" },
+                {option: "Сначала новые", value: "newest"},
+                {option: "Сначала старые", value: "oldest"},
+                {option: "Цена по возрастанию", value: "price_asc"},
+                {option: "Цена по убыванию", value: "price_desc"},
               ]}
-              value={sort}
-              onChange={value => {
+              onChange1={value => {
                 setSort(value);
                 updateFilters("sort", value);
               }}
+              onChange2 = {(value: IOnChange) => value}
             />
           </div>
-          <div className="border-b-[1px] border-x-none border-[#423c3d]">
-            <Select
-              options={optionsColor}
-              value={color}
-              onChange={value => {
-                setColor(value);
-                updateFilters("color", value);
-              }}
+          <div>
+          <Select
+              title={"Фильтр"}
+              name_first={'Цвет'}
+              name_second={'Размер'}
+              options1={optionsColor}
+              options2={[
+                {option: 'S', value: 'S'},
+                {option: 'M', value: 'M'},
+                {option: 'L', value: 'L'},
+                {option: 'XL', value: 'XL'},
+              ]}
+              onChange2 = {(value: IOnChange) => onChangeFunc(value)}
+              onChange1={() => {}}
             />
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <ButtonSizes
-            selectedSize={size}
-            onSizeSelect={value => {
-              setSize(value);
-              updateFilters("size", value);
-            }}
-          />
         </div>
       </div>
 

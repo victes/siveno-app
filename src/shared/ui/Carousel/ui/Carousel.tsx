@@ -29,7 +29,7 @@ type SliderProps = {
 
 const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
   return (
-    <div className="w-full mx-auto tablet:p-6">
+    <div className="w-full mx-auto tablet:px-0">
       <div className="w-full flex mt-[40px]">
         <h2 className="text-3xl title-h1 text-start uppercase tracking-wide lineyka">{heading}</h2>
       </div>
@@ -43,12 +43,12 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
         slidesPerView={5}
         breakpoints={{
           300: {
-            slidesPerView: 1,
-            spaceBetween: 20,
+            slidesPerView: 2,
+            spaceBetween: 0,
           },
           480: {
             slidesPerView: 2,
-            spaceBetween: 20,
+            spaceBetween: 0,
           },
           768: {
             slidesPerView: 3,

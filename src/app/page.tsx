@@ -9,12 +9,12 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setActive(true)
-    },10000)
+    },15000)
   },[])
   return (
     <div className="">
       <MainPage />
-      {/* {active && <PopUp setActive={setActive} />} */}
+      <PopUp setActive={setActive} active={active} />
     </div>
   );
 }

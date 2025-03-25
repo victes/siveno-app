@@ -6,6 +6,23 @@
   margin: 0 auto;
 }
 
+.filters {
+  @media(max-width: 600px) {
+    flex-direction: column;
+    gap: 10px;
+  
+    div {
+      h3 {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.filters__active {
+  margin-bottom: 5px;
+}
+
 .spinner {
   animation: spin 1s linear infinite;
 }
