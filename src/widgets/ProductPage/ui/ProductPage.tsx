@@ -69,8 +69,6 @@ const ProductPage = () => {
     setSelectedSize(size);
   };
 
-  console.log(products)
-
   const accordion = [
     { name: "Состав и Уход", value: <>{products?.composition_care}</> },
     {
@@ -149,7 +147,7 @@ const ProductPage = () => {
             </div>
             <div className="product-page__colors">
               <p className="text-xs uppercase mb-2 font-medium tracking-wider">Цвет</p>
-              <ButtonColors />
+              <ButtonColors colorCode={products?.colors}/>
             </div>
           </div>
           {/* ================================================== */}

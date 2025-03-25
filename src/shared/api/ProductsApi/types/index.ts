@@ -82,6 +82,13 @@ export interface IProduct {
   created_at: string;
   updated_at: string;
   images: IProductImage[];
+  colors: IColor[]
+}
+
+export interface IColor {
+  id: number;
+  name: string;
+  code: string
 }
 
 // ====================================================== Popular Products =================================
