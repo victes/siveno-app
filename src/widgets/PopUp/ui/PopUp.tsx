@@ -27,9 +27,8 @@ const PopUp = ({ setActive, active }: any) => {
         name
       };
       try {
-        const send = await sendSubscribe(data).unwrap();
-        console.log(send.message, send.error);
-        toast.success(`Письмо успешно отправлено!`, {
+        await sendSubscribe(data).unwrap();
+        toast.success(`Вы успешно подписались на рассылку!`, {
           position: "top-right",
         });
         setTimeout(() => {
