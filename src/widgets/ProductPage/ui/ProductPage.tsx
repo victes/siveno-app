@@ -8,14 +8,14 @@ import ButtonsProduct from "@/features/ButtonsProduct";
 import Accordion from "@/shared/ui/Accordion";
 import Carousel from "@/shared/ui/Carousel";
 import BtnBack from "@/shared/ui/BtnBack";
-import delivery from '../icons/delivery.png';
-import russia from '../icons/russia.png';
-import returnIcon from '../icons/return.png'
+import delivery from "../icons/delivery.png";
+import russia from "../icons/russia.png";
+import returnIcon from "../icons/return.png";
 
 import { useParams } from "next/navigation";
 
 import React, { useState, useEffect } from "react";
-import Image from 'next/image'
+import Image from "next/image";
 
 import "../styles/product-page.scss";
 
@@ -36,10 +36,10 @@ const ProductPage = () => {
       }
     };
 
-    window.addEventListener('sizeSelected', handleSizeSelected as EventListener);
-    
+    window.addEventListener("sizeSelected", handleSizeSelected as EventListener);
+
     return () => {
-      window.removeEventListener('sizeSelected', handleSizeSelected as EventListener);
+      window.removeEventListener("sizeSelected", handleSizeSelected as EventListener);
     };
   }, []);
 
@@ -59,6 +59,7 @@ const ProductPage = () => {
   const slides: SliderItem[] = transformProductsToSlides(popular);
 
   const carousel = products?.images;
+  console.log(products);
 
   // Преобразуем в комментарий или используем переменную
   // const sizes = Object.entries(products?.measurements || {}).map(([size]) => {
@@ -74,20 +75,52 @@ const ProductPage = () => {
     {
       name: "Обмеры",
       value: (
-        <table>
-          <thead>
+        <table className="border-[#dedede] border-2 w-full h-auto">
+          <thead className="border-b-2">
             <tr>
-              <th>Размер</th>
-              <th>Параметры</th>
+              <th className="border-r-2 p-2 tabletProduct">Размер</th>
+              <th className="border-r-2 w-[60px] p-2 leading-[18px] tabletProduct">S, см</th>
+              <th className="border-r-2 w-[60px] p-2 leading-[18px] tabletProduct">M, см</th>
+              <th className="w-[60px] p-2 leading-[18px] tabletProduct">L, см</th>
             </tr>
           </thead>
           <tbody>
-            {Object.entries(products?.measurements || {}).map(([size, measures]) => (
+            {/* {Object.entries(products?.measurements || {}).map(([size, measures]) => (
               <tr key={size}>
                 <td>{size}</td>
                 <td>{Array.isArray(measures) ? measures.join(", ") : String(measures)}</td>
               </tr>
-            ))}
+            ))} */}
+            <tr>
+              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Длина по спинке</td>
+              <td className="text-center border-r-2 p-2 border-b-2">70</td>
+              <td className="text-center border-r-2 p-2 border-b-2">71</td>
+              <td className="text-center p-2 border-b-2">72</td>
+            </tr>
+            <tr>
+              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Обхват груди</td>
+              <td className="text-center border-r-2 p-2 border-b-2">119</td>
+              <td className="text-center border-r-2 p-2 border-b-2">123</td>
+              <td className="text-center p-2 border-b-2">127</td>
+            </tr>
+            <tr>
+              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Обхват по низу</td>
+              <td className="text-center border-r-2 p-2 border-b-2">118</td>
+              <td className="text-center border-r-2 p-2 border-b-2">122</td>
+              <td className="text-center p-2 border-b-2">126</td>
+            </tr>
+            <tr>
+              <td className="text-center border-r-2 font-bold border-b-2 p-2 leading-[20px] tabletProduct">Длина рукава от горловины</td>
+              <td className="text-center border-r-2 p-2 border-b-2">77,5</td>
+              <td className="text-center border-r-2 p-2 border-b-2">78</td>
+              <td className="text-center p-2 border-b-2">78,5</td>
+            </tr>
+            <tr>
+              <td className="text-center border-r-2 font-bold leading-[20px] p-2 tabletProduct">Обхват рукава под проймой</td>
+              <td className="text-center border-r-2 p-2">55</td>
+              <td className="text-center border-r-2 p-2">56,4</td>
+              <td className="text-center p-2">57,8</td>
+            </tr>
           </tbody>
         </table>
       ),
@@ -95,20 +128,52 @@ const ProductPage = () => {
     {
       name: "Параметры Модели",
       value: (
-        <table>
-          <thead>
+        <table className="border-[#dedede] border-2 w-full h-auto">
+          <thead className="border-b-2">
             <tr>
-              <th>Размер</th>
-              <th>Параметры</th>
+              <th className="border-r-2 p-2 tabletProduct">Размер</th>
+              <th className="border-r-2 w-[70px] p-2 leading-[18px] tabletProduct">S, см</th>
+              <th className="border-r-2 w-[70px] p-2 leading-[18px] tabletProduct">M, см</th>
+              <th className="w-[70px] p-2 leading-[18px] tabletProduct">L, см</th>
             </tr>
           </thead>
           <tbody>
-            {Object.entries(products?.measurements || {}).map(([size, measures]) => (
+            {/* {Object.entries(products?.measurements || {}).map(([size, measures]) => (
               <tr key={size}>
                 <td>{size}</td>
                 <td>{Array.isArray(measures) ? measures.join(", ") : String(measures)}</td>
               </tr>
-            ))}
+            ))} */}
+            <tr>
+              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Длина по спинке</td>
+              <td className="text-center border-r-2 p-2 border-b-2">70</td>
+              <td className="text-center border-r-2 p-2 border-b-2">71</td>
+              <td className="text-center p-2 border-b-2">72</td>
+            </tr>
+            <tr>
+              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Обхват груди</td>
+              <td className="text-center border-r-2 p-2 border-b-2">119</td>
+              <td className="text-center border-r-2 p-2 border-b-2">123</td>
+              <td className="text-center p-2 border-b-2">127</td>
+            </tr>
+            <tr>
+              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Обхват по низу</td>
+              <td className="text-center border-r-2 p-2 border-b-2">118</td>
+              <td className="text-center border-r-2 p-2 border-b-2">122</td>
+              <td className="text-center p-2 border-b-2">126</td>
+            </tr>
+            <tr>
+              <td className="text-center border-r-2 font-bold border-b-2 p-2 leading-[20px] tabletProduct">Длина рукава от горловины</td>
+              <td className="text-center border-r-2 p-2 border-b-2">77,5</td>
+              <td className="text-center border-r-2 p-2 border-b-2">78</td>
+              <td className="text-center p-2 border-b-2">78,5</td>
+            </tr>
+            <tr>
+              <td className="text-center border-r-2 font-bold leading-[20px] p-2 tabletProduct">Обхват рукава под проймой</td>
+              <td className="text-center border-r-2 p-2">55</td>
+              <td className="text-center border-r-2 p-2">56,4</td>
+              <td className="text-center p-2">57,8</td>
+            </tr>
           </tbody>
         </table>
       ),
@@ -132,22 +197,17 @@ const ProductPage = () => {
           <div className="flex flex-col items-center justify-center gap-[20px]">
             <h1 className="title-h1 lineyka">{products?.name}</h1>
             <p className="product-page__price text-center">{Number(products?.price).toFixed()} руб.</p>
-            <p className=" tablet:max-w-full text-[14px] tablet:text-[14px] text-gray-600">
-              {products?.description}
-            </p>
+            <p className=" tablet:max-w-full text-[14px] tablet:text-[14px] text-gray-600">{products?.description}</p>
           </div>
           {/* ================================================== */}
           <div className="product-page__controls w-full max-w-[400px] flex flex-col gap-5 mt-2 mb-4">
             <div className="product-page__sizes">
               <p className="text-xs uppercase mb-2 font-medium tracking-wider">Размер</p>
-              <ButtonSizes 
-                selectedSize={selectedSize} 
-                onSizeSelect={handleSizeSelect}
-              />
+              <ButtonSizes selectedSize={selectedSize} onSizeSelect={handleSizeSelect} />
             </div>
             <div className="product-page__colors">
               <p className="text-xs uppercase mb-2 font-medium tracking-wider">Цвет</p>
-              <ButtonColors colorCode={products?.colors}/>
+              <ButtonColors colorCode={products?.colors} />
             </div>
           </div>
           {/* ================================================== */}
@@ -163,18 +223,29 @@ const ProductPage = () => {
             />
           </div>
           {/* ================================================== */}
-          <div className='product-page__premium'>
+          <div className="product-page__premium">
             <div>
               <Image src={russia} alt="..."></Image>
-              <h2>Сделано в<br/>России</h2>
+              <h2>
+                Сделано в<br />
+                России
+              </h2>
             </div>
             <div>
               <Image src={delivery} alt="..."></Image>
-              <h2>Удобная<br/>доставка</h2>
+              <h2>
+                Удобная
+                <br />
+                доставка
+              </h2>
             </div>
             <div>
               <Image src={returnIcon} alt="..."></Image>
-              <h2>Бесплатный<br/>возврат</h2>
+              <h2>
+                Бесплатный
+                <br />
+                возврат
+              </h2>
             </div>
           </div>
           {/* ================================================== */}

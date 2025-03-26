@@ -19,7 +19,6 @@ const CatalogCard = ({ id, img, name, href, price, del }: ICCard) => {
   const { addProduct } = useProductStore();
   const { token } = useAuth();
   const [localToken, setLocalToken] = useState<string | null>(token);
-  console.log(href)
 
   useEffect(() => {
     setLocalToken(token);

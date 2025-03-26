@@ -8,7 +8,7 @@ export default function Home() {
   const [active, setActive] = useState<boolean>(false)
   useEffect(() => {
     setTimeout(() => {
-      // setActive(true)
+      setActive(true)
     },15000)
   },[])
   return (

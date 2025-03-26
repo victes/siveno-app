@@ -6,7 +6,7 @@ const Accordion = ({ name, context }: IAccordion) => {
     <div className="collapse collapse-plus  w-full">
       <input type="radio" name="my-accordion-3" />
       <div className="collapse-title text-xs font-medium uppercase">{name}</div>
-      <div className="collapse-content mx-4">{context}</div>
+      <div className="collapse-content p-0">{context}</div>
     </div>
   );
 };

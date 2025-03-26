@@ -92,3 +92,10 @@
   color: #423c3d;
   text-align: center;
 }
+
+.tabletProduct {
+  @media(max-width:420px){
+    font-size: 14px;
+    line-height: 16px;
+  }
+}

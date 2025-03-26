@@ -12,6 +12,7 @@ export default {
       },
       screens: {
         phone: "360px",
+        tabletProduct: "420px",
         tablet: "480px",
         minilaptop: "666px",
         laptop: "769px",

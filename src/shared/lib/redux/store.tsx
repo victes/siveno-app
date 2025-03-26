@@ -1,17 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { CategoriesApi } from "@/shared/api/CategoriesApi/CategoriesApi";
-import { LoginApi } from "@/shared/api/LoginApi/LoginApi";
-import { RegApi } from "@/shared/api/RegApi/RegApi";
-import { ProfileApi } from "@/shared/api/ProfileApi/ProfileApi";
-import { LogoutApi } from "@/shared/api/LogoutApi/LogoutApi";
-import { colorsApi } from "@/shared/api/ColorsApi/ui/ColorsApi";
-import { productsApi } from "@/shared/api/ProductsApi/ui/ProductsApi";
-import { sizesApi } from "@/shared/api/SizesApi/ui/SizesApi";
 import { AddressesApi } from "@/shared/api/AddressApi/AddressApi";
-import { OrdersApi } from "@/shared/api/OrdersApi/OrdersApi";
+import { CategoriesApi } from "@/shared/api/CategoriesApi/CategoriesApi";
+import { colorsApi } from "@/shared/api/ColorsApi/ui/ColorsApi";
+import { LoginApi } from "@/shared/api/LoginApi/LoginApi";
+import { LogoutApi } from "@/shared/api/LogoutApi/LogoutApi";
 import { LoyaytiApi } from "@/shared/api/LoyaytyApi/Loyayti";
+import { OrdersApi } from "@/shared/api/OrdersApi/OrdersApi";
+import { productsApi } from "@/shared/api/ProductsApi/ui/ProductsApi";
+import { ProfileApi } from "@/shared/api/ProfileApi/ProfileApi";
+import { RegApi } from "@/shared/api/RegApi/RegApi";
+import { sizesApi } from "@/shared/api/SizesApi/ui/SizesApi";
 import { storiesApi } from "@/shared/api/StoriesApi/ui/StoriesApi";
+import { subscribeApi } from "@/shared/api/SubscribeApi/ui/SubscribeApi";
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
     [AddressesApi.reducerPath]: AddressesApi.reducer,
     [LoyaytiApi.reducerPath]: LoyaytiApi.reducer,
     [storiesApi.reducerPath]: storiesApi.reducer,
+    [subscribeApi.reducerPath]: subscribeApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -42,6 +44,7 @@ export const store = configureStore({
       AddressesApi.middleware,
       LoyaytiApi.middleware,
       storiesApi.middleware,
+      subscribeApi.middleware,
     ),
 });
 

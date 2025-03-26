@@ -1,16 +1,46 @@
-import "../style/popup.scss";
+import { ISubstribeResponce, IUserData } from "@/shared/api/SubscribeApi/types/index.interface";
+import { useSendSubscribeMutation } from "@/shared/api/SubscribeApi/ui/SubscribeApi";
 import Image from "next/image";
-import close from "../../../../public/images/MainPage/close.png";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import close from "../../../../public/images/MainPage/close.png";
+import "../style/popup.scss";
 
 const PopUp = ({ setActive, active }: any) => {
-  const getPromo = () => {
-    toast.success(`Письмо успешно отправлено!`, {
-      position: "top-right",
-    });
-    setTimeout(() => {
-      setActive(false);
-    }, 2000);
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [sendSubscribe] = useSendSubscribeMutation();
+
+  const getPromo = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!name) {
+      return toast.error(`Заполните ваше имя!`, { position: "top-right" });
+    }
+    if (!email) {
+      return toast.error(`Заполните ваш email!`, { position: "top-right" });
+    }
+    if (name && email) {
+      const data: IUserData = {
+        email,
+        name
+      };
+      try {
+        const send = await sendSubscribe(data).unwrap();
+        console.log(send.message, send.error);
+        toast.success(`Письмо успешно отправлено!`, {
+          position: "top-right",
+        });
+        setTimeout(() => {
+          setActive(false);
+        }, 2000);
+      } catch {
+        toast.error(`Ошибка при отправке письма.`, {
+          position: "top-right",
+        });
+      }
+    }
   };
   return (
     <>
@@ -25,9 +55,21 @@ const PopUp = ({ setActive, active }: any) => {
             Скидка 10% на первый заказ, новости бренда, ранний доступ к коллекциям и эксклюзивные акции для подписчиков
             рассылки
           </p>
-          <form action="mailto:geno74@bk.ru" method='post' encType='text/plain'>
-            <input type="text" placeholder="Имя" name="name" className="pop-up__input" />
-            <input type="text" placeholder="Почта" name="email" className="pop-up__input" />
+          <form action="mailto:geno74@bk.ru" method="post" encType="text/plain">
+            <input
+              type="text"
+              placeholder="Имя"
+              name="name"
+              className="pop-up__input"
+              onChange={e => setName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Почта"
+              name="email"
+              className="pop-up__input"
+              onChange={e => setEmail(e.target.value)}
+            />
             <button className="pop-up__btn" onClick={getPromo}>
               Подписаться
             </button>
