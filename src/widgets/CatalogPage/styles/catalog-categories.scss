@@ -20,7 +20,17 @@
   }
   /* Для экранов ниже 480px — 1 карточка */
   @media (max-width: 440px) {
-    grid-template-columns: repeat(1, 1fr); /* 1 карточки */
+    grid-template-columns: repeat(2, 150px);
     gap: 10px;
+    .product-card-wrapper {
+      width: 150px;
+      .product-card {
+        padding: 0;
+        width: 150px;
+      }
+      .product-card__image {
+        width: 150px;
+      }
+    }
   }
 }

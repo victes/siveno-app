@@ -9,7 +9,7 @@ const MainPage = () => {
     <div>
       <Hero />
       <Category />
-      {/* <Catalog /> */}
+      <Catalog />
     </div>
   );
 };
