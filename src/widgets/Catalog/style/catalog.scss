@@ -67,10 +67,20 @@
 		--widthSize: 150px
 	}
 	.catalog__container {
+		width: 100%;
+		justify-content: space-between;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 10px;
 		div{
+			width: 100%;
 			h2{
-				font-size: 14px;
+				font-size: 16px;
 				margin-top: 5px;
+			}
+			img {
+				margin: 0;
+				width: 100%;
+				height: auto;
 			}
 		}
 	}

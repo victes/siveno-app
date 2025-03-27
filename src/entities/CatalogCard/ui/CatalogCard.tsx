@@ -17,12 +17,6 @@ import { useProductStore } from "@/entities/productStore/store";
 const CatalogCard = ({ id, img, name, href, price, del }: ICCard) => {
   const { addFav } = useFavStore();
   const { addProduct } = useProductStore();
-  const { token } = useAuth();
-  const [localToken, setLocalToken] = useState<string | null>(token);
-
-  useEffect(() => {
-    setLocalToken(token);
-  }, [token]);
 
   const handleAddFavourite = (e: React.MouseEvent) => {
     e.preventDefault();

@@ -3,7 +3,7 @@
   gap: 20px;
 
   @media screen and (min-width: 1920px) {
-    grid-template-columns: repeat(5, 1fr); /* 4 карточки */
+    grid-template-columns: repeat(5, 1fr); /* 5 карточки */
   }
 
   @media (min-width: 1366px) and (max-width: 1920px) {

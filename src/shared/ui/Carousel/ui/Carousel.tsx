@@ -30,7 +30,7 @@ type SliderProps = {
 const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
   return (
     <div className="w-full mx-auto tablet:px-0">
-      <div className="w-full flex mt-[40px]">
+      <div className="w-full flex mt-[40px] justify-center">
         <h2 className="text-3xl title-h1 text-start uppercase tracking-wide lineyka">{heading}</h2>
       </div>
       <Swiper

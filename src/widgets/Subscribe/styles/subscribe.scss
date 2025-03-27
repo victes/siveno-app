@@ -1,0 +1,12 @@
+.subtitle {
+	@media(max-width:480px){
+		font-size: 14px;
+		line-height: 18px;
+	}
+}
+
+.input-up {
+	@media(max-width:480px) {
+		margin-top: 20px;
+	}
+}

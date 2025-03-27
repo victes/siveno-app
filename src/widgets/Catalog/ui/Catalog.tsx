@@ -9,7 +9,7 @@ import "../style/catalog.scss";
 function Catalog() {
   return (
     <div className="mt-10 containers px-[40px]">
-      <div className="w-full flex mt-[40px] mb-[40px]">
+      <div className="w-full flex mt-[40px] mb-[40px] justify-center">
         <h2 className="text-3xl title-h1 text-start uppercase tracking-wide lineyka">Каталог</h2>
       </div>
       <div className="catalog__container">
