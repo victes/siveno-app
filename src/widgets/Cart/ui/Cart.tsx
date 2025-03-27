@@ -87,6 +87,7 @@ const Cart = ({ click, setClick }: ICart) => {
             <button
               className="bg-gray-100 text-[#423C3D] px-4 py-4 hover:bg-gray-300 w-full"
               onClick={openPayCard}
+              disabled={products.length === 0}
             >
               Оформить заказ
             </button>

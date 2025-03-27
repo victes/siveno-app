@@ -9,6 +9,8 @@ export const OrdersApi = createApi({
     prepareHeaders: headers => {
       // Добавляем токен в заголовки
       const token = localStorage.getItem("access_token");
+      headers.set("accept", 'application/json');
+      headers.set("Content-Type", 'application/json');
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
         // Или, если нужно использовать X-CSRF-TOKEN:
@@ -33,10 +35,10 @@ export const OrdersApi = createApi({
       query: id => `orders/${id}`,
     }),
     payOrder: builder.mutation({
-      query: ({ orderId, paymentData }) => ({
-        url: `orders/${orderId}/pay`,
+      query: ({ data }) => ({
+        url: `payments`,
         method: "POST",
-        body: paymentData,
+        body: data
       }),
     }),
     confirmPayment: builder.mutation({

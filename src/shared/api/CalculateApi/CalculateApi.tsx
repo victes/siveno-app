@@ -8,6 +8,8 @@ export const CalculateApi = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: headers => {
       // Добавляем токен в заголовки
+      headers.set("accept", 'application/json');
+      headers.set("Content-Type", 'application/json');
       const token = localStorage.getItem("access_token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);

@@ -8,13 +8,13 @@ const Orders = () => {
   const { products, removeProduct } = useProductStore();
   // const {data,isSuccess} = useGetOrdersQuery()
   return (
-    <div className="max-w-[700px] w-full mt-[100px] grid grid-cols-2 gap-[30px] h-[350px]">
+    <div className="max-w-[1000px] w-full mt-[100px] grid gap-[30px] h-[350px]">
       {products.length > 0
         ? products.map(product => (
             <li key={product.id} className="flex gap-5 p-2 justify-between">
               <div className="flex gap-5 items-center">
                 <div>
-                  <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
+                  <img src={product.img} alt={product.name} className="h-[300px] w-[300px] object-cover" />
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="text-black">{product.name}</span>

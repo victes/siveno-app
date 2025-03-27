@@ -168,6 +168,7 @@ const InputField: React.FC<IInputFieldProps> = ({ label, error, ...props }) => (
 
 const PayCard = ({ onOpen, open }: IPayCard) => {
   const [delivery, setDelivery] = useState<number>(1);
+  const [typePayment, setTypePayment] = useState<string>('bank_card');
   const [discount, setDiscount] = useState<boolean>(false)
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
@@ -225,7 +226,6 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       alert("Выберите адрес доставки");
       return;
     }
-    console.log(selectedAddress);
 
     const orderResponse = await createOrder({
       address_id: selectedAddress,
@@ -235,19 +235,19 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
         quantity: 1,
       })),
       delivery: "express",
+      delivery_type: "russianpost",
       use_loyalty_points: false,
       payment_method: "yookassa",
-      promo_code: "SIVENO10",
+      promo_code: discount ? "SIVENO10" : "",
     }).unwrap();
+    console.log(orderResponse)
 
-    if (!orderResponse?.id) {
-      throw new Error("Не удалось создать заказ. Попробуйте позже.");
-    }
-
-    setOrderId(orderResponse.id);
+    setOrderId(orderResponse.order.total_price);
 
     const paymentResponse = await payOrder({
-      orderId: orderResponse.id,
+      amount: orderId,
+      payment_method: typePayment,
+      use_loyalty_points: false
     }).unwrap();
 
     window.location.href = paymentResponse.payment_url;
@@ -371,7 +371,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 )}
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Доставка</h2>
-                  <label className="flex flex-row items-center gap-2">
+                  {/* <label className="flex flex-row items-center gap-2">
                     <input
                       type="radio"
                       name="delivery"
@@ -381,17 +381,53 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                       className="w-[15px] h-[15px]"
                     />
                     <p>Доставка по SDEK</p>
-                  </label>
+                  </label> */}
                   <label className="flex flex-row items-center gap-2">
                     <input
                       type="radio"
                       name="delivery"
-                      value={2}
-                      checked={2 === delivery}
-                      onChange={() => setDelivery(2)}
+                      value={1}
+                      checked={1 === delivery}
+                      onChange={() => setDelivery(1)}
                       className="w-[15px] h-[15px]"
                     />
                     <p>Доставка по Почта России</p>
+                  </label>
+                </div>
+                <div>
+                  <h2 className="uppercase text-[24px] text-black mb-[15px]">Тип оплаты</h2>
+                  <label className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="payment"
+                      value={"bank_card"}
+                      checked={"bank_card" === typePayment}
+                      onChange={() => setTypePayment("bank_card")}
+                      className="w-[15px] h-[15px]"
+                    />
+                    <p>Банковская карта</p>
+                  </label>
+                  <label className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="payment"
+                      value={"sbp"}
+                      checked={"sbp" === typePayment}
+                      onChange={() => setTypePayment("sbp")}
+                      className="w-[15px] h-[15px]"
+                    />
+                    <p>СБП</p>
+                  </label>
+                  <label className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="payment"
+                      value={"installments"}
+                      checked={"installments" === typePayment}
+                      onChange={() =>setTypePayment("installments")}
+                      className="w-[15px] h-[15px]"
+                    />
+                    <p>Рассрочка</p>
                   </label>
                 </div>
                 <div>
