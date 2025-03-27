@@ -31,7 +31,7 @@ function Catalog() {
             <Image src={img3} alt="..." className="img"></Image>
           </div>
         </Link>
-        <Link href={"/catalog-categories"}>
+        <Link href={"/catalog-products/Lingerie"}>
           <div>
             <h2 className="mb-5 text-[20px]">Нижнее бельё</h2>
             <Image src={img4} alt="..." className="img"></Image>
