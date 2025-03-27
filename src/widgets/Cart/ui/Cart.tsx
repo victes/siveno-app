@@ -32,6 +32,11 @@ const Cart = ({ click, setClick }: ICart) => {
 
   const { products, removeProduct, totalCost } = useProductStore();
 
+  const openPayCard = () => {
+    handleClose()
+    setPayCard(prev => !prev)
+  }
+
   return (
     <>
       {click && (
@@ -81,7 +86,7 @@ const Cart = ({ click, setClick }: ICart) => {
             </div>
             <button
               className="bg-gray-100 text-[#423C3D] px-4 py-4 hover:bg-gray-300 w-full"
-              onClick={() => setPayCard(prev => !prev)}
+              onClick={openPayCard}
             >
               Оформить заказ
             </button>
