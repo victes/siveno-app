@@ -396,7 +396,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Промокод</h2>
-                  <input type="text" placeholder='Введите промокод' className='bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none' name='promo' onChange={(e) => handleDiscount(e.target.value)} value={discount ? "SIVENO10" : ''} />
+                  <input type="text" placeholder='Введите промокод' className='bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none' name='promo' onChange={(e) => handleDiscount(e.target.value)} defaultValue={discount ? "SIVENO10" : ''} />
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Ваш заказ</h2>

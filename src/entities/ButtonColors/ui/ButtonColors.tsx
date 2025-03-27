@@ -20,7 +20,7 @@ const ButtonColors = ({colorCode}: {colorCode?: IColor[]}) => {
 
   // Обработчик клика по кнопке
   const handleClick = (color: string) => {
-    setActiveColor(color); // Устанавливаем активный цвет
+    // setActiveColor(color); // Устанавливаем активный цвет
   };
 
   return (
