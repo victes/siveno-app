@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { InputHTMLAttributes } from "react";
 import { FieldError } from "react-hook-form";
 import { IPayCard } from "../types/type";
@@ -16,6 +16,7 @@ import {
 } from "@/shared/api/OrdersApi/OrdersApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
+import { useCalculateRussianPostMutation } from "@/shared/api/CalculateApi/CalculateApi";
 
 const formSchema = z.object({
   state: z.string().nonempty({
@@ -166,6 +167,8 @@ const InputField: React.FC<IInputFieldProps> = ({ label, error, ...props }) => (
 );
 
 const PayCard = ({ onOpen, open }: IPayCard) => {
+  const [delivery, setDelivery] = useState<number>(1);
+  const [discount, setDiscount] = useState<boolean>(false)
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
   const { products, totalCost, clearProducts } = useProductStore();
@@ -175,8 +178,11 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [orderId, setOrderId] = useState<number | null>(null);
   const { token } = useAuth();
   const router = useRouter();
+  const [sdek, setSdek] = useState<number>(0);
+  const [mail, setMail] = useState<number>(0);
   const [createOrder] = useCreateOrderMutation();
   const [payOrder] = usePayOrderMutation();
+  const [postCalc] = useCalculateRussianPostMutation();
   const [cancelOrder] = useCancelOrderMutation();
   const { data: orderData } = useGetOrderByIdQuery(orderId!, {
     skip: !orderId,
@@ -188,6 +194,12 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       setTimeout(() => onOpen(false), 300);
     }
   };
+
+  const handleDiscount = (value: string) => {
+    if(value === "SIVENO10"){
+      setDiscount(true)
+    }
+  }
 
   const handleClose = useCallback(() => {
     setAnimate(false);
@@ -201,52 +213,73 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   }, [open]);
 
   const handlePayment = async () => {
+    if (!token) {
+      // Если пользователь не авторизован, перенаправляем на страницу входа
+      alert("Для оформления заказа необходимо войти в аккаунт");
+      handleClose();
+      router.push("/login");
+      return;
+    }
+
+    if (!selectedAddress) {
+      alert("Выберите адрес доставки");
+      return;
+    }
+    console.log(selectedAddress);
+
+    const orderResponse = await createOrder({
+      address_id: selectedAddress,
+      items: products.map(p => ({
+        product_id: Number(p.id),
+        size_id: 1,
+        quantity: 1,
+      })),
+      delivery: "express",
+      use_loyalty_points: false,
+      payment_method: "yookassa",
+      promo_code: "SIVENO10",
+    }).unwrap();
+
+    if (!orderResponse?.id) {
+      throw new Error("Не удалось создать заказ. Попробуйте позже.");
+    }
+
+    setOrderId(orderResponse.id);
+
+    const paymentResponse = await payOrder({
+      orderId: orderResponse.id,
+    }).unwrap();
+
+    window.location.href = paymentResponse.payment_url;
+
+    // if (data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
+    //   alert("Произошла ошибка на сервере. Попробуйте позже.");
+    // } else {
+    //   alert("Произошла ошибка при оформлении заказа");
+    // }
+  };
+
+  const fullPrice = () => {
+    let fullprice: number = totalCost()
+    if (discount) {
+      fullprice = totalCost()*90/100
+    }
+    return fullprice
+  }
+
+  const m = async () => {
     try {
-      // Проверяем авторизацию перед оформлением заказа
-      if (!token) {
-        // Если пользователь не авторизован, перенаправляем на страницу входа
-        alert("Для оформления заказа необходимо войти в аккаунт");
-        handleClose();
-        router.push("/login");
-        return;
-      }
-
-      if (!selectedAddress) {
-        alert("Выберите адрес доставки");
-        return;
-      }
-
-      const orderResponse = await createOrder({
-        address_id: selectedAddress,
-        items: products.map(p => ({
-          product_id: Number(p.id),
-          size_id: 1,
-          quantity: 1,
-        })),
-        delivery: "express",
-        use_loyalty_points: false,
-        payment_method: "cash",
+      const n = await postCalc({
+        from_postcode: "101000",
+        to_postcode: "190000",
+        weight: 1.5,
+        length: 30,
+        width: 20,
+        height: 10,
       }).unwrap();
-
-      if (!orderResponse?.id) {
-        throw new Error("Не удалось создать заказ. Попробуйте позже.");
-      }
-
-      setOrderId(orderResponse.id);
-
-      const paymentResponse = await payOrder({
-        orderId: orderResponse.id,
-      }).unwrap();
-
-      window.location.href = paymentResponse.payment_url;
-    } catch (error) {
-      console.error("Ошибка при создании заказа:", error);
-
-      // if (data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
-      //   alert("Произошла ошибка на сервере. Попробуйте позже.");
-      // } else {
-      //   alert("Произошла ошибка при оформлении заказа");
-      // }
+      console.log(n);
+    } catch (e) {
+      console.log("error", e);
     }
   };
 
@@ -280,14 +313,11 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             } transition-transform duration-300`}
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center mb-5">
-              <h2 className="text-black text-[30px]">Оформление заказа</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-black text-[32px]">Оформление заказа</h2>
               <RxCross2 className="cursor-pointer" size={30} onClick={() => handleClose()} />
             </div>
-            <p className="uppercase">
-              {products.length} Товаров на {totalCost()} руб.
-            </p>
-            
+
             {!token ? (
               <div className="flex flex-col gap-4 items-center justify-center py-8">
                 <p className="text-lg text-center">Для оформления заказа необходимо войти в аккаунт</p>
@@ -303,9 +333,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
               </div>
             ) : (
               <>
-                <p className="text-black uppercase">Адреса</p>
+                <p className="uppercase text-[24px] text-black">Адреса</p>
                 {isSuccess && addresses.length > 0 ? (
-                  <div className="flex flex-col justify-center items-center gap-[30px] mt-[30px] w-full">
+                  <div className="flex flex-col justify-center items-center gap-[30px] mt-[0px] w-full">
                     {addresses.map(address => (
                       <label key={address.id} className="flex justify-center gap-[20px] w-full">
                         <input
@@ -339,22 +369,48 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                     </button>
                   </div>
                 )}
-                <div className="flex flex-col justify-start text-left px-[100px] gap-[20px]">
-                  <p className="text-black uppercase">Итого</p>
-                  <p className="text-[20px] text-black uppercase">{totalCost()} руб.</p>
+                <div>
+                  <h2 className="uppercase text-[24px] text-black mb-[15px]">Доставка</h2>
+                  <label className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value={1}
+                      checked={1 === delivery}
+                      onChange={() => setDelivery(1)}
+                      className="w-[15px] h-[15px]"
+                    />
+                    <p>Доставка по SDEK</p>
+                  </label>
+                  <label className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value={2}
+                      checked={2 === delivery}
+                      onChange={() => setDelivery(2)}
+                      className="w-[15px] h-[15px]"
+                    />
+                    <p>Доставка по Почта России</p>
+                  </label>
+                </div>
+                <div>
+                  <h2 className="uppercase text-[24px] text-black mb-[15px]">Промокод</h2>
+                  <input type="text" placeholder='Введите промокод' className='bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none' name='promo' onChange={(e) => handleDiscount(e.target.value)} value={discount ? "SIVENO10" : ''} />
+                </div>
+                <div>
+                  <h2 className="uppercase text-[24px] text-black mb-[15px]">Ваш заказ</h2>
+                  <p>Товаров на - {totalCost()} ₽</p>
+                  <p>Скидка - {discount ? "10" : "0"} %</p>
+                  <p>Доставка - 0 ₽</p>
+                  <p>Итого - {fullPrice()} ₽</p>
                 </div>
                 <button
                   className="bg-gray-100 text-[#423C3D] px-6 py-2 hover:bg-gray-300 w-full mt-[40px]"
                   onClick={handlePayment}
-                  disabled={!selectedAddress}
                 >
                   {orderId ? "Ожидание оплаты..." : "Оплатить заказ"}
                 </button>
-                {orderId && (
-                  <button className="bg-red-100 text-red-600 px-6 py-2 hover:bg-red-200 w-full" onClick={handleCancelOrder}>
-                    Отменить заказ
-                  </button>
-                )}
               </>
             )}
           </div>

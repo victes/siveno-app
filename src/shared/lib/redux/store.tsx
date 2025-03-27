@@ -13,6 +13,7 @@ import { RegApi } from "@/shared/api/RegApi/RegApi";
 import { sizesApi } from "@/shared/api/SizesApi/ui/SizesApi";
 import { storiesApi } from "@/shared/api/StoriesApi/ui/StoriesApi";
 import { subscribeApi } from "@/shared/api/SubscribeApi/ui/SubscribeApi";
+import { CalculateApi } from '@/shared/api/CalculateApi/CalculateApi'
 
 export const store = configureStore({
   reducer: {
@@ -29,6 +30,7 @@ export const store = configureStore({
     [LoyaytiApi.reducerPath]: LoyaytiApi.reducer,
     [storiesApi.reducerPath]: storiesApi.reducer,
     [subscribeApi.reducerPath]: subscribeApi.reducer,
+    [CalculateApi.reducerPath]: CalculateApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -45,6 +47,7 @@ export const store = configureStore({
       LoyaytiApi.middleware,
       storiesApi.middleware,
       subscribeApi.middleware,
+      CalculateApi.middleware,
     ),
 });
 

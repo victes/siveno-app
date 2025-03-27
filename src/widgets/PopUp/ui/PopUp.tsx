@@ -69,7 +69,7 @@ const PopUp = ({ setActive, active }: any) => {
               className="pop-up__input"
               onChange={e => setEmail(e.target.value)}
             />
-            <button className="pop-up__btn" onClick={getPromo}>
+            <button className="pop-up__btn text-white" onClick={getPromo}>
               Подписаться
             </button>
           </form>

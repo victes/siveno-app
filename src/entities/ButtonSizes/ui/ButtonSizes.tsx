@@ -13,7 +13,7 @@ const ButtonSizes: React.FC<ButtonSizesProps> = ({ selectedSize = "", onSizeSele
   const { data: sizes } = useGetSizesByProductQuery();
 
   // Стандартные размеры, которые мы хотим отображать
-  const standardSizes = ["S", "M", "L"];
+  const standardSizes = ["XS", "S", "M", "L"];
 
   // Фильтруем размеры, оставляя только стандартные
   const filteredSizes = sizes?.filter(item => 
