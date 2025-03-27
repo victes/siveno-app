@@ -239,18 +239,19 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       use_loyalty_points: false,
       payment_method: "yookassa",
       promo_code: discount ? "SIVENO10" : "",
-    }).unwrap();
-    console.log(orderResponse)
+    }).unwrap().then(async (data) => {
+      console.log(data.order.total_price, typePayment)
+      await payOrder({
+        amount: data.order.total_price,
+        payment_method: typePayment,
+        use_loyalty_points: false
+      }).unwrap();
+    });
+    
 
-    setOrderId(orderResponse.order.total_price);
+    // const paymentResponse = await payOrder().unwrap();
 
-    const paymentResponse = await payOrder({
-      amount: orderId,
-      payment_method: typePayment,
-      use_loyalty_points: false
-    }).unwrap();
-
-    window.location.href = paymentResponse.payment_url;
+    // window.location.href = paymentResponse.payment_url;
 
     // if (data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
     //   alert("Произошла ошибка на сервере. Попробуйте позже.");

@@ -35,7 +35,7 @@ export const OrdersApi = createApi({
       query: id => `orders/${id}`,
     }),
     payOrder: builder.mutation({
-      query: ({ data }) => ({
+      query: ( data ) => ({
         url: `payments`,
         method: "POST",
         body: data
