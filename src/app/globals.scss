@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+* {
+  font-family: "Manrope", sans-serif;
+}
 
 body {
   background-color: #fff;
@@ -12,7 +17,7 @@ body {
   line-height: 34px;
   margin-bottom: 40px;
   text-transform: uppercase;
-
+  font-family: 'involve';
   // font-family: "CSTM Xprmntl 02", "Jost", "Arial", sans-serif;
   font-style: italic;
   font-weight: 400;
@@ -75,9 +80,14 @@ body {
   src: url('/public/fonts/Lineyka.ttf');
 }
 
-.lineyka {
-  font-family: 'lineyka';
+@font-face {
+  font-family: 'involve';
+  src: url('/public/fonts/Involve.ttf');
 }
+
+// .lineyka {
+//   font-family: 'lineyka';
+// }
 
 // .yeseva {
 //   font-family: "Yeseva One", serif;
