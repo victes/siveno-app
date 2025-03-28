@@ -246,13 +246,13 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       payment_method: "yookassa",
       promo_code: discount ? "SIVENO10" : "",
     }).unwrap().then(async (data) => {
-      localStorage.setItem('orderId', data.order.id)
       const paymentResponse = await payOrder({
         amount: data.order.total_price,
         order_id: data.order.id,
         payment_method: typePayment,
         use_loyalty_points: false
       }).unwrap();
+      localStorage.setItem('orderId', paymentResponse.payment_url.slice(58))
       window.location.href = paymentResponse.payment_url;
     });
   };

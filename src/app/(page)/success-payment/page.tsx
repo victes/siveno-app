@@ -12,7 +12,6 @@ const page = () => {
           status: "succeeded",
         },
       });
-      window.location.href = "/";
     }
   };
 	status()
