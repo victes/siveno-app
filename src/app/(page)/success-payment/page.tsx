@@ -10,7 +10,13 @@ const page = async () => {
       },
     });
   }
-	return window.location.href="/"
+	window.location.href="/"
+
+	return (
+		<>
+		 	<h2>Redirect in Main Page</h2>
+		</>
+	)
 };
 
 export default page;
