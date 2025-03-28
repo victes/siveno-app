@@ -54,7 +54,7 @@ const PopUp = ({ setActive, active }: any) => {
             Скидка 10% на первый заказ, новости бренда, ранний доступ к коллекциям и эксклюзивные акции для подписчиков
             рассылки
           </p>
-          <form action="mailto:geno74@bk.ru" method="post" encType="text/plain">
+          <div>
             <input
               type="text"
               placeholder="Имя"
@@ -72,7 +72,7 @@ const PopUp = ({ setActive, active }: any) => {
             <button className="pop-up__btn text-white" onClick={getPromo}>
               Подписаться
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </>
