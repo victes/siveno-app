@@ -19,6 +19,7 @@
   }
   /* Для экранов ниже 480px — 1 карточка */
   @media (max-width: 480px) {
-    grid-template-columns: 1fr; /* 1 карточка */
+    grid-template-columns: repeat(2, minmax(150px, 1fr)); /* 2 карточки (ширина от 150px до 1fr) */
+    gap:0;
   }
 }

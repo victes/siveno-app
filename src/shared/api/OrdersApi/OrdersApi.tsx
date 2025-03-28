@@ -35,11 +35,18 @@ export const OrdersApi = createApi({
       query: id => `orders/${id}`,
     }),
     payOrder: builder.mutation({
-      query: ( data ) => ({
+      query: data => ({
         url: `payments`,
         method: "POST",
         body: data
       }),
+    }),
+    successPayment: builder.mutation({
+      query: objectData => ({
+        url: `payments/webhook`,
+        method: "POST",
+        body: objectData
+      })
     }),
     confirmPayment: builder.mutation({
       query: orderId => ({
@@ -71,4 +78,5 @@ export const {
   useConfirmPaymentMutation,
   useCancelOrderMutation,
   useHandlePaymentWebhookMutation,
+  useSuccessPaymentMutation,
 } = OrdersApi;

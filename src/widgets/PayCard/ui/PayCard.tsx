@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { InputHTMLAttributes } from "react";
 import { FieldError } from "react-hook-form";
@@ -231,7 +233,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       return;
     }
 
-    const orderResponse = await createOrder({
+    await createOrder({
       address_id: selectedAddress,
       items: products.map(p => ({
         product_id: Number(p.id),
@@ -244,24 +246,14 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       payment_method: "yookassa",
       promo_code: discount ? "SIVENO10" : "",
     }).unwrap().then(async (data) => {
-      await payOrder({
+      const paymentResponse = await payOrder({
         amount: data.order.total_price,
         order_id: data.order.id,
         payment_method: typePayment,
         use_loyalty_points: false
       }).unwrap();
+      window.location.href = paymentResponse.payment_url;
     });
-    
-
-    // const paymentResponse = await payOrder().unwrap();
-
-    // window.location.href = paymentResponse.payment_url;
-
-    // if (data && typeof error.data === "string" && error.data.startsWith("<!DOCTYPE html>")) {
-    //   alert("Произошла ошибка на сервере. Попробуйте позже.");
-    // } else {
-    //   alert("Произошла ошибка при оформлении заказа");
-    // }
   };
 
   const fullPrice = () => {
