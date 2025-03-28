@@ -3,11 +3,13 @@ import { useSendSubscribeMutation } from '@/shared/api/SubscribeApi/ui/Subscribe
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import '../styles/subscribe.scss'
+import Link from 'next/link'
 
 const Subscribe = () => {
 	const [name, setName] = useState<string>("");
 		const [email, setEmail] = useState<string>("");
 		const [sendSubscribe] = useSendSubscribeMutation();
+		const [success, setSuccess] = useState<boolean>(false)
 	
 		const getPromo = async (e: React.MouseEvent) => {
 			e.preventDefault();
@@ -18,6 +20,9 @@ const Subscribe = () => {
 			}
 			if (!email) {
 				return toast.error(`Заполните ваш email!`, { position: "top-right" });
+			}
+			if (!success) {
+				return toast.error(`Необходимо согласится с условиями!`, { position: "top-right" })
 			}
 			if (name && email) {
 				const data: IUserData = {
@@ -47,6 +52,10 @@ const Subscribe = () => {
 				<form className='flex flex-col gap-3'>
 					<input type="text" name='name' placeholder='Имя' onChange={(e) => setName(e.target.value)} className='mt-10 bg-white h-12 rounded px-5 outline-none input-up border-black border-2' />
 					<input type="email" name='email' className='bg-white h-12 rounded px-5 outline-none border-black border-2' placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
+					<div className='flex flex-row gap-3 items-center' onClick={() => setSuccess(!success)}>
+						<h3 className='size-[15px] border-black border-2 flex justify-center items-center'><span className='size-[7px] bg-black transition-all duration-300' style={success ? {opacity:1} : {opacity: 0}}></span></h3>
+						<p className='text-[14px] leading-[18px] text-black'>Я приминаю <Link href="/politika" className='underline'>Политику кондифенциальности</Link> и соглашаюсь с условиями <Link href="/oferta" className='underline'>Публичной оферты</Link></p>
+					</div>
 					<button onClick={getPromo} className='w-full bg-black text-white h-12 rounded'>Подписаться</button>
 				</form>
 			</div>
