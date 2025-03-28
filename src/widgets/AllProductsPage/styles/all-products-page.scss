@@ -36,7 +36,14 @@
   }
 }
 
-@media (min-width: 768px) {
+@media(max-width:615){
+  .products-card-container {
+    gap:0;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+  }
+}
+
+@media (min-width: 754px) {
   .products-card-container {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }

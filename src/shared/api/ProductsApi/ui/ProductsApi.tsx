@@ -7,6 +7,9 @@ export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }), // Убедитесь, что это полный URL
   endpoints: builder => ({
+    getPromo: builder.query<string[], void>({
+      query: () => "promos",
+    }),
     getProductsByCategory: builder.query<ProductResponse, string>({
       query: (categorySlug) => `products?category_slug=${categorySlug}`,
     }),
@@ -26,5 +29,6 @@ export const {
   useGetProductsByCategoryQuery, 
   useGetProductsByIdQuery, 
   useGetProductsPopularQuery,
-  useGetProductsQuery 
+  useGetProductsQuery,
+  useGetPromoQuery,
 } = productsApi;

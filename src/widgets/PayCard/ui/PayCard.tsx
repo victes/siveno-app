@@ -17,6 +17,7 @@ import {
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
 import { useCalculateRussianPostMutation } from "@/shared/api/CalculateApi/CalculateApi";
+import { useGetPromoQuery } from '@/shared/api/ProductsApi/ui/ProductsApi'
 
 const formSchema = z.object({
   state: z.string().nonempty({
@@ -169,6 +170,7 @@ const InputField: React.FC<IInputFieldProps> = ({ label, error, ...props }) => (
 const PayCard = ({ onOpen, open }: IPayCard) => {
   const [delivery, setDelivery] = useState<number>(1);
   const [typePayment, setTypePayment] = useState<string>('bank_card');
+  // const {data: promos} = useGetPromoQuery();
   const [discount, setDiscount] = useState<boolean>(false)
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
@@ -196,11 +198,13 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     }
   };
 
-  const handleDiscount = (value: string) => {
-    if(value === "SIVENO10"){
-      setDiscount(true)
-    }
-  }
+  // const handleDiscount = (value: string) => {
+  //   if (promos) {
+  //     if(promos.includes(value)){
+  //       setDiscount(true)
+  //     }
+  //   }
+  // }
 
   const handleClose = useCallback(() => {
     setAnimate(false);
@@ -240,9 +244,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       payment_method: "yookassa",
       promo_code: discount ? "SIVENO10" : "",
     }).unwrap().then(async (data) => {
-      console.log(data.order.total_price, typePayment)
       await payOrder({
         amount: data.order.total_price,
+        order_id: data.order.id,
         payment_method: typePayment,
         use_loyalty_points: false
       }).unwrap();
@@ -433,7 +437,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Промокод</h2>
-                  <input type="text" placeholder='Введите промокод' className='bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none' name='promo' onChange={(e) => handleDiscount(e.target.value)} defaultValue={discount ? "SIVENO10" : ''} />
+                  <input type="text" placeholder='Введите промокод' className='bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none' name='promo' onChange={(e) => (e.target.value)} />
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Ваш заказ</h2>
