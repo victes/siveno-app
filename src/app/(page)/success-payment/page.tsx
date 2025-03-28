@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 const page = () => {
   const [successPayment] = useSuccessPaymentMutation();
   useEffect(() => {
-		if (localStorage.getItem("orderId")) {
+		if (localStorage?.getItem("orderId")) {
 			successPayment({
 			 object: {
 				 id: localStorage.getItem("orderId"),
