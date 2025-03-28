@@ -1,3 +1,5 @@
+'use client'
+
 import { useSuccessPaymentMutation } from "@/shared/api/OrdersApi/OrdersApi";
 
 const page = () => {
