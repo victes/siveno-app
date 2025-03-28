@@ -13,6 +13,8 @@ const page = () => {
         },
       });
     }
+		localStorage.removeItem('orderId')
+		window.location.href = '/'
   };
 	status()
 
