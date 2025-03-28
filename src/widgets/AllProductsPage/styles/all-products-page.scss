@@ -36,7 +36,7 @@
   }
 }
 
-@media(max-width:615){
+@media(max-width:615px){
   .products-card-container {
     gap:0;
     grid-template-columns: repeat(2, minmax(150px, 1fr));
