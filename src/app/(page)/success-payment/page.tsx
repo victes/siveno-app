@@ -1,16 +1,19 @@
 import { useSuccessPaymentMutation } from "@/shared/api/OrdersApi/OrdersApi";
+import { useEffect } from 'react'
 
-const page = async () => {
+const page = () => {
   const [successPayment] = useSuccessPaymentMutation();
-  if (localStorage.getItem("orderId")) {
-    await successPayment({
-      object: {
-        id: localStorage.getItem("orderId"),
-        status: "succeeded",
-      },
-    });
-  }
-	window.location.href="/"
+  useEffect(() => {
+		if (localStorage.getItem("orderId")) {
+			successPayment({
+			 object: {
+				 id: localStorage.getItem("orderId"),
+				 status: "succeeded",
+			 },
+		 });
+		 window.location.href="/"
+	 }
+	},[])
 
 	return (
 		<>
