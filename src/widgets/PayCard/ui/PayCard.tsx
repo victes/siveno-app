@@ -268,7 +268,8 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       localStorage.setItem('orderId', paymentResponse.payment_url.slice(58))
       window.location.href = paymentResponse.payment_url;
     }).catch(e => {
-      alert(e.data.message)
+      if (e.data.message === 'Промокод уже использован максимальное количество раз') alert(e.data.message);
+      else console.log(e)
     })
   };
 
