@@ -27,14 +27,14 @@ export const CalculateApi = createApi({
         body: postData,
       }),
     }),
-    calculateSdek: builder.mutation({
-      query: sdekData => ({
+    calculateCdek: builder.mutation({
+      query: cdekData => ({
         url: "sdek/calculate-delivery",
         method: "POST",
-        body: sdekData,
+        body: cdekData,
       }),
     }),
   }),
 });
 
-export const { useCalculateRussianPostMutation, useCalculateSdekMutation } = CalculateApi;
+export const { useCalculateRussianPostMutation, useCalculateCdekMutation } = CalculateApi;

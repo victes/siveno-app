@@ -18,7 +18,7 @@ import {
 } from "@/shared/api/OrdersApi/OrdersApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
-import { useCalculateRussianPostMutation, useCalculateSdekMutation } from "@/shared/api/CalculateApi/CalculateApi";
+import { useCalculateRussianPostMutation, useCalculateCdekMutation } from "@/shared/api/CalculateApi/CalculateApi";
 import { useGetPromoQuery } from '@/shared/api/ProductsApi/ui/ProductsApi'
 
 const formSchema = z.object({
@@ -188,7 +188,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [createOrder] = useCreateOrderMutation();
   const [payOrder] = usePayOrderMutation();
   const [postCalc] = useCalculateRussianPostMutation();
-  const [sdekCalc] = useCalculateSdekMutation();
+  const [cdekCalc] = useCalculateCdekMutation();
   const [cancelOrder] = useCancelOrderMutation();
   const { data: orderData } = useGetOrderByIdQuery(orderId!, {
     skip: !orderId,
@@ -304,7 +304,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
           setDeliveryPrice(postCalcData[property])
           setDelivery('russianpost')
         } else {
-          const {data} = await sdekCalc({
+          const {data} = await cdekCalc({
             senderCityId: 44,
             receiverCityId: 137,
             weight: 1.5,
@@ -323,7 +323,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             receiverContragentType: "recipient"
           })
           setDeliveryPrice(data?.tariff_codes[0].delivery_sum)
-          setDelivery('sdek')
+          setDelivery('cdek')
         }
       }
     })
@@ -421,12 +421,12 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                   <input
                       type="radio"
                       name="delivery"
-                      value={'sdek'}
-                      checked={'sdek' === delivery}
-                      onChange={() => delivery !== 'sdek' ? delivery_price('sdek') : ''}
+                      value={'cdek'}
+                      checked={'cdek' === delivery}
+                      onChange={() => delivery !== 'cdek' ? delivery_price('cdek') : ''}
                       className="w-[15px] h-[15px]"
                     />
-                    <p>Доставка по SDEK</p>
+                    <p>Доставка по CDEK</p>
                   </label>
                   <label className="flex flex-row items-center gap-2">
                     <input
