@@ -185,8 +185,6 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [orderId, setOrderId] = useState<number | null>(null);
   const { token } = useAuth();
   const router = useRouter();
-  const [sdek, setSdek] = useState<number>(0);
-  const [mail, setMail] = useState<number>(0);
   const [createOrder] = useCreateOrderMutation();
   const [payOrder] = usePayOrderMutation();
   const [postCalc] = useCalculateRussianPostMutation();
@@ -269,7 +267,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       }).unwrap();
       localStorage.setItem('orderId', paymentResponse.payment_url.slice(58))
       window.location.href = paymentResponse.payment_url;
-    });
+    }).catch(e => {
+      alert(e.data.message)
+    })
   };
 
   const fullPrice = () => {
