@@ -1,11 +1,10 @@
-import { ISubstribeResponce, IUserData } from "@/shared/api/SubscribeApi/types/index.interface";
+import { IUserData } from "@/shared/api/SubscribeApi/types/index.interface";
 import { useSendSubscribeMutation } from "@/shared/api/SubscribeApi/ui/SubscribeApi";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import close from "../../../../public/images/MainPage/close.png";
 import "../style/popup.scss";
-import { useGetPromoQuery } from '@/shared/api/ProductsApi/ui/ProductsApi'
 
 const PopUp = ({ setActive, active }: any) => {
   const [name, setName] = useState<string>("");
@@ -25,19 +24,19 @@ const PopUp = ({ setActive, active }: any) => {
     if (name && email) {
       const data: IUserData = {
         email,
-        name
+        name,
       };
       try {
         await sendSubscribe(data).unwrap();
         toast.success(`Вы успешно подписались на рассылку!`, {
-          position: "top-right",
+          position: "top-left",
         });
         setTimeout(() => {
           setActive(false);
         }, 2000);
       } catch {
         toast.error(`Ошибка при отправке письма.`, {
-          position: "top-right",
+          position: "top-left",
         });
       }
     }

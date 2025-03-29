@@ -8,11 +8,11 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { RxCross2 } from "react-icons/rx";
-import { z } from "zod";
-import { GoPencil } from "react-icons/go";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { GoPencil } from "react-icons/go";
+import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
+import { z } from "zod";
 
 interface IModal {
   click: boolean;
@@ -173,7 +173,7 @@ const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
       console.log("result: " + result);
       setClick(false);
       toast.info(`Адрес изменен`, {
-        position: "top-right",
+        position: "top-left",
       });
     } catch (err) {
       console.error("Registration failed:", err);
@@ -247,7 +247,7 @@ const Address = () => {
   const handleDelete = (id: number) => {
     deleteAddresses({ id: id });
     toast.error(`Адрес удален `, {
-      position: "top-right",
+      position: "top-left",
     });
   };
 

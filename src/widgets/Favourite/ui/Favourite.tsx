@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useRef, useEffect, useState, useMemo} from "react";
-import { MdDeleteOutline } from "react-icons/md";
-import { IFav } from "../types/type";
-import { RxCross2 } from "react-icons/rx";
-import { useDeleteWishlistMutation, useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
-import { toast } from "react-toastify";
-import { useProductStore } from "@/entities/productStore/store";
 import { useFavStore } from "@/entities/favouriteStore/store";
+import { useProductStore } from "@/entities/productStore/store";
+import React, { useEffect, useRef, useState } from "react";
+import { MdDeleteOutline } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
+import { toast } from "react-toastify";
+import { IFav } from "../types/type";
 
 interface Product {
   id: string;
@@ -22,13 +21,13 @@ const Favourite = ({ click, setClick }: IFav) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
   const { addProduct } = useProductStore();
-  const { favourites, removeFav} = useFavStore();
-  console.log(favourites)
+  const { favourites, removeFav } = useFavStore();
+  console.log(favourites);
 
   const handleDeleteWishlist = (id: string) => {
-    removeFav(id)
+    removeFav(id);
     toast.error(`Удалено из Избранного`, {
-      position: "top-right",
+      position: "top-left",
     });
   };
 
@@ -60,7 +59,7 @@ const Favourite = ({ click, setClick }: IFav) => {
       setAnimate(true); // Запуск анимации при открытии
     }
   }, [click]);
-  
+
   return (
     <>
       {click && (
@@ -77,36 +76,36 @@ const Favourite = ({ click, setClick }: IFav) => {
           >
             <RxCross2 className="absolute top-0 right-0 m-5 cursor-pointer" size={30} onClick={() => handleClose()} />
             <h2 className="text-black text-[30px]">Избранное</h2>
-            {favourites.length > 0 ? favourites.map((product) => (
-              <li key={product.id} className="flex gap-5 p-2 justify-between ">
-                <div className="flex gap-5 items-center">
-                  <div>
-                    <img
-                      src={product.img}
-                      alt={product.name}
-                      className="h-[300px] w-[200px] object-cover"
+            {favourites.length > 0 ? (
+              favourites.map(product => (
+                <li key={product.id} className="flex gap-5 p-2 justify-between ">
+                  <div className="flex gap-5 items-center">
+                    <div>
+                      <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
+                    </div>
+                    <div className="flex flex-col justify-start">
+                      <span className="text-black">{product.name}</span>
+                      <span className="text-[30px] text-black">{product.price} руб</span>
+                    </div>
+                  </div>
+                  <div className="flex">
+                    <MdDeleteOutline
+                      onClick={() => handleDeleteWishlist(product.id)}
+                      size={30}
+                      className="m-2 cursor-pointer hover:text-red-500"
                     />
+                    <button
+                      className="btn bg-transparent rounded-none btn-active uppercase"
+                      onClick={() => handleAddProduct(product)}
+                    >
+                      Добавить в корзину
+                    </button>
                   </div>
-                  <div className="flex flex-col justify-start">
-                    <span className="text-black">{product.name}</span>
-                    <span className="text-[30px] text-black">{product.price} руб</span>
-                  </div>
-                </div>
-                <div className="flex">
-                  <MdDeleteOutline
-                    onClick={() => handleDeleteWishlist(product.id)}
-                    size={30}
-                    className="m-2 cursor-pointer hover:text-red-500"
-                  />
-                  <button
-                    className="btn bg-transparent rounded-none btn-active uppercase"
-                    onClick={() => handleAddProduct(product)}
-                  >
-                    Добавить в корзину
-                  </button>
-                </div>
-              </li>
-            )) : <h2>Товаров не найдено.</h2>}
+                </li>
+              ))
+            ) : (
+              <h2>Товаров не найдено.</h2>
+            )}
           </div>
         </div>
       )}

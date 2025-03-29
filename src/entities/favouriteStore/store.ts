@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { toast } from "react-toastify";
+import { create } from "zustand";
 
 export interface favourite {
   id: string;
@@ -26,11 +26,11 @@ export const useFavStore = create<FavouriteStore>((set, get) => ({
         favourites: [...state.favourites, favourites],
       }));
       toast.success(`Добавлено в избранное: ${favourites.name}`, {
-        position: "top-right",
+        position: "top-left",
       });
     } else {
       toast.warning(`Объект уже в избранном: ${favourites.name}`, {
-        position: "top-right",
+        position: "top-left",
       });
     }
   },
@@ -41,7 +41,7 @@ export const useFavStore = create<FavouriteStore>((set, get) => ({
     }));
     if (productItem) {
       toast.error(`Удалено из корзины: ${productItem.name}`, {
-        position: "top-right",
+        position: "top-left",
       });
     }
   },
@@ -50,7 +50,7 @@ export const useFavStore = create<FavouriteStore>((set, get) => ({
       favourites: [],
     }));
     toast.info("Товары очищены.", {
-      position: "top-right",
+      position: "top-left",
     });
   },
   totalCost: () => {

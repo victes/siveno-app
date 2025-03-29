@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { toast } from "react-toastify";
+import { create } from "zustand";
 
 interface Product {
   id: string;
@@ -25,7 +25,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       products: [...state.products, product],
     }));
     toast.success(`Добавлено в корзину: ${product.name}`, {
-      position: "top-right",
+      position: "top-left",
     });
   },
   removeProduct: id => {
@@ -35,7 +35,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     }));
     if (productItem) {
       toast.error(`Удалено из корзины: ${productItem.name}`, {
-        position: "top-right",
+        position: "top-left",
       });
     }
   },
@@ -44,7 +44,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       products: [],
     }));
     toast.info("Товары очищены.", {
-      position: "top-right",
+      position: "top-left",
     });
   },
   totalCost: () => {

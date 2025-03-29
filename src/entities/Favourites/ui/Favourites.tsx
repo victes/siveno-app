@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { useDeleteWishlistMutation, useGetWishListQuery } from "@/shared/api/ProfileApi/ProfileApi";
-import React from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { toast } from "react-toastify";
 
@@ -25,7 +24,7 @@ const Favourites = () => {
   const handleDeleteWishlist = (id: number) => {
     deleteWishlist({ id: id });
     toast.error(`Удалено из избранного `, {
-      position: "top-right",
+      position: "top-left",
     });
   };
 
