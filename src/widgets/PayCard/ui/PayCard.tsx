@@ -300,8 +300,8 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             width: 20,
             height: 10,
           }).unwrap();
-          const property = 'total-rate'
-          setDeliveryPrice(postCalcData[property] / 10)
+          const property = 'ground-rate'
+          setDeliveryPrice(postCalcData[property].rate / 10)
           setDelivery('russianpost')
         } else {
           const {data} = await cdekCalc({
