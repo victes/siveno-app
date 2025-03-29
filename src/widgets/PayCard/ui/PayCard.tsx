@@ -295,10 +295,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
           const postCalcData = await postCalc({
             from_postcode: "630052",
             to_postcode: adress.postal_code,
-            weight: 1.5,
-            length: 30,
-            width: 20,
-            height: 10,
+            weight: 0.1,
+            length: 0.55,
+            width: 0.45,
+            height: 0.05,
           }).unwrap();
           const property = 'ground-rate'
           setDeliveryPrice(postCalcData[property].rate / 10)
@@ -307,10 +307,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
           const {data} = await cdekCalc({
             senderCityId: 44,
             receiverCityId: 137,
-            weight: 1.5,
-            length: 30,
-            width: 20,
-            height: 10,
+            weight: 0.1,
+            length: 0.55,
+            width: 0.45,
+            height: 0.05,
             senderPostalCode: "630052",
             receiverPostalCode: adress.postal_code,
             senderCountryCode: "RU",
