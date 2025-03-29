@@ -307,7 +307,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
           const {data} = await cdekCalc({
             senderCityId: 44,
             receiverCityId: 137,
-            weight: 1.5,
+            weight: 10,
             length: 30,
             width: 20,
             height: 10,
