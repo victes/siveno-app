@@ -300,7 +300,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             width: 20,
             height: 10,
           }).unwrap();
-          const property = 'total-vat'
+          const property = 'total-rate'
           setDeliveryPrice(postCalcData[property] / 10)
           setDelivery('russianpost')
         } else {
