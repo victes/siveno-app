@@ -1,3 +1,9 @@
+export interface Promo {
+  id: number;
+  code: string;
+  discount: number;
+}
+
 export interface Product {
   id: number;
   name: string;

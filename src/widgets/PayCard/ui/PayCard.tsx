@@ -18,7 +18,7 @@ import {
 } from "@/shared/api/OrdersApi/OrdersApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
-import { useCalculateRussianPostMutation } from "@/shared/api/CalculateApi/CalculateApi";
+import { useCalculateRussianPostMutation, useCalculateSdekMutation } from "@/shared/api/CalculateApi/CalculateApi";
 import { useGetPromoQuery } from '@/shared/api/ProductsApi/ui/ProductsApi'
 
 const formSchema = z.object({
@@ -170,16 +170,18 @@ const InputField: React.FC<IInputFieldProps> = ({ label, error, ...props }) => (
 );
 
 const PayCard = ({ onOpen, open }: IPayCard) => {
-  const [delivery, setDelivery] = useState<number>(1);
+  const [delivery, setDelivery] = useState<string>('');
+  const [deliveryPrice, setDeliveryPrice] = useState<number>(0);
   const [typePayment, setTypePayment] = useState<string>('bank_card');
-  // const {data: promos} = useGetPromoQuery();
-  const [discount, setDiscount] = useState<boolean>(false)
+  const {data: promos} = useGetPromoQuery();
+  const [discount, setDiscount] = useState<number>(0)
+  const [discountName, setDiscountName] = useState<string>('')
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
   const { products, totalCost, clearProducts } = useProductStore();
   const { data: addresses, isSuccess } = useGetAddressesQuery();
   const [click, setClick] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState<number | null>(null);
+  const [selectedAddress, setSelectedAddress] = useState<number | null>(addresses ? addresses[0].id : null);
   const [orderId, setOrderId] = useState<number | null>(null);
   const { token } = useAuth();
   const router = useRouter();
@@ -188,6 +190,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [createOrder] = useCreateOrderMutation();
   const [payOrder] = usePayOrderMutation();
   const [postCalc] = useCalculateRussianPostMutation();
+  const [sdekCalc] = useCalculateSdekMutation();
   const [cancelOrder] = useCancelOrderMutation();
   const { data: orderData } = useGetOrderByIdQuery(orderId!, {
     skip: !orderId,
@@ -200,13 +203,20 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     }
   };
 
-  // const handleDiscount = (value: string) => {
-  //   if (promos) {
-  //     if(promos.includes(value)){
-  //       setDiscount(true)
-  //     }
-  //   }
-  // }
+  const handleDiscount = (value: string) => {
+    if (promos) {
+      if (promos.length > 0) {
+        setDiscountName('');
+        setDiscount(0)
+        promos.forEach(promo => {
+          if (promo.code === value) { 
+            setDiscount(promo.discount);
+            setDiscountName(promo.code);
+          }
+        })
+      }
+    }
+  }
 
   const handleClose = useCallback(() => {
     setAnimate(false);
@@ -233,6 +243,11 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       return;
     }
 
+    if (!delivery) {
+      alert("Выберите способ доставки");
+      return;
+    }
+
     await createOrder({
       address_id: selectedAddress,
       items: products.map(p => ({
@@ -241,10 +256,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
         quantity: 1,
       })),
       delivery: "express",
-      delivery_type: "russianpost",
+      delivery_type: delivery,
       use_loyalty_points: false,
       payment_method: "yookassa",
-      promo_code: discount ? "SIVENO10" : "",
+      promo_code: discountName,
     }).unwrap().then(async (data) => {
       const paymentResponse = await payOrder({
         amount: data.order.total_price,
@@ -259,27 +274,59 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
 
   const fullPrice = () => {
     let fullprice: number = totalCost()
+    if (deliveryPrice) {
+      fullprice+=deliveryPrice
+    }
     if (discount) {
-      fullprice = totalCost()*90/100
+      fullprice = Math.round(fullprice*(100-discount)/100)
     }
     return fullprice
   }
 
-  const m = async () => {
-    try {
-      const n = await postCalc({
-        from_postcode: "101000",
-        to_postcode: "190000",
-        weight: 1.5,
-        length: 30,
-        width: 20,
-        height: 10,
-      }).unwrap();
-      console.log(n);
-    } catch (e) {
-      console.log("error", e);
+  const delivery_price = async (delivery_type: string) => {
+    if (!selectedAddress) {
+      alert('Выберите адрес доставки');
+      return;
     }
-  };
+    addresses?.forEach(async (adress) => {
+      if (adress.id === selectedAddress) {
+        if (delivery_type === 'russianpost') {
+          const postCalcData = await postCalc({
+            from_postcode: "630052",
+            to_postcode: adress.postal_code,
+            weight: 1.5,
+            length: 30,
+            width: 20,
+            height: 10,
+          }).unwrap();
+          const property = 'total-vat'
+          setDeliveryPrice(postCalcData[property])
+          setDelivery('russianpost')
+        } else {
+          const {data} = await sdekCalc({
+            senderCityId: 44,
+            receiverCityId: 137,
+            weight: 1.5,
+            length: 30,
+            width: 20,
+            height: 10,
+            senderPostalCode: "630052",
+            receiverPostalCode: adress.postal_code,
+            senderCountryCode: "RU",
+            receiverCountryCode: "RU",
+            senderCity: "Новосибирск",
+            receiverCity: adress.city,
+            senderAddress: "ул. Толмачевская, д.1/1",
+            receiverAddress: adress.street,
+            senderContragentType: "sender",
+            receiverContragentType: "recipient"
+          })
+          setDeliveryPrice(data?.tariff_codes[0].delivery_sum)
+          setDelivery('sdek')
+        }
+      }
+    })
+  }
 
   const handleCancelOrder = async () => {
     if (orderId) {
@@ -369,24 +416,24 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 )}
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Доставка</h2>
-                  {/* <label className="flex flex-row items-center gap-2">
-                    <input
+                  <label className="flex flex-row items-center gap-2">
+                  <input
                       type="radio"
                       name="delivery"
-                      value={1}
-                      checked={1 === delivery}
-                      onChange={() => setDelivery(1)}
+                      value={'sdek'}
+                      checked={'sdek' === delivery}
+                      onChange={() => delivery !== 'sdek' ? delivery_price('sdek') : ''}
                       className="w-[15px] h-[15px]"
                     />
                     <p>Доставка по SDEK</p>
-                  </label> */}
+                  </label>
                   <label className="flex flex-row items-center gap-2">
                     <input
                       type="radio"
                       name="delivery"
-                      value={1}
-                      checked={1 === delivery}
-                      onChange={() => setDelivery(1)}
+                      value={'russianpost'}
+                      checked={'russianpost' === delivery}
+                      onChange={() => delivery !== 'russianpost' ? delivery_price('russianpost') : ''}
                       className="w-[15px] h-[15px]"
                     />
                     <p>Доставка по Почта России</p>
@@ -430,13 +477,13 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Промокод</h2>
-                  <input type="text" placeholder='Введите промокод' className='bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none' name='promo' onChange={(e) => (e.target.value)} />
+                  <input type="text" placeholder='Введите промокод' className='bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none' name='promo' onChange={(e) => handleDiscount(e.target.value)} />
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Ваш заказ</h2>
                   <p>Товаров на - {totalCost()} ₽</p>
-                  <p>Скидка - {discount ? "10" : "0"} %</p>
-                  <p>Доставка - 0 ₽</p>
+                  <p>Скидка - {discount} %</p>
+                  <p>Доставка - {deliveryPrice} ₽</p>
                   <p>Итого - {fullPrice()} ₽</p>
                 </div>
                 <button

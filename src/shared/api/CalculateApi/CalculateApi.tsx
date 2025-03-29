@@ -8,8 +8,8 @@ export const CalculateApi = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: headers => {
       // Добавляем токен в заголовки
-      headers.set("accept", 'application/json');
-      headers.set("Content-Type", 'application/json');
+      headers.set("accept", "application/json");
+      headers.set("Content-Type", "application/json");
       const token = localStorage.getItem("access_token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
@@ -21,14 +21,20 @@ export const CalculateApi = createApi({
   }),
   endpoints: builder => ({
     calculateRussianPost: builder.mutation({
-      
       query: postData => ({
         url: "russian-post/calculate-delivery",
         method: "POST",
         body: postData,
       }),
     }),
+    calculateSdek: builder.mutation({
+      query: sdekData => ({
+        url: "sdek/calculate-delivery",
+        method: "POST",
+        body: sdekData,
+      }),
+    }),
   }),
 });
 
-export const {useCalculateRussianPostMutation} = CalculateApi;
+export const { useCalculateRussianPostMutation, useCalculateSdekMutation } = CalculateApi;

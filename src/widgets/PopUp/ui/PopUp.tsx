@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import close from "../../../../public/images/MainPage/close.png";
 import "../style/popup.scss";
+import { useGetPromoQuery } from '@/shared/api/ProductsApi/ui/ProductsApi'
 
 const PopUp = ({ setActive, active }: any) => {
   const [name, setName] = useState<string>("");
