@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRegisterUserMutation } from "@/shared/api/RegApi/RegApi";
 import { useRouter } from "next/navigation";
 
+let emailError = "";
 const formSchema = z
   .object({
     email: z.string().email({
@@ -69,6 +70,8 @@ const RegisterPage = () => {
 
       push("/");
     } catch (err) {
+      const errorData = err as { data?: { errors?: { email?: string[] } } };
+      emailError = errorData?.data?.errors?.email?.[0] || "Регистрация не удалась";
       console.error("Registration failed:", err);
     }
   }
@@ -205,7 +208,7 @@ const RegisterPage = () => {
         {form.formState.errors.agreeToPolicy && (
           <span className="text-red-500 text-sm">{form.formState.errors.agreeToPolicy.message}</span>
         )}
-
+        <span className="text-red-500 text-sm">{emailError}</span>
         {/* Submit Button */}
         <div className="flex flex-col gap-5 mt-4 w-full">
           <button type="submit" className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300">

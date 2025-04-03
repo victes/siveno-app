@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useLoginUserMutation } from "@/shared/api/LoginApi/LoginApi";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
-
+let loginError = "";
 const formSchema = z.object({
   email: z.string().email({
     message: "Почта введена не правильно",
@@ -41,6 +41,9 @@ const LoginPage = () => {
       push("/account");
     } catch (err) {
       console.error("Login failed:", err);
+      const errorData = err as { data?: { error?: string } };
+      loginError = errorData?.data?.error || "Login не удалась";
+      console.log(errorData);
     }
   }
 
@@ -77,7 +80,7 @@ const LoginPage = () => {
             <span className="text-red-500 text-sm">{form.formState.errors.password.message}</span>
           )}
         </div>
-
+        <span className="text-red-500 text-sm">{loginError}</span>
         {/* Submit Button */}
         <div className="flex flex-col gap-5 mt-4 w-full">
           <button type="submit" className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300">

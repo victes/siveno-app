@@ -93,12 +93,11 @@ const Modal = ({ click, setClick }: IModal) => {
 
   return (
     <>
-      {" "}
       {click ? (
         <div className="z-50 bg-black/50 w-screen h-screen fixed top-0 left-0 flex justify-center items-center">
           <div className="w-[500px] transform bg-white p-6 py-8 rounded-[5px]">
             <button onClick={() => setClick(false)}>
-              <RxCross2 className="absolute top-0 right-0 cursor-pointer m-3" size={30} />{" "}
+              <RxCross2 className="absolute top-0 right-0 cursor-pointer m-3" size={30} />
             </button>
             <form onSubmit={form.handleSubmit(handleChange)} className="flex flex-col gap-[20px]">
               <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
