@@ -7,8 +7,9 @@ import Link from "next/link";
 import { useRegisterUserMutation } from "@/shared/api/RegApi/RegApi";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useLoginUserMutation } from "@/shared/api/LoginApi/LoginApi";
+import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 
-let emailError = "";
 const formSchema = z
   .object({
     email: z.string().email({
@@ -34,8 +35,17 @@ const formSchema = z
     message: "Пароли не совпадают",
     path: ["confirmPassword"],
   });
+const formSchemaLogin = z.object({
+  email: z.string().email({
+    message: "Почта введена не правильно",
+  }),
+  password: z.string().min(8, {
+    message: "Пароль должен содержать не менее 8 символов",
+  }),
+});
 
 type FormFields = z.infer<typeof formSchema>;
+type FormFieldsLogin = z.infer<typeof formSchemaLogin>;
 interface ApiError {
   data?: {
     message?: string;
@@ -64,6 +74,8 @@ const RegisterPage = () => {
   const { push } = useRouter();
   const [apiError, setApiError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loginUser] = useLoginUserMutation();
+  const { setToken } = useAuth();
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -91,6 +103,17 @@ const RegisterPage = () => {
       generalError: error.data?.message || "Произошла ошибка при регистрации",
     };
   };
+  async function login(values: FormFieldsLogin) {
+    try {
+      const result = await loginUser(values).unwrap();
+      console.log("Login successful:", result);
+      setToken(result.access_token);
+    } catch (err) {
+      console.error("Login failed:", err);
+      console.log(err);
+    }
+  }
+
   async function onSubmit(values: FormFields) {
     setIsSubmitting(true);
     setApiError(null);
@@ -106,11 +129,15 @@ const RegisterPage = () => {
       };
 
       const result = await registerUser(requestBody).unwrap();
-
+      console.log(result);
+      const formLogin = {
+        email: requestBody.email,
+        password: requestBody.password,
+      };
       if (typeof window !== "undefined") {
         localStorage.setItem("access_token", result.access_token);
       }
-
+      login(formLogin);
       push("/");
     } catch (err) {
       const error = err as ApiError;
@@ -118,9 +145,7 @@ const RegisterPage = () => {
 
       const { fieldErrors, generalError } = extractApiErrors(error);
 
-      // Устанавливаем ошибки для полей формы
       Object.entries(fieldErrors).forEach(([field, message]) => {
-        // Приводим имена полей к формату формы (например, first_name -> firstName)
         const formField =
           field === "first_name"
             ? "firstName"
