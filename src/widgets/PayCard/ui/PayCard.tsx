@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { InputHTMLAttributes } from "react";
@@ -19,7 +19,7 @@ import {
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
 import { useCalculateRussianPostMutation, useCalculateCdekMutation } from "@/shared/api/CalculateApi/CalculateApi";
-import { useGetPromoQuery } from '@/shared/api/ProductsApi/ui/ProductsApi'
+import { useGetPromoQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
 
 const formSchema = z.object({
   state: z.string().nonempty({
@@ -170,18 +170,18 @@ const InputField: React.FC<IInputFieldProps> = ({ label, error, ...props }) => (
 );
 
 const PayCard = ({ onOpen, open }: IPayCard) => {
-  const [delivery, setDelivery] = useState<string>('');
+  const [delivery, setDelivery] = useState<string>("");
   const [deliveryPrice, setDeliveryPrice] = useState<number>(0);
-  const [typePayment, setTypePayment] = useState<string>('bank_card');
-  const {data: promos} = useGetPromoQuery();
-  const [discount, setDiscount] = useState<number>(0)
-  const [discountName, setDiscountName] = useState<string>('')
+  const [typePayment, setTypePayment] = useState<string>("bank_card");
+  const { data: promos } = useGetPromoQuery();
+  const [discount, setDiscount] = useState<number>(0);
+  const [discountName, setDiscountName] = useState<string>("");
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
   const { products, totalCost, clearProducts } = useProductStore();
   const { data: addresses, isSuccess } = useGetAddressesQuery();
   const [click, setClick] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState<number | null>(addresses ? addresses[0].id : null);
+  const [selectedAddress, setSelectedAddress] = useState<number | null>(addresses?.length ? addresses[0]?.id : null);
   const [orderId, setOrderId] = useState<number | null>(null);
   const { token } = useAuth();
   const router = useRouter();
@@ -204,17 +204,17 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const handleDiscount = (value: string) => {
     if (promos) {
       if (promos.length > 0) {
-        setDiscountName('');
-        setDiscount(0)
+        setDiscountName("");
+        setDiscount(0);
         promos.forEach(promo => {
-          if (promo.code === value) { 
+          if (promo.code === value) {
             setDiscount(promo.discount);
             setDiscountName(promo.code);
           }
-        })
+        });
       }
     }
-  }
+  };
 
   const handleClose = useCallback(() => {
     setAnimate(false);
@@ -249,7 +249,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     await createOrder({
       address_id: selectedAddress,
       items: products.map(p => ({
-        product_id: Number(p.id),
+        product_id: Number(p?.id),
         size_id: 1,
         quantity: 1,
       })),
@@ -258,76 +258,80 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       use_loyalty_points: false,
       payment_method: "yookassa",
       promo_code: discountName,
-    }).unwrap().then(async (data) => {
-      const paymentResponse = await payOrder({
-        amount: data.order.total_price,
-        order_id: data.order.id,
-        payment_method: typePayment,
-        use_loyalty_points: false
-      }).unwrap();
-      localStorage.setItem('orderId', paymentResponse.payment_url.slice(58))
-      window.location.href = paymentResponse.payment_url;
-    }).catch(e => {
-      if (e.data.message === 'Промокод уже использован максимальное количество раз') alert(e.data.message);
-      else console.log(e)
     })
+      .unwrap()
+      .then(async data => {
+        const paymentResponse = await payOrder({
+          amount: data.order.total_price,
+          order_id: data.order?.id,
+          payment_method: typePayment,
+          use_loyalty_points: false,
+        }).unwrap();
+        localStorage.setItem("orderId", paymentResponse.payment_url.slice(58));
+        window.location.href = paymentResponse.payment_url;
+      })
+      .catch(e => {
+        if (e.data.message === "Промокод уже использован максимальное количество раз") alert(e.data.message);
+        else console.log(e);
+      });
   };
 
   const fullPrice = () => {
-    let fullprice: number = totalCost()
+    let fullprice: number = totalCost();
     if (deliveryPrice) {
-      fullprice+=deliveryPrice
+      fullprice += deliveryPrice;
     }
     if (discount) {
-      fullprice = Math.round(fullprice*(100-discount)/100)
+      fullprice = Math.round((fullprice * (100 - discount)) / 100);
     }
-    return fullprice
-  }
+    return fullprice;
+  };
 
   const delivery_price = async (delivery_type: string) => {
     if (!selectedAddress) {
-      alert('Выберите адрес доставки');
+      alert("Выберите адрес доставки");
       return;
     }
-    addresses?.forEach(async (adress) => {
-      if (adress.id === selectedAddress) {
-        if (delivery_type === 'russianpost') {
-          const postCalcData = await postCalc({
-            from_postcode: "630052",
-            to_postcode: adress.postal_code,
-            weight: 0.1,
-            length: 0.55,
-            width: 0.45,
-            height: 0.05,
-          }).unwrap();
-          const property = 'total-rate'
-          setDeliveryPrice(postCalcData[property] / 100)
-          setDelivery('russianpost')
-        } else {
-          const {data} = await cdekCalc({
-            senderCityId: 44,
-            receiverCityId: 137,
-            weight: 0.1,
-            length: 30,
-            width: 20,
-            height: 10,
-            senderPostalCode: "630052",
-            receiverPostalCode: adress.postal_code,
-            senderCountryCode: "RU",
-            receiverCountryCode: "RU",
-            senderCity: "Новосибирск",
-            receiverCity: adress.city,
-            senderAddress: "ул. Толмачевская, д.1/1",
-            receiverAddress: adress.street,
-            senderContragentType: "sender",
-            receiverContragentType: "recipient"
-          })
-          setDeliveryPrice(data?.tariff_codes[0].delivery_sum)
-          setDelivery('cdek')
+    addresses &&
+      addresses?.forEach(async adress => {
+        if (adress?.id === selectedAddress) {
+          if (delivery_type === "russianpost") {
+            const postCalcData = await postCalc({
+              from_postcode: "630052",
+              to_postcode: adress.postal_code,
+              weight: 0.1,
+              length: 0.55,
+              width: 0.45,
+              height: 0.05,
+            }).unwrap();
+            const property = "total-rate";
+            setDeliveryPrice(postCalcData[property] / 100);
+            setDelivery("russianpost");
+          } else {
+            const { data } = await cdekCalc({
+              senderCityId: 44,
+              receiverCityId: 137,
+              weight: 0.1,
+              length: 30,
+              width: 20,
+              height: 10,
+              senderPostalCode: "630052",
+              receiverPostalCode: adress.postal_code,
+              senderCountryCode: "RU",
+              receiverCountryCode: "RU",
+              senderCity: "Новосибирск",
+              receiverCity: adress.city,
+              senderAddress: "ул. Толмачевская, д.1/1",
+              receiverAddress: adress.street,
+              senderContragentType: "sender",
+              receiverContragentType: "recipient",
+            });
+            setDeliveryPrice(data?.tariff_codes[0].delivery_sum);
+            setDelivery("cdek");
+          }
         }
-      }
-    })
-  }
+      });
+  };
 
   const handleCancelOrder = async () => {
     if (orderId) {
@@ -383,13 +387,13 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 {isSuccess && addresses.length > 0 ? (
                   <div className="flex flex-col justify-center items-center gap-[30px] mt-[0px] w-full">
                     {addresses.map(address => (
-                      <label key={address.id} className="flex justify-center gap-[20px] w-full">
+                      <label key={address?.id} className="flex justify-center gap-[20px] w-full">
                         <input
                           type="radio"
                           name="address"
-                          value={address.id}
-                          checked={selectedAddress === address.id}
-                          onChange={() => setSelectedAddress(address.id)}
+                          value={address?.id}
+                          checked={selectedAddress === address?.id}
+                          onChange={() => setSelectedAddress(address?.id)}
                           className="w-[20px] h-[20px]"
                         />
                         <div className="w-full flex flex-col">
@@ -418,12 +422,12 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Доставка</h2>
                   <label className="flex flex-row items-center gap-2">
-                  <input
+                    <input
                       type="radio"
                       name="delivery"
-                      value={'cdek'}
-                      checked={'cdek' === delivery}
-                      onChange={() => delivery !== 'cdek' ? delivery_price('cdek') : ''}
+                      value={"cdek"}
+                      checked={"cdek" === delivery}
+                      onChange={() => (delivery !== "cdek" ? delivery_price("cdek") : "")}
                       className="w-[15px] h-[15px]"
                     />
                     <p>Доставка по CDEK</p>
@@ -432,9 +436,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                     <input
                       type="radio"
                       name="delivery"
-                      value={'russianpost'}
-                      checked={'russianpost' === delivery}
-                      onChange={() => delivery !== 'russianpost' ? delivery_price('russianpost') : ''}
+                      value={"russianpost"}
+                      checked={"russianpost" === delivery}
+                      onChange={() => (delivery !== "russianpost" ? delivery_price("russianpost") : "")}
                       className="w-[15px] h-[15px]"
                     />
                     <p>Доставка по Почта России</p>
@@ -470,7 +474,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                       name="payment"
                       value={"installments"}
                       checked={"installments" === typePayment}
-                      onChange={() =>setTypePayment("installments")}
+                      onChange={() => setTypePayment("installments")}
                       className="w-[15px] h-[15px]"
                     />
                     <p>Рассрочка</p>
@@ -478,7 +482,13 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Промокод</h2>
-                  <input type="text" placeholder='Введите промокод' className='bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none' name='promo' onChange={(e) => handleDiscount(e.target.value)} />
+                  <input
+                    type="text"
+                    placeholder="Введите промокод"
+                    className="bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none"
+                    name="promo"
+                    onChange={e => handleDiscount(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Ваш заказ</h2>
