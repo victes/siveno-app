@@ -6,6 +6,7 @@ import { z } from "zod";
 import Link from "next/link";
 import { useRegisterUserMutation } from "@/shared/api/RegApi/RegApi";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 let emailError = "";
 const formSchema = z
@@ -35,10 +36,34 @@ const formSchema = z
   });
 
 type FormFields = z.infer<typeof formSchema>;
+interface ApiError {
+  data?: {
+    message?: string;
+    errors?: Record<string, string[]>;
+  };
+  status?: number;
+}
+const extractApiErrors = (error: ApiError) => {
+  const errors: Record<string, string> = {};
 
+  if (error.data?.errors) {
+    Object.entries(error.data.errors).forEach(([field, messages]) => {
+      if (messages && messages.length > 0) {
+        errors[field] = messages[0];
+      }
+    });
+  }
+
+  return {
+    fieldErrors: errors,
+    generalError: error.data?.message || "Произошла ошибка при регистрации",
+  };
+};
 const RegisterPage = () => {
   const [registerUser] = useRegisterUserMutation();
   const { push } = useRouter();
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,8 +75,27 @@ const RegisterPage = () => {
       agreeToPolicy: false,
     },
   });
+  const extractApiErrors = (error: ApiError) => {
+    const errors: Record<string, string> = {};
 
+    if (error.data?.errors) {
+      Object.entries(error.data.errors).forEach(([field, messages]) => {
+        if (messages && messages.length > 0) {
+          errors[field] = messages[0]; // Берем первую ошибку для каждого поля
+        }
+      });
+    }
+
+    return {
+      fieldErrors: errors,
+      generalError: error.data?.message || "Произошла ошибка при регистрации",
+    };
+  };
   async function onSubmit(values: FormFields) {
+    setIsSubmitting(true);
+    setApiError(null);
+    form.clearErrors(); // Очищаем предыдущие ошибки
+
     try {
       const requestBody = {
         name: values.firstName,
@@ -62,7 +106,6 @@ const RegisterPage = () => {
       };
 
       const result = await registerUser(requestBody).unwrap();
-      console.log("Registration successful:", result);
 
       if (typeof window !== "undefined") {
         localStorage.setItem("access_token", result.access_token);
@@ -70,9 +113,40 @@ const RegisterPage = () => {
 
       push("/");
     } catch (err) {
-      const errorData = err as { data?: { errors?: { email?: string[] } } };
-      emailError = errorData?.data?.errors?.email?.[0] || "Регистрация не удалась";
-      console.error("Registration failed:", err);
+      const error = err as ApiError;
+      console.error("Registration failed:", error);
+
+      const { fieldErrors, generalError } = extractApiErrors(error);
+
+      // Устанавливаем ошибки для полей формы
+      Object.entries(fieldErrors).forEach(([field, message]) => {
+        // Приводим имена полей к формату формы (например, first_name -> firstName)
+        const formField =
+          field === "first_name"
+            ? "firstName"
+            : field === "last_name"
+              ? "lastName"
+              : field === "password_confirmation"
+                ? "confirmPassword"
+                : field;
+
+        if (formField in form.control._fields) {
+          form.setError(formField as keyof FormFields, {
+            type: "server",
+            message,
+          });
+        } else {
+          // Если ошибка для поля, которого нет в форме, показываем как общую
+          setApiError(prev => (prev ? `${prev}\n${message}` : message));
+        }
+      });
+
+      // Устанавливаем общее сообщение об ошибке
+      if (!apiError) {
+        setApiError(generalError);
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -208,7 +282,7 @@ const RegisterPage = () => {
         {form.formState.errors.agreeToPolicy && (
           <span className="text-red-500 text-sm">{form.formState.errors.agreeToPolicy.message}</span>
         )}
-        <span className="text-red-500 text-sm">{emailError}</span>
+        {apiError && <span className="text-red-500 text-sm">{apiError}</span>}
         {/* Submit Button */}
         <div className="flex flex-col gap-5 mt-4 w-full">
           <button type="submit" className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300">
