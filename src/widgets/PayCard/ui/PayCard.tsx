@@ -178,7 +178,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [discountName, setDiscountName] = useState<string>("");
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
-  const { products, totalCost, clearProducts } = useProductStore();
+  const { products, totalCost, clearProducts, totalQuantity } = useProductStore();
   const { data: addresses, isSuccess } = useGetAddressesQuery();
   const [click, setClick] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<number | null>(addresses?.length ? addresses[0]?.id : null);
@@ -299,10 +299,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             const postCalcData = await postCalc({
               from_postcode: "630052",
               to_postcode: adress.postal_code,
-              weight: 0.4,
-              length: 0.4,
-              width: 0.3,
-              height: 0.05,
+              weight: 0.4 * totalQuantity(),
+              length: 0.4 * totalQuantity(),
+              width: 0.3 * totalQuantity(),
+              height: 0.05 * totalQuantity(),
             }).unwrap();
             const property = "total-rate";
             setDeliveryPrice(postCalcData[property] / 100);
@@ -310,10 +310,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
           } else {
             const { data } = await cdekCalc({
               senderCityId: 44,
-              weight: 0.4,
-              length: 40,
-              width: 30,
-              height: 5,
+              weight: 0.4 * totalQuantity(),
+              length: 40 * totalQuantity(),
+              width: 30 * totalQuantity(),
+              height: 5 * totalQuantity(),
               senderPostalCode: "630052",
               receiverPostalCode: adress.postal_code,
               senderCountryCode: "RU",

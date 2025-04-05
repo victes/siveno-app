@@ -16,6 +16,7 @@ interface ProductStore {
   removeProduct: (id: string) => void;
   clearProducts: () => void;
   totalCost: () => number;
+  totalQuantity: () => number;
 }
 
 export const useProductStore = create<ProductStore>((set, get) => ({
@@ -51,4 +52,8 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     const products = get().products;
     return products.reduce((total, product) => total + product.price, 0);
   },
+  totalQuantity: () => {
+    const products = get().products;
+    return products.reduce((total, product) => total + (product.quantity || 1), 0);
+  }
 }));
