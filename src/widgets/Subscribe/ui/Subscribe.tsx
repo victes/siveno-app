@@ -77,7 +77,7 @@ const Subscribe = () => {
             <p className="text-[14px] leading-[18px] text-black">
               Я принимаю{" "}
               <Link href="/politika" className="underline">
-                Политику кондифенциальности
+                Политику конфиденциальности
               </Link>{" "}
               и соглашаюсь с условиями{" "}
               <Link href="/oferta" className="underline">

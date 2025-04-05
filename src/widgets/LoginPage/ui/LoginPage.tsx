@@ -50,7 +50,7 @@ const LoginPage = () => {
   return (
     <div className="space-y-4 min-w-[220px] lg:min-w-[450px] mt-4 my-10">
       <div className="w-full text-center">
-        <h1 className="text-[20px] tablet:text-[30px]">Вход/Регистрация</h1>
+        <h1 className="text-[20px] tablet:text-[30px] mt-20">Вход/Регистрация</h1>
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
