@@ -35,7 +35,7 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
               priority={true}
               alt={`Slide ${idx + 1}`}
               className="object-cover h-full w-auto  max-w-full rounded-sm"
-              unoptimized={item.image_path.startsWith('http://') || item.image_path.startsWith('https://')}
+              unoptimized={item.image_path.startsWith("http://") || item.image_path.startsWith("https://")}
             />
           </div>
         ))}
@@ -68,7 +68,7 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
               alt={`Thumbnail ${idx + 1}`}
               className="h-20 w-20 flex-shrink-0 object-cover rounded-sm"
             /> */}
-            <h2 className='h-5 w-5 bg-white mb-5 rounded-2xl'></h2>
+            <h2 className="h-5 w-5 bg-white mb-5 rounded-2xl"></h2>
           </button>
         ))}
       </div>

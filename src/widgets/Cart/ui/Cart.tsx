@@ -6,6 +6,7 @@ import { useProductStore } from "@/entities/productStore/store";
 import { MdDeleteOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { PayCard } from "@/widgets/PayCard";
+import Link from "next/link";
 
 const Cart = ({ click, setClick }: ICart) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -33,9 +34,9 @@ const Cart = ({ click, setClick }: ICart) => {
   const { products, removeProduct, totalCost } = useProductStore();
 
   const openPayCard = () => {
-    handleClose()
-    setPayCard(prev => !prev)
-  }
+    handleClose();
+    setPayCard(prev => !prev);
+  };
 
   return (
     <>
@@ -58,19 +59,21 @@ const Cart = ({ click, setClick }: ICart) => {
             <p className="uppercase">
               {products.length} Товаров на {totalCost()} руб.
             </p>
-            <div className="h-[700px] flex flex-col overflow-y-auto">
+            <div className="h-[700px] flex flex-col overflow-y-auto ">
               {products.length > 0 ? (
                 products.map(product => (
                   <li key={product.id} className="flex gap-5 p-2 justify-between">
-                    <div className="flex gap-5 items-center">
-                      <div>
-                        <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
+                    <Link href={`/product/${product.id}`} onClick={handleClose}>
+                      <div className="flex gap-5 items-center cursor-pointer">
+                        <div>
+                          <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
+                        </div>
+                        <div className="flex flex-col justify-start">
+                          <span className="text-black">{product.name}</span>
+                          <span className="text-[30px] text-black">{product.price} руб</span>
+                        </div>
                       </div>
-                      <div className="flex flex-col justify-start">
-                        <span className="text-black">{product.name}</span>
-                        <span className="text-[30px] text-black">{product.price} руб</span>
-                      </div>
-                    </div>
+                    </Link>
                     <div>
                       <MdDeleteOutline
                         onClick={() => removeProduct(product.id)}

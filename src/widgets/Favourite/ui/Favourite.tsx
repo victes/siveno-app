@@ -7,6 +7,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import { IFav } from "../types/type";
+import Link from "next/link";
 
 interface Product {
   id: string;
@@ -79,15 +80,17 @@ const Favourite = ({ click, setClick }: IFav) => {
             {favourites.length > 0 ? (
               favourites.map(product => (
                 <li key={product.id} className="flex gap-5 p-2 justify-between ">
-                  <div className="flex gap-5 items-center">
-                    <div>
-                      <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
+                  <Link href={`/product/${product.id}`} onClick={handleClose}>
+                    <div className="flex gap-5 items-center cursor-pointer">
+                      <div>
+                        <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
+                      </div>
+                      <div className="flex flex-col justify-start">
+                        <span className="text-black">{product.name}</span>
+                        <span className="text-[30px] text-black">{product.price} руб</span>
+                      </div>
                     </div>
-                    <div className="flex flex-col justify-start">
-                      <span className="text-black">{product.name}</span>
-                      <span className="text-[30px] text-black">{product.price} руб</span>
-                    </div>
-                  </div>
+                  </Link>
                   <div className="flex">
                     <MdDeleteOutline
                       onClick={() => handleDeleteWishlist(product.id)}
