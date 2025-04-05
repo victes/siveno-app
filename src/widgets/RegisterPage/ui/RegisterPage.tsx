@@ -301,7 +301,7 @@ const RegisterPage = () => {
             {...form.register("agreeToPolicy")}
           />
           <label htmlFor="agreeToPolicy" className="text-xs">
-            Подтверждаю согласие с <Link href="/policy">Политикой конфиденциальности</Link>
+            Подтверждаю согласие с <Link href="/politika">Политикой конфиденциальности</Link>
           </label>
         </div>
         {form.formState.errors.agreeToPolicy && (

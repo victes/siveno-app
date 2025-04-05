@@ -7,16 +7,16 @@ const ShippingPage = () => {
       <div className="mt-[40px]">
         <div className="flex flex-col gap-[20px] mb-[30px]">
           <h2 className="font-bold text-[16px]">ДОСТАВКА РОССИИ</h2>
-          <ul className="!lowercase">
-            <li>- осуществляется Почтой России и СДЭКом. Стоимость от 690 руб.</li>
-            <li>- Бесплатно при заказе от 15 000 руб.</li>
-            <li>Срок доставки до 7 дней.</li>
+          <ul className="">
+            <li>- осуществляется почтой России и СДЭКом. cтоимость от 690 руб.</li>
+            <li>- бесплатно при заказе от 15 000 руб.</li>
+            <li>- срок доставки до 7 дней.</li>
           </ul>
         </div>
         <div className="flex flex-col gap-[20px] mb-[30px]">
-          <p className="mt-[10px]">
+          {/* <p className="mt-[10px]">
             Ознакомиться с тарифам на доставку можно по ссылке, а также на этапе ввода адреса при оформлении заказа.
-          </p>
+          </p> */}
         </div>
         <div className="mt-[40px] ml-[50px]">
           <ul className="list-disc">

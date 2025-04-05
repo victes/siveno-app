@@ -20,7 +20,7 @@ const returns = [
   },
   {
     name: "За чей счет осуществляется обратная отправка товара?",
-    value: `С нашей стороны возврат денежных средств, осуществляется в течение 10 рабочих дней со дня получения вашей посылки. Обращаем ваше внимание на то, что на карту деньги могут поступить позже. Срок поступления денежных средств зависит от вашего банка.
+    value: `С нашей стороны возврат денежных средств осуществляется в течение 10 рабочих дней со дня получения вашей посылки. Обращаем ваше внимание на то, что на карту деньги могут поступить позже. Срок поступления денежных средств зависит от вашего банка.
 `,
   },
   {
@@ -30,7 +30,7 @@ const returns = [
     inSend: `Куда: 630091, г. Новосибирск, Крылова 3.`,
     onSend: `Кому: ООО «Просто Логистика»`,
     phone: `Телефон: +7 (913) 470-23-11`,
-    value2: `После отправки товара просим вас связаться с нами в Telegram, написав аккаунту info.siveno.store и отправить трек-номер посылки на почту info@siveno.store`
+    value2: `После отправки товара просим вас связаться с нами в Telegram, написав аккаунту info.siveno.store и отправить трек-номер посылки на почту info@siveno.store`,
   },
 ];
 
@@ -40,7 +40,17 @@ const ReturnsPage = () => {
       <h1 className="title-h1">Возврат</h1>
       <div className="flex flex-col gap-[20px] mt-[40px] w-full">
         {returns.map((item, idx) => {
-          return <AccordionFAQ key={idx} question={item.name} answer={item.value} inSend={item?.inSend} onSend={item?.onSend} phone={item?.phone} value2={item?.value2} />;
+          return (
+            <AccordionFAQ
+              key={idx}
+              question={item.name}
+              answer={item.value}
+              inSend={item?.inSend}
+              onSend={item?.onSend}
+              phone={item?.phone}
+              value2={item?.value2}
+            />
+          );
         })}
       </div>
     </div>

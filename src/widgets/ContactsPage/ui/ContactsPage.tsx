@@ -48,7 +48,7 @@ const ContactsPage = () => {
         <h3 className="text-[36px] text-black">Магазины</h3>
         <div>
           <p>Г. Новосибирск, ул Крылова, 3</p>
-          <p>Режим работы (уточняйте у мессенджеров)</p>
+          <p>Режим работы (уточняйте у менеджеров)</p>
           <p>Телефон +7 (913) 470-23-11</p>
           <br />
           <div className="flex gap-2">
@@ -79,7 +79,11 @@ const ContactsPage = () => {
           <p>Email: info@siveno.store</p>
           <br />
           <div className="flex gap-2 items-center">
-            <a href="https://t.me/SivenoBot" target='_blank' className="text-gray-500 hover:text-black transition-colors">
+            <a
+              href="https://t.me/SivenoBot"
+              target="_blank"
+              className="text-gray-500 hover:text-black transition-colors"
+            >
               <FaTelegram size={18} />
             </a>
             <h2>«Менеджер Телеграм»</h2>
