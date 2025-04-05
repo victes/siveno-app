@@ -278,11 +278,11 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
 
   const fullPrice = () => {
     let fullprice: number = totalCost();
-    if (deliveryPrice) {
-      fullprice += deliveryPrice;
-    }
     if (discount) {
       fullprice = Math.round((fullprice * (100 - discount)) / 100);
+    }
+    if (deliveryPrice) {
+      fullprice += deliveryPrice;
     }
     return fullprice;
   };
@@ -299,9 +299,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             const postCalcData = await postCalc({
               from_postcode: "630052",
               to_postcode: adress.postal_code,
-              weight: 0.1,
-              length: 0.55,
-              width: 0.45,
+              weight: 0.4,
+              length: 0.4,
+              width: 0.3,
               height: 0.05,
             }).unwrap();
             const property = "total-rate";
@@ -310,11 +310,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
           } else {
             const { data } = await cdekCalc({
               senderCityId: 44,
-              receiverCityId: 137,
-              weight: 0.1,
-              length: 30,
-              width: 20,
-              height: 10,
+              weight: 0.4,
+              length: 40,
+              width: 30,
+              height: 5,
               senderPostalCode: "630052",
               receiverPostalCode: adress.postal_code,
               senderCountryCode: "RU",
