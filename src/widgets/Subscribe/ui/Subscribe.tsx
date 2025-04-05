@@ -49,7 +49,7 @@ const Subscribe = () => {
       </div>
       <div className="max-w-[700px] mx-auto h-auto">
         <h2 className="text-xl text-black text-center subtitle">
-          Скидка 10% на первый заказ, новости бренда, ранний доступ к коллекциям и эксклюзивные акции для подписчиков
+          Скидка 10% на первый заказ, новости бренда, ранний доступ к коллекциям и эксклюзивным акциям для подписчиков
           рассылки
         </h2>
         <form className="flex flex-col gap-3">
@@ -75,7 +75,7 @@ const Subscribe = () => {
               ></span>
             </h3>
             <p className="text-[14px] leading-[18px] text-black">
-              Я приминаю{" "}
+              Я принимаю{" "}
               <Link href="/politika" className="underline">
                 Политику кондифенциальности
               </Link>{" "}
