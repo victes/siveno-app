@@ -12,7 +12,7 @@ const page = () => {
   if (!token) return push('/')
   return (
     <div>
-      <Container className="px-[180px]">
+      <Container className="">
         <AccountPage />
       </Container>
     </div>

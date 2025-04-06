@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { PersonalAcc } from "@/entities/PersonalAcc";
 import { Orders } from "@/entities/Orders";
-import { Favourites } from "@/entities/Favourites";
 import { Address } from "@/entities/Address";
 import { PartnerProgramm } from "@/entities/PartnerProgramm";
 import { Logout } from "@/entities/Logout";
@@ -46,7 +45,7 @@ const AccountPage = () => {
   return (
     <div className="flex mt-[90px] mb-[50px] gap-[100px] justify-center max-laptop:flex-col max-laptop:gap-[40px]">
       <div>
-        <ul className="flex gap-4 cursor-pointer flex-col max-laptop:flex-row overflow-x-auto max-laptop:justify-center max-laptop:text-base max-[340px]:test-xs">
+        <ul className=" flex gap-4 cursor-pointer flex-col max-laptop:flex-row overflow-x-auto max-laptop:justify-center max-laptop:text-base max-[340px]:test-xs">
           {["Личные данные", "Заказы", "Адреса"].map(tab => (
             <li
               key={tab}
@@ -57,7 +56,7 @@ const AccountPage = () => {
             </li>
           ))}
         </ul>
-        <ul className="flex gap-4 cursor-pointer flex-col max-laptop:flex-row overflow-x-auto max-laptop:text-base max-laptop:justify-center max-[340px]:test-xs ">
+        <ul className=" flex gap-4 cursor-pointer flex-col max-laptop:flex-row overflow-x-auto max-laptop:text-base max-laptop:justify-center max-[340px]:test-xs ">
           {["Карта лояльности", "Выйти"].map(tab => (
             <li
               key={tab}
