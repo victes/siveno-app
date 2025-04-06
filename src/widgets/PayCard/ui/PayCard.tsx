@@ -467,17 +467,6 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                     />
                     <p>СБП</p>
                   </label>
-                  <label className="flex flex-row items-center gap-2">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value={"installments"}
-                      checked={"installments" === typePayment}
-                      onChange={() => setTypePayment("installments")}
-                      className="w-[15px] h-[15px]"
-                    />
-                    <p>Рассрочка</p>
-                  </label>
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Промокод</h2>
