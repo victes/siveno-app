@@ -15,12 +15,8 @@ const formSchema = z
     email: z.string().email({
       message: "Почта введена неправильно",
     }),
-    password: z.string().min(8, {
-      message: "Пароль должен содержать не менее 8 символов",
-    }),
-    confirmPassword: z.string().min(8, {
-      message: "Подтверждение пароля должно содержать не менее 8 символов",
-    }),
+    password: z.string().optional(),
+    confirmPassword: z.string().optional(),
     firstName: z.string().nonempty({
       message: "Имя обязательно для заполнения",
     }),
@@ -30,7 +26,6 @@ const formSchema = z
     phone: z.string().min(10, {
       message: "Телефон обязателен для заполнения",
     }).refine((val) => {
-      // Удаляем все нецифровые символы и проверяем длину
       const digitsOnly = val.replace(/\D/g, '');
       return digitsOnly.length === 11 && digitsOnly.startsWith('7');
     }, {
@@ -38,11 +33,41 @@ const formSchema = z
     }),
     birthDate: z.string().optional(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Пароли не совпадают",
-    path: ["confirmPassword"],
-  });
+  .superRefine((data, ctx) => {
+    const hasPassword = data.password?.trim() !== "";
 
+    if (hasPassword) {
+      if (!data.password || data.password.length < 8) {
+        ctx.addIssue({
+          path: ["password"],
+          code: z.ZodIssueCode.too_small,
+          type: "string",
+          minimum: 8,
+          inclusive: true,
+          message: "Пароль должен содержать не менее 8 символов",
+        });
+      }
+
+      if (!data.confirmPassword || data.confirmPassword.length < 8) {
+        ctx.addIssue({
+          path: ["confirmPassword"],
+          code: z.ZodIssueCode.too_small,
+          type: "string",
+          minimum: 8,
+          inclusive: true,
+          message: "Подтверждение пароля должно содержать не менее 8 символов",
+        });
+      }
+
+      if (data.password !== data.confirmPassword) {
+        ctx.addIssue({
+          path: ["confirmPassword"],
+          code: z.ZodIssueCode.custom,
+          message: "Пароли не совпадают",
+        });
+      }
+    }
+  });
 type FormFields = z.infer<typeof formSchema>;
 
 const PersonalAcc = () => {
