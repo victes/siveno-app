@@ -18,8 +18,8 @@ const ContactsPage = () => {
       <div className="flex flex-col gap-[20px]">
         <h3 className="text-[36px] text-black">Контакты</h3>
         <div>
-          <p>Телефон: +7 (913) 470-23-11</p>
-          <p>Email: info@siveno.store</p>
+          <a href="tel:+79134702311" target="_blank">Телефон: +7 (913) 470-23-11</a> <br/>
+          <a href="mailto:info@siveno.store" target="_blank">Email: info@siveno.store</a>
           <br />
           <p>Офис: Новосибирск, ул. Крылова, 3</p>
           <p>Режим работы с 9:00 до 21:00</p>
@@ -49,7 +49,7 @@ const ContactsPage = () => {
         <div>
           <p>Г. Новосибирск, ул Крылова, 3</p>
           <p>Режим работы (уточняйте у менеджеров)</p>
-          <p>Телефон +7 (913) 470-23-11</p>
+          <a href="tel:+79134702311" target="_blank">Телефон: +7 (913) 470-23-11</a>
           <br />
           <div className="flex gap-2">
             <a href="https://t.me/+pnsEBODRdPJiNmNi" className="text-gray-500 hover:text-black transition-colors">
@@ -75,8 +75,8 @@ const ContactsPage = () => {
           <p>Ответим на любые вопросы, связанные с доставкой и товаром</p>
           <p>Ежедневно с 9:00 до 21:00</p>
           <br />
-          <p>Телефон: +7 (913) 470-23-11</p>
-          <p>Email: info@siveno.store</p>
+          <a href="tel:+79134702311" target="_blank">Телефон: +7 (913) 470-23-11</a>
+          <a href="mailto:info@siveno.store" target="_blank">Email: info@siveno.store</a>
           <br />
           <div className="flex gap-2 items-center">
             <a
@@ -92,13 +92,13 @@ const ContactsPage = () => {
         <h3 className="text-[36px] text-black">Сотрудничество:</h3>
         <div>
           <p>По вопросам сотрудничества, пожалуйста, пишите на почту</p>
-          <p>Email: info@siveno.store</p>
+          <a href="mailto:info@siveno.store" target="_blank">Email: info@siveno.store</a>
         </div>
         <h3 className="text-[36px] text-black">Наши реквизиты</h3>
         <div>
           <p>ООО «Просто Логистика»</p>
           <p>Юридический адрес: 630052, г.Новосибирск, ул. Толмачевская, д.1/1, офис 211</p>
-          <p>Телефон: +79137655595</p>
+          <a href="tel:+79137655595" target="_blank">Телефон: +79137655595</a>
           <p>Почтовый адрес: 630029, г. Новосибирск, а/я 14</p>
           <p>ИНН: 5402015479</p>
           <p>КПП: 540401001</p>
