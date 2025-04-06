@@ -14,7 +14,7 @@ const page = () => {
       });
     }
 		localStorage.removeItem('orderId')
-		window.location.href = '/'
+		window.location.href = '/account';
   };
 	status()
 
