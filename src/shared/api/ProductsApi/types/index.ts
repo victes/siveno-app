@@ -88,7 +88,8 @@ export interface IProduct {
   created_at: string;
   updated_at: string;
   images: IProductImage[];
-  colors: IColor[]
+  colors: IColor[];
+  sizes?: string[];
 }
 
 export interface IColor {

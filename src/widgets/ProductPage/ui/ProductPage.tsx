@@ -29,7 +29,7 @@ const ProductPage = () => {
   const { data: products, isLoading, error } = useGetProductsByIdQuery(Number(product_id));
   const { data } = useGetProductsPopularQuery(10);
   const [selectedSize, setSelectedSize] = useState<string>("");
-
+  console.log('size', selectedSize)
   useEffect(() => {
     const handleSizeSelected = (event: CustomEvent) => {
       if (event.detail && event.detail.size) {
@@ -54,7 +54,6 @@ const ProductPage = () => {
       price: product.price,
     }));
   };
-
   const popular: IPopular[] = Array.isArray(data) ? data : [];
 
   const slides: SliderItem[] = transformProductsToSlides(popular);
@@ -192,7 +191,7 @@ const ProductPage = () => {
           <div className="product-page__controls w-full max-w-[400px] flex flex-col gap-5 mt-2 mb-4">
             <div className="product-page__sizes">
               <p className="text-xs uppercase mb-2 font-medium tracking-wider">Размер</p>
-              <ButtonSizes selectedSize={selectedSize} onSizeSelect={handleSizeSelect} />
+              <ButtonSizes selectedSize={selectedSize} onSizeSelect={handleSizeSelect} id={Number(product_id)} />
             </div>
             <div className="product-page__colors">
               <p className="text-xs uppercase mb-2 font-medium tracking-wider">Цвет</p>
