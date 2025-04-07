@@ -176,6 +176,8 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const { data: promos } = useGetPromoQuery();
   const [discount, setDiscount] = useState<number>(0);
   const [discountName, setDiscountName] = useState<string>("");
+  const [promo, setPromo] = useState<string>("");
+  const [disableBtn, setDisableBtn] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
   const { products, totalCost, clearProducts, totalQuantity } = useProductStore();
@@ -193,25 +195,27 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const { data: orderData } = useGetOrderByIdQuery(orderId!, {
     skip: !orderId,
   });
-
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       setAnimate(false);
       setTimeout(() => onOpen(false), 300);
+      setDisableBtn(false)
     }
   };
 
   const handleDiscount = (value: string) => {
     if (promos) {
-      if (promos.length > 0) {
-        setDiscountName("");
-        setDiscount(0);
-        promos.forEach(promo => {
-          if (promo.code === value) {
-            setDiscount(promo.discount);
-            setDiscountName(promo.code);
-          }
-        });
+
+      setDiscountName("");
+      setDiscount(0);
+      setDisableBtn(true);
+
+      const foundPromo = promos.find(promo => promo.code === value);
+
+      if (foundPromo) {
+        setDiscount(foundPromo.discount);
+        setDiscountName(foundPromo.code);
+        setDisableBtn(false);
       }
     }
   };
@@ -331,6 +335,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
         }
       });
   };
+  const handleChange = (e: string) => {
+    setPromo(e)
+    setDisableBtn(false)
+  }
 
   const handleCancelOrder = async () => {
     if (orderId) {
@@ -470,13 +478,23 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Промокод</h2>
+                  {disableBtn && <span className="text-red-500 text-sm">Промокод не найден</span>}
+                  <div className='relative'>
                   <input
                     type="text"
                     placeholder="Введите промокод"
                     className="bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none"
                     name="promo"
-                    onChange={e => handleDiscount(e.target.value)}
+                    onChange={e => handleChange(e.target.value)}
                   />
+                    <button
+                        disabled={disableBtn}
+                        className={`bg-gray-100 ${disableBtn ? "text-[#999]" :'text-[#423C3D]'}  ${!disableBtn && 'hover:bg-gray-300'} py-2.5 px-2 rounded-[8px] absolute top-[50%] translate-y-[-50%] right-[3px]`}
+                        onClick={() => handleDiscount(promo)}
+                    >
+                     Применить
+                    </button>
+                  </div>
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Ваш заказ</h2>
