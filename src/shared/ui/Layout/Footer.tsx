@@ -4,6 +4,7 @@ import { Container } from "../Container";
 import Link from "next/link";
 import { FaTelegram, FaWhatsapp } from "react-icons/fa";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
+import {useParams} from "next/navigation";
 
 const Footer = () => {
   const { token } = useAuth();
