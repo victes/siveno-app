@@ -24,7 +24,7 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
             >
               <RxCross1 size={30} className="cursor-pointer md:text-[40px]" />
             </button>
-
+            <a href="tel:+79134702311" target="_blank" className="text-sm text-[#fff] whitespace-nowrap">8 (913) 470-23-11</a>
             {/* Социальные сети в правом верхнем углу */}
             <div className="flex items-center space-x-6">
               <a
