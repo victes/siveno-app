@@ -104,7 +104,7 @@ const Header = () => {
           {/* Правая часть шапки */}
           <div className="flex items-center space-x-3 md:space-x-5 lg:space-x-10">
             <div className="hidden lg:block flex-shrink-0">
-              <p className="text-sm font-light whitespace-nowrap">8 (913) 470-23-11</p>
+              <a href="tel:+79134702311" target="_blank" className="text-sm font-light whitespace-nowrap">8 (913) 470-23-11</a>
             </div>
             
             {/* Социальные сети - видны только на экранах шириной более 600px */}
