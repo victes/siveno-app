@@ -14,13 +14,14 @@ interface ButtonSizesProps {
 type Size = {
   id: number;
   name: string;
-  slug: string;
+  slug?: string;
   created_at?: string;
   updated_at?: string;
   pivot?: {
     product_id: number;
     size_id: number;
   };
+  className?: string;
 };
 
 // Обновленная функция для обработки обоих типов sizes
