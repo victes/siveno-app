@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ReduxProvider } from "@/shared/lib/redux/provider";
 import { AuthProvider } from "@/shared/hook/AuthContext/ui/AuthContext";
 import Head from "next/head";
+import Script from "next/script";
 import Link from "next/link";
 
 const geistSans = Geist({
@@ -51,7 +52,39 @@ export default function RootLayout({
         <link rel="icon" href="./favicon.ico" sizes="any" />
       </Head>
       <body className={`font-raleway antialiased`}>
-        <ReduxProvider>
+
+      {/* Yandex.Metrika */}
+      <Script id="yandex-metrika" strategy="afterInteractive">
+        {`
+            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {
+              if (document.scripts[j].src === r) { return; }
+            }
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+            ym(100833094, "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true,
+                ecommerce:"dataLayer"
+            });
+          `}
+      </Script>
+      <noscript>
+        <div>
+          <img
+            src="https://mc.yandex.ru/watch/100833094"
+            style={{ position: "absolute", left: "-9999px" }}
+            alt=""
+          />
+        </div>
+      </noscript>
+      {/* Yandex.Metrika */}
+
+      <ReduxProvider>
           <AuthProvider>
             <div className="flex flex-col min-h-screen">
               <ToastContainer />
