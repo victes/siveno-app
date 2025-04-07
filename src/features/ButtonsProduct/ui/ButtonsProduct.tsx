@@ -14,9 +14,10 @@ interface IProduct {
   price: string;
   img: string;
   selectedSize?: string;
+  selectedSizeId?: number;
 }
 
-const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }: IProduct) => {
+const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize,selectedSizeId  }: IProduct) => {
   const { addProduct } = useProductStore();
   const { addFav } = useFavStore();
   const [addToWishlist] = useAddToWishlistMutation();
@@ -69,6 +70,7 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize }
         img,
         selectedSize,
         quantity: 1,
+        selectedSizeId,
       });
     }
   };

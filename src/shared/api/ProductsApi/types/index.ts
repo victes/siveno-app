@@ -89,7 +89,7 @@ export interface IProduct {
   updated_at: string;
   images: IProductImage[];
   colors: IColor[];
-  sizes?: string[];
+  sizes?:  {name: string, id: number}[];
 }
 
 export interface IColor {

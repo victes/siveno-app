@@ -8,6 +8,7 @@ interface Product {
   img: string; // Новое поле для строки изображения
   selectedSize?: string; //
   quantity?: number; // Новое поле для количества
+  selectedSizeId?: number;
 }
 
 interface ProductStore {

@@ -250,7 +250,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       address_id: selectedAddress,
       items: products.map(p => ({
         product_id: Number(p?.id),
-        size_id: 1,
+        size_id: p?.selectedSizeId,
         quantity: 1,
       })),
       delivery: "express",

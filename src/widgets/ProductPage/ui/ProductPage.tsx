@@ -44,6 +44,7 @@ const ProductPage = () => {
         </div>
     );
   };
+  const selectedSizeId =  products?.sizes?.find(size => size?.name == selectedSize);
 
   const transformProductsToSlides = (items: IPopular[] = []): SliderItem[] => {
     return items.map(product => ({
@@ -214,6 +215,7 @@ const ProductPage = () => {
                   name={products.name?.toString()}
                   img={products.images[0]?.image_path || ""}
                   selectedSize={selectedSize}
+                  selectedSizeId={selectedSizeId?.id}
               />
             </div>
 
