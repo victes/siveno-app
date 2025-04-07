@@ -1,22 +1,14 @@
-// Объект с цветами
-// const buttonColors = {
-//   primary: "bg-red-500",
-//   secondary: "bg-green-500",
-//   danger: "bg-red-500",
-//   warning: "bg-yellow-500",
-//   success: "bg-teal-500",
-//   info: "bg-indigo-500",
-// };
 
 interface IBtnColor {
-  // color: keyof typeof buttonColors;
   color: string;
   name?: string;
   className?: string;
   onClick?: () => void;
 }
 
+
 const ButtonColor = ({ color, name, className, onClick }: IBtnColor) => {
+  console.log(color, name, className);
   return (
     <button
       onClick={onClick}

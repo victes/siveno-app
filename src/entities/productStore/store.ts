@@ -1,60 +1,85 @@
-import { toast } from "react-toastify";
 import { create } from "zustand";
+import { toast } from "react-toastify";
 
 interface Product {
   id: string;
   name: string;
   price: number;
-  img: string; // Новое поле для строки изображения
-  selectedSize?: string; //
-  quantity?: number; // Новое поле для количества
+  img: string;
+  selectedSize?: string;
+  quantity?: number;
   selectedSizeId?: number;
+  selectedColorId?: number;
 }
 
 interface ProductStore {
   products: Product[];
-  addProduct: (product: Product) => void;
+  selectedColorId: number | null;
+  addProduct: (product: Omit<Product, 'selectedColorId'>) => void;
   removeProduct: (id: string) => void;
   clearProducts: () => void;
   totalCost: () => number;
   totalQuantity: () => number;
+  setSelectedColorId: (colorId: number | null) => void;
+  updateProductColor: (productId: string, colorId: number) => void;
 }
 
 export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
-  addProduct: product => {
-    set(state => ({
-      products: [...state.products, product],
-    }));
+  selectedColorId: null,
+
+  addProduct: (product: Omit<Product, 'selectedColorId'>) => {
+    const currentColorId = get().selectedColorId;
+    set({
+      products: [...get().products, {
+        ...product,
+        selectedColorId: currentColorId !== null ? currentColorId : undefined
+      }]
+    });
     toast.success(`Добавлено в корзину: ${product.name}`, {
       position: "top-left",
     });
   },
-  removeProduct: id => {
-    const productItem = get().products.find(product => product.id === id);
-    set(state => ({
-      products: state.products.filter(product => product.id !== id),
-    }));
+
+  removeProduct: (id: string) => {
+    const productItem = get().products.find((p: Product) => p.id === id);
+    set({
+      products: get().products.filter((p: Product) => p.id !== id)
+    });
     if (productItem) {
       toast.error(`Удалено из корзины: ${productItem.name}`, {
         position: "top-left",
       });
     }
   },
+
   clearProducts: () => {
-    set(() => ({
+    set({
       products: [],
-    }));
+      selectedColorId: null
+    });
     toast.info("Товары очищены.", {
       position: "top-left",
     });
   },
-  totalCost: () => {
-    const products = get().products;
-    return products.reduce((total, product) => total + product.price, 0);
+
+  totalCost: (): number => {
+    return get().products.reduce((total: number, p: Product) => total + p.price, 0);
   },
-  totalQuantity: () => {
-    const products = get().products;
-    return products.reduce((total, product) => total + (product.quantity || 1), 0);
+
+  totalQuantity: (): number => {
+    return get().products.reduce((total: number, p: Product) => total + (p.quantity || 1), 0);
+  },
+
+  setSelectedColorId: (colorId: number | null) => {
+    set({ selectedColorId: colorId });
+  },
+
+  updateProductColor: (productId: string, colorId: number) => {
+    set({
+      products: get().products.map((p: Product) =>
+          p.id === productId ? { ...p, selectedColorId: colorId } : p
+      )
+    });
   }
 }));
