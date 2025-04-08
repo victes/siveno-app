@@ -14,7 +14,6 @@ const ButtonColors = ({ colorCode, productId }: ButtonColorsProps) => {
   const selectedColorId = useProductStore(state => state.selectedColorId);
   const setSelectedColorId = useProductStore(state => state.setSelectedColorId);
   const updateProductColor = useProductStore(state => state.updateProductColor);
-  console.log('select color', selectedColorId)
   const handleClick = (colorId: number) => {
     setSelectedColorId(colorId);
     if (productId) {
@@ -22,14 +21,15 @@ const ButtonColors = ({ colorCode, productId }: ButtonColorsProps) => {
     }
   };
 
+
   return (
       <div className="flex items-center space-x-2">
         {colorCode?.map(color =>
             <ButtonColor
                 key={color.id}
                 color={color.code}
-                onClick={() => handleClick(color.id)} // Теперь передаем ID цвета
-                className={selectedColorId === color.id ? "active-btn-colors" : ""}
+                onClick={() => handleClick(color.id)}
+                className={selectedColorId === color.id ? `border-[5px] border-[#a6b5d3] ` : ""}
             />
         )}
       </div>
