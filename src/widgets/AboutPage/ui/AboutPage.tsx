@@ -181,7 +181,7 @@ const AboutPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              Екатерина Абдрахманова - собственница и идейный вдохновитель бренда.
+              Екатерина Абдрахманова - основатель и идейный вдохновитель бренда.
             </motion.h2>
             <motion.p
               className="text-[18px] tablet:text-[20px] laptop:text-[20px] text-text font-semibold"
