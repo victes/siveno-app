@@ -255,8 +255,8 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       items: products.map(p => ({
         product_id: Number(p?.id),
         size_id: p?.selectedSizeId,
+        color_id: p?.selectedColorId,
         quantity: 1,
-        selectedColorId: p?.selectedColorId,
       })),
       delivery: "express",
       delivery_type: delivery,
