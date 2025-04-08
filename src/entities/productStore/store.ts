@@ -9,7 +9,7 @@ interface Product {
   selectedSize?: string;
   quantity?: number;
   selectedSizeId?: number;
-  selectedColorId?: number;
+  color_id?: number;
 }
 
 interface ProductStore {
@@ -33,7 +33,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     set({
       products: [...get().products, {
         ...product,
-        selectedColorId: currentColorId !== null ? currentColorId : undefined
+        color_id: currentColorId !== null ? currentColorId : undefined
       }]
     });
     toast.success(`Добавлено в корзину: ${product.name}`, {
