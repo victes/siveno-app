@@ -73,6 +73,7 @@ export interface IProductImage {
   image_path: string;
   created_at: string;
   updated_at: string;
+  color_id: number;
 }
 
 export interface IProduct {

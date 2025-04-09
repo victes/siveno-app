@@ -16,15 +16,17 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import "../styles/product-page.scss";
 import { useGetProductsByIdQuery, useGetProductsPopularQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
-import { IPopular } from "@/shared/api/ProductsApi/types";
+import {IPopular, IProductImage} from "@/shared/api/ProductsApi/types";
 import { SliderItem } from "@/shared/ui/Carousel/ui/Carousel";
+import {useProductStore} from "@/entities/productStore/store";
 
 const ProductPage = () => {
   const { product_id } = useParams();
   const { data: products, isLoading, error } = useGetProductsByIdQuery(Number(product_id));
   const { data } = useGetProductsPopularQuery(10);
   const [selectedSize, setSelectedSize] = useState<string>("");
-
+  const selectedColorId = useProductStore(state => state.selectedColorId);
+    console.log(products, selectedColorId)
   useEffect(() => {
     const handleSizeSelected = (event: CustomEvent) => {
       if (event.detail?.size) {
@@ -56,11 +58,17 @@ const ProductPage = () => {
       price: product.price,
     }));
   };
-
+    const filterImages = (images: IProductImage[] | undefined) => {
+       const filteredImages = images?.filter(color_id => color_id?.color_id == selectedColorId)
+        if(!filteredImages?.length){
+            return   images?.filter(color_id => color_id?.color_id == images[0]?.color_id)
+        }
+        return filteredImages
+    }
   const popular: IPopular[] = Array.isArray(data) ? data : [];
   const slides: SliderItem[] = transformProductsToSlides(popular);
-  const carousel = products?.images;
-
+  const carousel = filterImages(products?.images);
+    console.log('filtered images',filterImages(products?.images))
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
   };
