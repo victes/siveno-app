@@ -26,7 +26,7 @@ const ProductPage = () => {
   const { data } = useGetProductsPopularQuery(10);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const selectedColorId = useProductStore(state => state.selectedColorId);
-    console.log(products, selectedColorId)
+
   useEffect(() => {
     const handleSizeSelected = (event: CustomEvent) => {
       if (event.detail?.size) {
@@ -58,17 +58,17 @@ const ProductPage = () => {
       price: product.price,
     }));
   };
-    const filterImages = (images: IProductImage[] | undefined) => {
-       const filteredImages = images?.filter(color_id => color_id?.color_id == selectedColorId)
-        if(!filteredImages?.length){
-            return   images?.filter(color_id => color_id?.color_id == images[0]?.color_id)
-        }
-        return filteredImages
+
+  const filterImages = (images: IProductImage[] | undefined) => {
+    const filteredImages = images?.filter(image => image?.color_id == selectedColorId)
+    if (!filteredImages?.length) {
+      return   images?.filter(image => image?.color_id == images[0]?.color_id)
     }
+    return filteredImages
+  }
   const popular: IPopular[] = Array.isArray(data) ? data : [];
   const slides: SliderItem[] = transformProductsToSlides(popular);
   const carousel = filterImages(products?.images);
-    console.log('filtered images',filterImages(products?.images))
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
   };
