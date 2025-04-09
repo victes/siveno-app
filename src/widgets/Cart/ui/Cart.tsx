@@ -67,8 +67,8 @@ const Cart = ({ click, setClick }: ICart) => {
             </p>
             <div className="h-[700px] flex flex-col overflow-y-auto ">
               {products.length > 0 ? (
-                products.map(product => (
-                  <li key={product.id} className="flex gap-5 p-2 justify-between">
+                products.map((product, index) => (
+                  <li key={index} className="flex gap-5 p-2 justify-between">
                     <Link href={`/product/${product.id}`} onClick={handleClose}>
                       <div className="flex gap-5 items-center cursor-pointer">
                         <div>
@@ -86,7 +86,7 @@ const Cart = ({ click, setClick }: ICart) => {
                     </Link>
                     <div>
                       <MdDeleteOutline
-                        onClick={() => removeProduct(product.id)}
+                        onClick={() => removeProduct(index)}
                         size={30}
                         className="m-2 cursor-pointer hover:text-red-500"
                       />

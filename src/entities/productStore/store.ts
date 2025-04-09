@@ -16,7 +16,7 @@ interface ProductStore {
   products: Product[];
   selectedColorId: number | null;
   addProduct: (product: Omit<Product, 'selectedColorId'>) => void;
-  removeProduct: (id: string) => void;
+  removeProduct: (index: number) => void;
   clearProducts: () => void;
   totalCost: () => number;
   totalQuantity: () => number;
@@ -41,10 +41,10 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     });
   },
 
-  removeProduct: (id: string) => {
-    const productItem = get().products.find((p: Product) => p.id === id);
+  removeProduct: (index: number) => {
+    const productItem = get().products[index];
     set({
-      products: get().products.filter((p: Product) => p.id !== id)
+      products: get().products.filter((p, i) => i !== index),
     });
     if (productItem) {
       toast.error(`Удалено из корзины: ${productItem.name}`, {
