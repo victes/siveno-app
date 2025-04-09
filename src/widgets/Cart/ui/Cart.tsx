@@ -9,6 +9,7 @@ import { PayCard } from "@/widgets/PayCard";
 import Link from "next/link";
 import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi";
 import ButtonColor from "@/shared/ui/ButtonColor";
+import ButtonSize from "@/shared/ui/ButtonSize";
 
 const Cart = ({ click, setClick }: ICart) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -33,7 +34,6 @@ const Cart = ({ click, setClick }: ICart) => {
     }
   }, [click]);
   const { data: colors } = useGetColorsByProductQuery();
-  console.log(colors)
   const { products, removeProduct, totalCost } = useProductStore();
   const findColor = (id: number | undefined ) => {
     return colors?.find(color => color.id == id)?.code
@@ -77,7 +77,10 @@ const Cart = ({ click, setClick }: ICart) => {
                         <div className="flex flex-col justify-start">
                           <span className="text-black">{product.name}</span>
                           <span className="text-[30px] text-black">{product.price} руб</span>
-                          {product?.color_id &&  <ButtonColor  color={findColor(product?.color_id)} className='hover:scale-[1] !w-[20px] !h-[20px]' />}
+                          <div className='flex items-center gap-2'>
+                            {product?.color_id &&  <ButtonColor  color={findColor(product?.color_id)} className='hover:scale-[1] !w-[20px] !h-[20px]' />}
+                            {product?.selectedSize}
+                          </div>
                         </div>
                       </div>
                     </Link>
