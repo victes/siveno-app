@@ -100,7 +100,6 @@ const CatalogProductsPage = () => {
 
   // Обновляем список товаров при получении новых данных
   useEffect(() => {
-    console.log(products)
     if (products) {
       const products1: any = products
       setAllProducts(products1);
@@ -115,7 +114,6 @@ const CatalogProductsPage = () => {
     if (observerRef.current) {
       observerRef.current.disconnect();
     }
-
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting && hasMore && !isLoading && !isLoadingMore) {
@@ -138,6 +136,7 @@ const CatalogProductsPage = () => {
     };
   }, [hasMore, isLoading, isLoadingMore, loadNextPage]);
 
+  // @ts-ignore
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
       <div className="breadcrumbs text-sm mx-auto mb-[70px]">
@@ -195,7 +194,7 @@ const CatalogProductsPage = () => {
             <CatalogCard
               id={item.id}
               key={`${item.id}-${currentPage}-${index}`}
-              img={item.images[0]?.image_path || "/images/placeholder.jpg"}
+              images={item.images}
               href={`/product/${item.id}`}
               name={item.name}
               price={Number(item.price).toFixed()}

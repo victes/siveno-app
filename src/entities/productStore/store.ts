@@ -5,11 +5,12 @@ interface Product {
   id: string;
   name: string;
   price: number;
-  img: string;
+  img?: string;
   selectedSize?: string;
   quantity?: number;
   selectedSizeId?: number;
   color_id?: number;
+  images?: {image_path: string}[];
 }
 
 interface ProductStore {

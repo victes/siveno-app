@@ -5,7 +5,8 @@ export interface favourite {
   id: string;
   name: string;
   price: number;
-  img: string; // Новое поле для строки изображения
+  img?: string; // Новое поле для строки изображения
+  images?: {image_path: string}[];
 }
 
 interface FavouriteStore {

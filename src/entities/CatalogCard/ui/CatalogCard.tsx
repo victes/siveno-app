@@ -13,8 +13,9 @@ import { useRouter } from "next/navigation";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { useProductStore } from "@/entities/productStore/store";
+import CarouselMousemove from "@/entities/CarouselMousemove/ui/CarouselMousemove";
 
-const CatalogCard = ({ id, img, name, href, price, del }: ICCard) => {
+const CatalogCard = ({ id, images, name, href, price, del }: ICCard) => {
   const { addFav } = useFavStore();
   const { addProduct } = useProductStore();
 
@@ -22,12 +23,12 @@ const CatalogCard = ({ id, img, name, href, price, del }: ICCard) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (name.trim() && price) {
+    if (name.trim() && price && images && images.length > 0) {
       addFav({
         id: id.toString(),
         name,
         price: parseFloat(price),
-        img,
+        img: images[0].image_path,
       });
     }
   };
@@ -36,12 +37,12 @@ const CatalogCard = ({ id, img, name, href, price, del }: ICCard) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (name.trim() && price) {
+    if (name.trim() && price && images && images.length > 0) {
       addProduct({
         id: id.toString(),
         name,
         price: parseFloat(price),
-        img,
+        img: images[0].image_path,
         quantity: 1,
         selectedSize: "",
       });
@@ -52,8 +53,7 @@ const CatalogCard = ({ id, img, name, href, price, del }: ICCard) => {
     <Link href={href} className="block product-card-wrapper">
       <div className="product-card">
         <div className="product-card__image">
-          <Image src={img} alt="..." width={600} height={400} />
-
+          <CarouselMousemove slides={images?.slice(0, 4) ?? []} />
           {!del && (
             <div className="product-card__actions">
               <button aria-label="Добавить в избранное" onClick={handleAddFavourite}>
