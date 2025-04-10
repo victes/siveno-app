@@ -8,6 +8,9 @@ import "swiper/css/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import "../styles/carousel.scss";
+import {IProductImage} from "@/shared/api/ProductsApi/types";
+import CarouselMousemove from "@/entities/CarouselMousemove/ui/CarouselMousemove";
+import {ICarouselMousemoveImages} from "@/entities/CarouselMousemove/types/types";
 
 type ImageType = {
   src: string;
@@ -15,7 +18,7 @@ type ImageType = {
 };
 export type SliderItem = {
   id: number;
-  img: ImageType[];
+  img: IProductImage[];
   title: string;
   oldPrice?: number;
   discount?: number;
@@ -66,41 +69,44 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
         className="rounded-sm"
       >
         {items.map((item, index) => {
-          const firstImage = item.img?.[0]; // Проверяем, есть ли изображение
-          const isExternalImage = firstImage?.src && (firstImage.src.startsWith('http://') || firstImage.src.startsWith('https://'));
+          // @ts-ignore
+          const images: ICarouselMousemoveImages[] = item.img?.slice(0, 5);
+          // const isExternalImage = firstImage?.src && (firstImage.src.startsWith('http://') || firstImage.src.startsWith('https://'));
+
 
           return (
-            <SwiperSlide key={index} className="flex items-stretch h-auto">
+            <SwiperSlide key={index} className="flex items-stretch h-full">
               <Link href={`/product/${item.id}`} className="slider-card-wrapper">
                 <div className="slider-card">
-                  {firstImage ? (
+                  {/*{firstImage ? (*/}
                     <div className="slider-card__image">
-                      {isExternalImage ? (
-                        <Image
-                          width={400}
-                          height={600}
-                          loading="lazy"
-                          src={firstImage.src}
-                          alt={firstImage.alt}
-                          className="w-full h-[20rem] object-cover rounded-sm"
-                          unoptimized={true}
-                        />
-                      ) : (
-                        <Image
-                          width={400}
-                          height={600}
-                          loading="lazy"
-                          src={firstImage.src}
-                          alt={firstImage.alt}
-                          className="w-full h-[20rem] object-cover rounded-sm"
-                        />
-                      )}
+                      {/*{isExternalImage ? (*/}
+                      {/*  <Image*/}
+                      {/*    width={400}*/}
+                      {/*    height={600}*/}
+                      {/*    loading="lazy"*/}
+                      {/*    src={firstImage.src}*/}
+                      {/*    alt={firstImage.alt}*/}
+                      {/*    className="w-full h-[20rem] object-cover rounded-sm"*/}
+                      {/*    unoptimized={true}*/}
+                      {/*  />*/}
+                      {/*) : (*/}
+                      {/*  <Image*/}
+                      {/*    width={400}*/}
+                      {/*    height={600}*/}
+                      {/*    loading="lazy"*/}
+                      {/*    src={firstImage.src}*/}
+                      {/*    alt={firstImage.alt}*/}
+                      {/*    className="w-full h-[20rem] object-cover rounded-sm"*/}
+                      {/*  />*/}
+                      {/*)}*/}
+                      <CarouselMousemove slides={images}/>
                     </div>
-                  ) : (
-                    <div className="slider-card__no-image">
-                      <span className="text-gray-500">Нет изображения</span>
-                    </div>
-                  )}
+                  {/*) : (*/}
+                  {/*  <div className="slider-card__no-image">*/}
+                  {/*    <span className="text-gray-500">Нет изображения</span>*/}
+                  {/*  </div>*/}
+                  {/*)}*/}
                   <div className="slider-card__info">
                     <h3 className="slider-card__title">{item.title}</h3>
                     <span className="slider-card__price">{Number(item.price).toFixed()} руб.</span>
