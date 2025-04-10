@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from "next/image";
 
 type RawSlide = { src: string; alt: string } | { image_path: string };
@@ -17,15 +17,20 @@ export default function CarouselMousemove({ slides }: Props) {
     const containerRef = useRef<HTMLDivElement>(null);
     const innerRef = useRef<HTMLDivElement>(null);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
 
-    // 🧹 Приводим slides к одному формату
     const normalizedSlides: NormalizedSlide[] = slides.map((slide) =>
         'image_path' in slide
             ? { src: slide.image_path, alt: 'image' }
             : slide
     );
 
+    useEffect(() => {
+        setIsMobile('ontouchstart' in window || window.innerWidth <= 768);
+    }, []);
+
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isMobile) return;
         const container = containerRef.current;
         const inner = innerRef.current;
         if (!container || !inner) return;
@@ -44,16 +49,15 @@ export default function CarouselMousemove({ slides }: Props) {
     };
 
     const handleMouseLeave = () => {
+        if (isMobile) return;
         const container = containerRef.current;
         const inner = innerRef.current;
         if (!container || !inner) return;
 
-        const rect = container.getBoundingClientRect();
-        const maxTranslate = inner.scrollWidth - rect.width;
         const totalWidth = inner.scrollWidth;
         const slideWidth = totalWidth / normalizedSlides.length;
-
         const targetTranslate = slideWidth * activeIndex;
+
         inner.style.transition = 'transform 0.4s ease';
         inner.style.transform = `translateX(-${targetTranslate}px)`;
 
@@ -62,15 +66,51 @@ export default function CarouselMousemove({ slides }: Props) {
         }, 400);
     };
 
+    const touchStartX = useRef(0);
+    const touchEndX = useRef(0);
+
+    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+        touchEndX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        const delta = touchStartX.current - touchEndX.current;
+        if (Math.abs(delta) > 50) {
+            if (delta > 0 && activeIndex < normalizedSlides.length - 1) {
+                setActiveIndex((prev) => prev + 1);
+            } else if (delta < 0 && activeIndex > 0) {
+                setActiveIndex((prev) => prev - 1);
+            }
+        }
+    };
+
+    useEffect(() => {
+        const container = containerRef.current;
+        const inner = innerRef.current;
+        if (!container || !inner) return;
+
+        const rect = container.getBoundingClientRect();
+        const slideWidth = rect.width;
+        inner.style.transition = 'transform 0.3s ease';
+        inner.style.transform = `translateX(-${activeIndex * slideWidth}px)`;
+    }, [activeIndex]);
+
     return (
         <div className="relative w-full h-full">
             <div
                 ref={containerRef}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
                 className="w-full h-full overflow-hidden bg-gray-100"
             >
-                <div ref={innerRef} className="flex">
+                <div ref={innerRef} className="flex transition-transform duration-300">
                     {normalizedSlides.map((slide, idx) => (
                         <Image
                             key={idx}
@@ -78,14 +118,13 @@ export default function CarouselMousemove({ slides }: Props) {
                             alt={slide.alt}
                             width={400}
                             height={600}
-                            className="w-full h-full object-cover rounded-sm"
+                            className="w-full h-full object-cover flex-shrink-0"
                             unoptimized
                         />
                     ))}
                 </div>
             </div>
 
-            {/* Навигационные точки */}
             <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1.5">
                 {normalizedSlides.map((_, idx) => (
                     <div
