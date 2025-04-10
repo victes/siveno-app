@@ -15,9 +15,10 @@ interface IProduct {
   img: string;
   selectedSize?: string;
   selectedSizeId?: number;
+  selectedColorId: number | null;
 }
 
-const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize,selectedSizeId  }: IProduct) => {
+const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize,selectedSizeId, selectedColorId  }: IProduct) => {
   const { addProduct } = useProductStore();
   const { addFav } = useFavStore();
   const [addToWishlist] = useAddToWishlistMutation();
@@ -60,6 +61,10 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize,s
     if (!selectedSize) {
       alert("Пожалуйста, выберите размер");
       return;
+    }
+    if (!selectedColorId) {
+      alert("Пожалуйста, выберите цвет");
+      return
     }
 
     if (name?.trim() && price) {
