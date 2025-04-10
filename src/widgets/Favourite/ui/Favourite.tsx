@@ -13,7 +13,7 @@ interface Product {
   id: string;
   name: string;
   price: number;
-  img: string; // Новое поле для строки изображения
+  img?: string | undefined; // Новое поле для строки изображения
   selectedSize?: string; //
   quantity?: number; // Новое поле для количества
 }
@@ -39,12 +39,12 @@ const Favourite = ({ click, setClick }: IFav) => {
     }
   };
 
-  const handleAddProduct = (product: Product) => {
+  const handleAddProduct = (product: Product ) => {
     addProduct({
       id: product.id.toString() || "",
       name: product.name || "",
       price: product.price || 0,
-      img: product.img,
+      img: product.img || '',
       selectedSize: "",
       quantity: 1,
     });

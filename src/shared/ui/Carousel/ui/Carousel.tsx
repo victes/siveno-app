@@ -18,7 +18,7 @@ type ImageType = {
 };
 export type SliderItem = {
   id: number;
-  img: IProductImage[];
+  img: IProductImage[] | ImageType[];
   title: string;
   oldPrice?: number;
   discount?: number;
