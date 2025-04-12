@@ -242,7 +242,7 @@ const AllProductsPage = () => {
           <CatalogCard
             id={item.id}
             key={`${item.id}-${currentPage}-${index}`}
-            img={item.images && item.images[0] ? item.images[0].image_path : '/images/placeholder.jpg'}
+            images={item.images}
             href={`/product/${item.id}`}
             name={item.name}
             price={Number(item.price).toFixed()}
