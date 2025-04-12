@@ -17,12 +17,13 @@ interface IProduct {
   selectedSizeId?: number;
 }
 
-const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize,selectedSizeId  }: IProduct) => {
+const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize,selectedSizeId,   }: IProduct) => {
   const { addProduct } = useProductStore();
   const { addFav } = useFavStore();
   const [addToWishlist] = useAddToWishlistMutation();
   const { data: sizes } = useGetSizesByProductQuery();
   const [selectedSize, setSelectedSize] = useState<string>(propSelectedSize || "");
+  const selectedColorId = useProductStore(state => state.selectedColorId);
 
   useEffect(() => {
     if (propSelectedSize) {
@@ -59,6 +60,10 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize,s
   const handleAddProduct = () => {
     if (!selectedSize) {
       alert("Пожалуйста, выберите размер");
+      return;
+    }
+    if (!selectedColorId) {
+      alert("Пожалуйста, выберите цвет")
       return;
     }
 

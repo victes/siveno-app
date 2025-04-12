@@ -9,6 +9,8 @@ import Link from "next/link";
 
 const CatalogPage = () => {
   const { data: categories, error, isLoading } = useGetCategoriesQuery();
+    console.log(';home', categories)
+
 
   return (
     <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">

@@ -15,10 +15,9 @@ import { IoCartOutline } from "react-icons/io5";
 import { useProductStore } from "@/entities/productStore/store";
 import CarouselMousemove from "@/entities/CarouselMousemove/ui/CarouselMousemove";
 
-const CatalogCard = ({ id, images, name, href, price, del }: ICCard) => {
+const CatalogCard = ({ id, images, img, name, href, price, del }: ICCard) => {
   const { addFav } = useFavStore();
   const { addProduct } = useProductStore();
-
   const handleAddFavourite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -53,7 +52,7 @@ const CatalogCard = ({ id, images, name, href, price, del }: ICCard) => {
     <Link href={href} className="block product-card-wrapper">
       <div className="product-card">
         <div className="product-card__image">
-          <CarouselMousemove slides={images?.slice(0, 4) ?? []} />
+          {images?.length ? <CarouselMousemove slides={images?.slice(0, 4) ?? []} /> :  img ? <Image src={img} alt='image' width={400} height={600} /> : null }
           {!del && (
             <div className="product-card__actions">
               <button aria-label="Добавить в избранное" onClick={handleAddFavourite}>
