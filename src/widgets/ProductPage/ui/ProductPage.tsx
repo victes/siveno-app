@@ -224,6 +224,7 @@ const ProductPage = () => {
                   img={products.images[0]?.image_path || ""}
                   selectedSize={selectedSize}
                   selectedSizeId={selectedSizeId?.id}
+                  selectedColorId={selectedColorId}
               />
             </div>
 
