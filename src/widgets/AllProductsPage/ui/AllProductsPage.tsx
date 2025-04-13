@@ -109,7 +109,6 @@ const AllProductsPage = () => {
   }, [sort, color, size]);
 
   const onChangeFunc= ({value, filter}: IOnChange) => {
-    setColor(value)
     updateFilters(filter, value)
   }
 
