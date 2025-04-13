@@ -2,27 +2,27 @@
 import React from "react";
 import { Container } from "../Container";
 import Link from "next/link";
-import {FaTelegram, FaWhatsapp} from "react-icons/fa";
+import {FaTelegram} from "react-icons/fa";
 import {FaVk} from "react-icons/fa6";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
-import {useParams} from "next/navigation";
+
 
 const Footer = () => {
   const { token } = useAuth();
   return (
-    <footer className="border-t border-gray-200 pt-16 pb-8 mt-20">
+    <footer className="border-t border-gray-200 pt-16 pb-8 mt-20 text-secondary ">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-sm font-normal mb-6 uppercase tracking-wide">О компании</h3>
+            <h3 className="text-sm font-medium mb-6 uppercase tracking-wide">О компании</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/about" className="text-sm text-gray-500 hover:text-black transition-colors">
+                <Link href="/about" className="text-sm text-primary hover:text-primaryHover transition-colors">
                   О нас
                 </Link>
               </li>
               <li>
-                <Link href="/contacts" className="text-sm text-gray-500 hover:text-black transition-colors">
+                <Link href="/contacts" className="text-sm text-primary hover:text-primaryHover transition-colors">
                   Контакты
                 </Link>
               </li>
@@ -30,36 +30,36 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-normal mb-6 uppercase tracking-wide">Покупателям</h3>
+            <h3 className="text-sm font-medium mb-6 uppercase tracking-wide">Покупателям</h3>
             <ul className="space-y-4">
               <li>
                 {token ? (
-                  <Link href="/account" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  <Link href="/account" className="text-sm text-primary hover:text-primaryHover transition-colors">
                     Личный кабинет
                   </Link>
                 ) : (
-                  <Link href="/login" className="text-sm text-gray-500 hover:text-black transition-colors">
+                  <Link href="/login" className="text-sm text-primary hover:text-primaryHover transition-colors">
                     Личный кабинет
                   </Link>
                 )}
               </li>
               <li>
-                <Link href="/shipping" className="text-sm text-gray-500 hover:text-black transition-colors">
+                <Link href="/shipping" className="text-sm text-primary hover:text-primaryHover transition-colors">
                   Доставка
                 </Link>
               </li>
               <li>
-                <Link href="/returns" className="text-sm text-gray-500 hover:text-black transition-colors">
+                <Link href="/returns" className="text-sm text-primary hover:text-primaryHover transition-colors">
                   Возврат
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-sm text-gray-500 hover:text-black transition-colors">
+                <Link href="/faq" className="text-sm text-primary hover:text-primaryHover transition-colors">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link href="/product-care" className="text-sm text-gray-500 hover:text-black transition-colors">
+                <Link href="/product-care" className="text-sm text-primary hover:text-primaryHover transition-colors">
                   Уход за изделиями
                 </Link>
               </li>
@@ -67,15 +67,15 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-normal mb-6 uppercase tracking-wide">Документы</h3>
+            <h3 className="text-sm font-medium mb-6 uppercase tracking-wide">Документы</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/politika" className="text-sm text-gray-500 hover:text-black transition-colors">
+                <Link href="/politika" className="text-sm text-primary hover:text-primaryHover transition-colors">
                   Политика конфиденциальности
                 </Link>
               </li>
               <li>
-                <Link href="/oferta" className="text-sm text-gray-500 hover:text-black transition-colors">
+                <Link href="/oferta" className="text-sm text-primary hover:text-primaryHover transition-colors">
                   Публичная оферта
                 </Link>
               </li>
@@ -104,10 +104,10 @@ const Footer = () => {
             </form> */}
 
             <div className="flex gap-6">
-              <a href="https://t.me/+pnsEBODRdPJiNmNi" className="text-gray-500 hover:text-black transition-colors">
+              <a href="https://t.me/+pnsEBODRdPJiNmNi" className="text-primary hover:text-primaryHover transition-colors">
                 <FaTelegram className='text-[35px] max-md:text-[25px] ' />
               </a>
-              <a href="https://vk.com/siveno.store" className="text-gray-500 hover:text-black transition-colors">
+              <a href="https://vk.com/siveno.store" className="text-primary hover:text-primaryHover transition-colors">
                 <FaVk  className='text-[35px] max-md:text-[25px]'/>
               </a>
             </div>
@@ -115,15 +115,15 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-gray-400"> SIVENO 2025 | Все права защищены</p>
+          <p className="text-xs text-primary"> SIVENO 2025 | Все права защищены</p>
           <div className="flex gap-6">
-            <Link href="/politika" className="text-xs text-gray-400 hover:text-black transition-colors">
+            <Link href="/politika" className="text-xs text-primary hover:text-primaryHover transition-colors">
               Политика
             </Link>
-            <Link href="/oferta" className="text-xs text-gray-400 hover:text-black transition-colors">
+            <Link href="/oferta" className="text-xs text-primary hover:text-primaryHover transition-colors">
               Публичная оферта
             </Link>
-            <Link href="/contacts" className="text-xs text-gray-400 hover:text-black transition-colors">
+            <Link href="/contacts" className="text-xs text-primary hover:text-primaryHover transition-colors">
               Контакты
             </Link>
           </div>

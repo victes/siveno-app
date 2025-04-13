@@ -1,12 +1,13 @@
 import React from "react";
 import { IAccordion } from "../types";
+import '../styles/accordion.scss'
 
 const Accordion = ({ name, context }: IAccordion) => {
   return (
-    <div className="collapse collapse-plus  w-full">
-      <input type="checkbox" name="my-accordion-3" />
-      <div className="collapse-title text-xs font-medium uppercase">{name}</div>
-      <div className="collapse-content p-0 pl-4">{context}</div>
+      <div className="collapse collapse-plus w-full text-primary custom-collapse ">
+      <input type="checkbox" name="my-accordion-3"/>
+      <div className="collapse-title text-sm font-medium uppercase">{name}</div>
+      <div className="collapse-content pl-[20px]">{context}</div>
     </div>
   );
 };

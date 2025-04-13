@@ -98,7 +98,7 @@ const ProductPage = () => {
               <td className="text-center p-2 border-b-2">{accordian[0].Bust[3]}</td>
             </tr>
             <tr>
-              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Обхват талии</td>
+              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct ">Обхват талии</td>
               <td className="text-center border-r-2 p-2 border-b-2">{accordian[0].Waist[1]}</td>
               <td className="text-center border-r-2 p-2 border-b-2">{accordian[0].Waist[2]}</td>
               <td className="text-center p-2 border-b-2">{accordian[0].Waist[3]}</td>
@@ -229,7 +229,7 @@ const ProductPage = () => {
             </div>
 
 
-            <div className="product-page__premium">
+            <div className="product-page__premium text-primary">
               <div>
                 <Image src={russia} alt="Сделано в России" />
                 <h2>Сделано в<br />России</h2>

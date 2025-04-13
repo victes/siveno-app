@@ -23,6 +23,10 @@ export default {
         xxl: "1920px",
       },
       colors: {
+        primary: '#4a4a4a',
+        secondary: '#333',
+        primaryHover: '#aeadca',
+        // primaryHover: '#353434',
         background: "var(--background)",
         foreground: "var(--foreground)",
         text: "#423c3d",
