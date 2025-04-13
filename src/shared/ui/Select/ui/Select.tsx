@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import array from "../img/array.png";
 import Image from "next/image";
 import { FilterKey, IOnChange } from "@/widgets/AllProductsPage/ui/AllProductsPage";
+import { useSearchParams } from "next/navigation";
 
 interface SelectOption {
   option: string;
@@ -29,10 +30,12 @@ const Select: React.FC<SelectProps> = ({
   options1,
   options2,
 }: SelectProps) => {
+  const searchParams = useSearchParams();
+
   const [active, setActive] = useState<boolean>(false);
-  const [activeFilterColor, setActiveFilterColor] = useState<string>("");
-  const [activeFilterSize, setActiveFilterSize] = useState<string>("");
-  const [activeSorted, setActiveSorted] = useState<string>("");
+  const [activeFilterColor, setActiveFilterColor] = useState<string>(searchParams?.get("color") || "all");
+  const [activeFilterSize, setActiveFilterSize] = useState<string>(searchParams?.get("size") || "all");
+  const [activeSorted, setActiveSorted] = useState<string>(searchParams?.get("sort") || "newest");
 
   const updateSort = (value: string) => {
     setActiveSorted(value);
