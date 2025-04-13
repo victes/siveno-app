@@ -15,10 +15,12 @@ const Hero = () => {
             COMPANY NAME
           </h1> */}
           <Link href="/catalog-products">
-            <button className="px-8 py-3 text-sm tracking-widest uppercase transition-all duration-300 bg-black bg-opacity-40 border border-white hover:bg-opacity-60">
+            <button className="px-8 py-3 text-sm tracking-widest uppercase transition-all duration-300 text-black bg-white bg-opacity-40 border border-black hover:bg-opacity-60">
               СМОТРЕТЬ КОЛЛЕКЦИЮ
             </button>
           </Link>
+          <p className='text-center mt-5 max-md:text-sm max-[540px]:text-[12px]'>Российский бренд женской одежды премиального качества. <br/>
+            Натуральные ткани, Российское производство, Бесплатная доставка от 15 000 руб.</p>
         </div>
       </div>
       <LoopSlider text="скидка 10% на первый заказ" />
