@@ -8,6 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import { IFav } from "../types/type";
 import Link from "next/link";
+import {IoCartOutline} from "react-icons/io5";
 
 interface Product {
   id: string;
@@ -79,7 +80,7 @@ const Favourite = ({ click, setClick }: IFav) => {
             <h2 className="text-black text-[30px]">Избранное</h2>
             {favourites.length > 0 ? (
               favourites.map(product => (
-                <li key={product.id} className="flex gap-5 p-2 justify-between ">
+                <li key={product.id} className=" relative flex gap-5 p-2 justify-between ">
                   <Link href={`/product/${product.id}`} onClick={handleClose}>
                     <div className="flex gap-5 items-center cursor-pointer">
                       <div>
@@ -91,17 +92,20 @@ const Favourite = ({ click, setClick }: IFav) => {
                       </div>
                     </div>
                   </Link>
-                  <div className="flex">
+                  <div className="flex max-[750px]:absolute max-[750px]:bottom-10 max-[750px]:right-10 max-tablet:justify-center max-tablet:items-center">
                     <MdDeleteOutline
                       onClick={() => handleDeleteWishlist(product.id)}
                       size={30}
                       className="m-2 cursor-pointer hover:text-red-500"
                     />
                     <button
-                      className="btn bg-transparent rounded-none btn-active uppercase"
+                      className="btn bg-transparent rounded-none btn-active uppercase max-[520px]:text-[11px] max-[520px]:px-2 max-[520px]:py-0 max-tablet:hidden"
                       onClick={() => handleAddProduct(product)}
                     >
                       Добавить в корзину
+                    </button>
+                    <button className='max-tablet:block tablet:hidden text-[25px] hover:text-primary duration-300 ease-in-out' onClick={() => handleAddProduct(product)}>
+                      <IoCartOutline/>
                     </button>
                   </div>
                 </li>
