@@ -12,6 +12,7 @@ import ButtonSizes from "@/entities/ButtonSizes";
 import { Product } from "@/shared/api/ProductsApi/types";
 
 import "../styles/all-products-page.scss";
+import { useGetSizesByProductQuery } from "@/shared/api/SizesApi/ui/SizesApi";
 
 export interface IOnChange{
   filter: FilterKey;
@@ -49,6 +50,15 @@ const AllProductsPage = () => {
       }))
     : [];
   const optionsColor = [{ option: "Все цвета", value: "all" }, ...colorOptions];
+
+  // Загружаем размеры
+  const { data: sizes } = useGetSizesByProductQuery();
+  const optionsSize = sizes
+  ? sizes.map(size => ({
+      option: size.name,
+      value: size.name.toLowerCase(),
+    }))
+  : [];
 
   // Формирование строки запроса
   const queryParams = new URLSearchParams();
@@ -217,12 +227,7 @@ const AllProductsPage = () => {
               name_first={'Цвет'}
               name_second={'Размер'}
               options1={optionsColor}
-              options2={[
-                {option: 'S', value: 'S'},
-                {option: 'M', value: 'M'},
-                {option: 'L', value: 'L'},
-                {option: 'XL', value: 'XL'},
-              ]}
+              options2={optionsSize}
               onChange2 = {(value: IOnChange) => onChangeFunc(value)}
               onChange1={() => {}}
             />
@@ -233,10 +238,13 @@ const AllProductsPage = () => {
       {/* Карточки товаров */}
       <div className="products-card-container">
         {isLoading && currentPage === 1 && <p>Загрузка...</p>}
+
         {error && <p>Ошибка загрузки товаров</p>}
+
         {!allProducts.length && !isLoading && (
           <p className="text-center w-full text-lg">Товары не найдены</p>
         )}
+
         {allProducts.map((item, index) => (
           <CatalogCard
             id={item.id}

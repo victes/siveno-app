@@ -87,7 +87,6 @@ const Select: React.FC<SelectProps> = ({
                   key={index}
                   onClick={() => updateFilterColor(option.value)}
                   className="cursor-pointer flex flex-row gap-3 items-center"
-                  style={index === 0 ? { display: "none" } : {}}
                 >
                   <div className="size-[20px] flex justify-center items-center border-zinc-500 border-2 rounded-full">
                     {activeFilterColor === option.value && <div className="size-[12px] bg-zinc-500 rounded-full" />}

@@ -15,6 +15,7 @@ import { Product } from "@/shared/api/ProductsApi/types";
 
 import "../styles/catalog-products-page.scss";
 import { IOnChange } from '@/widgets/AllProductsPage/ui/AllProductsPage'
+import { useGetSizesByProductQuery } from "@/shared/api/SizesApi/ui/SizesApi";
 
 const CatalogProductsPage = () => {
   let { products_slug } = useParams();
@@ -60,10 +61,18 @@ const CatalogProductsPage = () => {
   if (sort) queryParams.set("sort", sort);
   queryParams.set("page", currentPage.toString());
 
-    const onChangeFunc= ({value, filter}: IOnChange) => {
-      setColor(value)
-      updateFilters(filter, value)
-    }
+  // Загружаем размеры
+  const { data: sizes } = useGetSizesByProductQuery();
+  const optionsSize = sizes
+    ? sizes.map(size => ({
+      option: size.name,
+      value: size.name.toLowerCase(),
+    }))
+    : [];
+
+  const onChangeFunc= ({value, filter}: IOnChange) => {
+    updateFilters(filter, value)
+  }
 
   const queryString = queryParams.toString();
   const { data: products, isLoading, error } = useGetProductsQuery(queryString);
@@ -172,12 +181,7 @@ const CatalogProductsPage = () => {
               name_first={'Цвет'}
               name_second={'Размер'}
               options1={optionsColor}
-              options2={[
-                {option: 'S', value: 'S'},
-                {option: 'M', value: 'M'},
-                {option: 'L', value: 'L'},
-                {option: 'XL', value: 'XL'},
-              ]}
+              options2={optionsSize}
               onChange2 = {(value: IOnChange) => onChangeFunc(value)}
               onChange1={() => {}}
             />
@@ -189,6 +193,7 @@ const CatalogProductsPage = () => {
       <div className="products-card-container">
         {isLoading && currentPage === 1 && <p>Загрузка...</p>}
         {error && <p>Ошибка загрузки товаров</p>}
+
         {allProducts.length > 0 ? (
           allProducts.map((item, index) => (
             <CatalogCard

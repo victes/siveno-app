@@ -52,7 +52,13 @@ const CatalogCard = ({ id, images, img, name, href, price, del }: ICCard) => {
     <Link href={href} className="block product-card-wrapper">
       <div className="product-card">
         <div className="product-card__image">
-          {images?.length ? <CarouselMousemove slides={images?.slice(0, 4) ?? []} /> :  img ? <Image src={img} alt='image' width={400} height={600} /> : null }
+          {
+            images?.length
+              ? <CarouselMousemove slides={images.slice(0, 4)} />
+              : img
+                ? <Image src={img} alt="image" width={400} height={600} />
+                : <Image src="/images/About/img3.jpg" alt="image" width={400} height={600} />
+          }
           {!del && (
             <div className="product-card__actions">
               <button aria-label="Добавить в избранное" onClick={handleAddFavourite}>
