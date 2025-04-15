@@ -38,7 +38,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "SIVENO",
-  description: "Created by group Saeddd, Ilyas, Mikhail",
+  description: "SIVENO",
 };
 
 export default function RootLayout({
