@@ -90,6 +90,7 @@ export interface IProduct {
   updated_at: string;
   images: IProductImage[];
   colors: IColor[];
+  color_options: IColorOptions[];
   sizes?:  {name: string, id: number}[];
 }
 
@@ -97,6 +98,11 @@ export interface IColor {
   id: number;
   name: string;
   code: string
+}
+
+export interface IColorOptions {
+  id: number;
+  colors: IColor[];
 }
 
 // ====================================================== Popular Products =================================

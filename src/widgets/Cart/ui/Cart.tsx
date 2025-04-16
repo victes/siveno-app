@@ -78,7 +78,6 @@ const Cart = ({ click, setClick }: ICart) => {
                           <span className="text-black">{product.name}</span>
                           <span className="text-[30px] text-black">{product.price} руб</span>
                           <div className='flex items-center gap-2'>
-                            {product?.color_id &&  <ButtonColor  color={findColor(product?.color_id)} className='hover:scale-[1] !w-[20px] !h-[20px]' />}
                             {product?.selectedSize}
                           </div>
                         </div>

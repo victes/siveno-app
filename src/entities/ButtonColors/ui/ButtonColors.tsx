@@ -2,34 +2,30 @@
 
 import React from "react";
 import ButtonColor from "@/shared/ui/ButtonColor";
-import { useProductStore } from "@/entities/productStore/store";
-import { IColor } from '@/shared/api/ProductsApi/types'
+import { IColorOptions } from "@/shared/api/ProductsApi/types";
+import { useRouter } from "next/navigation";
 
 interface ButtonColorsProps {
-  colorCode?: IColor[];
-  productId?: string; // Добавляем опциональный ID продукта
+  colorOptions: IColorOptions[];
+  productId: number;
 }
 
-const ButtonColors = ({ colorCode, productId }: ButtonColorsProps) => {
-  const selectedColorId = useProductStore(state => state.selectedColorId);
-  const setSelectedColorId = useProductStore(state => state.setSelectedColorId);
-  const updateProductColor = useProductStore(state => state.updateProductColor);
-  const handleClick = (colorId: number) => {
-    setSelectedColorId(colorId);
-    if (productId) {
-      updateProductColor(productId, colorId); // Обновляем цвет конкретного продукта
-    }
-  };
+const ButtonColors = ({ colorOptions, productId }: ButtonColorsProps) => {
+  const router = useRouter();
 
+  const handleClick = (newProductId: number) => {
+    if (!router) return;
+    router.push(`/product/${newProductId}`);
+  };
 
   return (
       <div className="flex items-center space-x-2">
-        {colorCode?.map(color =>
+        {colorOptions.map(option =>
             <ButtonColor
-                key={color.id}
-                color={color.code}
-                onClick={() => handleClick(color.id)}
-                className={selectedColorId === color.id ? `border-[5px] border-[#a6b5d3] ` : ""}
+                key={option.id}
+                color={option.colors[0].code}
+                onClick={() => handleClick(option.id)}
+                active={productId === option.id}
             />
         )}
       </div>

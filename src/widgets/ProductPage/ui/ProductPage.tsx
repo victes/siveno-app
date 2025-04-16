@@ -25,7 +25,6 @@ const ProductPage = () => {
   const { data: products, isLoading, error } = useGetProductsByIdQuery(Number(product_id));
   const { data } = useGetProductsPopularQuery(10);
   const [selectedSize, setSelectedSize] = useState<string>("");
-  const selectedColorId = useProductStore(state => state.selectedColorId);
 
   useEffect(() => {
     const handleSizeSelected = (event: CustomEvent) => {
@@ -59,16 +58,9 @@ const ProductPage = () => {
     }));
   };
 
-  const filterImages = (images: IProductImage[] | undefined) => {
-    const filteredImages = images?.filter(image => image?.color_id == selectedColorId)
-    if (!filteredImages?.length) {
-      return   images?.filter(image => image?.color_id == images[0]?.color_id)
-    }
-    return filteredImages
-  }
   const popular: IPopular[] = Array.isArray(data) ? data : [];
   const slides: SliderItem[] = transformProductsToSlides(popular);
-  const carousel = filterImages(products?.images);
+  const carousel = products?.images;
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
   };
@@ -211,7 +203,7 @@ const ProductPage = () => {
               </div>
               <div className="product-page__colors">
                 <p className="text-xs uppercase mb-2 font-medium tracking-wider">Цвет</p>
-                <ButtonColors colorCode={products.colors} />
+                <ButtonColors colorOptions={products.color_options} productId={products.id}/>
               </div>
             </div>
 
@@ -224,7 +216,6 @@ const ProductPage = () => {
                   img={products.images[0]?.image_path || ""}
                   selectedSize={selectedSize}
                   selectedSizeId={selectedSizeId?.id}
-                  selectedColorId={selectedColorId}
               />
             </div>
 
