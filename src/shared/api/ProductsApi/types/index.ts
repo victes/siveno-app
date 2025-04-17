@@ -84,8 +84,14 @@ export interface IProduct {
   price: string;
   description: string;
   composition_care: string;
-  preference: Record<string, string[]>; // Объект с размерами и их параметрами
-  measurements: Record<string, string[]>; // Аналогично preference
+  preference: {
+    size_label: string;
+    chest: string;
+    waist: string;
+    hips: string;
+    height: string;
+  }[]; // Массив объектов с размерами и их параметрами
+  measurements: Record<string, string[]>; // Массив объектов с размерами и их параметрами
   created_at: string;
   updated_at: string;
   images: IProductImage[];

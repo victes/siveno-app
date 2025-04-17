@@ -16,7 +16,7 @@ const CatalogPage = () => {
         <Breadcrumbs />
       </div>
       <div className="mb-[20px]">
-        <h1 className="title-h1">Каталог</h1>
+        <h1 className="title-h1">Категории</h1>
         <div className="mt-4 mb-8">
           <Link href="/catalog-products" className="inline-block py-3 px-6 bg-black text-white hover:bg-gray-800 transition-colors duration-200 ease-out">
             Смотреть все товары

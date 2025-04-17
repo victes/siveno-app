@@ -199,7 +199,7 @@ const AllProductsPage = () => {
 
       {/* Заголовок */}
       <div className="mb-[40px]">
-        <h1 className="title-h1">Все товары</h1>
+        <h1 className="title-h1">Каталог</h1>
       </div>
 
       {/* Фильтры */}

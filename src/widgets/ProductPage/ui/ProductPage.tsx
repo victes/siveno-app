@@ -16,9 +16,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import "../styles/product-page.scss";
 import { useGetProductsByIdQuery, useGetProductsPopularQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
-import {IPopular, IProductImage} from "@/shared/api/ProductsApi/types";
+import {IPopular} from "@/shared/api/ProductsApi/types";
 import { SliderItem } from "@/shared/ui/Carousel/ui/Carousel";
-import {useProductStore} from "@/entities/productStore/store";
 
 const ProductPage = () => {
   const { product_id } = useParams();
@@ -72,98 +71,66 @@ const ProductPage = () => {
     },
     {
       name: "Обмеры",
-      value: products?.name && !accordianCategory.includes(products.name) ? (
-          <table className="border-[#dedede] border-2 w-full h-auto">
-            <thead className="border-b-2">
-            <tr>
-              <th className="border-r-2 p-2 tabletProduct">Размер Россия</th>
-              <th className="border-r-2 w-[65px] p-2 leading-[18px] tabletProduct">{accordian[0].Head[1]}</th>
-              <th className="border-r-2 w-[65px] p-2 leading-[18px] tabletProduct">{accordian[0].Head[2]}</th>
-              <th className="w-[65px] p-2 leading-[18px] tabletProduct">{accordian[0].Head[3]}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Обхват груди</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[0].Bust[1]}</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[0].Bust[2]}</td>
-              <td className="text-center p-2 border-b-2">{accordian[0].Bust[3]}</td>
-            </tr>
-            <tr>
-              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct ">Обхват талии</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[0].Waist[1]}</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[0].Waist[2]}</td>
-              <td className="text-center p-2 border-b-2">{accordian[0].Waist[3]}</td>
-            </tr>
-            <tr>
-              <td className="text-center border-r-2 font-bold border-b-2 p-2 leading-[20px] tabletProduct">Обхват бёдер</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[0].Hips[1]}</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[0].Hips[2]}</td>
-              <td className="text-center p-2 border-b-2">{accordian[0].Hips[3]}</td>
-            </tr>
-            <tr>
-              <td className="text-center border-r-2 font-bold leading-[20px] p-2 tabletProduct">Рост</td>
-              <td className="text-center border-r-2 p-2">{accordian[0].Height[1]}</td>
-              <td className="text-center border-r-2 p-2">{accordian[0].Height[2]}</td>
-              <td className="text-center p-2">{accordian[0].Height[3]}</td>
-            </tr>
-            </tbody>
-          </table>
+      value: products?.preference && Object.keys(products.preference).length > 0 ? (
+        <table className="border-[#dedede] border-2 w-full h-auto">
+          <tbody>
+          <tr>
+            <th className="border-r-2 border-2 p-2 text-left tabletProduct">Размер Россия</th>
+            {products.preference.map((item, idx) => (
+              <td key={idx} className="text-center border-2 p-2 font-bold">{item.size_label}</td>
+            ))}
+          </tr>
+          <tr>
+            <th className="border-r-2 border-2 p-2 text-left tabletProduct">Обхват груди</th>
+            {products.preference.map((item, idx) => (
+              <td key={idx} className="text-center border-2 p-2">{item.chest}</td>
+            ))}
+          </tr>
+          <tr>
+            <th className="border-r-2 border-2 p-2 text-left tabletProduct">Обхват талии</th>
+            {products.preference.map((item, idx) => (
+              <td key={idx} className="text-center border-2 p-2">{item.waist}</td>
+            ))}
+          </tr>
+          <tr>
+            <th className="border-r-2 border-2 p-2 text-left tabletProduct">Обхват бёдер</th>
+            {products.preference.map((item, idx) => (
+              <td key={idx} className="text-center border-2 p-2">{item.hips}</td>
+            ))}
+          </tr>
+          <tr>
+            <th className="border-r-2 border-2 p-2 text-left tabletProduct">Рост</th>
+            {products.preference.map((item, idx) => (
+              <td key={idx} className="text-center border-2 p-2">{item.height}</td>
+            ))}
+          </tr>
+          </tbody>
+        </table>
       ) : (
-          <table className="border-[#dedede] border-2 w-full h-auto">
-            <thead className="border-b-2">
-            <tr>
-              <th className="border-r-2 p-2 tabletProduct">Размер Россия</th>
-              <th className="border-r-2 w-[65px] p-2 leading-[18px] tabletProduct">{accordian[1].Head[1]}</th>
-              <th className="border-r-2 w-[65px] p-2 leading-[18px] tabletProduct">{accordian[1].Head[2]}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Обхват груди</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[1].Bust[1]}</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[1].Bust[2]}</td>
-            </tr>
-            <tr>
-              <td className="text-center border-r-2 font-bold border-b-2 leading-[20px] p-2 tabletProduct">Обхват талии</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[1].Waist[1]}</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[1].Waist[2]}</td>
-            </tr>
-            <tr>
-              <td className="text-center border-r-2 font-bold border-b-2 p-2 leading-[20px] tabletProduct">Обхват бёдер</td>
-              <td className="text-center border-r-2 p-2 border-b-2">{accordian[1].Hips[1]}</td>
-              <td className="text-center p-2 border-b-2">{accordian[1].Hips[2]}</td>
-            </tr>
-            <tr>
-              <td className="text-center border-r-2 font-bold leading-[20px] p-2 tabletProduct">Рост</td>
-              <td className="text-center border-r-2 p-2">{accordian[1].Height[1]}</td>
-              <td className="text-center p-2">{accordian[1].Height[2]}</td>
-            </tr>
-            </tbody>
-          </table>
+        <p className="tabletProduct">Нет данных об обмерах</p>
       ),
     },
     {
       name: "Параметры Модели",
       value: (
-          <table className="border-[#dedede] border-2 w-full h-auto">
-            <thead className="border-b-2">
-            <tr>
-              <th className="border-r-2 p-2 tabletProduct">Размер</th>
-              <th className="border-r-2 p-2 leading-[18px] tabletProduct">Параметры</th>
+        <table className="border-[#dedede] border-2 w-full h-auto">
+          <thead className="border-2">
+          <tr>
+            <th className="border-r-2 border-2 p-2 tabletProduct">Размер</th>
+            <th className="border-2 p-2 leading-[18px] tabletProduct">Параметры</th>
+          </tr>
+          </thead>
+          <tbody>
+          {Object.entries(products?.measurements || {}).map(([size, measures]) => (
+            <tr key={size}>
+              <td className="border-r-2 border-2 text-center p-2">{size}</td>
+              <td className="border-2 text-center p-2">
+                {Array.isArray(measures) ? measures.join(", ") : String(measures)}
+              </td>
             </tr>
-            </thead>
-            <tbody>
-            {Object.entries(products?.measurements || {}).map(([size, measures]) => (
-                <tr key={size}>
-                  <td className='border-r-2 text-center'>{size}</td>
-                  <td className="text-center">
-                    {Array.isArray(measures) ? measures.join(", ") : String(measures)}
-                  </td>
-                </tr>
-            ))}
-            </tbody>
-          </table>
+          ))}
+          </tbody>
+        </table>
       ),
     },
   ];

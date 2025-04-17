@@ -79,7 +79,7 @@ const Header = () => {
             </Link>
             
             <nav className="hidden md:flex space-x-4 lg:space-x-6 xl:space-x-10 text-primary ">
-              <Link href="/catalog-categories" className="text-sm whitespace-nowrap hover:text-primaryHover transition-colors">
+              <Link href="/catalog-products" className="text-sm whitespace-nowrap hover:text-primaryHover transition-colors">
                 Каталог
               </Link>
               {localToken && (
