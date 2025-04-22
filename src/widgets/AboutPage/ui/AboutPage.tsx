@@ -9,6 +9,7 @@ import img2 from "../../../../public/images/About/img2.png";
 import img3 from "../../../../public/images/About/img3.jpg";
 import img4 from "../../../../public/images/About/img4.jpg";
 import "../styles/about.scss";
+import { useGetPageTextQuery } from "@/shared/api/PageTextApi/ui/PageTextApi";
 
 const fadeIn = (direction = "up", delay = 0) => {
   return {
@@ -34,6 +35,11 @@ const AboutPage = () => {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 300], [0, -50]);
   const y2 = useTransform(scrollY, [0, 300], [0, 50]);
+
+  const { data, isLoading, error } = useGetPageTextQuery("about");
+
+  if (isLoading) return <p>Загрузка...</p>;
+  if (error) return <p>Ошибка загрузки</p>;
 
   return (
     <div>
@@ -64,39 +70,8 @@ const AboutPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
-            >
-              Siveno — это воплощение современной женственности, сочетающее в себе элегантность, комфорт и
-              непринужденный стиль.
-            </motion.p>
-            <br />
-            <motion.p
-              className="text-[18px] tablet:text-[20px] laptop:text-[20px] text-text font-semibold"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
-              Мы создаем не просто вещи, а пространство для женщины, которая ценит гармонию в жизни и качество в вещах.
-              Siveno - это про уверенность быть собой, про внутреннюю силу, которая не требует громких слов.
-            </motion.p>
-            <br />
-            <motion.p
-              className="text-[18px] tablet:text-[20px] laptop:text-[20px] text-text font-semibold"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
-              Мы уделяем особое внимание выбору материалов, используя высококачественные натуральные Ткани, такие как
-              Модал, Хлопок, Вискоза и др.
-            </motion.p>
-            <br />
-            <motion.p
-              className="text-[18px] tablet:text-[25px] laptop:text-[20px] text-text font-semibold"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
-              Siveno - это выбор. Это стиль, который не подчиняется времени, и ценности, которые идут изнутри.
-            </motion.p>
+              dangerouslySetInnerHTML={{ __html: data?.text[0].content || '' }}
+            ></motion.p>
           </motion.div>
         </motion.div>
 
@@ -112,39 +87,8 @@ const AboutPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
-            >
-              Это обеспечивает комфорт, приятные тактильные ощущения и долговечность одежды, позволяя наслаждаться
-              каждой деталью гардероба.
-            </motion.p>
-            <br />
-            <motion.p
-              className="text-[18px] tablet:text-[25px] laptop:text-[20px] text-text font-semibold"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
-              Помимо этого, коллекции Siveno сочетают в себе лаконичность и изысканность, создавая образы, которые
-              остаются актуальными вне времени и модных тенденций.
-            </motion.p>
-            <br />
-            <motion.p
-              className="text-[18px] tablet:text-[25px] laptop:text-[20px] text-text font-semibold"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
-              Наши модели одежды подходят как для деловых встреч, так и для повседневной жизни, обеспечивая комфорт и
-              стиль в любой ситуации.
-            </motion.p>
-            <br />
-            <motion.p
-              className="text-[18px] tablet:text-[25px] laptop:text-[20px] text-text font-semibold"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
-              Желаем вам приятного взаимодействия с брендом! Команда Siveno
-            </motion.p>
+              dangerouslySetInnerHTML={{ __html: data?.text[1].content || '' }}
+            ></motion.p>
           </motion.div>
           <div className="relative">
             <motion.div className="max-w-[550px] mb-[50px] w-full" variants={fadeIn("right", 0.5)} style={{ y: y2 }}>
@@ -188,15 +132,8 @@ const AboutPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
-            >
-              Август 2024 года. Жаркий вечер, лёгкий ветерок, мысли, которые кружатся в голове, словно листья в воздухе.
-              В тот момент я осознала: хочу путешествовать с деловыми целями. Но вместе с этим возник другой важный
-              вопрос — мой гардероб. <br />
-              <br />Я обновила его, но чего-то не хватало. Хотелось лёгкости, свободы, осознанности. Так родилась идея:
-              создать свой бренд одежды. Бренд, который решает сразу две мои задачи — стиль и движение. Ведь мода не
-              терпит статичности: выбор тканей, разработка моделей, поиск лучших решений — это бесконечный процесс,
-              полный вдохновения.
-            </motion.p>
+              dangerouslySetInnerHTML={{ __html: data?.text[2].content || '' }}
+            ></motion.p>
           </motion.div>
         </motion.div>
 
@@ -212,21 +149,8 @@ const AboutPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-            >
-              Я всегда мечтала о гардеробе, в котором минимум вещей, но максимум возможностей. Чтобы каждая деталь была
-              продумана, каждая ткань дарила комфорт, а каждый образ отражал внутреннюю гармонию. Теперь мы воплощаем
-              эту мечту в реальность.
-            </motion.p>
-            <motion.p
-              className="text-[18px] tablet:text-[25px] laptop:text-[20px] text-text font-semibold"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
-              Сегодня вместе с дизайнером Викторией Щетниковой и нашей талантливой командой мы создаём не просто одежду,
-              а стиль жизни. Siveno — это про тебя. Про твою самодостаточность, уверенность и утончённость. Про красоту
-              в деталях и свободу в осознанном выборе.
-            </motion.p>
+              dangerouslySetInnerHTML={{ __html: data?.text[3].content || '' }}
+            ></motion.p>
           </motion.div>
           <div className="relative">
             <motion.div className="max-w-[550px] mb-[50px] w-full" variants={fadeIn("right", 0.5)} style={{ y: y2 }}>

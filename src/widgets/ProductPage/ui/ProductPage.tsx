@@ -100,9 +100,7 @@ const ProductPage = () => {
           </tr>
           <tr>
             <th className="border-r-2 border-2 p-2 text-left tabletProduct">Рост</th>
-            {products.preference.map((item, idx) => (
-              <td key={idx} className="text-center border-2 p-2">{item.height}</td>
-            ))}
+            <td className="text-center border-2 p-2" colSpan={100}>164-174</td>
           </tr>
           </tbody>
         </table>

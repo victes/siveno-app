@@ -89,7 +89,6 @@ export interface IProduct {
     chest: string;
     waist: string;
     hips: string;
-    height: string;
   }[]; // Массив объектов с размерами и их параметрами
   measurements: Record<string, string[]>; // Массив объектов с размерами и их параметрами
   created_at: string;

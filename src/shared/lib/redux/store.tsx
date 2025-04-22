@@ -14,6 +14,8 @@ import { sizesApi } from "@/shared/api/SizesApi/ui/SizesApi";
 import { storiesApi } from "@/shared/api/StoriesApi/ui/StoriesApi";
 import { subscribeApi } from "@/shared/api/SubscribeApi/ui/SubscribeApi";
 import { CalculateApi } from '@/shared/api/CalculateApi/CalculateApi'
+import { pageTextApi } from "@/shared/api/PageTextApi/ui/PageTextApi";
+import { faqApi} from "@/shared/api/FaqApi/ui/FaqApi";
 
 export const store = configureStore({
   reducer: {
@@ -31,6 +33,8 @@ export const store = configureStore({
     [storiesApi.reducerPath]: storiesApi.reducer,
     [subscribeApi.reducerPath]: subscribeApi.reducer,
     [CalculateApi.reducerPath]: CalculateApi.reducer,
+    [pageTextApi.reducerPath]: pageTextApi.reducer,
+    [faqApi.reducerPath]: faqApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -48,6 +52,8 @@ export const store = configureStore({
       storiesApi.middleware,
       subscribeApi.middleware,
       CalculateApi.middleware,
+      pageTextApi.middleware,
+      faqApi.middleware,
     ),
 });
 

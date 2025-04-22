@@ -1,6 +1,7 @@
 import React from "react";
 
 import AccordionFAQ from "@/shared/ui/AccordionFAQ";
+import AccordionReturn from "@/shared/ui/AccordionFAQ/ui/AccordionReturn";
 
 const returns = [
   {
@@ -41,7 +42,7 @@ const ReturnsPage = () => {
       <div className="flex flex-col gap-[20px] mt-[40px] w-full">
         {returns.map((item, idx) => {
           return (
-            <AccordionFAQ
+            <AccordionReturn
               key={idx}
               question={item.name}
               answer={item.value}
