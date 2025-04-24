@@ -102,9 +102,9 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize,s
           <IoMdHeartEmpty size={22} />
         </button>
       </div>
-      <button className="product-buttons__installment w-full h-12 border border-gray-300 text-gray-700 uppercase text-xs tracking-widest font-medium hover:border-black transition-all duration-300">
-        Купить долями
-      </button>
+      {/*<button className="product-buttons__installment w-full h-12 border border-gray-300 text-gray-700 uppercase text-xs tracking-widest font-medium hover:border-black transition-all duration-300">*/}
+      {/*  Купить долями*/}
+      {/*</button>*/}
     </div>
   );
 };

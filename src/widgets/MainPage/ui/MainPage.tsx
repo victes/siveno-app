@@ -6,8 +6,6 @@ import Subscribe from '@/widgets/Subscribe'
 import React from "react";
 import {useProductStore} from "@/entities/productStore/store";
 const MainPage = () => {
-const { products } = useProductStore();
-    console.log(products);
   return (
     <div>
       <Hero />

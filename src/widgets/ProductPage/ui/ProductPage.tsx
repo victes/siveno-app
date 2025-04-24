@@ -70,7 +70,7 @@ const ProductPage = () => {
       value: <FormattedText text={products?.composition_care} />
     },
     {
-      name: "Обмеры",
+      name: "Размеры",
       value: products?.preference && Object.keys(products.preference).length > 0 ? (
         <table className="border-[#dedede] border-2 w-full h-auto">
           <tbody>
@@ -105,7 +105,118 @@ const ProductPage = () => {
           </tbody>
         </table>
       ) : (
-        <p className="tabletProduct">Нет данных об обмерах</p>
+        <p className="tabletProduct">Нет данных об размерах</p>
+      ),
+    },
+    {
+      name: "Обмеры",
+      value: products?.size_characteristics && products.size_characteristics.length > 0 ? (
+        <table className="border-[#dedede] border-2 w-full h-auto">
+          <tbody>
+          {products.size_characteristics.some(p => p.size_label) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Размер Россия</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.size_label ? (
+                  <td key={idx} className="text-center border-2 p-2 font-bold">{item.size_label}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          {products.size_characteristics.some(p => p.length_back) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Длина по спинке</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.length_back ? (
+                  <td key={idx} className="text-center border-2 p-2">{item.length_back}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          {products.size_characteristics.some(p => p.chest) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Обхват груди</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.chest ? (
+                  <td key={idx} className="text-center border-2 p-2">{item.chest}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          {products.size_characteristics.some(p => p.bottom_girth) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Обхват по низу</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.bottom_girth ? (
+                  <td key={idx} className="text-center border-2 p-2">{item.bottom_girth}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          {products.size_characteristics.some(p => p.sleeve_length_from_neck) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Длина рукава от горловины</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.sleeve_length_from_neck ? (
+                  <td key={idx} className="text-center border-2 p-2">{item.sleeve_length_from_neck}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          {products.size_characteristics.some(p => p.sleeve_girth_under_armhole) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Обхват рукава под проймой</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.sleeve_girth_under_armhole ? (
+                  <td key={idx} className="text-center border-2 p-2">{item.sleeve_girth_under_armhole}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          {products.size_characteristics.some(p => p.side_seam_length) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Длина по боковому шву</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.side_seam_length ? (
+                  <td key={idx} className="text-center border-2 p-2">{item.side_seam_length}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          {products.size_characteristics.some(p => p.waist) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Обхват талии</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.waist ? (
+                  <td key={idx} className="text-center border-2 p-2">{item.waist}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          {products.size_characteristics.some(p => p.hips) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Обхват бёдер</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.hips ? (
+                  <td key={idx} className="text-center border-2 p-2">{item.hips}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          {products.size_characteristics.some(p => p.inseam_length) && (
+            <tr>
+              <th className="border-r-2 border-2 p-2 text-left tabletProduct">Длина по внутреннему шву</th>
+              {products.size_characteristics.map((item, idx) =>
+                item.inseam_length ? (
+                  <td key={idx} className="text-center border-2 p-2">{item.inseam_length}</td>
+                ) : null
+              )}
+            </tr>
+          )}
+          </tbody>
+        </table>
+      ) : (
+        <p className="tabletProduct">Нет данных об обмерах изделия</p>
       ),
     },
     {

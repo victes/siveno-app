@@ -1,6 +1,8 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { useGetProfileQuery } from "@/shared/api/ProfileApi/ProfileApi";
+import { useRouter } from "next/navigation";
 
 interface AuthContextType {
   token: string | null;
@@ -11,6 +13,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const storedToken = localStorage.getItem("access_token");
@@ -26,6 +29,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
+
+  // Проверяем валидность токена если он задан
+  const { isError, isLoading } = useGetProfileQuery(undefined, {
+    skip: !token, // не делаем запрос, если токена нет
+  });
+
+  // Если токен невалиден — удаляем его и редиректим
+  useEffect(() => {
+    if (isError) {
+      updateToken(null);
+      router.push("/");
+    }
+  }, [isError]);
 
   const updateToken = (newToken: string | null) => {
     if (newToken) {

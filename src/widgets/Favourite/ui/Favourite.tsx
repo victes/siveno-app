@@ -24,7 +24,6 @@ const Favourite = ({ click, setClick }: IFav) => {
   const [animate, setAnimate] = useState(false);
   const { addProduct } = useProductStore();
   const { favourites, removeFav } = useFavStore();
-  console.log(favourites);
 
   const handleDeleteWishlist = (id: string) => {
     removeFav(id);

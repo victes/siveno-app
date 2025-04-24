@@ -81,13 +81,13 @@ const ButtonSizes: React.FC<ButtonSizesProps> = ({ selectedSize = "", onSizeSele
   return (
       <div className="flex flex-wrap tablet:flex-nowrap gap-3">
         {displaySizes.map((item, idx) => {
-          const isActive = selectedSize === item.name;
           return (
               <ButtonSize
                   key={idx}
                   name={item.name}
-                  className={`${item.className} ${isActive ? "border-2 border-[#423c3d]" : ""}`}
+                  className={item.className}
                   onClick={() => handleSizeSelect(item.name)}
+                  isActive={selectedSize === item.name}
               />
           );
         })}

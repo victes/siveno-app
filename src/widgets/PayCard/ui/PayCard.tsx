@@ -187,8 +187,8 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [orderId, setOrderId] = useState<number | null>(null);
   const { token } = useAuth();
   const router = useRouter();
-  const [createOrder] = useCreateOrderMutation();
-  const [payOrder] = usePayOrderMutation();
+  const [createOrder, {isLoading: isCreating}] = useCreateOrderMutation();
+  const [payOrder, {isLoading: isPaying}] = usePayOrderMutation();
   const [postCalc] = useCalculateRussianPostMutation();
   const [cdekCalc] = useCalculateCdekMutation();
   const [cancelOrder] = useCancelOrderMutation();
@@ -506,8 +506,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 <button
                   className="bg-gray-100 text-[#423C3D] px-6 py-2 hover:bg-gray-300 w-full mt-[40px]"
                   onClick={handlePayment}
+                  disabled={isCreating || isPaying}
                 >
-                  {orderId ? "Ожидание оплаты..." : "Оплатить заказ"}
+                  {isCreating || isPaying ? "Ожидание..." : "Оплатить заказ"}
                 </button>
               </>
             )}

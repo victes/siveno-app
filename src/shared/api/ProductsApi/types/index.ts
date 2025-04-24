@@ -84,19 +84,34 @@ export interface IProduct {
   price: string;
   description: string;
   composition_care: string;
-  preference: {
-    size_label: string;
-    chest: string;
-    waist: string;
-    hips: string;
-  }[]; // Массив объектов с размерами и их параметрами
-  measurements: Record<string, string[]>; // Массив объектов с размерами и их параметрами
   created_at: string;
   updated_at: string;
   images: IProductImage[];
   colors: IColor[];
   color_options: IColorOptions[];
   sizes?:  {name: string, id: number}[];
+
+  preference: {
+    size_label: string;
+    chest: string;
+    waist: string;
+    hips: string;
+  }[]; // Массив объектов с размерами
+
+  size_characteristics: {
+    size_label: string | null;
+    length_back: string | null;
+    chest: string | null;
+    bottom_girth: string | null;
+    sleeve_length_from_neck: string | null;
+    sleeve_girth_under_armhole: string | null;
+    side_seam_length: string | null;
+    waist: string | null;
+    hips: string | null;
+    inseam_length: string | null;
+  }[]; // Массив объектов с обмерами
+
+  measurements: Record<string, string[]>; // Массив ключ значения параметра модели
 }
 
 export interface IColor {
