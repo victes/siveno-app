@@ -42,6 +42,7 @@ const Cart = ({ click, setClick }: ICart) => {
   const openPayCard = () => {
     handleClose();
     setPayCard(prev => !prev);
+    ym(100833094, 'reachGoal', 'begin_checkout');
   };
 
   return (

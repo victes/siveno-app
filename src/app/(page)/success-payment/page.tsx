@@ -12,6 +12,7 @@ const page = () => {
           status: "succeeded",
         },
       });
+      ym(100833094, 'reachGoal', 'purchase');
     }
 		localStorage.removeItem('orderId')
 		window.location.href = '/account';

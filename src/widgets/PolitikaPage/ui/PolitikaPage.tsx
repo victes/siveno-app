@@ -1,4 +1,12 @@
+"use client";
+
+import { useEffect } from "react";
+
 const PolitikaPage = () => {
+  useEffect(() => {
+    ym(100833094, 'reachGoal', 'view_policy_page');
+  }, []);
+
   return (
     <div className="flex flex-col mx-auto items-center max-w-[1200px] w-full text-text p-6 bona mt-[100px]">
       <h1 className="title-h1 text-3xl font-bold text-center">Политика конфиденциальности</h1>

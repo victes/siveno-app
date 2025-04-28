@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
@@ -32,6 +32,10 @@ const fadeIn = (direction = "up", delay = 0) => {
 };
 
 const AboutPage = () => {
+  useEffect(() => {
+    ym(100833094, 'reachGoal', 'view_about_page');
+  }, []);
+
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 300], [0, -50]);
   const y2 = useTransform(scrollY, [0, 300], [0, 50]);

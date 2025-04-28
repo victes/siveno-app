@@ -40,6 +40,8 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     toast.success(`Добавлено в корзину: ${product.name}`, {
       position: "top-left",
     });
+
+    ym(100833094, 'reachGoal', 'add_to_cart', { productId: product.id });
   },
 
   removeProduct: (index: number) => {
@@ -52,6 +54,8 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         position: "top-left",
       });
     }
+
+    ym(100833094, 'reachGoal', 'remove_from_cart', { productId: productItem.id });
   },
 
   clearProducts: () => {

@@ -29,6 +29,8 @@ export const useFavStore = create<FavouriteStore>((set, get) => ({
       toast.success(`Добавлено в избранное: ${favourites.name}`, {
         position: "top-left",
       });
+
+      ym(100833094, 'reachGoal', 'add_to_favorites', { productId: favourites.id });
     } else {
       toast.warning(`Объект уже в избранном: ${favourites.name}`, {
         position: "top-left",

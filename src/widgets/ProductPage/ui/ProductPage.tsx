@@ -26,6 +26,7 @@ const ProductPage = () => {
   const [selectedSize, setSelectedSize] = useState<string>("");
 
   useEffect(() => {
+    console.log('aaa');
     const handleSizeSelected = (event: CustomEvent) => {
       if (event.detail?.size) {
         setSelectedSize(event.detail.size);
@@ -34,6 +35,14 @@ const ProductPage = () => {
 
     window.addEventListener("sizeSelected", handleSizeSelected as EventListener);
     return () => window.removeEventListener("sizeSelected", handleSizeSelected as EventListener);
+  }, []);
+
+  useEffect(() => {
+    console.log('product_id изменился:', product_id);
+
+    if (product_id) {
+      ym(100833094, 'reachGoal', 'product_view', { productId: product_id });
+    }
   }, []);
 
   const FormattedText = ({ text }: { text?: string }) => {

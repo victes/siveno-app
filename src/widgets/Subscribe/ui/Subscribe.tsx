@@ -34,6 +34,7 @@ const Subscribe = () => {
         toast.success(`Вы успешно подписались на рассылку!`, {
           position: "top-left",
         });
+        ym(100833094, 'reachGoal', 'subscribe_newsletter');
       } catch {
         toast.error(`Ошибка при отправке письма.`, {
           position: "top-left",

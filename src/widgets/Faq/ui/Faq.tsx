@@ -2,8 +2,13 @@
 
 import AccordionFAQ from "@/shared/ui/AccordionFAQ";
 import { useGetFaqsQuery } from "@/shared/api/FaqApi/ui/FaqApi";
+import { useEffect } from "react";
 
 function Faq(){
+  useEffect(() => {
+    ym(100833094, 'reachGoal', 'view_faq_page');
+  }, []);
+
   const {data: faqs, isLoading, error} = useGetFaqsQuery()
 
   if (isLoading) return <p>Загрузка...</p>;
