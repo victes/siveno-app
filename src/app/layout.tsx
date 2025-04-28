@@ -84,6 +84,31 @@ export default function RootLayout({
       </noscript>
       {/* Yandex.Metrika */}
 
+      {/* Top.Mail.Ru counter */}
+      <Script id="top-mail-ru" strategy="afterInteractive">
+        {`
+            var _tmr = window._tmr || (window._tmr = []);
+            _tmr.push({id: "3640558", type: "pageView", start: (new Date()).getTime()});
+            (function (d, w, id) {
+              if (d.getElementById(id)) return;
+              var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+              ts.src = "https://top-fwz1.mail.ru/js/code.js";
+              var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+              if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+            })(document, window, "tmr-code");
+          `}
+      </Script>
+      <noscript>
+        <div>
+          <img
+            src="https://top-fwz1.mail.ru/counter?id=3640558;js=na"
+            style={{ position: "absolute", left: "-9999px" }}
+            alt="Top.Mail.Ru"
+          />
+        </div>
+      </noscript>
+      {/* /Top.Mail.Ru counter */}
+
       <ReduxProvider>
           <AuthProvider>
             <div className="flex flex-col min-h-screen">
