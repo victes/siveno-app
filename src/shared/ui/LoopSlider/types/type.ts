@@ -1,3 +1,3 @@
 export interface ILoopSlider {
-  text: string;
+  texts: string[];
 }

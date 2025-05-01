@@ -269,13 +269,13 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       return;
     }
 
-    if (!selectedAddress) {
-      alert("Выберите адрес доставки");
+    if (!delivery) {
+      alert("Выберите способ доставки");
       return;
     }
 
-    if (!delivery) {
-      alert("Выберите способ доставки");
+    if (delivery !== 'pickup' && !selectedAddress) {
+      alert("Выберите адрес доставки");
       return;
     }
 
@@ -321,10 +321,18 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   };
 
   const delivery_price = async (delivery_type: string) => {
+    if (delivery_type === "pickup") {
+      setDeliveryPrice(0);
+      setDelivery("pickup");
+      setSelectedAddress(null);
+      return;
+    }
+
     if (!selectedAddress) {
       alert("Выберите адрес доставки");
       return;
     }
+
     addresses &&
       addresses?.forEach(async adress => {
         if (adress?.id === selectedAddress) {
@@ -478,6 +486,17 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                       className="w-[15px] h-[15px]"
                     />
                     <p>Доставка по Почта России</p>
+                  </label>
+                  <label className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value={"pickup"}
+                      checked={"pickup" === delivery}
+                      onChange={() => (delivery !== "pickup" ? delivery_price("pickup") : "")}
+                      className="w-[15px] h-[15px]"
+                    />
+                    <p>Самовывоз (г. Новосибирск, ул Крылова, 3)</p>
                   </label>
                 </div>
                 <div>

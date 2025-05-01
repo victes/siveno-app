@@ -10,7 +10,9 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import "./LoopSlider.scss";
 
-const LoopSlider = ({ text }: ILoopSlider) => {
+const LoopSlider = ({ texts }: ILoopSlider) => {
+  const slides = [...Array(12)].map((_, index) => texts[index % texts.length]);
+
   return (
     <div className="bg-black py-2">
       <Swiper
@@ -24,9 +26,9 @@ const LoopSlider = ({ text }: ILoopSlider) => {
           disableOnInteraction: false,
         }}
       >
-        {[...Array(12).keys()].map(id => (
-          <SwiperSlide 
-            key={id + 1} 
+        {slides.map((text, id) => (
+          <SwiperSlide
+            key={id}
             className="text-white font-light text-xs tracking-wider uppercase !w-auto"
           >
             <div className="flex items-center whitespace-nowrap px-4">
