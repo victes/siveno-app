@@ -1,15 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { InputHTMLAttributes } from "react";
-import { FieldError } from "react-hook-form";
 import { IPayCard } from "../types/type";
 import { RxCross2 } from "react-icons/rx";
 import { useProductStore } from "@/entities/productStore/store";
 import { useAddAddressesMutation, useGetAddressesQuery } from "@/shared/api/AddressApi/AddressApi";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import {
   useCancelOrderMutation,
   useCreateOrderMutation,
@@ -20,48 +15,93 @@ import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
 import { useCalculateRussianPostMutation, useCalculateCdekMutation } from "@/shared/api/CalculateApi/CalculateApi";
 import { useGetPromoQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
-
-const formSchema = z.object({
-  state: z.string().nonempty({
-    message: "Почта введена неправильно",
-  }),
-  city: z.string().nonempty({
-    message: "Пароль должен содержать не менее 8 символов",
-  }),
-  street: z.string().nonempty({
-    message: "Подтверждение пароля должно содержать не менее 8 символов",
-  }),
-  house: z.string().nonempty({
-    message: "Дом обязательно для заполнения",
-  }),
-  postal_code: z.string().nonempty({
-    message: "Почтовый индекс обязательна для заполнения",
-  }),
-  apartment: z.string().nonempty({
-    message: "Апартаменты обязательное поле",
-  }),
-});
-
-type FormFields = z.infer<typeof formSchema>;
+import 'react-dadata/dist/react-dadata.css';
+import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from "react-dadata";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface IModal {
   click: boolean;
   setClick: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const addressSchema = z.object({
+  state: z.string().min(1, "Область обязательна"),
+  city: z.string().min(1, "Город обязателен"),
+  street: z.string().min(1, "Улица обязательна"),
+  house: z.string().min(1, "Дом обязателен"),
+  postal_code: z.string().min(1, "Индекс обязателен"),
+  apartment: z.string().min(1, "Квартира обязательна"),
+});
+
+type AddressFormData = z.infer<typeof addressSchema>;
+
 const Modal = ({ click, setClick }: IModal) => {
-  const [addAddresses] = useAddAddressesMutation();
-  const form = useForm<FormFields>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      state: "",
-      city: "",
-      street: "",
-      house: "",
-      postal_code: "",
-      apartment: "",
-    },
+  const [addAddresses, {isLoading: addAddressLoading} ] = useAddAddressesMutation();
+  const {handleSubmit, formState: { errors }, setError, clearErrors, setValue} = useForm<AddressFormData>({
+    resolver: zodResolver(addressSchema),
   });
+
+  const onSubmit = async () => {
+    if (!addressData?.data) {
+      setError("state", {
+        type: "manual",
+        message: "Выберите адрес из подсказки",
+      });
+      return;
+    }
+
+    const data = addressData.data;
+
+    const mapped: AddressFormData = {
+      state: data.region ?? "",
+      city: data.city ?? "",
+      street: data.street ?? "",
+      house: data.house ?? "",
+      postal_code: data.postal_code ?? "",
+      apartment: data.flat ?? "",
+    };
+
+    try {
+      await addAddresses({ ...mapped, is_primary: false }).unwrap();
+      handleClose();
+    } catch (err: any) {
+      if (err?.errors) {
+        err.errors.forEach((error: any) => {
+          setError(error.path[0], {
+            type: "manual",
+            message: error.message,
+          });
+        });
+      } else {
+        console.error("Ошибка добавления адреса:", err);
+      }
+    }
+  };
+
+  const [addressData, setAddressData] = useState<DaDataSuggestion<DaDataAddress> | undefined>();
+
+  useEffect(() => {
+    if (!addressData?.data) {
+      setValue("state", "");
+      setValue("city", "");
+      setValue("street", "");
+      setValue("house", "");
+      setValue("postal_code", "");
+      setValue("apartment", "");
+      return;
+    }
+
+    const data = addressData.data;
+
+    setValue("state", data.region_with_type ?? "");
+    setValue("city", data.city_with_type ?? "");
+    setValue("street", data.street_with_type ?? "");
+    setValue("house", data.house ?? "");
+    setValue("postal_code", data.postal_code ?? "");
+    setValue("apartment", data.flat ?? "");
+  }, [addressData, setValue]);
 
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
@@ -84,20 +124,6 @@ const Modal = ({ click, setClick }: IModal) => {
     }
   }, [click]);
 
-  const handleSubmit = async (values: FormFields) => {
-    try {
-      const requestBody = {
-        is_primary: false,
-        ...values,
-      };
-      await addAddresses(requestBody).unwrap();
-      form.reset();
-      handleClose();
-    } catch (err) {
-      console.error("Ошибка добавления адреса:", err);
-    }
-  };
-
   return (
     <div
       className="fixed w-screen h-screen bg-black bg-opacity-20 top-0 left-0 flex justify-end z-[70]"
@@ -117,57 +143,60 @@ const Modal = ({ click, setClick }: IModal) => {
           </button>
         </div>
 
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-6">
-          <div className="space-y-4">
-            {Object.entries(form.formState.errors).map(([field, error]) => (
-              <p key={field} className="text-red-500 text-sm">
-                {error.message}
-              </p>
+        <div className="flex flex-col gap-6">
+          <div className="space-y-6">
+            <AddressSuggestions
+              token="3aa9b0c3d53a9f40a2955b76f7048baadc22c47a"
+              value={addressData}
+              onChange={value => {
+                setAddressData(value);
+                clearErrors();
+              }}
+              renderOption={(suggestion, query) => {
+                if (!query) return suggestion.value; // если нет запроса, показываем обычное значение
+
+                const highlightMatch = (text: string) => {
+                  const regex = new RegExp(`(${query})`, 'gi');
+                  return text.split(regex).map((part, index) =>
+                    regex.test(part) ? (
+                      <span key={index} className="bg-yellow-200">{part}</span>
+                    ) : part
+                  );
+                };
+
+                return (
+                  <div>
+                    {suggestion.data.postal_code && (
+                      <span className="text-sm text-gray-500">({suggestion.data.postal_code}) </span>
+                    )}
+                    {highlightMatch(suggestion.value)}
+
+                  </div>
+                );
+              }}
+              inputProps={{placeholder: "Начните вводить адрес..", }}
+            />
+          </div>
+
+          <div className="text-red-500 text-sm space-y-1">
+            {Object.entries(errors).map(([field, error]) => (
+              <p key={field}>{error?.message}</p>
             ))}
           </div>
 
-          <div className="space-y-6">
-            <InputField label="Государство" {...form.register("state")} error={form.formState.errors.state} />
-            <InputField label="Город" {...form.register("city")} error={form.formState.errors.city} />
-            <InputField label="Улица" {...form.register("street")} error={form.formState.errors.street} />
-            <InputField label="Дом" {...form.register("house")} error={form.formState.errors.house} />
-            <InputField
-              label="Почтовый индекс"
-              {...form.register("postal_code")}
-              error={form.formState.errors.postal_code}
-            />
-            <InputField label="Квартира" {...form.register("apartment")} error={form.formState.errors.apartment} />
-          </div>
-
           <button
-            type="submit"
-            className="mt-8 bg-gray-100 text-[#423C3D] px-6 py-3 hover:bg-gray-200 transition-colors w-full"
+            type="button"
+            onClick={handleSubmit(onSubmit)}
+            disabled={addAddressLoading}
+            className="mt-4 bg-gray-100 text-[#423C3D] px-6 py-3 hover:bg-gray-200 transition-colors w-full"
           >
             Сохранить адрес
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
 };
-
-interface IInputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  error?: FieldError;
-}
-const InputField: React.FC<IInputFieldProps> = ({ label, error, ...props }) => (
-  <div className="flex flex-col gap-1">
-    <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
-      <input {...props} type="text" className="grow" placeholder={label} />
-    </label>
-    {/* <label className="text-sm text-gray-600">{label}</label>
-    <input
-      {...props}
-      className={`p-2 border-b ${error ? "border-red-500" : "border-gray-300"} focus:outline-none focus:border-black`}
-    /> */}
-    {error && <span className="text-red-500 text-sm">{error.message}</span>}
-  </div>
-);
 
 const PayCard = ({ onOpen, open }: IPayCard) => {
   const [delivery, setDelivery] = useState<string>("");
