@@ -134,7 +134,9 @@
   font-size: 14px;
   font-weight: 500;
   color: #000;
-  display: block;
+  display: flex;
+  gap: 10px;
+  align-items: end;
   text-align: left;
   margin-top: auto; // Прижимаем цену к низу блока
 }

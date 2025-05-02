@@ -15,7 +15,7 @@ import { IoCartOutline } from "react-icons/io5";
 import { useProductStore } from "@/entities/productStore/store";
 import CarouselMousemove from "@/entities/CarouselMousemove/ui/CarouselMousemove";
 
-const CatalogCard = ({ id, images, img, name, href, price, del }: ICCard) => {
+const CatalogCard = ({ id, images, img, name, href, price, del, discount_percent, original_price }: ICCard) => {
   const { addFav } = useFavStore();
   const { addProduct } = useProductStore();
   const handleAddFavourite = (e: React.MouseEvent) => {
@@ -73,7 +73,17 @@ const CatalogCard = ({ id, images, img, name, href, price, del }: ICCard) => {
 
         <div className="product-card__info">
           <h3 className="product-card__title">{name}</h3>
-          <p className="product-card__price">{price ? `${price} ₽` : ""}</p>
+          <p className="product-card__price flex gap-3">
+            <span>{price ? `${price} ₽` : ""}</span>
+            { discount_percent && discount_percent > 0 && (
+              <>
+                <span className="text-base text-gray-500 opacity-75 line-through">{Number(original_price).toFixed()}₽</span>
+                <span className="text-sm bg-black text-white rounded-full px-1 py-0.5">
+                  -{Math.floor(discount_percent)}%
+                </span>
+              </>
+            )}
+          </p>
         </div>
       </div>
     </Link>

@@ -12,6 +12,23 @@
     margin-bottom: 5px;
   }
 
+  &_discount {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: "Jost", "Arial", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    color: #423c3d;
+    text-align: center;
+
+    &_percent {
+      font-size: 20px;
+    }
+  }
+
   &__controls {
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;

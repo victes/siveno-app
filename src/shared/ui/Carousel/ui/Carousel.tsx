@@ -20,8 +20,8 @@ export type SliderItem = {
   id: number;
   img: IProductImage[] | ImageType[];
   title: string;
-  oldPrice?: number;
-  discount?: number;
+  discount_percent: number;
+  original_price: number;
   price: number;
 };
 
@@ -71,45 +71,27 @@ const Carousel: React.FC<SliderProps> = ({ items, heading }) => {
         {items.map((item, index) => {
           // @ts-ignore
           const images: ICarouselMousemoveImages[] = item.img?.slice(0, 5);
-          // const isExternalImage = firstImage?.src && (firstImage.src.startsWith('http://') || firstImage.src.startsWith('https://'));
-
 
           return (
             <SwiperSlide key={index} className="flex items-stretch h-full">
               <Link href={`/product/${item.id}`} className="slider-card-wrapper">
                 <div className="slider-card">
-                  {/*{firstImage ? (*/}
-                    <div className="slider-card__image">
-                      {/*{isExternalImage ? (*/}
-                      {/*  <Image*/}
-                      {/*    width={400}*/}
-                      {/*    height={600}*/}
-                      {/*    loading="lazy"*/}
-                      {/*    src={firstImage.src}*/}
-                      {/*    alt={firstImage.alt}*/}
-                      {/*    className="w-full h-[20rem] object-cover rounded-sm"*/}
-                      {/*    unoptimized={true}*/}
-                      {/*  />*/}
-                      {/*) : (*/}
-                      {/*  <Image*/}
-                      {/*    width={400}*/}
-                      {/*    height={600}*/}
-                      {/*    loading="lazy"*/}
-                      {/*    src={firstImage.src}*/}
-                      {/*    alt={firstImage.alt}*/}
-                      {/*    className="w-full h-[20rem] object-cover rounded-sm"*/}
-                      {/*  />*/}
-                      {/*)}*/}
-                      <CarouselMousemove slides={images}/>
-                    </div>
-                  {/*) : (*/}
-                  {/*  <div className="slider-card__no-image">*/}
-                  {/*    <span className="text-gray-500">Нет изображения</span>*/}
-                  {/*  </div>*/}
-                  {/*)}*/}
+                  <div className="slider-card__image">
+                    <CarouselMousemove slides={images}/>
+                  </div>
                   <div className="slider-card__info">
                     <h3 className="slider-card__title">{item.title}</h3>
-                    <span className="slider-card__price">{Number(item.price).toFixed()} руб.</span>
+                    <div className="slider-card__price flex gap-3">
+                      <span>{Number(item.price).toFixed()}₽</span>
+                      { item.discount_percent && item.discount_percent > 0 && (
+                          <>
+                            <span className="text-base text-gray-500 opacity-75 line-through">{Number(item.original_price).toFixed()}₽</span>
+                            <span className="text-sm bg-black text-white rounded-full px-1 py-0.5">
+                              -{Math.floor(item.discount_percent)}%
+                            </span>
+                          </>
+                        )}
+                    </div>
                   </div>
                 </div>
               </Link>

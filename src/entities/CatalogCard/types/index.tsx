@@ -8,4 +8,6 @@ export interface ICCard {
   href: string;
   price?: string;
   del?: boolean;
+  discount_percent?: number;
+  original_price?: number;
 }

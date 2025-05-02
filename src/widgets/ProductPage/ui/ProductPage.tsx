@@ -63,6 +63,8 @@ const ProductPage = () => {
           : [{ src: "/images/MainPage/1.jpg", alt: "Нет изображения" }],
       title: product.name,
       price: product.price,
+      original_price: product.original_price,
+      discount_percent: product.discount_percent,
     }));
   };
 
@@ -271,7 +273,17 @@ const ProductPage = () => {
           <div className="flex flex-col gap-[20px] items-center tablet:mx-auto tablet:max-w-[500px]">
             <div className="flex flex-col items-center justify-center gap-[20px]">
               <h1 className="title-h1 lineyka">{products.name}</h1>
-              <p className="product-page__price text-center">{Number(products.price).toFixed()} руб.</p>
+              <div className="product-page__price_block flex flex-row-reverse">
+                { products.discount_percent && products.discount_percent > 0 && (
+                  <p className="product-page_discount">
+                    <span className="text-gray-500 opacity-75 line-through">{Number(products.original_price).toFixed()} ₽</span>
+                    <span className="product-page_discount_percent bg-black text-white rounded-full px-1 py-0.5">
+                  -{Math.floor(products.discount_percent)}%
+                </span>
+                  </p>
+                )}
+                <p className="product-page__price text-center">{Number(products.price).toFixed()} ₽</p>
+              </div>
               <p className="tablet:max-w-full text-[14px] tablet:text-[14px] text-gray-600">
                 {products.description}
               </p>

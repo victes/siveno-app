@@ -7,6 +7,8 @@ export interface Promo {
 export interface Product {
   id: number;
   name: string;
+  discount_percent: number;
+  original_price: number;
   price: string;
   category_id: number;
   video_url: string | null;
@@ -81,6 +83,8 @@ export interface IProduct {
   name: string;
   category_id: number;
   video_url: string;
+  discount_percent: number;
+  original_price: number;
   price: string;
   description: string;
   composition_care: string;
@@ -174,6 +178,8 @@ export type IPopular = {
   name: string;
   category_id: number;
   video_url: string;
+  discount_percent: number;
+  original_price: number;
   price: number;
   description: string;
   composition_care: string;
@@ -181,8 +187,6 @@ export type IPopular = {
   measurements: Record<string, string[]>;
   created_at: string;
   updated_at: string;
-  is_discount: boolean;
-  discount_percentage: string;
   wishlisted_by_count: number;
   discounted_price: number;
   images: Image[];

@@ -19,6 +19,8 @@ const Category = () => {
           : [{ src: "/images/MainPage/1.jpg", alt: "Нет изображения" }], // Фолбэк на случай отсутствия фото
         title: product.name,
         price: product.price,
+        original_price: product.original_price,
+        discount_percent: product.discount_percent,
       }));
   };
 
@@ -26,55 +28,6 @@ const Category = () => {
 
   const slides: SliderItem[] = transformProductsToSlides(popular);
 
-  //   {
-  //     img: [{ src: "/images/MainPage/13.jpg", alt: "Img" }],
-  //     title: "Кардиган из пряжи с Мериносом",
-  //     description: "Description",
-  //     price: 10000,
-  //   },
-  //   {
-  //     img: [{ src: "/images/MainPage/10.jpg", alt: "Img" }],
-  //     title: "Рубашка Декоррованная цветами",
-  //     description: "Description",
-  //     price: 7895,
-  //   },
-  //   {
-  //     img: [{ src: "/images/MainPage/11.jpg", alt: "Img" }],
-  //     title: "Жакет-балон из атласа",
-  //     description: "Description",
-  //     price: 87954,
-  //   },
-  //   {
-  //     img: [{ src: "/images/MainPage/12.jpg", alt: "Img" }],
-  //     title: "Рубашка в пижамном стиле с буфами",
-  //     description: "Description",
-  //     price: 1204,
-  //   },
-  //   {
-  //     img: [{ src: "/images/MainPage/13.jpg", alt: "Img" }],
-  //     title: "Кардиган из пряжи с Мериносом",
-  //     description: "Description",
-  //     price: 20415,
-  //   },
-  //   {
-  //     img: [{ src: "/images/MainPage/14.jpg", alt: "Img" }],
-  //     title: "Жакет-балон из атласа",
-  //     description: "Description",
-  //     price: 45689,
-  //   },
-  //   {
-  //     img: [{ src: "/images/MainPage/10.jpg", alt: "Img" }],
-  //     title: "Кардиган из пряжи с Мериносом",
-  //     description: "Description",
-  //     price: 48986,
-  //   },
-  //   {
-  //     img: [{ src: "/images/MainPage/13.jpg", alt: "Img" }],
-  //     title: "Рубашка в пижамном стиле с буфами",
-  //     description: "Description",
-  //     price: 17894,
-  //   },
-  // ];
   return (
     <>
       <Container>
