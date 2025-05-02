@@ -201,6 +201,7 @@ const Modal = ({ click, setClick }: IModal) => {
 const PayCard = ({ onOpen, open }: IPayCard) => {
   const [delivery, setDelivery] = useState<string>("");
   const [deliveryPrice, setDeliveryPrice] = useState<number>(0);
+  const [deliveryDate, setDeliveryDate] = useState<string>("");
   const [typePayment, setTypePayment] = useState<string>("bank_card");
   const { data: promos } = useGetPromoQuery();
   const [discount, setDiscount] = useState<number>(0);
@@ -325,6 +326,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       setDeliveryPrice(0);
       setDelivery("pickup");
       setSelectedAddress(null);
+      setDeliveryDate("");
       return;
     }
 
@@ -333,45 +335,51 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       return;
     }
 
-    addresses &&
-      addresses?.forEach(async adress => {
-        if (adress?.id === selectedAddress) {
-          if (delivery_type === "russianpost") {
-            const postCalcData = await postCalc({
-              from_postcode: "630052",
-              to_postcode: adress.postal_code,
-              weight: 0.4 * totalQuantity(),
-              length: 0.4 * totalQuantity(),
-              width: 0.3 * totalQuantity(),
-              height: 0.05 * totalQuantity(),
-            }).unwrap();
-            const property = "total-rate";
-            setDeliveryPrice(postCalcData[property] / 100);
-            setDelivery("russianpost");
-          } else {
-            const { data } = await cdekCalc({
-              senderCityId: 44,
-              weight: 0.4 * totalQuantity(),
-              length: 40 * totalQuantity(),
-              width: 30 * totalQuantity(),
-              height: 5 * totalQuantity(),
-              senderPostalCode: "630052",
-              receiverPostalCode: adress.postal_code,
-              senderCountryCode: "RU",
-              receiverCountryCode: "RU",
-              senderCity: "Новосибирск",
-              receiverCity: adress.city,
-              senderAddress: "ул. Толмачевская, д.1/1",
-              receiverAddress: adress.street,
-              senderContragentType: "sender",
-              receiverContragentType: "recipient",
-            });
-            setDeliveryPrice(data?.tariff_codes[0].delivery_sum);
-            setDelivery("cdek");
+    if (addresses) {
+      for (const address of addresses) {
+        if (address?.id === selectedAddress) {
+          try {
+            if (delivery_type === "russianpost") {
+              const postCalcData = await postCalc({
+                to_postcode: address.postal_code,
+                weight: 0.4 * totalQuantity(),
+                length: 0.4 * totalQuantity(),
+                width: 0.3 * totalQuantity(),
+                height: 0.05 * totalQuantity(),
+              }).unwrap();
+
+              const property = "total-rate";
+              console.log(postCalcData);
+              setDeliveryPrice(postCalcData[property] / 100);
+              setDeliveryDate(postCalcData['delivery-time']['min-days'] + '-' + postCalcData['delivery-time']['max-days'] + ' дня')
+              setDelivery("russianpost");
+            } else {
+              const { data } = await cdekCalc({
+                weight: 0.4 * totalQuantity(),
+                length: 40 * totalQuantity(),
+                width: 30 * totalQuantity(),
+                height: 5 * totalQuantity(),
+                receiverPostalCode: address.postal_code,
+                receiverCountryCode: "RU",
+                receiverCity: address.city,
+                receiverAddress: address.street,
+                receiverContragentType: "recipient",
+              });
+              console.log(data);
+              setDeliveryPrice(data?.tariff_codes?.[0]?.delivery_sum ?? 0);
+              setDeliveryDate(data?.tariff_codes?.[0].period_min + '-' + data?.tariff_codes?.[0].period_max + ' дня')
+              setDelivery("cdek");
+            }
+          } catch (error) {
+            console.error("Ошибка при расчёте стоимости доставки:", error);
           }
+
+          break; // адрес найден — прерываем цикл
         }
-      });
+      }
+    }
   };
+
   const handleChange = (e: string) => {
     setPromo(e)
     setDisableBtn(false)
@@ -447,7 +455,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                           <p>{`Квартира: ${address.apartment || "Не указано"}`}</p>
                           <p>{`Почтовый индекс: ${address.postal_code}`}</p>
                           <p>{`Область: ${address.state}`}</p>
-                          <p>{`Основной адрес: ${address.is_primary ? "Да" : "Нет"}`}</p>
+                          {/*<p>{`Основной адрес: ${address.is_primary ? "Да" : "Нет"}`}</p>*/}
                         </div>
                       </label>
                     ))}
@@ -474,7 +482,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                       onChange={() => (delivery !== "cdek" ? delivery_price("cdek") : "")}
                       className="w-[15px] h-[15px]"
                     />
-                    <p>Доставка по CDEK</p>
+                    <p>Доставка по CDEK (До двери)</p>
                   </label>
                   <label className="flex flex-row items-center gap-2">
                     <input
@@ -548,7 +556,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Ваш заказ</h2>
                   <p>Товаров на - {totalCost()} ₽</p>
                   <p>Скидка - {discount} %</p>
-                  <p>Доставка - {deliveryPrice} ₽</p>
+                  <p>Доставка {deliveryDate && ('(' + deliveryDate + ')')}- {deliveryPrice} ₽</p>
                   <p>Итого - {fullPrice()} ₽</p>
                 </div>
                 <button
