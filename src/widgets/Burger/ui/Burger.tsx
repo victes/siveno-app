@@ -73,6 +73,7 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   { label: "Толстовки и худи", link: "/catalog-products/Hoodies"},
                   { label: "Футболки и топы", link: "/catalog-products/TshirtsAndLongsleeves" },
                   { label: "Нижнее бельё", link: "/catalog-products/Lingerie"},
+                  { label: "Распродажа", link: "/catalog-products/sale" },
                   
                 ].map(({ label, link }) => (
                   <li key={label} onClick={() => setOpen(prev => !prev)}>
