@@ -73,7 +73,7 @@ const CatalogCard = ({ id, images, img, name, href, price, del, discount_percent
 
         <div className="product-card__info">
           <h3 className="product-card__title">{name}</h3>
-          <p className="product-card__price flex gap-3">
+          <p className="product-card__price flex gap-3 items-end">
             <span>{price ? `${price} ₽` : ""}</span>
             { discount_percent && discount_percent > 0 && (
               <>

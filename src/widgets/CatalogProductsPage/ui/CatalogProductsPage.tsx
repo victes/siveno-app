@@ -203,6 +203,8 @@ const CatalogProductsPage = () => {
               href={`/product/${item.id}`}
               name={item.name}
               price={Number(item.price).toFixed()}
+              discount_percent={item.discount_percent}
+              original_price={item.original_price}
             />
           ))
         ) : (
