@@ -6,7 +6,7 @@ import { z } from "zod";
 import Link from "next/link";
 import { useRegisterUserMutation } from "@/shared/api/RegApi/RegApi";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useLoginUserMutation } from "@/shared/api/LoginApi/LoginApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 
@@ -14,6 +14,14 @@ const formSchema = z
   .object({
     email: z.string().email({
       message: "Почта введена неправильно",
+    }),
+    phone: z.string().min(10, {
+      message: "Телефон обязателен для заполнения",
+    }).refine((val) => {
+      const digitsOnly = val.replace(/\D/g, '');
+      return digitsOnly.length === 11 && digitsOnly.startsWith('7');
+    }, {
+      message: "Введите корректный номер телефона",
     }),
     password: z.string().min(8, {
       message: "Пароль должен содержать не менее 8 символов",
@@ -35,6 +43,7 @@ const formSchema = z
     message: "Пароли не совпадают",
     path: ["confirmPassword"],
   });
+
 const formSchemaLogin = z.object({
   email: z.string().email({
     message: "Почта введена не правильно",
@@ -80,6 +89,7 @@ const RegisterPage = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
+      phone: "",
       password: "",
       confirmPassword: "",
       firstName: "",
@@ -87,6 +97,82 @@ const RegisterPage = () => {
       agreeToPolicy: false,
     },
   });
+
+  // Форматирование телефонного номера при вводе
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, ''); // Оставляем только цифры
+
+    // Обработка ввода первой цифры
+    if (value.length > 0) {
+      // Если первая цифра не 7, преобразуем её
+      if (value[0] !== '7') {
+        if (value[0] === '8') {
+          // Заменяем 8 на 7 (российская традиция)
+          value = '7' + value.substring(1);
+        } else if (value[0] === '9' || value[0] === '3' || value[0] === '4' || value[0] === '5' || value[0] === '6') {
+          // Если начинается с 9, 3, 4, 5, 6 (мобильные коды), добавляем 7 в начало
+          value = '7' + value;
+        }
+      }
+    }
+
+    // Ограничиваем длину до 11 цифр (стандарт для России)
+    value = value.substring(0, 11);
+
+    // Форматируем номер в стиле +7 (999) 999-99-99
+    let formattedValue = '';
+    if (value.length > 0) {
+      formattedValue = '+' + value[0]; // Код страны
+
+      if (value.length > 1) {
+        // Код оператора/региона (3 цифры)
+        formattedValue += ' (' + value.substring(1, Math.min(4, value.length));
+        if (value.length < 4) {
+          formattedValue += '_'.repeat(4 - value.length);
+        }
+        formattedValue += ')';
+      } else {
+        formattedValue += ' (___)'
+      }
+
+      if (value.length > 4) {
+        // Первая часть номера (3 цифры)
+        formattedValue += ' ' + value.substring(4, Math.min(7, value.length));
+        if (value.length < 7) {
+          formattedValue += '_'.repeat(7 - value.length);
+        }
+      } else {
+        formattedValue += ' ___';
+      }
+
+      if (value.length > 7) {
+        // Вторая часть номера (2 цифры)
+        formattedValue += '-' + value.substring(7, Math.min(9, value.length));
+        if (value.length < 9) {
+          formattedValue += '_'.repeat(9 - value.length);
+        }
+      } else {
+        formattedValue += '-__';
+      }
+
+      if (value.length > 9) {
+        // Третья часть номера (2 цифры)
+        formattedValue += '-' + value.substring(9, 11);
+        if (value.length < 11) {
+          formattedValue += '_'.repeat(11 - value.length);
+        }
+      } else {
+        formattedValue += '-__';
+      }
+    } else {
+      // Пустой шаблон для пустого поля
+      formattedValue = '+7 (___) ___-__-__';
+    }
+
+    // Устанавливаем отформатированное значение в форму
+    form.setValue('phone', formattedValue);
+  };
+
   const extractApiErrors = (error: ApiError) => {
     const errors: Record<string, string> = {};
 
@@ -124,6 +210,7 @@ const RegisterPage = () => {
         name: values.firstName,
         surname: values.lastName,
         email: values.email,
+        phone: values.phone,
         password: values.password,
         password_confirmation: values.confirmPassword,
       };
@@ -197,6 +284,31 @@ const RegisterPage = () => {
           </label>
           {form.formState.errors.email && (
             <span className="text-red-500 text-sm">{form.formState.errors.email.message}</span>
+          )}
+        </div>
+
+        {/* Phone Number Field */}
+        <div className="flex flex-col space-y-2 w-full">
+          <label className="input bg-transparent border-b border-[#423C3D] border-x-0 border-t-0 rounded-none flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M3.654 1.328a.678.678 0 0 1 .738-.093l2.522 1.18a.678.678 0 0 1 .291.902l-1.015 2.031a.678.678 0 0 1-.756.336l-.927-.232a11.72 11.72 0 0 0 5.292 5.292l-.232-.927a.678.678 0 0 1 .336-.756l2.031-1.015a.678.678 0 0 1 .902.291l1.18 2.522a.678.678 0 0 1-.093.738l-1.2 1.6a.678.678 0 0 1-.746.253c-1.803-.547-5.926-2.79-8.593-5.457C1.493 6.104-.75 1.98.798.178a.678.678 0 0 1 .253-.746l1.6-1.2Z" />
+            </svg>
+            <input
+              type="tel"
+              className="grow"
+              value={form.watch("phone") || "+7 (___) ___-__-__"}
+              onChange={(e) => {
+                handlePhoneChange(e);
+              }}
+            />
+          </label>
+          {form.formState.errors.phone && (
+            <span className="text-red-500 text-sm">{form.formState.errors.phone.message}</span>
           )}
         </div>
 
