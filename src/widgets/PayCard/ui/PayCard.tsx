@@ -353,7 +353,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
               setDeliveryPrice(postCalcData[property] / 100);
               setDeliveryDate(postCalcData['delivery-time']['min-days'] + '-' + postCalcData['delivery-time']['max-days'] + ' дня')
               setDelivery("russianpost");
-            } else {
+            } else if (delivery_type == "cdek" || delivery_type == "cdek_pickup") {
               const { data } = await cdekCalc({
                 weight: 0.4 * totalQuantity(),
                 length: 40 * totalQuantity(),
@@ -364,11 +364,12 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 receiverCity: address.city,
                 receiverAddress: address.street,
                 receiverContragentType: "recipient",
+                deliveryType: delivery_type,
               });
               console.log(data);
               setDeliveryPrice(data?.tariff_codes?.[0]?.delivery_sum ?? 0);
               setDeliveryDate(data?.tariff_codes?.[0].period_min + '-' + data?.tariff_codes?.[0].period_max + ' дня')
-              setDelivery("cdek");
+              setDelivery(delivery_type);
             }
           } catch (error) {
             console.error("Ошибка при расчёте стоимости доставки:", error);
@@ -482,7 +483,18 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                       onChange={() => (delivery !== "cdek" ? delivery_price("cdek") : "")}
                       className="w-[15px] h-[15px]"
                     />
-                    <p>Доставка по CDEK (До двери)</p>
+                    <p>Доставка по CDEK - До двери</p>
+                  </label>
+                  <label className="flex flex-row items-center gap-2">
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value={"cdek_pickup"}
+                      checked={"cdek_pickup" === delivery}
+                      onChange={() => (delivery !== "cdek_pickup" ? delivery_price("cdek_pickup") : "")}
+                      className="w-[15px] h-[15px]"
+                    />
+                    <p>Доставка по CDEK - ПВЗ</p>
                   </label>
                   <label className="flex flex-row items-center gap-2">
                     <input
