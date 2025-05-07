@@ -225,7 +225,8 @@ const RegisterPage = ({isCart = false, loginButtonClicked = ()=> {}}) => {
         localStorage.setItem("access_token", result.access_token);
       }
       login(formLogin);
-      push("/");
+      if (!isCart)
+        push("/");
     } catch (err) {
       const error = err as ApiError;
       console.error("Registration failed:", error);

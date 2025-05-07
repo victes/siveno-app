@@ -38,7 +38,8 @@ const LoginPage = ({isCart= false, registerButtonClicked = () => {}}) => {
       const result = await loginUser(values).unwrap();
       console.log("Login successful:", result);
       setToken(result.access_token); // Обновит токен глобально
-      push("/account");
+      if (!isCart)
+        push("/account");
     } catch (err) {
       console.error("Login failed:", err);
       const errorData = err as { data?: { error?: string } };
