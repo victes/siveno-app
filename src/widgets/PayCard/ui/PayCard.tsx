@@ -20,6 +20,8 @@ import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from "react-dadat
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import LoginPage from "@/widgets/LoginPage";
+import RegisterPage from "@/widgets/RegisterPage";
 
 interface IModal {
   click: boolean;
@@ -199,6 +201,7 @@ const Modal = ({ click, setClick }: IModal) => {
 };
 
 const PayCard = ({ onOpen, open }: IPayCard) => {
+  const [activeAuthTab, setActiveAuthTab] = useState<string>("register");
   const [delivery, setDelivery] = useState<string>("");
   const [deliveryPrice, setDeliveryPrice] = useState<number>(0);
   const [deliveryDate, setDeliveryDate] = useState<string>("");
@@ -424,15 +427,11 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
             {!token ? (
               <div className="flex flex-col gap-4 items-center justify-center py-8">
                 <p className="text-lg text-center">Для оформления заказа необходимо войти в аккаунт</p>
-                <button
-                  className="bg-gray-100 text-[#423C3D] px-6 py-3 hover:bg-gray-300 w-full max-w-md"
-                  onClick={() => {
-                    handleClose();
-                    router.push("/login");
-                  }}
-                >
-                  Войти или зарегистрироваться
-                </button>
+                {activeAuthTab === "login" ? (
+                  <LoginPage isCart={true} registerButtonClicked={() => setActiveAuthTab("register")} />
+                ) : (
+                  <RegisterPage isCart={true} loginButtonClicked={() => setActiveAuthTab("login")}/>
+                )}
               </div>
             ) : (
               <>

@@ -78,7 +78,7 @@ const extractApiErrors = (error: ApiError) => {
     generalError: error.data?.message || "Произошла ошибка при регистрации",
   };
 };
-const RegisterPage = () => {
+const RegisterPage = ({isCart = false, loginButtonClicked = ()=> {}}) => {
   const [registerUser] = useRegisterUserMutation();
   const { push } = useRouter();
   const [apiError, setApiError] = useState<string | null>(null);
@@ -425,13 +425,17 @@ const RegisterPage = () => {
           <button type="submit" className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300">
             Зарегистрироваться
           </button>
-          <div className="flex justify-center">
-            <button className="text-center flex gap-2">
-              <span className="text-[14px]">Уже есть аккаунт?</span>
+          <div className="text-center flex gap-2">
+            <span className="text-[14px]">Уже есть аккаунт?</span>
+            {!isCart ? (
               <Link href="/login" className="text-blue-300 text-[14px]">
                 Войти
               </Link>
-            </button>
+            ) : (
+              <button type="button" className="text-blue-300 text-[14px]" onClick={loginButtonClicked}>
+                Войти
+              </button>
+            )}
           </div>
         </div>
       </form>

@@ -20,7 +20,7 @@ const formSchema = z.object({
 
 type FormFields = z.infer<typeof formSchema>;
 
-const LoginPage = () => {
+const LoginPage = ({isCart= false, registerButtonClicked = () => {}}) => {
   const [loginUser] = useLoginUserMutation();
   const { push } = useRouter();
   const { setToken } = useAuth();
@@ -87,18 +87,25 @@ const LoginPage = () => {
             Вход
           </button>
           <div className="flex flex-col items-center gap-2 justify-center">
-            <button className="text-center flex gap-2 ">
+            <div className="text-center flex gap-2">
               <span className="text-[14px]">У вас нет аккаунта?</span>
-              <Link href="/register" className="text-blue-300 text-[14px]">
-                Регистрация
-              </Link>
-            </button>
-            <button className="text-center flex gap-2">
+              {!isCart ? (
+                <Link href="/register" className="text-blue-300 text-[14px]">
+                  Регистрация
+                </Link>
+              ) : (
+                <button type="button" className="text-blue-300 text-[14px]" onClick={registerButtonClicked}>
+                  Регистрация
+                </button>
+              )}
+            </div>
+
+            <div className="text-center flex gap-2">
               <span className="text-[14px]">Забыли свой</span>
               <Link href="/forgot-password" className="text-blue-300 text-[14px]">
                 Пароль?
               </Link>
-            </button>
+            </div>
           </div>
         </div>
       </form>
