@@ -16,6 +16,7 @@ import { subscribeApi } from "@/shared/api/SubscribeApi/ui/SubscribeApi";
 import { CalculateApi } from '@/shared/api/CalculateApi/CalculateApi'
 import { pageTextApi } from "@/shared/api/PageTextApi/ui/PageTextApi";
 import { faqApi} from "@/shared/api/FaqApi/ui/FaqApi";
+import { deliveryApi } from "@/shared/api/DeliveryApi/DeliveryApi";
 
 export const store = configureStore({
   reducer: {
@@ -35,6 +36,7 @@ export const store = configureStore({
     [CalculateApi.reducerPath]: CalculateApi.reducer,
     [pageTextApi.reducerPath]: pageTextApi.reducer,
     [faqApi.reducerPath]: faqApi.reducer,
+    [deliveryApi.reducerPath]: deliveryApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -54,6 +56,7 @@ export const store = configureStore({
       CalculateApi.middleware,
       pageTextApi.middleware,
       faqApi.middleware,
+      deliveryApi.middleware,
     ),
 });
 

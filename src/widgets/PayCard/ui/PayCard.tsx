@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoginPage from "@/widgets/LoginPage";
 import RegisterPage from "@/widgets/RegisterPage";
+import { useGetDeliveryServicesQuery, useGetPickUpPointsQuery } from "@/shared/api/DeliveryApi/DeliveryApi";
 
 interface IModal {
   click: boolean;
@@ -202,6 +203,8 @@ const Modal = ({ click, setClick }: IModal) => {
 
 const PayCard = ({ onOpen, open }: IPayCard) => {
   const [activeAuthTab, setActiveAuthTab] = useState<string>("register");
+  const { data: deliveryServices } = useGetDeliveryServicesQuery();
+  const { data: pickupPoints } = useGetPickUpPointsQuery();
   const [delivery, setDelivery] = useState<string>("");
   const [deliveryPrice, setDeliveryPrice] = useState<number>(0);
   const [deliveryDate, setDeliveryDate] = useState<string>("");
@@ -354,8 +357,8 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
               const property = "total-rate";
               console.log(postCalcData);
               setDeliveryPrice(postCalcData[property] / 100);
-              setDeliveryDate(postCalcData['delivery-time']['min-days'] + '-' + postCalcData['delivery-time']['max-days'] + ' дня')
-              setDelivery("russianpost");
+              setDeliveryDate(postCalcData['delivery-time']['max-days'] + ' дня')
+              setDelivery(delivery_type);
             } else if (delivery_type == "cdek" || delivery_type == "cdek_pickup") {
               const { data } = await cdekCalc({
                 weight: 0.4 * totalQuantity(),
@@ -473,39 +476,21 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 )}
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Доставка</h2>
-                  <label className="flex flex-row items-center gap-2">
-                    <input
-                      type="radio"
-                      name="delivery"
-                      value={"cdek"}
-                      checked={"cdek" === delivery}
-                      onChange={() => (delivery !== "cdek" ? delivery_price("cdek") : "")}
-                      className="w-[15px] h-[15px]"
-                    />
-                    <p>Доставка по CDEK - До двери</p>
-                  </label>
-                  <label className="flex flex-row items-center gap-2">
-                    <input
-                      type="radio"
-                      name="delivery"
-                      value={"cdek_pickup"}
-                      checked={"cdek_pickup" === delivery}
-                      onChange={() => (delivery !== "cdek_pickup" ? delivery_price("cdek_pickup") : "")}
-                      className="w-[15px] h-[15px]"
-                    />
-                    <p>Доставка по CDEK - ПВЗ</p>
-                  </label>
-                  <label className="flex flex-row items-center gap-2">
-                    <input
-                      type="radio"
-                      name="delivery"
-                      value={"russianpost"}
-                      checked={"russianpost" === delivery}
-                      onChange={() => (delivery !== "russianpost" ? delivery_price("russianpost") : "")}
-                      className="w-[15px] h-[15px]"
-                    />
-                    <p>Доставка по Почта России</p>
-                  </label>
+                  { deliveryServices && deliveryServices.length > 0 && (
+                    deliveryServices.map(deliveryService => (
+                        <label key={deliveryService.slug} className="flex flex-row items-center gap-2">
+                          <input
+                            type="radio"
+                            name="delivery"
+                            value={deliveryService.slug}
+                            checked={deliveryService.slug === delivery}
+                            onChange={() => (delivery !== deliveryService.slug ? delivery_price(deliveryService.slug) : "")}
+                            className="w-[15px] h-[15px]"
+                          />
+                          <p>{ deliveryService.name }</p>
+                        </label>
+                      ))
+                  )}
                   <label className="flex flex-row items-center gap-2">
                     <input
                       type="radio"
