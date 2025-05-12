@@ -8,7 +8,7 @@ import { useGetProductsByIdQuery } from "@/shared/api/ProductsApi/ui/ProductsApi
 interface ButtonSizesProps {
   selectedSize?: string;
   onSizeSelect?: (size: string) => void;
-  id?: number;
+  sizes: Size[];
 }
 
 type Size = {
@@ -22,6 +22,7 @@ type Size = {
     size_id: number;
   };
   className?: string;
+  available: number;
 };
 
 // Обновленная функция для обработки обоих типов sizes
@@ -37,25 +38,7 @@ function extractSizeNames(sizesArray: Size[] | string[] | undefined): string[] {
   return (sizesArray as Size[]).map(size => size.name);
 }
 
-const ButtonSizes: React.FC<ButtonSizesProps> = ({ selectedSize = "", onSizeSelect, id }) => {
-  const { data, isLoading, error } = useGetProductsByIdQuery(Number(id));
-  const { data: sizes } = useGetSizesByProductQuery();
-
-  // Стандартные размеры
-  const standardSizes = extractSizeNames(data?.sizes);
-
-  // Фильтруем размеры, оставляя только стандартные
-  const filteredSizes = sizes?.filter(item =>
-      standardSizes.includes(item.name.toUpperCase())
-  ) || [];
-
-  // Если API не вернуло стандартные размеры, создаем их сами
-  const displaySizes = filteredSizes.length > 0 ? filteredSizes :
-      standardSizes.map(size => ({
-        id: size.toLowerCase(),
-        name: size,
-        className: ""
-      }));
+const ButtonSizes: React.FC<ButtonSizesProps> = ({ selectedSize = "", onSizeSelect, sizes }) => {
 
   // Функция для обработки выбора размера
   const handleSizeSelect = (size: string) => {
@@ -69,22 +52,15 @@ const ButtonSizes: React.FC<ButtonSizesProps> = ({ selectedSize = "", onSizeSele
     window.dispatchEvent(event);
   };
 
-  // Если данные загружаются или произошла ошибка
-  if (isLoading) return <div>Loading sizes...</div>;
-  if (error) return <div>Error loading sizes</div>;
-
-  // Проверяем, есть ли что отображать
-  if (!displaySizes || displaySizes.length === 0) {
-    return <div>No sizes available</div>;
-  }
 
   return (
       <div className="flex flex-wrap tablet:flex-nowrap gap-3">
-        {displaySizes.map((item, idx) => {
+        {sizes.map((item, idx) => {
           return (
               <ButtonSize
-                  key={idx}
+                  key={item.id}
                   name={item.name}
+                  disabled={item.available <= 0}
                   className={item.className}
                   onClick={() => handleSizeSelect(item.name)}
                   isActive={selectedSize === item.name}

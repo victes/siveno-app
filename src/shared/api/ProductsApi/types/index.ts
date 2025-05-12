@@ -43,6 +43,21 @@ export interface Product {
     pivot: { product_id: number; size_id: number };
   }[];
   wishlisted_by: [];
+
+  size_stocks: {
+    id: number;
+    size_id: number;
+    product_id: number;
+    stock: number;
+    available: number;
+    created_at: string;
+    updated_at: string;
+    size: {
+      id: number;
+      name: string;
+      slug: string;
+    };
+  }[];
 }
 
 export interface PaginationLink {
@@ -93,7 +108,7 @@ export interface IProduct {
   images: IProductImage[];
   colors: IColor[];
   color_options: IColorOptions[];
-  sizes?:  {name: string, id: number}[];
+  sizes:  Size[];
 
   preference: {
     size_label: string;
@@ -116,6 +131,21 @@ export interface IProduct {
   }[]; // Массив объектов с обмерами
 
   measurements: Record<string, string[]>; // Массив ключ значения параметра модели
+
+  size_stocks: {
+    id: number;
+    size_id: number;
+    product_id: number;
+    stock: number;
+    available: number;
+    created_at: string;
+    updated_at: string;
+    size: {
+      id: number;
+      name: string;
+      slug: string;
+    };
+  }[];
 }
 
 export interface IColor {
@@ -148,6 +178,7 @@ type Size = {
     product_id: number;
     size_id: number;
   };
+  available: number;
 };
 
 type Color = {

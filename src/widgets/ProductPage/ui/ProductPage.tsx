@@ -26,7 +26,6 @@ const ProductPage = () => {
   const [selectedSize, setSelectedSize] = useState<string>("");
 
   useEffect(() => {
-    console.log('aaa');
     const handleSizeSelected = (event: CustomEvent) => {
       if (event.detail?.size) {
         setSelectedSize(event.detail.size);
@@ -39,11 +38,14 @@ const ProductPage = () => {
 
   useEffect(() => {
     console.log('product_id изменился:', product_id);
-
     if (product_id) {
       ym(100833094, 'reachGoal', 'product_view', { productId: product_id });
     }
   }, []);
+
+  useEffect(() => {
+    console.log(products);
+  }, [products])
 
   const FormattedText = ({ text }: { text?: string }) => {
     if (!text) return null;
@@ -295,7 +297,7 @@ const ProductPage = () => {
                 <ButtonSizes
                     selectedSize={selectedSize}
                     onSizeSelect={handleSizeSelect}
-                    id={Number(product_id)}
+                    sizes={products.sizes}
                 />
               </div>
               <div className="product-page__colors">
@@ -313,6 +315,7 @@ const ProductPage = () => {
                   img={products.images[0]?.image_path || ""}
                   selectedSize={selectedSize}
                   selectedSizeId={selectedSizeId?.id}
+                  sizeStocks={products.size_stocks}
               />
             </div>
 
