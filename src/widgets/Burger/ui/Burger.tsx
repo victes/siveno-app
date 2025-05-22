@@ -74,7 +74,8 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
                   { label: "Футболки и топы", link: "/catalog-products/TshirtsAndLongsleeves" },
                   { label: "Нижнее бельё", link: "/catalog-products/Lingerie"},
                   { label: "Распродажа", link: "/catalog-products/sale" },
-                  
+                  { label: "Купальники", link: "/catalog-products/kupalniki"},
+                  { label: "Домашняя одежда", link: "/catalog-products/home"},
                 ].map(({ label, link }) => (
                   <li key={label} onClick={() => setOpen(prev => !prev)}>
                     <Link href={link} className="text-white hover:text-gray-300 transition-colors">
