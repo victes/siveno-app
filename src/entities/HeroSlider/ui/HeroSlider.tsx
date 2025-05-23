@@ -37,7 +37,7 @@ const HeroSlider = () => {
           className="w-full h-screen object-cover video-slider"
         >
           {/* Приоритет отдаем MP4 формату, так как он лучше поддерживается */}
-          <source src="/images/Hero/hero_video.mp4" type="video/mp4" />
+          <source src="/images/Hero/hero_video_second.mp4" type="video/mp4" />
           <source src="/images/Hero/hero_video.mov" type="video/quicktime" />
           Ваш браузер не поддерживает видео.
         </video>
