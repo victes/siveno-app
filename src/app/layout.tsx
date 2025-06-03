@@ -114,7 +114,10 @@ export default function RootLayout({
             <div className="flex flex-col min-h-screen">
               <ToastContainer />
               <Header />
+              <div className="pt-14">
+
               {children}
+              </div>
               <Footer />
             </div>
           </AuthProvider>

@@ -11,8 +11,8 @@ const StoriesCatalogPage: React.FC = () => {
   const { data: stories, isLoading, error } = useGetStoriesQuery();
 
   return (
-    <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
-      <div className="breadcrumbs text-sm mx-auto mb-[20px]">
+    <div className="flex flex-col gap-4 mt-2 justify-center max-sm:gap-2">
+      <div className="breadcrumbs text-sm mx-auto mb-5 max-sm:mb-0">
         <Breadcrumbs />
       </div>
 

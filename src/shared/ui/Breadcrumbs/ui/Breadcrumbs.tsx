@@ -39,7 +39,7 @@ const Breadcrumbs = () => {
                 <span className="text-gray-800">{displayName}</span>
               ) : (
                 <Link href={href === "/catalog-products" ? "/catalog-categories" : href} className="hover:underline">
-                  {displayName}
+                  {displayName} 
                 </Link>
               )}
             </li>

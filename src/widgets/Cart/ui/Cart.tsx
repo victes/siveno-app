@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useGetColorsByProductQuery } from "@/shared/api/ColorsApi/ui/ColorsApi";
 import ButtonColor from "@/shared/ui/ButtonColor";
 import ButtonSize from "@/shared/ui/ButtonSize";
+import Image from "next/image";
 
 const Cart = ({ click, setClick }: ICart) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -31,64 +32,84 @@ const Cart = ({ click, setClick }: ICart) => {
   useEffect(() => {
     if (click) {
       setAnimate(true); // Запуск анимации при открытии
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
     }
   }, [click]);
   const { data: colors } = useGetColorsByProductQuery();
   const { products, removeProduct, totalCost } = useProductStore();
-  const findColor = (id: number | undefined ) => {
-    return colors?.find(color => color.id == id)?.code
-
-  }
+  const findColor = (id: number | undefined) => {
+    return colors?.find(color => color.id == id)?.code;
+  };
   const openPayCard = () => {
     handleClose();
     setPayCard(prev => !prev);
-    ym(100833094, 'reachGoal', 'begin_checkout');
+    ym(100833094, "reachGoal", "begin_checkout");
   };
+
+  useEffect(() => {
+    useProductStore.getState().loadProducts();
+  }, []);
 
   return (
     <>
       {click && (
         <div
-          className="fixed w-screen h-screen bg-black bg-opacity-80 top-0 left-0 z-50 flex justify-end"
+          className="fixed w-screen h-screen bg-black bg-opacity-80 top-0 left-0 z-50 flex justify-end overflow-y-hidden max-h-screen"
           onClick={handleOutsideClick}
         >
           <div
             ref={modalRef}
-            className={`bg-white p-4 relative rounded-lg shadow-lg transform max-w-[800px] overflow-y-auto w-full flex flex-col gap-5 ${
+            className={`bg-white  p-4 max-sm:p-2.5 relative rounded-l-lg max-sm:rounded-none shadow-lg transform max-w-[800px] max-sm:max-w-full  overflow-y-auto  w-full flex flex-col gap-5 max-sm:gap-3 ${
               animate ? "translate-x-0" : "translate-x-full"
             } transition-transform duration-300`}
             onClick={e => e.stopPropagation()} // Предотвращает всплытие события клика
           >
-            <div className="flex justify-between items-center mb-5">
+            <div className="flex justify-between items-center mb-5 max-sm:mb-0">
               <h2 className="text-black text-[30px]">Корзина</h2>
               <RxCross2 className="cursor-pointer" size={30} onClick={() => handleClose()} />
             </div>
             <p className="uppercase">
               {products.length} Товаров на {totalCost()} руб.
             </p>
-            <div className="h-[700px] flex flex-col overflow-y-auto ">
+            <div className="h-full flex flex-col max-h-[calc(100vh-200px)] max-sm:max-h-[calc(100vh-180px)] overflow-y-auto ">
               {products.length > 0 ? (
                 products.map((product, index) => (
-                  <li key={index} className="flex gap-5 p-2 justify-between">
+                  <li key={index} className="flex gap-5 p-2 justify-between  relative max-sm:gap-3">
                     <Link href={`/product/${product.id}`} onClick={handleClose}>
-                      <div className="flex gap-5 items-center cursor-pointer">
+                      <div className="flex gap-5 items-center cursor-pointer max-sm:gap-3">
                         <div>
-                          <img src={product.img} alt={product.name} className="h-[300px] w-[200px] object-cover" />
+                          {product.img && (
+                            <Image
+                              src={product.img}
+                              alt={product?.name}
+                              width={200}
+                              height={300}
+                              className="h-[300px] max-sm:h-[180px] w-[200px] max-sm:w-[160px] max-sm:min-w-[160px] object-cover rounded"
+                              priority
+                            />
+                          )}
                         </div>
                         <div className="flex flex-col justify-start">
                           <span className="text-black">{product.name}</span>
-                          <span className="text-[30px] text-black">{product.price} руб</span>
-                          <div className='flex items-center gap-2'>
-                            {product?.selectedSize}
-                          </div>
+                          <span className="text-[30px] text-black max-sm:text-xl max-sm:font-semibold">
+                            {product.price} руб
+                          </span>
+                          <div className="flex items-center gap-2">{product?.selectedSize}</div>
                         </div>
                       </div>
                     </Link>
                     <div>
                       <MdDeleteOutline
-                        onClick={() => removeProduct(index)}
+                        onClick={() => removeProduct(product.id)}
                         size={30}
-                        className="m-2 cursor-pointer hover:text-red-500"
+                        className="m-2 cursor-pointer hover:text-red-500 max-sm:hidden"
+                      />
+                      <MdDeleteOutline
+                        onClick={() => removeProduct(product.id)}
+                        size={24}
+                        className="m-2 cursor-pointer hover:text-red-500 sm:hidden absolute top-0 right-0"
                       />
                     </div>
                   </li>

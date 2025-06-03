@@ -1,5 +1,5 @@
 "use client";
-import { useFavStore } from '@/entities/favouriteStore/store'
+import { useFavStore } from "@/entities/favouriteStore/store";
 import { useProductStore } from "@/entities/productStore/store";
 import { useAddToWishlistMutation } from "@/shared/api/ProfileApi/ProfileApi";
 import { useGetStoriesQuery } from "@/shared/api/StoriesApi/ui/StoriesApi";
@@ -124,6 +124,7 @@ interface Product {
   is_discount: boolean;
   discount_percentage: string;
   pivot: Pivot;
+  
 }
 
 interface ModalProps {
@@ -133,6 +134,28 @@ interface ModalProps {
 const Modal = ({ products }: ModalProps) => {
   const [addToWishlist] = useAddToWishlistMutation();
   const { addProduct } = useProductStore();
+
+  const addToCartLocal = (product: {
+    id: string;
+    name: string;
+    price: number;
+    img: string;
+    quantity: number;
+    selectedSize: string;
+  }) => {
+    if (typeof window === "undefined") return;
+
+    const existing = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const foundIndex = existing.findIndex((p: any) => p.id === product.id);
+    if (foundIndex !== -1) {
+      existing[foundIndex].quantity += 1;
+    } else {
+      existing.push(product);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(existing));
+  };
 
   return (
     <div className="absolute top-20 left-5 bg-white p-3 rounded-lg shadow-md max-w-[400px] w-full">
@@ -163,7 +186,7 @@ const Modal = ({ products }: ModalProps) => {
             className="border border-gray-300 p-2 rounded-full hover:bg-gray-100"
             aria-label="Добавить в корзину"
             onClick={() =>
-              addProduct({
+              addToCartLocal({
                 id: product.id.toString(),
                 name: product.name,
                 price: product.price,
@@ -185,7 +208,7 @@ const StoriesCard = ({ id, href, img, name, cart }: IStoriesCard) => {
   const { data: stories } = useGetStoriesQuery();
   const products = stories?.flatMap(story => story.products) || [];
   const [click, setClick] = useState(false);
-  const {addFav} = useFavStore();
+  const { addFav } = useFavStore();
   return (
     <div key={id} className="stories-card relative transition-all duration-300 ">
       <div className="relative group">

@@ -66,11 +66,11 @@ const StoriesPage = () => {
           }
         />
       </div>
-      <div className="hidden flex-col gap-4 mt-[10px] laptop:flex justify-center mb-[70px]">
-        <div className="breadcrumbs text-sm mb-[20px]">
+      <div className="hidden flex-col gap-4 mt-2 max-sm:gap-2 laptop:flex justify-center ">
+        <div className="breadcrumbs text-sm mb-5">
           <BtnBack />
         </div>
-        <div className="mb-[20px]">
+        <div className="mb-5 max-sm:mb-0">
           <h1 className="title-h1">{stories && stories[0].title}</h1>
         </div>
         <div className="stories-card-container">

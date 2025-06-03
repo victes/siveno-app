@@ -8,6 +8,7 @@ export interface Category {
   created_at: string;
   updated_at: string;
   children?: IChildren[];
+  stickers: any;
 }
 
 export interface IChildren {

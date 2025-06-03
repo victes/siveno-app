@@ -262,8 +262,8 @@ const ProductPage = () => {
   if (!products) return <p>Товар не найден</p>;
 
   return (
-      <section className="mb-[60px] pb-[20px]">
-        <div className="text-sm mx-auto mb-[30px]">
+      <section className="  pb-5 ">
+        <div className="text-sm mx-auto mb-[30px] border">
           <BtnBack />
         </div>
 
@@ -272,8 +272,8 @@ const ProductPage = () => {
             <ProductSlider carousel={carousel || []} />
           </div>
 
-          <div className="flex flex-col gap-[20px] items-center tablet:mx-auto tablet:max-w-[500px]">
-            <div className="flex flex-col items-center justify-center gap-[20px]">
+          <div className="flex flex-col gap-5 items-center tablet:mx-auto tablet:max-w-[500px]">
+            <div className="flex flex-col items-center justify-center gap-5">
               <h1 className="title-h1 lineyka">{products.name}</h1>
               <div className="product-page__price_block flex flex-row-reverse">
                 { products.discount_percent && products.discount_percent > 0 && (

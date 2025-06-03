@@ -52,9 +52,9 @@ const Header = () => {
   }, [token]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-sm py-2' : 'bg-white py-4'}`}>
+    <header className={`fixed   top-0 left-0 right-0 z-50 transition-all duration-300 py-4 ${scrolled ? 'bg-white shadow-sm ' : 'bg-white '}`}>
       <Container>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between  h-full">
           {/* Левая часть шапки */}
           <div className="flex items-center">
             <button 

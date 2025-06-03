@@ -34,7 +34,7 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
               src={item.image_path}
               priority={true}
               alt={`Slide ${idx + 1}`}
-              className="object-cover h-full w-auto  max-w-full rounded-sm"
+              className="object-cover h-full w-auto  max-w-full rounded"
               unoptimized={item.image_path.startsWith("http://") || item.image_path.startsWith("https://")}
             />
           </div>
@@ -56,19 +56,19 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
       </button>
 
       {/* Thumbnails - фиксированное расположение, всегда снизу */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-4 z-20">
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-4 z-20 items-center">
         {carousel.map((item, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
-            className={`${currentIndex === idx ? "scale-150" : "border-transparent"} rounded-sm transition`}
+            className={`${currentIndex === idx ? "scale-150" : "border-transparent"} rounded-sm transition `}
           >
             {/* <img
               src={item.image_path}
               alt={`Thumbnail ${idx + 1}`}
               className="h-20 w-20 flex-shrink-0 object-cover rounded-sm"
             /> */}
-            <h2 className="h-5 w-5 bg-white mb-5 rounded-2xl"></h2>
+            <h2 className="h-5 w-5 bg-white mb-5 rounded-full max-sm:h-3 max-sm:w-3 max-sm:mb-3"></h2>
           </button>
         ))}
       </div>

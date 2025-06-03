@@ -147,12 +147,12 @@ const CatalogProductsPage = () => {
 
   // @ts-ignore
   return (
-    <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
-      <div className="breadcrumbs text-sm mx-auto mb-[70px]">
+    <div className="flex flex-col gap-4 mt-2 max-sm:gap-2 justify-center ">
+      <div className="breadcrumbs text-sm mx-auto mb-5 max-sm:mb-0">
         <Breadcrumbs />
       </div>
 
-      <div className="mb-[40px]">
+      <div className="mb-5 max-sm:mb-0">
         <h1 className="title-h1">{category?.title || "Категория не найдена"}</h1>
       </div>
 
@@ -205,6 +205,7 @@ const CatalogProductsPage = () => {
               price={Number(item.price).toFixed()}
               discount_percent={item.discount_percent}
               original_price={item.original_price}
+              stickers={item.stickers?.[0]?.name}
             />
           ))
         ) : (

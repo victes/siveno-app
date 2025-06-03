@@ -18,6 +18,7 @@ export interface Product {
   measurements: Record<string, string[]>;
   created_at: string;
   updated_at: string;
+  stickers:any;
   category: {
     id: number;
     slug: string;
@@ -202,6 +203,7 @@ type Category = {
   updated_at: string;
   image: string;
   is_sale: number;
+  stickers:any;
 };
 
 export type IPopular = {

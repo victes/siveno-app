@@ -179,9 +179,9 @@ const AllProductsPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 mt-[10px] justify-center mb-[70px]">
+    <div className="flex flex-col gap-4 mt-2 max-sm:gap-2 justify-center ">
       {/* Хлебные крошки */}
-      <div className="breadcrumbs text-sm mx-auto mb-[70px]">
+      <div className="breadcrumbs text-sm mx-auto mb-5 max-sm:mb-0">
         <nav aria-label="breadcrumb">
           <ul className="flex space-x-2 text-gray-600">
             <li>
@@ -198,7 +198,7 @@ const AllProductsPage = () => {
       </div>
 
       {/* Заголовок */}
-      <div className="mb-[40px]">
+      <div className="mb-10 max-sm:mb-0">
         <h1 className="title-h1">Каталог</h1>
       </div>
 
@@ -255,19 +255,20 @@ const AllProductsPage = () => {
             price={Number(item.price).toFixed()}
             discount_percent={item.discount_percent}
             original_price={item.original_price}
+            stickers={item.stickers?.[0]?.name}
           />
         ))}
       </div>
 
       {/* Элемент для отслеживания прокрутки */}
-      <div ref={loaderRef} className="w-full py-8 text-center">
+      <div ref={loaderRef} className="w-full py-8 max-sm:py-4 text-center">
         {isLoadingMore && (
-          <div className="flex justify-center items-center py-4">
+          <div className="flex justify-center items-center py-4 max-sm:py-0">
             <div className="spinner w-8 h-8 border-2 border-[rgba(0,0,0,0.1)] border-t-[#423c3d] rounded-full animate-spin"></div>
           </div>
         )}
         {!hasMore && allProducts.length > 0 && (
-          <p className="text-center text-gray-500 py-4">Все товары загружены</p>
+          <p className="text-center text-gray-500 py-4 max-sm:py-0">Все товары загружены</p>
         )}
       </div>
     </div>

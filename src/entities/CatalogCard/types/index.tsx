@@ -1,8 +1,8 @@
-import {IProductImage} from "@/shared/api/ProductsApi/types";
+import { IProductImage } from "@/shared/api/ProductsApi/types";
 
 export interface ICCard {
   id: number;
-  images?: {image_path: string;}[];
+  images?: { image_path: string }[];
   img?: string;
   name: string;
   href: string;
@@ -10,4 +10,5 @@ export interface ICCard {
   del?: boolean;
   discount_percent?: number;
   original_price?: number;
+  stickers?: string;
 }
