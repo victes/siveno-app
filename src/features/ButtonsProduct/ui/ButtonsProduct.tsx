@@ -20,9 +20,19 @@ interface IProduct {
     stock: number;
     available: number;
   }[];
+  stickers: any;
 }
 
-const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize, selectedSizeId, sizeStocks = [] }: IProduct) => {
+const ButtonsProduct = ({
+  id,
+  name,
+  price,
+  img,
+  selectedSize: propSelectedSize,
+  selectedSizeId,
+  sizeStocks = [],
+  stickers=[]
+}: IProduct) => {
   const { addProduct } = useProductStore();
   const { addFav } = useFavStore();
   const [addToWishlist] = useAddToWishlistMutation();
@@ -68,15 +78,12 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize, 
     }
 
     // Проверка: есть ли остаток по выбранному размеру
-    const stockInfo = sizeStocks.find(
-      (s) => s.size_id === selectedSizeId
-    );
+    const stockInfo = sizeStocks.find(s => s.size_id === selectedSizeId);
 
     if (!stockInfo || stockInfo.available <= 0) {
       alert("Товара в выбранном размере нет в наличии");
       return;
     }
-
 
     if (name?.trim() && price) {
       addProduct({
@@ -87,6 +94,7 @@ const ButtonsProduct = ({ id, name, price, img, selectedSize: propSelectedSize, 
         selectedSize,
         quantity: 1,
         selectedSizeId,
+        stickers,
       });
     }
   };

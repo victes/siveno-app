@@ -76,10 +76,10 @@ const Cart = ({ click, setClick }: ICart) => {
             <div className="h-full flex flex-col max-h-[calc(100vh-200px)] max-sm:max-h-[calc(100vh-180px)] overflow-y-auto ">
               {products.length > 0 ? (
                 products.map((product, index) => (
-                  <li key={index} className="flex gap-5 p-2 justify-between  relative max-sm:gap-3">
+                  <li key={index} className="flex gap-5 p-2 justify-between  relative max-sm:gap-3 max-sm:px-0 ">
                     <Link href={`/product/${product.id}`} onClick={handleClose}>
                       <div className="flex gap-5 items-center cursor-pointer max-sm:gap-3">
-                        <div>
+                        <div className="relative">
                           {product.img && (
                             <Image
                               src={product.img}
@@ -90,6 +90,11 @@ const Cart = ({ click, setClick }: ICart) => {
                               priority
                             />
                           )}
+                        {product?.stickers?.[0]?.name && (
+                          <span className="absolute top-0 py-1  px-2 rounded-br-lg flex items-center justify-center text-white font-medium rounded-tl text-xs left-0 bg-primary/80 ">
+                            {product?.stickers?.[0]?.name}
+                          </span>
+                        )}
                         </div>
                         <div className="flex flex-col justify-start">
                           <span className="text-black">{product.name}</span>
@@ -100,7 +105,7 @@ const Cart = ({ click, setClick }: ICart) => {
                         </div>
                       </div>
                     </Link>
-                    <div>
+                    <div className="max-sm:absolute top-0 right-0">
                       <MdDeleteOutline
                         onClick={() => removeProduct(product.id)}
                         size={30}
@@ -109,7 +114,7 @@ const Cart = ({ click, setClick }: ICart) => {
                       <MdDeleteOutline
                         onClick={() => removeProduct(product.id)}
                         size={24}
-                        className="m-2 cursor-pointer hover:text-red-500 sm:hidden absolute top-0 right-0"
+                        className="m-2 cursor-pointer hover:text-red-500 sm:hidden "
                       />
                     </div>
                   </li>

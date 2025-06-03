@@ -11,6 +11,7 @@ interface Product {
   selectedSizeId?: number;
   color_id?: number;
   images?: { image_path: string }[];
+  stickers:any;
 }
 
 interface ProductStore {

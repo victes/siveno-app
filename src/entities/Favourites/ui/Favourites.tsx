@@ -12,6 +12,7 @@ interface Product {
   name: string;
   price: number;
   images: ProductImage[];
+  stickers: any;
 }
 
 const Favourites = () => {

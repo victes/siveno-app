@@ -316,6 +316,7 @@ const ProductPage = () => {
                   selectedSize={selectedSize}
                   selectedSizeId={selectedSizeId?.id}
                   sizeStocks={products.size_stocks}
+                  stickers={products.stickers}
               />
             </div>
 

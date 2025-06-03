@@ -95,6 +95,7 @@ export interface IProductImage {
 }
 
 export interface IProduct {
+  stickers: unknown;
   id: number;
   name: string;
   category_id: number;
