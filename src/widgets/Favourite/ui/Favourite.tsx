@@ -8,7 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import { IFav } from "../types/type";
 import Link from "next/link";
-import {IoCartOutline} from "react-icons/io5";
+import { IoCartOutline } from "react-icons/io5";
 
 interface Product {
   id: string;
@@ -17,6 +17,7 @@ interface Product {
   img?: string | undefined; // Новое поле для строки изображения
   selectedSize?: string; //
   quantity?: number; // Новое поле для количества
+  stickers?: any;
 }
 
 const Favourite = ({ click, setClick }: IFav) => {
@@ -39,14 +40,15 @@ const Favourite = ({ click, setClick }: IFav) => {
     }
   };
 
-  const handleAddProduct = (product: Product ) => {
+  const handleAddProduct = (product: Product) => {
     addProduct({
       id: product.id.toString() || "",
       name: product.name || "",
       price: product.price || 0,
-      img: product.img || '',
+      img: product.img || "",
       selectedSize: "",
       quantity: 1,
+      stickers: product.stickers,
     });
   };
 
@@ -103,8 +105,11 @@ const Favourite = ({ click, setClick }: IFav) => {
                     >
                       Добавить в корзину
                     </button>
-                    <button className='max-tablet:block tablet:hidden text-[25px] hover:text-primary duration-300 ease-in-out' onClick={() => handleAddProduct(product)}>
-                      <IoCartOutline/>
+                    <button
+                      className="max-tablet:block tablet:hidden text-[25px] hover:text-primary duration-300 ease-in-out"
+                      onClick={() => handleAddProduct(product)}
+                    >
+                      <IoCartOutline />
                     </button>
                   </div>
                 </li>
