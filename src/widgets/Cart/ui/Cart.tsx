@@ -99,7 +99,7 @@ const Cart = ({ click, setClick }: ICart) => {
                         <div className="flex flex-col justify-start">
                           <span className="text-black">{product.name}</span>
                           <span className="text-[30px] text-black max-sm:text-xl max-sm:font-semibold">
-                            {product.price} руб
+                            {product.price}  руб
                           </span>
                           <div className="flex items-center gap-2">{product?.selectedSize}</div>
                         </div>
