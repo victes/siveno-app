@@ -3,6 +3,7 @@ import React from "react";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { FaTelegram } from "react-icons/fa";
+import { useGetCategoriesMenuQuery } from "@/shared/api/CategoriesApi/CategoriesApi";
 
 // Интерфейс для пропсов
 export interface IBurger {
@@ -11,6 +12,13 @@ export interface IBurger {
 }
 
 const Burger = ({ onOpen, setOpen }: IBurger) => {
+  const {
+    data: categories,
+    isLoading,
+    error,
+  } = useGetCategoriesMenuQuery(undefined, {
+    refetchOnMountOrArgChange: false, // Cache’dan olish uchun
+  });
   return (
     <>
       {onOpen ? (
@@ -24,7 +32,9 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
             >
               <RxCross1 size={30} className="cursor-pointer md:text-[40px]" />
             </button>
-            <a href="tel:+79134702311" target="_blank" className="text-sm text-[#fff] whitespace-nowrap">8 (913) 470-23-11</a>
+            <a href="tel:+79134702311" target="_blank" className="text-sm text-[#fff] whitespace-nowrap">
+              8 (913) 470-23-11
+            </a>
             {/* Социальные сети в правом верхнем углу */}
             <div className="flex items-center space-x-6">
               <a
@@ -61,28 +71,39 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
             <div className="w-full">
               <h3 className="text-xl font-semibold mb-4 text-white">КАТЕГОРИИ</h3>
               <ul className="space-y-3">
-                {[
-                  { label: 'Новинки', link: '/catalog-products/new'},
+                {/* {JSON.stringify(categories)} */}
+                {categories?.map((cat: any) => (
+                  <li key={cat.id} onClick={() => setOpen(false)}>
+                    <Link
+                      href={`/catalog-products/${cat.slug}`}
+                      className="text-white hover:text-gray-300 transition-colors"
+                    >
+                      {cat.title}
+                    </Link>
+                  </li>
+                ))}
+                {/* {[
+                  { label: "Новинки", link: "/catalog-products/new" },
                   { label: "Все изделия", link: "/catalog-products" },
                   { label: "Свитеры и кардиганы", link: "/catalog-products/SweatersAndCardigans" },
                   { label: "Пиджаки и жакеты", link: "/catalog-products/Jackets" },
                   { label: "Брюки", link: "/catalog-products/TrousersAndShorts" },
                   { label: "Рубашки и блузы", link: "/catalog-products/ShirtsAndBlouses" },
-                  { label: "Юбки", link: "/catalog-products/Skirts"},
+                  { label: "Юбки", link: "/catalog-products/Skirts" },
                   { label: "Платья", link: "/catalog-products/Dresses" },
-                  { label: "Толстовки и худи", link: "/catalog-products/Hoodies"},
+                  { label: "Толстовки и худи", link: "/catalog-products/Hoodies" },
                   { label: "Футболки и топы", link: "/catalog-products/TshirtsAndLongsleeves" },
-                  { label: "Нижнее бельё", link: "/catalog-products/Lingerie"},
+                  { label: "Нижнее бельё", link: "/catalog-products/Lingerie" },
                   { label: "Распродажа", link: "/catalog-products/sale" },
-                  { label: "Купальники", link: "/catalog-products/kupalniki"},
-                  { label: "Домашняя одежда", link: "/catalog-products/home"},
+                  { label: "Купальники", link: "/catalog-products/kupalniki" },
+                  { label: "Домашняя одежда", link: "/catalog-products/home" },
                 ].map(({ label, link }) => (
                   <li key={label} onClick={() => setOpen(prev => !prev)}>
                     <Link href={link} className="text-white hover:text-gray-300 transition-colors">
                       {label}
                     </Link>
                   </li>
-                ))}
+                ))} */}
               </ul>
             </div>
 

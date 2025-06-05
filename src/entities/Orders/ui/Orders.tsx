@@ -70,7 +70,7 @@ const Orders = () => {
   return (
       <div className="max-w-[800px] w-full flex justify-start flex-wrap gap-[30px] text-black">
         {data.map((product:TProduct) => (
-          <div className='flex flex-col justify-between gap-[20px] p-[20px]'>
+          <div className='flex flex-col justify-between gap-[20px] p-[20px]' key={product?.id}>
             <p className='text-xl text-[#333] text-left'>Заказ № {product?.id}</p>
             <div className="max-w-[500px] flex justify-start gap-[20px] overflow-x-auto ">
               {

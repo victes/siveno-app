@@ -15,7 +15,7 @@ import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
 import { useCalculateRussianPostMutation, useCalculateCdekMutation } from "@/shared/api/CalculateApi/CalculateApi";
 import { useGetPromoQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
-import 'react-dadata/dist/react-dadata.css';
+import "react-dadata/dist/react-dadata.css";
 import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from "react-dadata";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -41,8 +41,14 @@ const addressSchema = z.object({
 type AddressFormData = z.infer<typeof addressSchema>;
 
 const Modal = ({ click, setClick }: IModal) => {
-  const [addAddresses, {isLoading: addAddressLoading} ] = useAddAddressesMutation();
-  const {handleSubmit, formState: { errors }, setError, clearErrors, setValue} = useForm<AddressFormData>({
+  const [addAddresses, { isLoading: addAddressLoading }] = useAddAddressesMutation();
+  const {
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+    setValue,
+  } = useForm<AddressFormData>({
     resolver: zodResolver(addressSchema),
   });
 
@@ -159,11 +165,15 @@ const Modal = ({ click, setClick }: IModal) => {
                 if (!query) return suggestion.value; // если нет запроса, показываем обычное значение
 
                 const highlightMatch = (text: string) => {
-                  const regex = new RegExp(`(${query})`, 'gi');
+                  const regex = new RegExp(`(${query})`, "gi");
                   return text.split(regex).map((part, index) =>
                     regex.test(part) ? (
-                      <span key={index} className="bg-yellow-200">{part}</span>
-                    ) : part
+                      <span key={index} className="bg-yellow-200">
+                        {part}
+                      </span>
+                    ) : (
+                      part
+                    ),
                   );
                 };
 
@@ -173,11 +183,10 @@ const Modal = ({ click, setClick }: IModal) => {
                       <span className="text-sm text-gray-500">({suggestion.data.postal_code}) </span>
                     )}
                     {highlightMatch(suggestion.value)}
-
                   </div>
                 );
               }}
-              inputProps={{placeholder: "Начните вводить адрес..", }}
+              inputProps={{ placeholder: "Начните вводить адрес.." }}
             />
           </div>
 
@@ -223,8 +232,8 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [orderId, setOrderId] = useState<number | null>(null);
   const { token } = useAuth();
   const router = useRouter();
-  const [createOrder, {isLoading: isCreating}] = useCreateOrderMutation();
-  const [payOrder, {isLoading: isPaying}] = usePayOrderMutation();
+  const [createOrder, { isLoading: isCreating }] = useCreateOrderMutation();
+  const [payOrder, { isLoading: isPaying }] = usePayOrderMutation();
   const [postCalc] = useCalculateRussianPostMutation();
   const [cdekCalc] = useCalculateCdekMutation();
   const [cancelOrder] = useCancelOrderMutation();
@@ -235,13 +244,12 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       setAnimate(false);
       setTimeout(() => onOpen(false), 300);
-      setDisableBtn(false)
+      setDisableBtn(false);
     }
   };
 
   const handleDiscount = (value: string) => {
     if (promos) {
-
       setDiscountName("");
       setDiscount(0);
       setDisableBtn(true);
@@ -281,7 +289,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       return;
     }
 
-    if (delivery !== 'pickup' && !selectedAddress) {
+    if (delivery !== "pickup" && !selectedAddress) {
       alert("Выберите адрес доставки");
       return;
     }
@@ -357,7 +365,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
               const property = "total-rate";
               console.log(postCalcData);
               setDeliveryPrice(postCalcData[property] / 100);
-              setDeliveryDate(postCalcData['delivery-time']['max-days'] + ' дня')
+              setDeliveryDate(postCalcData["delivery-time"]["max-days"] + " дня");
               setDelivery(delivery_type);
             } else if (delivery_type == "cdek" || delivery_type == "cdek_pickup") {
               const { data } = await cdekCalc({
@@ -374,7 +382,12 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
               });
               console.log(data);
               setDeliveryPrice(data?.tariff_codes?.[0]?.delivery_sum ?? 0);
-              setDeliveryDate(data?.tariff_codes?.[0].period_min + '-' + data?.tariff_codes?.[0].period_max + ' дня')
+              setDeliveryDate(
+                (data?.tariff_codes?.[0]?.period_min ? data?.tariff_codes?.[0]?.period_min : 1) +
+                  "-" +
+                  (data?.tariff_codes?.[0]?.period_max ? data?.tariff_codes?.[0]?.period_max : 2) +
+                  " дня",
+              );
               setDelivery(delivery_type);
             }
           } catch (error) {
@@ -388,9 +401,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   };
 
   const handleChange = (e: string) => {
-    setPromo(e)
-    setDisableBtn(false)
-  }
+    setPromo(e);
+    setDisableBtn(false);
+  };
 
   const handleCancelOrder = async () => {
     if (orderId) {
@@ -433,7 +446,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 {activeAuthTab === "login" ? (
                   <LoginPage isCart={true} registerButtonClicked={() => setActiveAuthTab("register")} />
                 ) : (
-                  <RegisterPage isCart={true} loginButtonClicked={() => setActiveAuthTab("login")}/>
+                  <RegisterPage isCart={true} loginButtonClicked={() => setActiveAuthTab("login")} />
                 )}
               </div>
             ) : (
@@ -476,21 +489,23 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 )}
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Доставка</h2>
-                  { deliveryServices && deliveryServices.length > 0 && (
+                  {deliveryServices &&
+                    deliveryServices.length > 0 &&
                     deliveryServices.map(deliveryService => (
-                        <label key={deliveryService.slug} className="flex flex-row items-center gap-2">
-                          <input
-                            type="radio"
-                            name="delivery"
-                            value={deliveryService.slug}
-                            checked={deliveryService.slug === delivery}
-                            onChange={() => (delivery !== deliveryService.slug ? delivery_price(deliveryService.slug) : "")}
-                            className="w-[15px] h-[15px]"
-                          />
-                          <p>{ deliveryService.name }</p>
-                        </label>
-                      ))
-                  )}
+                      <label key={deliveryService.slug} className="flex flex-row items-center gap-2">
+                        <input
+                          type="radio"
+                          name="delivery"
+                          value={deliveryService.slug}
+                          checked={deliveryService.slug === delivery}
+                          onChange={() =>
+                            delivery !== deliveryService.slug ? delivery_price(deliveryService.slug) : ""
+                          }
+                          className="w-[15px] h-[15px]"
+                        />
+                        <p>{deliveryService.name}</p>
+                      </label>
+                    ))}
                   <label className="flex flex-row items-center gap-2">
                     <input
                       type="radio"
@@ -531,20 +546,20 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Промокод</h2>
                   {disableBtn && <span className="text-red-500 text-sm">Промокод не найден</span>}
-                  <div className='relative'>
-                  <input
-                    type="text"
-                    placeholder="Введите промокод"
-                    className="bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none"
-                    name="promo"
-                    onChange={e => handleChange(e.target.value)}
-                  />
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Введите промокод"
+                      className="bg-white border-2 w-full h-[50px] px-3 text-[18px] outline-none"
+                      name="promo"
+                      onChange={e => handleChange(e.target.value)}
+                    />
                     <button
-                        disabled={disableBtn}
-                        className={`bg-gray-100 ${disableBtn ? "text-[#999]" :'text-[#423C3D]'}  ${!disableBtn && 'hover:bg-gray-300'} py-2.5 px-2 rounded-[8px] absolute top-[50%] translate-y-[-50%] right-[3px]`}
-                        onClick={() => handleDiscount(promo)}
+                      disabled={disableBtn}
+                      className={`bg-gray-100 ${disableBtn ? "text-[#999]" : "text-[#423C3D]"}  ${!disableBtn && "hover:bg-gray-300"} py-2.5 px-2 rounded-[8px] absolute top-[50%] translate-y-[-50%] right-[3px]`}
+                      onClick={() => handleDiscount(promo)}
                     >
-                     Применить
+                      Применить
                     </button>
                   </div>
                 </div>
@@ -552,7 +567,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Ваш заказ</h2>
                   <p>Товаров на - {totalCost()} ₽</p>
                   <p>Скидка - {discount} %</p>
-                  <p>Доставка {deliveryDate && ('(' + deliveryDate + ')')}- {deliveryPrice} ₽</p>
+                  <p>
+                    Доставка {deliveryDate && "(" + deliveryDate + ")"}- {deliveryPrice} ₽
+                  </p>
                   <p>Итого - {fullPrice()} ₽</p>
                 </div>
                 <button

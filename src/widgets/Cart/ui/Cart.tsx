@@ -87,7 +87,7 @@ const Cart = ({ click, setClick }: ICart) => {
                               width={200}
                               height={300}
                               className="h-[300px] max-sm:h-[180px] w-[200px] max-sm:w-[160px] max-sm:min-w-[160px] object-cover rounded"
-                              priority
+                              loading="lazy"
                             />
                           )}
                           {product?.stickers?.[0]?.name && (

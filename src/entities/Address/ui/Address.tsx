@@ -37,7 +37,6 @@ interface IUpdModal {
   };
 }
 
-
 const addressSchema = z.object({
   state: z.string().min(1, "Область обязательна"),
   city: z.string().min(1, "Город обязателен"),
@@ -50,8 +49,14 @@ const addressSchema = z.object({
 type AddressFormData = z.infer<typeof addressSchema>;
 
 const Modal = ({ click, setClick }: IModal) => {
-  const [addAddresses, {isLoading: addAddressLoading} ] = useAddAddressesMutation();
-  const {handleSubmit, formState: { errors }, setError, clearErrors, setValue} = useForm<AddressFormData>({
+  const [addAddresses, { isLoading: addAddressLoading }] = useAddAddressesMutation();
+  const {
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+    setValue,
+  } = useForm<AddressFormData>({
     resolver: zodResolver(addressSchema),
   });
 
@@ -123,44 +128,48 @@ const Modal = ({ click, setClick }: IModal) => {
             <button onClick={() => setClick(false)}>
               <RxCross2 className="absolute top-0 right-0 cursor-pointer m-3" size={30} />
             </button>
-              <div className="space-y-6">
-                <AddressSuggestions
-                  token="3aa9b0c3d53a9f40a2955b76f7048baadc22c47a"
-                  value={addressData}
-                  onChange={value => {
-                    setAddressData(value);
-                    clearErrors();
-                  }}
-                  inputProps={{placeholder: "Начните вводить адрес.."}}
-                  renderOption={(suggestion, query) => {
-                    if (!query) return suggestion.value; // если нет запроса, показываем обычное значение
+            <div className="space-y-6">
+              <AddressSuggestions
+                token="3aa9b0c3d53a9f40a2955b76f7048baadc22c47a"
+                value={addressData}
+                onChange={value => {
+                  setAddressData(value);
+                  clearErrors();
+                }}
+                inputProps={{ placeholder: "Начните вводить адрес.." }}
+                renderOption={(suggestion, query) => {
+                  if (!query) return suggestion.value; // если нет запроса, показываем обычное значение
 
-                    const highlightMatch = (text: string) => {
-                      const regex = new RegExp(`(${query})`, 'gi');
-                      return text.split(regex).map((part, index) =>
-                        regex.test(part) ? (
-                          <span key={index} className="bg-yellow-200">{part}</span>
-                        ) : part
-                      );
-                    };
-
-                    return (
-                      <div>
-                        {suggestion.data.postal_code && (
-                          <span className="text-sm text-gray-500">({suggestion.data.postal_code}) </span>
-                        )}
-                        {highlightMatch(suggestion.value)}
-                      </div>
+                  const highlightMatch = (text: string) => {
+                    const regex = new RegExp(`(${query})`, "gi");
+                    return text.split(regex).map((part, index) =>
+                      regex.test(part) ? (
+                        <span key={index} className="bg-yellow-200">
+                          {part}
+                        </span>
+                      ) : (
+                        part
+                      ),
                     );
-                  }}
-                />
-              </div>
+                  };
 
-              <div className="text-red-500 text-sm space-y-1">
-                {Object.entries(errors).map(([field, error]) => (
-                  <p key={field}>{error?.message}</p>
-                ))}
-              </div>
+                  return (
+                    <div>
+                      {suggestion.data.postal_code && (
+                        <span className="text-sm text-gray-500">({suggestion.data.postal_code}) </span>
+                      )}
+                      {highlightMatch(suggestion.value)}
+                    </div>
+                  );
+                }}
+              />
+            </div>
+
+            <div className="text-red-500 text-sm space-y-1">
+              {Object.entries(errors).map(([field, error]) => (
+                <p key={field}>{error?.message}</p>
+              ))}
+            </div>
 
             <button
               type="button"
@@ -201,7 +210,6 @@ const formSchema = z.object({
 });
 
 type FormFields = z.infer<typeof formSchema>;
-
 
 const UpdateModal = ({ click, setClick, item }: IUpdModal) => {
   const [updateAddresses] = useUpdateAddressesMutation();
@@ -365,8 +373,7 @@ const Address = () => {
         <p>Сохранненых адресов нет</p>
       )}
       <button className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full" onClick={() => setClick(true)}>
-        {" "}
-        Добавить новый адрес{" "}
+        Добавить новый адрес
       </button>
 
       {click ? <Modal click={click} setClick={() => setClick(prev => !prev)} /> : ""}

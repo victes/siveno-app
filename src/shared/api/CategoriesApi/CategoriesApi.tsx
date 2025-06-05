@@ -13,7 +13,10 @@ export const CategoriesApi = createApi({
     getCategories: builder.query<Category[], void>({
       query: () => "categories", // эндпоинт для получения списка категорий
     }),
+    getCategoriesMenu: builder.query<Category[], void>({
+      query: () => "categories/menu",
+    }),
   }),
 });
 
-export const { useGetCategoriesQuery } = CategoriesApi; // экспорт хука
+export const { useGetCategoriesQuery ,useGetCategoriesMenuQuery} = CategoriesApi; // экспорт хука
