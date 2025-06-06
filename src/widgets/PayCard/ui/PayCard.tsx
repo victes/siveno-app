@@ -425,7 +425,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     <>
       {open && (
         <div
-          className="fixed w-screen h-screen bg-black bg-opacity-20 top-0 left-0 flex justify-end z-[60]"
+          className="fixed w-screen h-dvh bg-black bg-opacity-20 top-0 left-0 flex justify-end z-[60]"
           onClick={handleOutsideClick}
         >
           <div

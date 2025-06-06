@@ -32,9 +32,11 @@ const Cart = ({ click, setClick }: ICart) => {
   useEffect(() => {
     if (click) {
       setAnimate(true); // Запуск анимации при открытии
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("no-scroll");
+      document.documentElement.classList.add("no-scroll");
     } else {
-      document.body.style.overflow = "auto";
+      document.body.classList.remove("no-scroll");
+      document.documentElement.classList.remove("no-scroll");
     }
   }, [click]);
   const { data: colors } = useGetColorsByProductQuery();
@@ -56,7 +58,7 @@ const Cart = ({ click, setClick }: ICart) => {
     <>
       {click && (
         <div
-          className="fixed w-screen h-screen bg-black bg-opacity-80 top-0 left-0 z-50 flex justify-end overflow-y-hidden max-h-screen"
+          className="fixed w-screen h-dvh bg-black bg-opacity-80 top-0 left-0 z-50 flex justify-end overflow-y-hidden max-h-screen"
           onClick={handleOutsideClick}
         >
           <div
@@ -73,7 +75,7 @@ const Cart = ({ click, setClick }: ICart) => {
             <p className="uppercase">
               {products.length} Товаров на {totalCost()} руб.
             </p>
-            <div className="h-full flex flex-col max-h-[calc(100vh-200px)] max-sm:max-h-[calc(100vh-180px)] overflow-y-auto ">
+            <div className="h-full flex flex-col max-h-[calc(100dvh-200px)]  overflow-y-auto ">
               {products.length > 0 ? (
                 products.map((product, index) => (
                   <li key={index} className="flex gap-5 p-2 justify-between  relative max-sm:gap-3 max-sm:px-0 ">
