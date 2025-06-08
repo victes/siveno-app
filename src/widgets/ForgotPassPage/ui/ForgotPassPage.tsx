@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { useResendResetPasswordMutation } from "@/shared/api/ForgotPassApi/ForgotPassApi";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -11,9 +14,11 @@ const formSchema = z.object({
   }),
 });
 
+
 type FormFields = z.infer<typeof formSchema>;
 
 const ForgotPassPage = () => {
+  const router = useRouter();
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -21,9 +26,23 @@ const ForgotPassPage = () => {
     },
   });
 
-  function onSubmit(values: FormFields) {
-    console.log("Восстановление пароля для:", values.email);
-    // Здесь можно добавить вызов API для отправки email на сервер
+  const [resendResetPassword] = useResendResetPasswordMutation();
+
+  async function onSubmit(values: FormFields) {
+    try {
+      const result = await resendResetPassword({ email: values.email }).unwrap();
+      toast.success(result?.message);
+    } catch (error: any) {
+      console.log(error);
+      if (error?.status === 403) {
+        toast.error("Данный email не существует.");
+      } else {
+        toast.error("Что-то пошло не так!");
+      }
+    } finally {
+      router.push("/login");
+      values.email = "";
+    }
   }
 
   return (

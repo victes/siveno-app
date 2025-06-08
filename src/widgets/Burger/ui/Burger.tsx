@@ -113,6 +113,7 @@ const Burger = ({ onOpen, setOpen }: IBurger) => {
               <ul className="space-y-3">
                 {[
                   { label: "Личный кабинет", link: "/account" },
+                  { label: "Вдохновение", link: "/inspirations" },
                   { label: "Часто задаваемые вопросы", link: "/faq" },
                   { label: "Оплата и доставка", link: "/shipping" },
                   { label: "Возврат", link: "/returns" },

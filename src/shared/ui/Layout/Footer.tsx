@@ -2,10 +2,9 @@
 import React from "react";
 import { Container } from "../Container";
 import Link from "next/link";
-import {FaTelegram} from "react-icons/fa";
-import {FaVk} from "react-icons/fa6";
+import { FaTelegram } from "react-icons/fa";
+import { FaVk } from "react-icons/fa6";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
-
 
 const Footer = () => {
   const { token } = useAuth();
@@ -46,6 +45,11 @@ const Footer = () => {
               <li>
                 <Link href="/shipping" className="text-sm text-primary hover:text-primaryHover transition-colors">
                   Доставка
+                </Link>
+              </li>
+              <li>
+                <Link href="/inspirations" className="text-sm text-primary hover:text-primaryHover transition-colors">
+                  Вдохновение
                 </Link>
               </li>
               <li>
@@ -104,11 +108,27 @@ const Footer = () => {
             </form> */}
 
             <div className="flex gap-6">
-              <a href="https://t.me/+pnsEBODRdPJiNmNi" target="_blank" onClick={() => {ym(100833094, 'reachGoal', 'social_link_click');; return true;}} className="text-primary hover:text-primaryHover transition-colors">
-                <FaTelegram className='text-[35px] max-md:text-[25px] ' />
+              <a
+                href="https://t.me/+pnsEBODRdPJiNmNi"
+                target="_blank"
+                onClick={() => {
+                  ym(100833094, "reachGoal", "social_link_click");
+                  return true;
+                }}
+                className="text-primary hover:text-primaryHover transition-colors"
+              >
+                <FaTelegram className="text-[35px] max-md:text-[25px] " />
               </a>
-              <a href="https://vk.com/siveno.store" target="_blank" onClick={() => {ym(100833094, 'reachGoal', 'social_link_click');; return true;}} className="text-primary hover:text-primaryHover transition-colors">
-                <FaVk  className='text-[35px] max-md:text-[25px]'/>
+              <a
+                href="https://vk.com/siveno.store"
+                target="_blank"
+                onClick={() => {
+                  ym(100833094, "reachGoal", "social_link_click");
+                  return true;
+                }}
+                className="text-primary hover:text-primaryHover transition-colors"
+              >
+                <FaVk className="text-[35px] max-md:text-[25px]" />
               </a>
             </div>
           </div>

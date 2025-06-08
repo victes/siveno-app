@@ -4,6 +4,7 @@ import { AddressesApi } from "@/shared/api/AddressApi/AddressApi";
 import { CategoriesApi } from "@/shared/api/CategoriesApi/CategoriesApi";
 import { colorsApi } from "@/shared/api/ColorsApi/ui/ColorsApi";
 import { LoginApi } from "@/shared/api/LoginApi/LoginApi";
+import { ForgotPassApi } from "@/shared/api/ForgotPassApi/ForgotPassApi";
 import { LogoutApi } from "@/shared/api/LogoutApi/LogoutApi";
 import { LoyaytiApi } from "@/shared/api/LoyaytyApi/Loyayti";
 import { OrdersApi } from "@/shared/api/OrdersApi/OrdersApi";
@@ -17,6 +18,7 @@ import { CalculateApi } from '@/shared/api/CalculateApi/CalculateApi'
 import { pageTextApi } from "@/shared/api/PageTextApi/ui/PageTextApi";
 import { faqApi} from "@/shared/api/FaqApi/ui/FaqApi";
 import { deliveryApi } from "@/shared/api/DeliveryApi/DeliveryApi";
+import { inspirationsApi } from "@/shared/api/InspirationsApi/InspirationsApi";
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +27,7 @@ export const store = configureStore({
     [sizesApi.reducerPath]: sizesApi.reducer,
     [colorsApi.reducerPath]: colorsApi.reducer,
     [LoginApi.reducerPath]: LoginApi.reducer,
+    [ForgotPassApi.reducerPath]: ForgotPassApi.reducer,
     [RegApi.reducerPath]: RegApi.reducer,
     [ProfileApi.reducerPath]: ProfileApi.reducer,
     [LogoutApi.reducerPath]: LogoutApi.reducer,
@@ -37,6 +40,7 @@ export const store = configureStore({
     [pageTextApi.reducerPath]: pageTextApi.reducer,
     [faqApi.reducerPath]: faqApi.reducer,
     [deliveryApi.reducerPath]: deliveryApi.reducer,
+    [inspirationsApi.reducerPath]: inspirationsApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -45,6 +49,7 @@ export const store = configureStore({
       sizesApi.middleware,
       colorsApi.middleware,
       LoginApi.middleware,
+      ForgotPassApi.middleware,
       RegApi.middleware,
       ProfileApi.middleware,
       LogoutApi.middleware,
@@ -57,6 +62,7 @@ export const store = configureStore({
       pageTextApi.middleware,
       faqApi.middleware,
       deliveryApi.middleware,
+      inspirationsApi.middleware,
     ),
 });
 
