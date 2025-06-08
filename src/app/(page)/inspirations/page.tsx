@@ -7,13 +7,13 @@ import { Metadata } from "next";
 export async function generateMetadata(): Promise<Metadata> {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const seo = await fetch(BASE_URL + "/seo/about").then(res => res.json());
+  // const seo = await fetch(BASE_URL + "/seo/about").then(res => res.json());
 
   return {
     // title: seo.title,
     title:"Вдохновение",
-    description: seo.description,
-    keywords: seo.keywords,
+    // description: seo.description,
+    // keywords: seo.keywords,
   };
 }
 
