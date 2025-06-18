@@ -15,6 +15,7 @@ jobs:
           key: ${{ secrets.ssh_key }}
           port: '22'
           script: |
+            source ~/.bashrc
             cd ~/web/siveno.store/public_html/
             git pull origin master 
             npm i
