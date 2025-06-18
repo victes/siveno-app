@@ -1,0 +1,22 @@
+name: "Deploy on vps"
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.ssh_host }}
+          username: ${{ secrets.ssh_sername }}
+          key: ${{ secrets.ssh_key }}
+          port: '22'
+          script: |
+            cd ~/web/siveno.store/public_html/
+            git pull origin master 
+            npm i
+            npm run build
+            pm2 restart nextjs-app
