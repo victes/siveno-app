@@ -43,7 +43,7 @@ const addressSchema = z.object({
   street: z.string().min(1, "Улица обязательна"),
   house: z.string().min(1, "Дом обязателен"),
   postal_code: z.string().min(1, "Индекс обязателен"),
-  apartment: z.string().min(1, "Квартира обязательна"),
+  apartment: z.string().optional(),
 });
 
 type AddressFormData = z.infer<typeof addressSchema>;

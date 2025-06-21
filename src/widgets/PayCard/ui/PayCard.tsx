@@ -35,7 +35,7 @@ const addressSchema = z.object({
   street: z.string().min(1, "Улица обязательна"),
   house: z.string().min(1, "Дом обязателен"),
   postal_code: z.string().min(1, "Индекс обязателен"),
-  apartment: z.string().min(1, "Квартира обязательна"),
+  apartment: z.string().optional(),
 });
 
 type AddressFormData = z.infer<typeof addressSchema>;
@@ -69,7 +69,7 @@ const Modal = ({ click, setClick }: IModal) => {
       street: data.street ?? "",
       house: data.house ?? "",
       postal_code: data.postal_code ?? "",
-      apartment: data.flat ?? "",
+      apartment: data.flat ?? undefined,
     };
 
     try {
@@ -479,14 +479,14 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 ) : (
                   <div>
                     <p>Адресов нет</p>
-                    <button
-                      className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full"
-                      onClick={() => setClick(true)}
-                    >
-                      Добавить новый адрес
-                    </button>
                   </div>
                 )}
+                <button
+                  className="bg-gray-100 text-[#423C3D] px-4 py-2 hover:bg-gray-300 w-full"
+                  onClick={() => setClick(true)}
+                >
+                  Добавить новый адрес
+                </button>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Доставка</h2>
                   {deliveryServices &&
