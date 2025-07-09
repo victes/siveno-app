@@ -125,6 +125,19 @@ const Cart = ({ click, setClick }: ICart) => {
                 <div className="flex justify-center items-center m-auto text-center">Корзина пуста</div>
               )}
             </div>
+            <div className="flex flex-col gap-2">
+              <Link href="/contacts" className="text-primary underline hover:text-primaryHover transition">
+                Наши контакты
+              </Link>
+              <a
+                href="https://wa.me/79134702311"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary underline hover:text-primaryHover transition"
+              >
+                Напишите нам
+              </a>
+            </div>
             <button
               className="bg-gray-100 text-[#423C3D] px-4 py-4 hover:bg-gray-300 w-full"
               onClick={openPayCard}

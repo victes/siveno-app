@@ -55,7 +55,9 @@ const CatalogCard = ({
         img: images[0].image_path,
         quantity: 1,
         selectedSize: "",
-        stickers
+        stickers,
+        discount_percent,
+        original_price,
       });
     }
   };

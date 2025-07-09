@@ -5,6 +5,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { IoIosLogIn } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
+import { HiOutlineSearch } from "react-icons/hi";
 import { Burger } from "@/widgets/Burger";
 import { Cart } from "@/widgets/Cart";
 import { Favourite } from "@/widgets/Favourite";
@@ -15,16 +17,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaTelegram } from "react-icons/fa";
 import { useFavStore } from "@/entities/favouriteStore/store";
+import { useGetSearchQuery } from "@/shared/api/ProductsApi/ui/ProductsApi";
 
 const Header = () => {
   const [click, setClick] = useState(false);
   const [cart, setCart] = useState(false);
   const [fav, setFav] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const { products } = useProductStore();
   const { favourites } = useFavStore();
   const { token } = useAuth();
   const [localToken, setLocalToken] = useState<string | null>(token);
+  const { data: searchProducts } = useGetSearchQuery(debouncedSearchQuery);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,13 +54,43 @@ const Header = () => {
     setFav(prev => !prev);
   };
 
+  const handleSearchToggle = () => {
+    setSearchOpen(prev => !prev);
+    if (searchOpen) {
+      setSearchQuery("");
+    }
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+    }
+  };
+
+  const handleClickOutside = (e: React.MouseEvent) => {
+    if (searchOpen && !(e.target as Element).closest(".search-container")) {
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
+
   useEffect(() => {
     setLocalToken(token);
   }, [token]);
 
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
   return (
     <header
       className={`fixed   top-0 left-0 right-0 z-50 transition-all duration-300 py-4 ${scrolled ? "bg-white shadow-sm " : "bg-white "}`}
+      onClick={handleClickOutside}
     >
       <Container>
         <div className="flex items-center justify-between  h-full">
@@ -147,6 +184,24 @@ const Header = () => {
             </div>
 
             <div className="flex items-center space-x-3 md:space-x-5">
+              {searchOpen ? (
+                <button
+                  type="button"
+                  onClick={handleSearchToggle}
+                  className=" hover:text-gray-500  text-black transition-colors"
+                >
+                  <IoClose size={20} />
+                </button>
+              ) : (
+                <button
+                  className={`text-black hover:text-gray-500 transition-colors  `}
+                  onClick={handleSearchToggle}
+                  aria-label="Поиск"
+                >
+                  <HiOutlineSearch size={20} />
+                </button>
+              )}
+
               {/* Избранное */}
               <button
                 className="relative text-black hover:text-gray-500 transition-colors"
@@ -192,6 +247,59 @@ const Header = () => {
 
       <Cart click={cart} setClick={() => setCart(prev => !prev)} />
       <Favourite click={fav} setClick={() => setFav(prev => !prev)} />
+      <div
+        className={`absolute transition-all duration-300 right-0 transform top-2 ease-in-out ${searchOpen ? "w-full max-lg:w-[calc(100%-300px)] max-sm:w-full max-sm:mr-0 max-sm:top-[50px] max-lg:mr-[200px] lg:w-[calc(100%-300px)] lg:mr-[260px]  " : "w-0 -right-[1000px]"}`}
+      >
+        <form
+          onSubmit={handleSearchSubmit}
+          className="relative w-full search-input-wrapper"
+          onClick={e => e.stopPropagation()}
+        >
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
+            <HiOutlineSearch size={18} />
+          </span>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Поиск..."
+            className={`w-full pl-10 py-2 pr-3 border border-gray-500 rounded-lg max-sm:rounded-none max-sm:border-none focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-transparent transition-all duration-300 ${
+              searchOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+            autoFocus={searchOpen}
+          />
+          {searchOpen && searchQuery && (
+            <div className="absolute left-0 right-0 mt-2 bg-white border max-sm:rounded-none border-gray-200 rounded-lg shadow-lg z-50 max-h-72 overflow-auto">
+              {(() => {
+                const products = Array.isArray(searchProducts) ? searchProducts : searchProducts?.data;
+
+                return products && products.length > 0 ? (
+                  products.map((product: any) => (
+                    <Link
+                      href={`/product/${product.id}`}
+                      key={product.id}
+                      className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition"
+                      onClick={() => {
+                        setSearchOpen(false);
+                        setSearchQuery("");
+                      }}
+                    >
+                      <img
+                        src={product.images?.[0]?.image_path || "/images/MainPage/1.jpg"}
+                        alt={product.name}
+                        className="w-10 h-10 object-cover rounded"
+                      />
+                      <span className="text-black text-sm">{product.name}</span>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="px-4 py-3 text-gray-500 text-sm">Товары не найдены</div>
+                );
+              })()}
+            </div>
+          )}
+        </form>
+      </div>
     </header>
   );
 };

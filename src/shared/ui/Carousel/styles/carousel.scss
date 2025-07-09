@@ -9,16 +9,16 @@
   padding: 8px 8px 16px 8px; // Унифицированные отступы
   transition: transform 0.3s ease;
   width: 100%; // Гарантируем полную ширину
-  
+
   &:hover {
     .slider-card {
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-      
+
       &::after {
         opacity: 0.05;
       }
     }
-    
+
     .slider-card__image img {
       transform: scale(1.05);
     }
@@ -35,9 +35,9 @@
   padding-bottom: 12px;
   display: flex;
   flex-direction: column;
-  
+
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -70,8 +70,8 @@
     height: 15rem;
   }
   @media (max-width: 430px) {
-  height: 14rem;
-}
+    height: 14rem;
+  }
   @media (max-width: 401px) {
     height: 13rem;
   }
@@ -117,15 +117,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; // Ограничиваем текст двумя строками
-  -webkit-box-orient: vertical;
-  height: 2.8em; // Фиксированная высота для заголовка (2 строки)
   line-height: 1.4;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .swiper-slide {
-  @media(max-width:480px) {
+  @media (max-width: 480px) {
     margin-right: 0;
   }
 }

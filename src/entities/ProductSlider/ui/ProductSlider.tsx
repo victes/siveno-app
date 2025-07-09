@@ -18,10 +18,10 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
   };
 
   return (
-    <div className="relative  w-full overflow-hidden">
+    <div className="relative  w-full overflow-hidden  ">
       {/* Slider Content */}
       <div
-        className="flex relative h-[400px] tablet:h-[500px] laptop:h-[800px] flex-col transition-transform duration-500"
+        className="flex relative h-[400px] tablet:h-[500px] laptop:h-[800px] flex-col transition-transform duration-500 "
         style={{
           transform: `translateY(-${currentIndex * 100}%)`,
         }}
@@ -34,7 +34,7 @@ const ProductSlider: React.FC<{ carousel: IProductImage[] }> = ({ carousel }) =>
               src={item.image_path}
               priority={true}
               alt={`Slide ${idx + 1}`}
-              className="object-cover h-full w-auto  max-w-full rounded"
+              className="object-cover h-full w-auto max-sm:w-full  max-w-full rounded"
               unoptimized={item.image_path.startsWith("http://") || item.image_path.startsWith("https://")}
             />
           </div>

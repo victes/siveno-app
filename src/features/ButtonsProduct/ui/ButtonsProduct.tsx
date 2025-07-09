@@ -21,6 +21,8 @@ interface IProduct {
     available: number;
   }[];
   stickers: any;
+  discount_percent?: number;
+  original_price?: number;
 }
 
 const ButtonsProduct = ({
@@ -31,7 +33,9 @@ const ButtonsProduct = ({
   selectedSize: propSelectedSize,
   selectedSizeId,
   sizeStocks = [],
-  stickers=[]
+  stickers = [],
+  discount_percent,
+  original_price,
 }: IProduct) => {
   const { addProduct } = useProductStore();
   const { addFav } = useFavStore();
@@ -95,6 +99,8 @@ const ButtonsProduct = ({
         quantity: 1,
         selectedSizeId,
         stickers,
+        discount_percent,
+        original_price,
       });
     }
   };

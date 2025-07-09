@@ -11,7 +11,7 @@ export const productsApi = createApi({
       query: () => "promos",
     }),
     getProductsByCategory: builder.query<ProductResponse, string>({
-      query: (categorySlug) => `products?category_slug=${categorySlug}`,
+      query: categorySlug => `products?category_slug=${categorySlug}`,
     }),
     getProductsById: builder.query<IProduct, number>({
       query: productId => `products/${productId}`,
@@ -20,15 +20,19 @@ export const productsApi = createApi({
       query: limit => `products/popular?limit=${limit}`,
     }),
     getProducts: builder.query<ProductResponse, string | void>({
-      query: (queryString = '') => queryString ? `products?${queryString}` : 'products',
+      query: (queryString = "") => (queryString ? `products?${queryString}` : "products"),
+    }),
+    getSearch: builder.query<ProductResponse, string | void>({
+      query: (searchQuery = "") => (searchQuery ? `products?search=${searchQuery}` : "products"),
     }),
   }),
 });
 
-export const { 
-  useGetProductsByCategoryQuery, 
-  useGetProductsByIdQuery, 
+export const {
+  useGetProductsByCategoryQuery,
+  useGetProductsByIdQuery,
   useGetProductsPopularQuery,
   useGetProductsQuery,
+  useGetSearchQuery,
   useGetPromoQuery,
 } = productsApi;

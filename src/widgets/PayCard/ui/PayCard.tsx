@@ -10,6 +10,7 @@ import {
   useCreateOrderMutation,
   useGetOrderByIdQuery,
   usePayOrderMutation,
+  useGetOrdersQuery,
 } from "@/shared/api/OrdersApi/OrdersApi";
 import { useAuth } from "@/shared/hook/AuthContext/ui/AuthContext";
 import { useRouter } from "next/navigation";
@@ -23,6 +24,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import LoginPage from "@/widgets/LoginPage";
 import RegisterPage from "@/widgets/RegisterPage";
 import { useGetDeliveryServicesQuery, useGetPickUpPointsQuery } from "@/shared/api/DeliveryApi/DeliveryApi";
+import Link from "next/link";
+import { toast } from "react-toastify";
 
 interface IModal {
   click: boolean;
@@ -220,9 +223,11 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const [typePayment, setTypePayment] = useState<string>("bank_card");
   const { data: promos } = useGetPromoQuery();
   const [discount, setDiscount] = useState<number>(0);
+  const [discountType, setDiscountType] = useState<"percentage" | "percent" | "amount">("percentage");
   const [discountName, setDiscountName] = useState<string>("");
   const [promo, setPromo] = useState<string>("");
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
+  const [promoError, setPromoError] = useState<string>("");
   const modalRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
   const { products, totalCost, clearProducts, totalQuantity } = useProductStore();
@@ -240,6 +245,9 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const { data: orderData } = useGetOrderByIdQuery(orderId!, {
     skip: !orderId,
   });
+  const { data: userOrders } = useGetOrdersQuery(undefined, {
+    skip: !token,
+  });
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       setAnimate(false);
@@ -252,14 +260,46 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
     if (promos) {
       setDiscountName("");
       setDiscount(0);
+      setDiscountType("percentage");
       setDisableBtn(true);
+      setPromoError("");
 
       const foundPromo = promos.find(promo => promo.code === value);
+      console.log(foundPromo);
 
       if (foundPromo) {
-        setDiscount(foundPromo.discount);
+        // Проверяем first_only
+        if (foundPromo.first_only && userOrders && userOrders.length > 0) {
+          setPromoError("Этот промокод действует только для первого заказа");
+          setDisableBtn(true);
+          return;
+        }
+
+        // Проверяем is_combinable
+        const hasDiscountedProducts = products.some(
+          product => product.discount_percent && product.discount_percent > 0,
+        );
+
+        if (!foundPromo.is_combinable && hasDiscountedProducts) {
+          setPromoError("Этот промокод нельзя применить к товарам со скидкой");
+          setDisableBtn(true);
+          return;
+        }
+
+        if (foundPromo.discount_type === "amount") {
+          setDiscount(foundPromo.amount_discount || 0);
+        } else if (foundPromo.discount_type === "percentage" || foundPromo.discount_type === "percent") {
+          setDiscount(foundPromo.discount);
+        } else {
+          setDiscount(foundPromo.discount);
+        }
+        setDiscountType(foundPromo.discount_type);
         setDiscountName(foundPromo.code);
         setDisableBtn(false);
+        toast.success("Промокод успешно применен!");
+      } else {
+        setPromoError("Промокод не найден");
+        setDisableBtn(true);
       }
     }
   };
@@ -310,7 +350,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
       .unwrap()
       .then(async data => {
         const paymentResponse = await payOrder({
-          amount: data.order.total_price,
+          amount: fullPrice(),
           order_id: data.order?.id,
           payment_method: typePayment,
           use_loyalty_points: false,
@@ -327,7 +367,12 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const fullPrice = () => {
     let fullprice: number = totalCost();
     if (discount) {
-      fullprice = Math.round((fullprice * (100 - discount)) / 100);
+      if (discountType === "percentage" || discountType === "percent") {
+        fullprice = Math.round((fullprice * (100 - discount)) / 100);
+      } else {
+        // Для фиксированной скидки в рублях
+        fullprice = Math.max(0, fullprice - discount);
+      }
     }
     if (deliveryPrice) {
       fullprice += deliveryPrice;
@@ -403,6 +448,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
   const handleChange = (e: string) => {
     setPromo(e);
     setDisableBtn(false);
+    setPromoError("");
   };
 
   const handleCancelOrder = async () => {
@@ -487,6 +533,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 >
                   Добавить новый адрес
                 </button>
+
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Доставка</h2>
                   {deliveryServices &&
@@ -545,7 +592,10 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 </div>
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Промокод</h2>
-                  {disableBtn && <span className="text-red-500 text-sm">Промокод не найден</span>}
+                  {promoError && <span className="text-red-500 text-sm block mb-2">{promoError}</span>}
+                  {disableBtn && !promoError && (
+                    <span className="text-red-500 text-sm block mb-2">Промокод не найден</span>
+                  )}
                   <div className="relative">
                     <input
                       type="text"
@@ -566,11 +616,28 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
                 <div>
                   <h2 className="uppercase text-[24px] text-black mb-[15px]">Ваш заказ</h2>
                   <p>Товаров на - {totalCost()} ₽</p>
-                  <p>Скидка - {discount} %</p>
+                  {discount > 0 && (
+                    <p>
+                      Скидка - {discount} {discountType === "percentage" || discountType === "percent" ? "%" : "₽"}
+                    </p>
+                  )}
                   <p>
                     Доставка {deliveryDate && "(" + deliveryDate + ")"}- {deliveryPrice} ₽
                   </p>
                   <p>Итого - {fullPrice()} ₽</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <a
+                    href="https://wa.me/79134702311"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline hover:text-primaryHover transition"
+                  >
+                    Напишите нам
+                  </a>
+                  <Link href="/contacts" className="text-primary underline hover:text-primaryHover transition">
+                    Наши контакты
+                  </Link>
                 </div>
                 <button
                   className="bg-gray-100 text-[#423C3D] px-6 py-2 hover:bg-gray-300 w-full mt-[40px]"
@@ -582,6 +649,7 @@ const PayCard = ({ onOpen, open }: IPayCard) => {
               </>
             )}
           </div>
+
           {click && <Modal click={click} setClick={() => setClick(prev => !prev)} />}
         </div>
       )}

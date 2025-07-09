@@ -107,29 +107,44 @@ const Footer = () => {
               </div>
             </form> */}
 
-            <div className="flex gap-6">
-              <a
-                href="https://t.me/+pnsEBODRdPJiNmNi"
-                target="_blank"
-                onClick={() => {
-                  ym(100833094, "reachGoal", "social_link_click");
-                  return true;
-                }}
-                className="text-primary hover:text-primaryHover transition-colors"
-              >
-                <FaTelegram className="text-[35px] max-md:text-[25px] " />
-              </a>
-              <a
-                href="https://vk.com/siveno.store"
-                target="_blank"
-                onClick={() => {
-                  ym(100833094, "reachGoal", "social_link_click");
-                  return true;
-                }}
-                className="text-primary hover:text-primaryHover transition-colors"
-              >
-                <FaVk className="text-[35px] max-md:text-[25px]" />
-              </a>
+            <div className="flex flex-col gap-6 max-sm:gap-4">
+              <div className="flex gap-6">
+                <a
+                  href="https://t.me/+pnsEBODRdPJiNmNi"
+                  target="_blank"
+                  onClick={() => {
+                    ym(100833094, "reachGoal", "social_link_click");
+                    return true;
+                  }}
+                  className="text-primary hover:text-primaryHover transition-colors"
+                >
+                  <FaTelegram className="text-[35px] max-md:text-[25px] " />
+                </a>
+                <a
+                  href="https://vk.com/siveno.store"
+                  target="_blank"
+                  onClick={() => {
+                    ym(100833094, "reachGoal", "social_link_click");
+                    return true;
+                  }}
+                  className="text-primary hover:text-primaryHover transition-colors"
+                >
+                  <FaVk className="text-[35px] max-md:text-[25px]" />
+                </a>
+              </div>
+              <div className="flex flex-col gap-4 max-sm:gap-3">
+                <a
+                  href="https://wa.me/79134702311"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary underline hover:text-primaryHover transition"
+                >
+                  Напишите нам
+                </a>
+                <Link href="/contacts" className="text-primary underline hover:text-primaryHover transition">
+                  Наши контакты
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -2,6 +2,10 @@ export interface Promo {
   id: number;
   code: string;
   discount: number;
+  amount_discount?: number;
+  discount_type: "percentage" | "percent" | "amount";
+  is_combinable: boolean;
+  first_only: boolean;
 }
 
 export interface Product {
@@ -18,7 +22,7 @@ export interface Product {
   measurements: Record<string, string[]>;
   created_at: string;
   updated_at: string;
-  stickers:any;
+  stickers: any;
   category: {
     id: number;
     slug: string;
@@ -110,7 +114,7 @@ export interface IProduct {
   images: IProductImage[];
   colors: IColor[];
   color_options: IColorOptions[];
-  sizes:  Size[];
+  sizes: Size[];
 
   preference: {
     size_label: string;
@@ -153,7 +157,7 @@ export interface IProduct {
 export interface IColor {
   id: number;
   name: string;
-  code: string
+  code: string;
 }
 
 export interface IColorOptions {
@@ -204,7 +208,7 @@ type Category = {
   updated_at: string;
   image: string;
   is_sale: number;
-  stickers:any;
+  stickers: any;
 };
 
 export type IPopular = {

@@ -142,6 +142,8 @@ const Modal = ({ products }: ModalProps) => {
     img: string;
     quantity: number;
     selectedSize: string;
+    discount_percent?: number;
+    original_price?: number;
   }) => {
     if (typeof window === "undefined") return;
 
@@ -193,6 +195,8 @@ const Modal = ({ products }: ModalProps) => {
                 img: product.video_url,
                 selectedSize: "",
                 quantity: 1,
+                discount_percent: product.is_discount ? parseFloat(product.discount_percentage) : undefined,
+                original_price: product.is_discount ? product.price : undefined,
               })
             }
           >

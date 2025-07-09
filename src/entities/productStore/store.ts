@@ -11,7 +11,9 @@ interface Product {
   selectedSizeId?: number;
   color_id?: number;
   images?: { image_path: string }[];
-  stickers:any;
+  stickers: any;
+  discount_percent?: number;
+  original_price?: number;
 }
 
 interface ProductStore {

@@ -291,12 +291,12 @@ const ProductPage = () => {
 
   return (
     <section className="  pb-5 ">
-      <div className="text-sm mx-auto mb-[30px] border">
+      <div className="text-sm mx-auto mb-[30px] border max-sm:border-none max-sm:mb-0">
         <BtnBack />
       </div>
 
       <div className="flex flex-col items-center largeDesk:flex-row justify-between">
-        <div className="mb-[40px] largeDesk:mb-0">
+        <div className="mb-[40px] largeDesk:mb-0  max-sm:w-full">
           <ProductSlider carousel={carousel || []} />
         </div>
 
@@ -347,6 +347,8 @@ const ProductPage = () => {
               selectedSizeId={selectedSizeId?.id}
               sizeStocks={products.size_stocks}
               stickers={products.stickers}
+              discount_percent={products.discount_percent}
+              original_price={products.original_price}
             />
           </div>
 
@@ -361,9 +363,9 @@ const ProductPage = () => {
             <div>
               <Image src={delivery} alt="Удобная доставка" />
               <h2>
-                Удобная
+                Доставка по
                 <br />
-                доставка
+                всей России
               </h2>
             </div>
             <div>
